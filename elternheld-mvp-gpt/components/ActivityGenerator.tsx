@@ -1,0 +1,1 @@
+// Komponente für Aktivitäts-Generator

@@ -1,0 +1,1 @@
+// API-Handler für Gemini
