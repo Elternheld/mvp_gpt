@@ -1,4 +1,4 @@
-export type Role = "admin" | "user" | "moderator" | "guest"
+import type { Role } from "@/types/auth"
 
 export function getUserRoleLabel(role: Role): string {
   switch (role) {
@@ -10,6 +10,10 @@ export function getUserRoleLabel(role: Role): string {
       return "Elternteil"
     case "guest":
       return "Gast"
+    case "customer":
+      return "Kunde"
+    case "agent":
+      return "Berater"
     default:
       return "Unbekannt"
   }
