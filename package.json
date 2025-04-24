@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.18.0",
     "class-variance-authority": "^0.7.1",
     "framer-motion": "^12.9.1",
     "lucide-react": "^0.503.0",
