@@ -4,7 +4,6 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { useAuth } from "@/components/auth/auth-provider"
 import { Button } from "@/components/ui/button"
 import {
   LayoutDashboard,
@@ -22,7 +21,7 @@ import { motion, AnimatePresence } from "framer-motion"
 
 export function AdminSidebar() {
   const pathname = usePathname()
-  const { user, logout } = useAuth()
+  const { user } = useUser()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
@@ -36,12 +35,10 @@ export function AdminSidebar() {
     { name: "Einstellungen", href: "/admin/settings", icon: Settings },
   ]
 
-  const isActive = (href: string) => {
-    return pathname === href
-  }
+  const isActive = (href: string) => pathname === href
 
   return (
-    <>
+    <SignedIn>
       {/* Mobile Menu Button */}
       <div className="lg:hidden fixed top-4 left-4 z-50">
         <Button variant="outline" size="icon" className="rounded-full" onClick={() => setIsMobileOpen(!isMobileOpen)}>
@@ -68,7 +65,7 @@ export function AdminSidebar() {
                   </div>
                   <div>
                     <p className="font-bold">ElternHeld Admin</p>
-                    <p className="text-xs text-gray-500">{user?.name}</p>
+                    <p className="text-xs text-gray-500">{user?.fullName}</p>
                   </div>
                 </div>
               </div>
@@ -89,17 +86,12 @@ export function AdminSidebar() {
                 ))}
               </nav>
               <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
-                <Button
-                  variant="outline"
-                  className="w-full flex items-center justify-center"
-                  onClick={() => {
-                    logout()
-                    setIsMobileOpen(false)
-                  }}
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Abmelden
-                </Button>
+                <SignOutButton>
+                  <Button variant="outline" className="w-full flex items-center justify-center">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Abmelden
+                  </Button>
+                </SignOutButton>
               </div>
             </div>
           </motion.div>
@@ -121,7 +113,7 @@ export function AdminSidebar() {
               </div>
               <div>
                 <p className="font-bold">ElternHeld Admin</p>
-                <p className="text-xs text-gray-500">{user?.name}</p>
+                <p className="text-xs text-gray-500">{user?.fullName}</p>
               </div>
             </div>
           )}
@@ -150,16 +142,17 @@ export function AdminSidebar() {
           ))}
         </nav>
         <div className="p-4 border-t border-gray-200">
-          <Button
-            variant="outline"
-            className={cn("flex items-center", isCollapsed ? "justify-center p-2" : "justify-center w-full")}
-            onClick={logout}
-          >
-            <LogOut className={cn("h-4 w-4", isCollapsed ? "" : "mr-2")} />
-            {!isCollapsed && "Abmelden"}
-          </Button>
+          <SignOutButton>
+            <Button
+              variant="outline"
+              className={cn("flex items-center", isCollapsed ? "justify-center p-2" : "justify-center w-full")}
+            >
+              <LogOut className={cn("h-4 w-4", isCollapsed ? "" : "mr-2")} />
+              {!isCollapsed && "Abmelden"}
+            </Button>
+          </SignOutButton>
         </div>
       </div>
-    </>
+    </SignedIn>
   )
 }
