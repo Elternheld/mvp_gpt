@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import ActivityFetcher from "@/components/ActivityFetcher"
+import ActivityFetcher from "../components/ActivityFetcher"
 
 export default function Home() {
   return (
