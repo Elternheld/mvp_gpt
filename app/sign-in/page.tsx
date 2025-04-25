@@ -1,10 +1,19 @@
-import { SignIn } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import "../styles/globals.css";
 
-export default function SignInPage() {
+export const metadata = {
+  title: "Elternheld MVP",
+  description: "Eine Anwendung, die Eltern unterstützt.",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <h1>Sign In</h1>
-      <SignIn />
-    </div>
+    <html lang="de">
+      <body>
+        <ClerkProvider>
+          {children}
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
