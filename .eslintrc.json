@@ -3,6 +3,6 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
-    // Add or customize rules here if needed
+    // Optional: Add or customize rules here if needed
   }
 }
