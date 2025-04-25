@@ -2,41 +2,36 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { UserButton, SignedIn, SignedOut, SignInButton } from "@clerk/nextjs"
-import { useState } from "react"
-import { Menu } from "lucide-react"
+import { UserButton } from "@clerk/nextjs"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { MobileSidebar } from "@/components/layouts/mobile-sidebar"
 
-export function Topbar({ toggleSidebar }: { toggleSidebar?: () => void }) {
-  const [isOpen, setIsOpen] = useState(false)
+<header className="...">
+  <div className="flex items-center space-x-2">
+    <MobileSidebar />
+    ...
+  </div>
+</header>
 
+export function Topbar() {
   return (
-    <header className="w-full bg-white border-b shadow-sm px-4 py-3 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        {toggleSidebar && (
-          <button
-            onClick={toggleSidebar}
-            className="lg:hidden p-2 bg-gray-100 rounded-md shadow-sm"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-        )}
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="ElternHeld Logo" width={32} height={32} />
-          <span className="font-bold text-lg tracking-tight">ElternHeld</span>
+    <header className="w-full border-b bg-white px-4 py-3 shadow-sm flex justify-between items-center">
+      <div className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/logo.png"
+            alt="ElternHeld Logo"
+            width={32}
+            height={32}
+            priority
+          />
+          <span className="text-lg font-semibold tracking-tight">ElternHeld</span>
         </Link>
       </div>
 
-      <div className="flex items-center gap-4">
-        <SignedOut>
-          <SignInButton mode="modal">
-            <button className="text-sm font-medium text-blue-600 hover:underline">
-              Anmelden
-            </button>
-          </SignInButton>
-        </SignedOut>
-        <SignedIn>
-          <UserButton afterSignOutUrl="/" />
-        </SignedIn>
+      <div className="flex items-center space-x-4">
+        <ThemeToggle />
+        <UserButton afterSignOutUrl="/" />
       </div>
     </header>
   )

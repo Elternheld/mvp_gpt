@@ -1,1 +1,14 @@
-{}
+{
+  "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js": {
+    "id": null,
+    "files": []
+  },
+  "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\keyless-actions.js -> ../server/keyless-log-cache.js": {
+    "id": null,
+    "files": []
+  },
+  "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\keyless-actions.js -> ../server/keyless-node.js": {
+    "id": null,
+    "files": []
+  }
+}

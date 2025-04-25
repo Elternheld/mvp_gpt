@@ -1,4 +1,7 @@
 import LayoutShell from "@/components/layouts/layout-shell"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
+
+<ThemeToggle />
 
 export default function DashboardPage() {
   return (
