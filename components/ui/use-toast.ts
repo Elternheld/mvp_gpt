@@ -12,10 +12,10 @@ type ToastContextType = {
   removeToast: (id: string) => void;
 };
 
-// Create the context
+// Create the ToastContext (this is NOT a namespace)
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-// Provider component
+// Provider Component
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -35,7 +35,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Custom hook to use the ToastContext
+// Custom Hook
 export function useToast() {
   const context = useContext(ToastContext);
   if (!context) {
