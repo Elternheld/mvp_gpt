@@ -1,21 +1,23 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
+// Define the type for individual toasts
 type Toast = {
   id: string;
   title: string;
   description?: string;
 };
 
+// Define the shape of the context
 type ToastContextType = {
   toasts: Toast[];
   showToast: (toast: Omit<Toast, "id">) => void;
   removeToast: (id: string) => void;
 };
 
-// Correctly define the React context
+// Create the ToastContext
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-// ToastProvider to wrap your application
+// Create the ToastProvider component
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -35,7 +37,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Custom hook for using the ToastContext
+// Create a custom hook to use the ToastContext
 export function useToast() {
   const context = useContext(ToastContext);
   if (!context) {
