@@ -1,12 +1,9 @@
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   experimental: {
-    forceSwcTransforms: true,
-    outputFileTracingRoot: __dirname
-  },
-  output: 'standalone',
-  runtime: 'nodejs'
+    serverActions: true
+  }
 }
 
 module.exports = nextConfig
