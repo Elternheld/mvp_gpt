@@ -1,4 +1,4 @@
-// File: C:\Users\AKhal\OneDrive\Dokumente\GitHub\mvp_gpt\app\agent\page.tsx
+// File: C:\Users\AKhal\OneDrive\Desktop\mvp_gpt\app\agent\page.tsx
 import * as entry from '../../../../app/agent/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
