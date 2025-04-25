@@ -1,7 +1,7 @@
 // runtime can't be in strict mode because a global variable is assign and maybe created.
 (self["webpackChunk_N_E"] = self["webpackChunk_N_E"] || []).push([[826],{
 
-/***/ 491:
+/***/ 5692:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -13,16 +13,28 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ nHandler)
 });
 
-// NAMESPACE OBJECT: ./node_modules/@clerk/nextjs/dist/esm/server/index.js
-var server_namespaceObject = {};
-__webpack_require__.r(server_namespaceObject);
+// NAMESPACE OBJECT: ./node_modules/swr/dist/index/index.mjs
+var index_namespaceObject = {};
+__webpack_require__.r(index_namespaceObject);
+__webpack_require__.d(index_namespaceObject, {
+  SWRConfig: () => (index_SWRConfig),
+  "default": () => (useSWR),
+  mutate: () => (mutate),
+  preload: () => (preload),
+  unstable_serialize: () => (unstable_serialize),
+  useSWRConfig: () => (useSWRConfig)
+});
+
+// NAMESPACE OBJECT: ./node_modules/@clerk/nextjs/dist/esm/index.js
+var esm_namespaceObject = {};
+__webpack_require__.r(esm_namespaceObject);
 
 // NAMESPACE OBJECT: ./middleware.ts
 var middleware_namespaceObject = {};
 __webpack_require__.r(middleware_namespaceObject);
 __webpack_require__.d(middleware_namespaceObject, {
   config: () => (config),
-  "default": () => (middleware)
+  "default": () => (middleware_0)
 });
 
 ;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/globals.js
@@ -306,122 +318,8 @@ function detectDomainLocale(domainItems, hostname, detectedLocale) {
     }
 } //# sourceMappingURL=detect-domain-locale.js.map
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/remove-trailing-slash.js
-/**
- * Removes the trailing slash for a given route or page path. Preserves the
- * root page. Examples:
- *   - `/foo/bar/` -> `/foo/bar`
- *   - `/foo/bar` -> `/foo/bar`
- *   - `/` -> `/`
- */ function removeTrailingSlash(route) {
-    return route.replace(/\/$/, "") || "/";
-} //# sourceMappingURL=remove-trailing-slash.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/parse-path.js
-/**
- * Given a path this function will find the pathname, query and hash and return
- * them. This is useful to parse full paths on the client side.
- * @param path A path to parse e.g. /foo/bar?id=1#hash
- */ function parsePath(path) {
-    const hashIndex = path.indexOf("#");
-    const queryIndex = path.indexOf("?");
-    const hasQuery = queryIndex > -1 && (hashIndex < 0 || queryIndex < hashIndex);
-    if (hasQuery || hashIndex > -1) {
-        return {
-            pathname: path.substring(0, hasQuery ? queryIndex : hashIndex),
-            query: hasQuery ? path.substring(queryIndex, hashIndex > -1 ? hashIndex : undefined) : "",
-            hash: hashIndex > -1 ? path.slice(hashIndex) : ""
-        };
-    }
-    return {
-        pathname: path,
-        query: "",
-        hash: ""
-    };
-} //# sourceMappingURL=parse-path.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/add-path-prefix.js
-
-/**
- * Adds the provided prefix to the given path. It first ensures that the path
- * is indeed starting with a slash.
- */ function addPathPrefix(path, prefix) {
-    if (!path.startsWith("/") || !prefix) {
-        return path;
-    }
-    const { pathname, query, hash } = parsePath(path);
-    return "" + prefix + pathname + query + hash;
-} //# sourceMappingURL=add-path-prefix.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/add-path-suffix.js
-
-/**
- * Similarly to `addPathPrefix`, this function adds a suffix at the end on the
- * provided path. It also works only for paths ensuring the argument starts
- * with a slash.
- */ function addPathSuffix(path, suffix) {
-    if (!path.startsWith("/") || !suffix) {
-        return path;
-    }
-    const { pathname, query, hash } = parsePath(path);
-    return "" + pathname + suffix + query + hash;
-} //# sourceMappingURL=add-path-suffix.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/path-has-prefix.js
-
-/**
- * Checks if a given path starts with a given prefix. It ensures it matches
- * exactly without containing extra chars. e.g. prefix /docs should replace
- * for /docs, /docs/, /docs/a but not /docsss
- * @param path The path to check.
- * @param prefix The prefix to check against.
- */ function pathHasPrefix(path, prefix) {
-    if (typeof path !== "string") {
-        return false;
-    }
-    const { pathname } = parsePath(path);
-    return pathname === prefix || pathname.startsWith(prefix + "/");
-} //# sourceMappingURL=path-has-prefix.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/add-locale.js
-
-
-/**
- * For a given path and a locale, if the locale is given, it will prefix the
- * locale. The path shouldn't be an API path. If a default locale is given the
- * prefix will be omitted if the locale is already the default locale.
- */ function addLocale(path, locale, defaultLocale, ignorePrefix) {
-    // If no locale was given or the locale is the default locale, we don't need
-    // to prefix the path.
-    if (!locale || locale === defaultLocale) return path;
-    const lower = path.toLowerCase();
-    // If the path is an API path or the path already has the locale prefix, we
-    // don't need to prefix the path.
-    if (!ignorePrefix) {
-        if (pathHasPrefix(lower, "/api")) return path;
-        if (pathHasPrefix(lower, "/" + locale.toLowerCase())) return path;
-    }
-    // Add the locale prefix to the path.
-    return addPathPrefix(path, "/" + locale);
-} //# sourceMappingURL=add-locale.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/format-next-pathname-info.js
-
-
-
-
-function formatNextPathnameInfo(info) {
-    let pathname = addLocale(info.pathname, info.locale, info.buildId ? undefined : info.defaultLocale, info.ignorePrefix);
-    if (info.buildId || !info.trailingSlash) {
-        pathname = removeTrailingSlash(pathname);
-    }
-    if (info.buildId) {
-        pathname = addPathSuffix(addPathPrefix(pathname, "/_next/data/" + info.buildId), info.pathname === "/" ? "index.json" : ".json");
-    }
-    pathname = addPathPrefix(pathname, info.basePath);
-    return !info.buildId && info.trailingSlash ? !pathname.endsWith("/") ? addPathSuffix(pathname, "/") : pathname : removeTrailingSlash(pathname);
-} //# sourceMappingURL=format-next-pathname-info.js.map
-
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/format-next-pathname-info.js + 2 modules
+var format_next_pathname_info = __webpack_require__(788);
 ;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/get-hostname.js
 /**
  * Takes an object with a hostname property (like a parsed URL) and some
@@ -440,114 +338,8 @@ function formatNextPathnameInfo(info) {
     return hostname.toLowerCase();
 } //# sourceMappingURL=get-hostname.js.map
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/i18n/normalize-locale-path.js
-/**
- * For a pathname that may include a locale from a list of locales, it
- * removes the locale from the pathname returning it alongside with the
- * detected locale.
- *
- * @param pathname A pathname that may include a locale.
- * @param locales A list of locales.
- * @returns The detected locale and pathname without locale
- */ function normalizeLocalePath(pathname, locales) {
-    let detectedLocale;
-    // first item will be empty string from splitting at first char
-    const pathnameParts = pathname.split("/");
-    (locales || []).some((locale)=>{
-        if (pathnameParts[1] && pathnameParts[1].toLowerCase() === locale.toLowerCase()) {
-            detectedLocale = locale;
-            pathnameParts.splice(1, 1);
-            pathname = pathnameParts.join("/") || "/";
-            return true;
-        }
-        return false;
-    });
-    return {
-        pathname,
-        detectedLocale
-    };
-} //# sourceMappingURL=normalize-locale-path.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/remove-path-prefix.js
-
-/**
- * Given a path and a prefix it will remove the prefix when it exists in the
- * given path. It ensures it matches exactly without containing extra chars
- * and if the prefix is not there it will be noop.
- *
- * @param path The path to remove the prefix from.
- * @param prefix The prefix to be removed.
- */ function removePathPrefix(path, prefix) {
-    // If the path doesn't start with the prefix we can return it as is. This
-    // protects us from situations where the prefix is a substring of the path
-    // prefix such as:
-    //
-    // For prefix: /blog
-    //
-    //   /blog -> true
-    //   /blog/ -> true
-    //   /blog/1 -> true
-    //   /blogging -> false
-    //   /blogging/ -> false
-    //   /blogging/1 -> false
-    if (!pathHasPrefix(path, prefix)) {
-        return path;
-    }
-    // Remove the prefix from the path via slicing.
-    const withoutPrefix = path.slice(prefix.length);
-    // If the path without the prefix starts with a `/` we can return it as is.
-    if (withoutPrefix.startsWith("/")) {
-        return withoutPrefix;
-    }
-    // If the path without the prefix doesn't start with a `/` we need to add it
-    // back to the path to make sure it's a valid path.
-    return "/" + withoutPrefix;
-} //# sourceMappingURL=remove-path-prefix.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/get-next-pathname-info.js
-
-
-
-function getNextPathnameInfo(pathname, options) {
-    var _options_nextConfig;
-    const { basePath, i18n, trailingSlash } = (_options_nextConfig = options.nextConfig) != null ? _options_nextConfig : {};
-    const info = {
-        pathname,
-        trailingSlash: pathname !== "/" ? pathname.endsWith("/") : trailingSlash
-    };
-    if (basePath && pathHasPrefix(info.pathname, basePath)) {
-        info.pathname = removePathPrefix(info.pathname, basePath);
-        info.basePath = basePath;
-    }
-    let pathnameNoDataPrefix = info.pathname;
-    if (info.pathname.startsWith("/_next/data/") && info.pathname.endsWith(".json")) {
-        const paths = info.pathname.replace(/^\/_next\/data\//, "").replace(/\.json$/, "").split("/");
-        const buildId = paths[0];
-        info.buildId = buildId;
-        pathnameNoDataPrefix = paths[1] !== "index" ? "/" + paths.slice(1).join("/") : "/";
-        // update pathname with normalized if enabled although
-        // we use normalized to populate locale info still
-        if (options.parseData === true) {
-            info.pathname = pathnameNoDataPrefix;
-        }
-    }
-    // If provided, use the locale route normalizer to detect the locale instead
-    // of the function below.
-    if (i18n) {
-        let result = options.i18nProvider ? options.i18nProvider.analyze(info.pathname) : normalizeLocalePath(info.pathname, i18n.locales);
-        info.locale = result.detectedLocale;
-        var _result_pathname;
-        info.pathname = (_result_pathname = result.pathname) != null ? _result_pathname : info.pathname;
-        if (!result.detectedLocale && info.buildId) {
-            result = options.i18nProvider ? options.i18nProvider.analyze(pathnameNoDataPrefix) : normalizeLocalePath(pathnameNoDataPrefix, i18n.locales);
-            if (result.detectedLocale) {
-                info.locale = result.detectedLocale;
-            }
-        }
-    }
-    return info;
-} //# sourceMappingURL=get-next-pathname-info.js.map
-
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/get-next-pathname-info.js + 1 modules
+var get_next_pathname_info = __webpack_require__(1798);
 ;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/next-url.js
 
 
@@ -577,7 +369,7 @@ class NextURL {
     }
     analyze() {
         var _this_Internal_options_nextConfig_i18n, _this_Internal_options_nextConfig, _this_Internal_domainLocale, _this_Internal_options_nextConfig_i18n1, _this_Internal_options_nextConfig1;
-        const info = getNextPathnameInfo(this[Internal].url.pathname, {
+        const info = (0,get_next_pathname_info/* getNextPathnameInfo */.a)(this[Internal].url.pathname, {
             nextConfig: this[Internal].options.nextConfig,
             parseData: !undefined,
             i18nProvider: this[Internal].options.i18nProvider
@@ -593,7 +385,7 @@ class NextURL {
         this[Internal].trailingSlash = info.trailingSlash;
     }
     formatPathname() {
-        return formatNextPathnameInfo({
+        return (0,format_next_pathname_info/* formatNextPathnameInfo */.R)({
             basePath: this[Internal].basePath,
             buildId: this[Internal].buildId,
             defaultLocale: !this[Internal].options.forceLocale ? this[Internal].defaultLocale : undefined,
@@ -729,11 +521,8 @@ class NextURL {
     }
 } //# sourceMappingURL=next-url.js.map
 
-// EXTERNAL MODULE: ./node_modules/next/dist/compiled/@edge-runtime/cookies/index.js
-var _edge_runtime_cookies = __webpack_require__(492);
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/cookies.js
- //# sourceMappingURL=cookies.js.map
-
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/cookies.js
+var spec_extension_cookies = __webpack_require__(3072);
 ;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/request.js
 
 
@@ -751,7 +540,7 @@ class NextRequest extends Request {
             nextConfig: init.nextConfig
         });
         this[INTERNALS] = {
-            cookies: new _edge_runtime_cookies.RequestCookies(this.headers),
+            cookies: new spec_extension_cookies/* RequestCookies */.q(this.headers),
             geo: init.geo || {},
             ip: init.ip,
             nextUrl,
@@ -842,7 +631,7 @@ class NextResponse extends Response {
     constructor(body, init = {}){
         super(body, init);
         this[response_INTERNALS] = {
-            cookies: new _edge_runtime_cookies.ResponseCookies(this.headers),
+            cookies: new spec_extension_cookies/* ResponseCookies */.n(this.headers),
             url: init.url ? new NextURL(init.url, {
                 headers: toNodeOutgoingHttpHeaders(this.headers),
                 nextConfig: init.nextConfig
@@ -917,27 +706,8 @@ class NextResponse extends Response {
     return relative.protocol + "//" + relative.host === origin ? relative.toString().replace(origin, "") : relative.toString();
 } //# sourceMappingURL=relativize-url.js.map
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/app-router-headers.js
-const RSC = "RSC";
-const ACTION = "Next-Action";
-const NEXT_ROUTER_STATE_TREE = "Next-Router-State-Tree";
-const NEXT_ROUTER_PREFETCH = "Next-Router-Prefetch";
-const NEXT_URL = "Next-Url";
-const RSC_CONTENT_TYPE_HEADER = "text/x-component";
-const RSC_VARY_HEADER = RSC + ", " + NEXT_ROUTER_STATE_TREE + ", " + NEXT_ROUTER_PREFETCH + ", " + NEXT_URL;
-const FLIGHT_PARAMETERS = [
-    [
-        RSC
-    ],
-    [
-        NEXT_ROUTER_STATE_TREE
-    ],
-    [
-        NEXT_ROUTER_PREFETCH
-    ]
-];
-const NEXT_RSC_UNION_QUERY = "_rsc"; //# sourceMappingURL=app-router-headers.js.map
-
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/components/app-router-headers.js
+var app_router_headers = __webpack_require__(384);
 ;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/internal-utils.js
 
 const INTERNAL_QUERY_NAMES = [
@@ -946,7 +716,7 @@ const INTERNAL_QUERY_NAMES = [
     "__nextInferredLocaleFromDefault",
     "__nextDefaultLocale",
     "__nextIsNotFound",
-    NEXT_RSC_UNION_QUERY
+    app_router_headers/* NEXT_RSC_UNION_QUERY */.H4
 ];
 const EDGE_EXTENDED_INTERNAL_QUERY_NAMES = [
     "__nextDataReq"
@@ -1177,316 +947,10 @@ const WEBPACK_RESOURCE_QUERIES = {
 };
  //# sourceMappingURL=constants.js.map
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/adapters/reflect.js
-class ReflectAdapter {
-    static get(target, prop, receiver) {
-        const value = Reflect.get(target, prop, receiver);
-        if (typeof value === "function") {
-            return value.bind(target);
-        }
-        return value;
-    }
-    static set(target, prop, value, receiver) {
-        return Reflect.set(target, prop, value, receiver);
-    }
-    static has(target, prop) {
-        return Reflect.has(target, prop);
-    }
-    static deleteProperty(target, prop) {
-        return Reflect.deleteProperty(target, prop);
-    }
-} //# sourceMappingURL=reflect.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/adapters/headers.js
-
-/**
- * @internal
- */ class ReadonlyHeadersError extends Error {
-    constructor(){
-        super("Headers cannot be modified. Read more: https://nextjs.org/docs/app/api-reference/functions/headers");
-    }
-    static callable() {
-        throw new ReadonlyHeadersError();
-    }
-}
-class HeadersAdapter extends Headers {
-    constructor(headers){
-        // We've already overridden the methods that would be called, so we're just
-        // calling the super constructor to ensure that the instanceof check works.
-        super();
-        this.headers = new Proxy(headers, {
-            get (target, prop, receiver) {
-                // Because this is just an object, we expect that all "get" operations
-                // are for properties. If it's a "get" for a symbol, we'll just return
-                // the symbol.
-                if (typeof prop === "symbol") {
-                    return ReflectAdapter.get(target, prop, receiver);
-                }
-                const lowercased = prop.toLowerCase();
-                // Let's find the original casing of the key. This assumes that there is
-                // no mixed case keys (e.g. "Content-Type" and "content-type") in the
-                // headers object.
-                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
-                // If the original casing doesn't exist, return undefined.
-                if (typeof original === "undefined") return;
-                // If the original casing exists, return the value.
-                return ReflectAdapter.get(target, original, receiver);
-            },
-            set (target, prop, value, receiver) {
-                if (typeof prop === "symbol") {
-                    return ReflectAdapter.set(target, prop, value, receiver);
-                }
-                const lowercased = prop.toLowerCase();
-                // Let's find the original casing of the key. This assumes that there is
-                // no mixed case keys (e.g. "Content-Type" and "content-type") in the
-                // headers object.
-                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
-                // If the original casing doesn't exist, use the prop as the key.
-                return ReflectAdapter.set(target, original ?? prop, value, receiver);
-            },
-            has (target, prop) {
-                if (typeof prop === "symbol") return ReflectAdapter.has(target, prop);
-                const lowercased = prop.toLowerCase();
-                // Let's find the original casing of the key. This assumes that there is
-                // no mixed case keys (e.g. "Content-Type" and "content-type") in the
-                // headers object.
-                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
-                // If the original casing doesn't exist, return false.
-                if (typeof original === "undefined") return false;
-                // If the original casing exists, return true.
-                return ReflectAdapter.has(target, original);
-            },
-            deleteProperty (target, prop) {
-                if (typeof prop === "symbol") return ReflectAdapter.deleteProperty(target, prop);
-                const lowercased = prop.toLowerCase();
-                // Let's find the original casing of the key. This assumes that there is
-                // no mixed case keys (e.g. "Content-Type" and "content-type") in the
-                // headers object.
-                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
-                // If the original casing doesn't exist, return true.
-                if (typeof original === "undefined") return true;
-                // If the original casing exists, delete the property.
-                return ReflectAdapter.deleteProperty(target, original);
-            }
-        });
-    }
-    /**
-   * Seals a Headers instance to prevent modification by throwing an error when
-   * any mutating method is called.
-   */ static seal(headers) {
-        return new Proxy(headers, {
-            get (target, prop, receiver) {
-                switch(prop){
-                    case "append":
-                    case "delete":
-                    case "set":
-                        return ReadonlyHeadersError.callable;
-                    default:
-                        return ReflectAdapter.get(target, prop, receiver);
-                }
-            }
-        });
-    }
-    /**
-   * Merges a header value into a string. This stores multiple values as an
-   * array, so we need to merge them into a string.
-   *
-   * @param value a header value
-   * @returns a merged header value (a string)
-   */ merge(value) {
-        if (Array.isArray(value)) return value.join(", ");
-        return value;
-    }
-    /**
-   * Creates a Headers instance from a plain object or a Headers instance.
-   *
-   * @param headers a plain object or a Headers instance
-   * @returns a headers instance
-   */ static from(headers) {
-        if (headers instanceof Headers) return headers;
-        return new HeadersAdapter(headers);
-    }
-    append(name, value) {
-        const existing = this.headers[name];
-        if (typeof existing === "string") {
-            this.headers[name] = [
-                existing,
-                value
-            ];
-        } else if (Array.isArray(existing)) {
-            existing.push(value);
-        } else {
-            this.headers[name] = value;
-        }
-    }
-    delete(name) {
-        delete this.headers[name];
-    }
-    get(name) {
-        const value = this.headers[name];
-        if (typeof value !== "undefined") return this.merge(value);
-        return null;
-    }
-    has(name) {
-        return typeof this.headers[name] !== "undefined";
-    }
-    set(name, value) {
-        this.headers[name] = value;
-    }
-    forEach(callbackfn, thisArg) {
-        for (const [name, value] of this.entries()){
-            callbackfn.call(thisArg, value, name, this);
-        }
-    }
-    *entries() {
-        for (const key of Object.keys(this.headers)){
-            const name = key.toLowerCase();
-            // We assert here that this is a string because we got it from the
-            // Object.keys() call above.
-            const value = this.get(name);
-            yield [
-                name,
-                value
-            ];
-        }
-    }
-    *keys() {
-        for (const key of Object.keys(this.headers)){
-            const name = key.toLowerCase();
-            yield name;
-        }
-    }
-    *values() {
-        for (const key of Object.keys(this.headers)){
-            // We assert here that this is a string because we got it from the
-            // Object.keys() call above.
-            const value = this.get(key);
-            yield value;
-        }
-    }
-    [Symbol.iterator]() {
-        return this.entries();
-    }
-} //# sourceMappingURL=headers.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/adapters/request-cookies.js
-
-
-/**
- * @internal
- */ class ReadonlyRequestCookiesError extends Error {
-    constructor(){
-        super("Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#cookiessetname-value-options");
-    }
-    static callable() {
-        throw new ReadonlyRequestCookiesError();
-    }
-}
-class RequestCookiesAdapter {
-    static seal(cookies) {
-        return new Proxy(cookies, {
-            get (target, prop, receiver) {
-                switch(prop){
-                    case "clear":
-                    case "delete":
-                    case "set":
-                        return ReadonlyRequestCookiesError.callable;
-                    default:
-                        return ReflectAdapter.get(target, prop, receiver);
-                }
-            }
-        });
-    }
-}
-const SYMBOL_MODIFY_COOKIE_VALUES = Symbol.for("next.mutated.cookies");
-function getModifiedCookieValues(cookies) {
-    const modified = cookies[SYMBOL_MODIFY_COOKIE_VALUES];
-    if (!modified || !Array.isArray(modified) || modified.length === 0) {
-        return [];
-    }
-    return modified;
-}
-function appendMutableCookies(headers, mutableCookies) {
-    const modifiedCookieValues = getModifiedCookieValues(mutableCookies);
-    if (modifiedCookieValues.length === 0) {
-        return false;
-    }
-    // Return a new response that extends the response with
-    // the modified cookies as fallbacks. `res` cookies
-    // will still take precedence.
-    const resCookies = new ResponseCookies(headers);
-    const returnedCookies = resCookies.getAll();
-    // Set the modified cookies as fallbacks.
-    for (const cookie of modifiedCookieValues){
-        resCookies.set(cookie);
-    }
-    // Set the original cookies as the final values.
-    for (const cookie of returnedCookies){
-        resCookies.set(cookie);
-    }
-    return true;
-}
-class MutableRequestCookiesAdapter {
-    static wrap(cookies, onUpdateCookies) {
-        const responseCookes = new _edge_runtime_cookies.ResponseCookies(new Headers());
-        for (const cookie of cookies.getAll()){
-            responseCookes.set(cookie);
-        }
-        let modifiedValues = [];
-        const modifiedCookies = new Set();
-        const updateResponseCookies = ()=>{
-            var _fetch___nextGetStaticStore;
-            // TODO-APP: change method of getting staticGenerationAsyncStore
-            const staticGenerationAsyncStore = fetch.__nextGetStaticStore == null ? void 0 : (_fetch___nextGetStaticStore = fetch.__nextGetStaticStore.call(fetch)) == null ? void 0 : _fetch___nextGetStaticStore.getStore();
-            if (staticGenerationAsyncStore) {
-                staticGenerationAsyncStore.pathWasRevalidated = true;
-            }
-            const allCookies = responseCookes.getAll();
-            modifiedValues = allCookies.filter((c)=>modifiedCookies.has(c.name));
-            if (onUpdateCookies) {
-                const serializedCookies = [];
-                for (const cookie of modifiedValues){
-                    const tempCookies = new _edge_runtime_cookies.ResponseCookies(new Headers());
-                    tempCookies.set(cookie);
-                    serializedCookies.push(tempCookies.toString());
-                }
-                onUpdateCookies(serializedCookies);
-            }
-        };
-        return new Proxy(responseCookes, {
-            get (target, prop, receiver) {
-                switch(prop){
-                    // A special symbol to get the modified cookie values
-                    case SYMBOL_MODIFY_COOKIE_VALUES:
-                        return modifiedValues;
-                    // TODO: Throw error if trying to set a cookie after the response
-                    // headers have been set.
-                    case "delete":
-                        return function(...args) {
-                            modifiedCookies.add(typeof args[0] === "string" ? args[0] : args[0].name);
-                            try {
-                                target.delete(...args);
-                            } finally{
-                                updateResponseCookies();
-                            }
-                        };
-                    case "set":
-                        return function(...args) {
-                            modifiedCookies.add(typeof args[0] === "string" ? args[0] : args[0].name);
-                            try {
-                                return target.set(...args);
-                            } finally{
-                                updateResponseCookies();
-                            }
-                        };
-                    default:
-                        return ReflectAdapter.get(target, prop, receiver);
-                }
-            }
-        });
-    }
-} //# sourceMappingURL=request-cookies.js.map
-
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/adapters/headers.js
+var adapters_headers = __webpack_require__(6537);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/adapters/request-cookies.js
+var request_cookies = __webpack_require__(480);
 ;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/api-utils/index.js
 
 
@@ -1519,7 +983,7 @@ class MutableRequestCookiesAdapter {
     return res;
 }
 function checkIsOnDemandRevalidate(req, previewProps) {
-    const headers = HeadersAdapter.from(req.headers);
+    const headers = adapters_headers/* HeadersAdapter */.h.from(req.headers);
     const previewModeId = headers.get(PRERENDER_REVALIDATE_HEADER);
     const isOnDemandRevalidate = previewModeId === previewProps.previewModeId;
     const revalidateOnlyGenerated = headers.has(PRERENDER_REVALIDATE_ONLY_GENERATED_HEADER);
@@ -1537,7 +1001,7 @@ function clearPreviewData(res, options = {}) {
     if (SYMBOL_CLEARED_COOKIES in res) {
         return res;
     }
-    const { serialize } = __webpack_require__(842);
+    const { serialize } = __webpack_require__(7842);
     const previous = res.getHeader("Set-Cookie");
     res.setHeader(`Set-Cookie`, [
         ...typeof previous === "string" ? [
@@ -1677,19 +1141,19 @@ class DraftModeProvider {
 
 
 function getHeaders(headers) {
-    const cleaned = HeadersAdapter.from(headers);
-    for (const param of FLIGHT_PARAMETERS){
+    const cleaned = adapters_headers/* HeadersAdapter */.h.from(headers);
+    for (const param of app_router_headers/* FLIGHT_PARAMETERS */.vu){
         cleaned.delete(param.toString().toLowerCase());
     }
-    return HeadersAdapter.seal(cleaned);
+    return adapters_headers/* HeadersAdapter */.h.seal(cleaned);
 }
 function getCookies(headers) {
-    const cookies = new _edge_runtime_cookies.RequestCookies(HeadersAdapter.from(headers));
-    return RequestCookiesAdapter.seal(cookies);
+    const cookies = new spec_extension_cookies/* RequestCookies */.q(adapters_headers/* HeadersAdapter */.h.from(headers));
+    return request_cookies/* RequestCookiesAdapter */.Qb.seal(cookies);
 }
 function getMutableCookies(headers, onUpdateCookies) {
-    const cookies = new _edge_runtime_cookies.RequestCookies(HeadersAdapter.from(headers));
-    return MutableRequestCookiesAdapter.wrap(cookies, onUpdateCookies);
+    const cookies = new spec_extension_cookies/* RequestCookies */.q(adapters_headers/* HeadersAdapter */.h.from(headers));
+    return request_cookies/* MutableRequestCookiesAdapter */.vr.wrap(cookies, onUpdateCookies);
 }
 const RequestAsyncStorageWrapper = {
     /**
@@ -1746,38 +1210,8 @@ const RequestAsyncStorageWrapper = {
     }
 }; //# sourceMappingURL=request-async-storage-wrapper.js.map
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/async-local-storage.js
-const sharedAsyncLocalStorageNotAvailableError = new Error("Invariant: AsyncLocalStorage accessed in runtime where it is not available");
-class FakeAsyncLocalStorage {
-    disable() {
-        throw sharedAsyncLocalStorageNotAvailableError;
-    }
-    getStore() {
-        // This fake implementation of AsyncLocalStorage always returns `undefined`.
-        return undefined;
-    }
-    run() {
-        throw sharedAsyncLocalStorageNotAvailableError;
-    }
-    exit() {
-        throw sharedAsyncLocalStorageNotAvailableError;
-    }
-    enterWith() {
-        throw sharedAsyncLocalStorageNotAvailableError;
-    }
-}
-const maybeGlobalAsyncLocalStorage = globalThis.AsyncLocalStorage;
-function createAsyncLocalStorage() {
-    if (maybeGlobalAsyncLocalStorage) {
-        return new maybeGlobalAsyncLocalStorage();
-    }
-    return new FakeAsyncLocalStorage();
-} //# sourceMappingURL=async-local-storage.js.map
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/request-async-storage.external.js
-
-const requestAsyncStorage = createAsyncLocalStorage(); //# sourceMappingURL=request-async-storage.external.js.map
-
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/components/request-async-storage.external.js
+var request_async_storage_external = __webpack_require__(1070);
 ;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/adapter.js
 
 
@@ -1815,15 +1249,15 @@ class NextRequestHint extends NextRequest {
         });
     }
 }
-const adapter_FLIGHT_PARAMETERS = [
+const FLIGHT_PARAMETERS = [
     [
-        RSC
+        app_router_headers/* RSC */.i4
     ],
     [
-        NEXT_ROUTER_STATE_TREE
+        app_router_headers/* NEXT_ROUTER_STATE_TREE */.ph
     ],
     [
-        NEXT_ROUTER_PREFETCH
+        app_router_headers/* NEXT_ROUTER_PREFETCH */.pz
     ]
 ];
 async function adapter(params) {
@@ -1863,7 +1297,7 @@ async function adapter(params) {
     const flightHeaders = new Map();
     // Parameters should only be stripped for middleware
     if (!isEdgeRendering) {
-        for (const param of adapter_FLIGHT_PARAMETERS){
+        for (const param of FLIGHT_PARAMETERS){
             const key = param.toString().toLowerCase();
             const value = requestHeaders.get(key);
             if (value) {
@@ -1928,7 +1362,7 @@ async function adapter(params) {
     // we only care to make async storage available for middleware
     const isMiddleware = params.page === "/middleware" || params.page === "/src/middleware";
     if (isMiddleware) {
-        response = await RequestAsyncStorageWrapper.wrap(requestAsyncStorage, {
+        response = await RequestAsyncStorageWrapper.wrap(request_async_storage_external/* requestAsyncStorage */.F, {
             req: request,
             renderOpts: {
                 onUpdateCookies: (cookies)=>{
@@ -2032,37 +1466,6644 @@ async function adapter(params) {
     };
 } //# sourceMappingURL=adapter.js.map
 
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-7ELT755Q.mjs
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
+// EXTERNAL MODULE: ./node_modules/next/compat/router.js
+var compat_router = __webpack_require__(5774);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(167);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/error.mjs
+var error = __webpack_require__(9659);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/authorization.mjs
+var authorization = __webpack_require__(5912);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/telemetry.mjs
+var telemetry = __webpack_require__(6888);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-L6WULBPV.mjs
+var chunk_L6WULBPV = __webpack_require__(8578);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-RWYTRAIK.mjs
+var chunk_RWYTRAIK = __webpack_require__(8622);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-NT4JRXL3.mjs
+var chunk_NT4JRXL3 = __webpack_require__(6857);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-LGJNYDTY.mjs
+var chunk_LGJNYDTY = __webpack_require__(2396);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-7ELT755Q.mjs
+var chunk_7ELT755Q = __webpack_require__(7032);
+// EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
+var shim = __webpack_require__(1528);
+;// CONCATENATED MODULE: ./node_modules/swr/dist/_internal/events.mjs
+const FOCUS_EVENT = 0;
+const RECONNECT_EVENT = 1;
+const MUTATE_EVENT = 2;
+const ERROR_REVALIDATE_EVENT = 3;
+
+
+;// CONCATENATED MODULE: ./node_modules/dequal/lite/index.mjs
+var has = Object.prototype.hasOwnProperty;
+function dequal(foo, bar) {
+    var ctor, len;
+    if (foo === bar) return true;
+    if (foo && bar && (ctor = foo.constructor) === bar.constructor) {
+        if (ctor === Date) return foo.getTime() === bar.getTime();
+        if (ctor === RegExp) return foo.toString() === bar.toString();
+        if (ctor === Array) {
+            if ((len = foo.length) === bar.length) {
+                while(len-- && dequal(foo[len], bar[len]));
+            }
+            return len === -1;
+        }
+        if (!ctor || typeof foo === "object") {
+            len = 0;
+            for(ctor in foo){
+                if (has.call(foo, ctor) && ++len && !has.call(bar, ctor)) return false;
+                if (!(ctor in bar) || !dequal(foo[ctor], bar[ctor])) return false;
+            }
+            return Object.keys(bar).length === len;
+        }
+    }
+    return foo !== foo && bar !== bar;
+}
+
+;// CONCATENATED MODULE: ./node_modules/swr/dist/_internal/config-context-client-v7VOFo66.mjs
+"use client";
+
+
+
+// Global state used to deduplicate requests and store listeners
+const SWRGlobalState = new WeakMap();
+// Shared state between server components and client components
+const noop = ()=>{};
+// Using noop() as the undefined value as undefined can be replaced
+// by something else. Prettier ignore and extra parentheses are necessary here
+// to ensure that tsc doesn't remove the __NOINLINE__ comment.
+// prettier-ignore
+const UNDEFINED = /*#__NOINLINE__*/ noop();
+const OBJECT = Object;
+const isUndefined = (v)=>v === UNDEFINED;
+const isFunction = (v)=>typeof v == "function";
+const mergeObjects = (a, b)=>({
+        ...a,
+        ...b
+    });
+const isPromiseLike = (x)=>isFunction(x.then);
+const EMPTY_CACHE = {};
+const INITIAL_CACHE = {};
+const STR_UNDEFINED = "undefined";
+// NOTE: Use the function to guarantee it's re-evaluated between jsdom and node runtime for tests.
+const isWindowDefined = "undefined" != STR_UNDEFINED;
+const isDocumentDefined = typeof document != STR_UNDEFINED;
+const isLegacyDeno = isWindowDefined && "Deno" in window;
+const hasRequestAnimationFrame = ()=>isWindowDefined && typeof window["requestAnimationFrame"] != STR_UNDEFINED;
+const createCacheHelper = (cache, key)=>{
+    const state = SWRGlobalState.get(cache);
+    return [
+        // Getter
+        ()=>!isUndefined(key) && cache.get(key) || EMPTY_CACHE,
+        // Setter
+        (info)=>{
+            if (!isUndefined(key)) {
+                const prev = cache.get(key);
+                // Before writing to the store, we keep the value in the initial cache
+                // if it's not there yet.
+                if (!(key in INITIAL_CACHE)) {
+                    INITIAL_CACHE[key] = prev;
+                }
+                state[5](key, mergeObjects(prev, info), prev || EMPTY_CACHE);
+            }
+        },
+        // Subscriber
+        state[6],
+        // Get server cache snapshot
+        ()=>{
+            if (!isUndefined(key)) {
+                // If the cache was updated on the client, we return the stored initial value.
+                if (key in INITIAL_CACHE) return INITIAL_CACHE[key];
+            }
+            // If we haven't done any client-side updates, we return the current value.
+            return !isUndefined(key) && cache.get(key) || EMPTY_CACHE;
+        }
+    ];
+} // export { UNDEFINED, OBJECT, isUndefined, isFunction, mergeObjects, isPromiseLike }
+;
+/**
+ * Due to the bug https://bugs.chromium.org/p/chromium/issues/detail?id=678075,
+ * it's not reliable to detect if the browser is currently online or offline
+ * based on `navigator.onLine`.
+ * As a workaround, we always assume it's online on the first load, and change
+ * the status upon `online` or `offline` events.
+ */ let online = true;
+const isOnline = ()=>online;
+// For node and React Native, `add/removeEventListener` doesn't exist on window.
+const [onWindowEvent, offWindowEvent] = isWindowDefined && window.addEventListener ? [
+    window.addEventListener.bind(window),
+    window.removeEventListener.bind(window)
+] : [
+    noop,
+    noop
+];
+const isVisible = ()=>{
+    const visibilityState = isDocumentDefined && document.visibilityState;
+    return isUndefined(visibilityState) || visibilityState !== "hidden";
+};
+const initFocus = (callback)=>{
+    // focus revalidate
+    if (isDocumentDefined) {
+        document.addEventListener("visibilitychange", callback);
+    }
+    onWindowEvent("focus", callback);
+    return ()=>{
+        if (isDocumentDefined) {
+            document.removeEventListener("visibilitychange", callback);
+        }
+        offWindowEvent("focus", callback);
+    };
+};
+const initReconnect = (callback)=>{
+    // revalidate on reconnected
+    const onOnline = ()=>{
+        online = true;
+        callback();
+    };
+    // nothing to revalidate, just update the status
+    const onOffline = ()=>{
+        online = false;
+    };
+    onWindowEvent("online", onOnline);
+    onWindowEvent("offline", onOffline);
+    return ()=>{
+        offWindowEvent("online", onOnline);
+        offWindowEvent("offline", onOffline);
+    };
+};
+const preset = {
+    isOnline,
+    isVisible
+};
+const defaultConfigOptions = {
+    initFocus,
+    initReconnect
+};
+const IS_REACT_LEGACY = !react.useId;
+const IS_SERVER = !isWindowDefined || isLegacyDeno;
+// Polyfill requestAnimationFrame
+const rAF = (f)=>hasRequestAnimationFrame() ? window["requestAnimationFrame"](f) : setTimeout(f, 1);
+// React currently throws a warning when using useLayoutEffect on the server.
+// To get around it, we can conditionally useEffect on the server (no-op) and
+// useLayoutEffect in the browser.
+const useIsomorphicLayoutEffect = IS_SERVER ? react.useEffect : react.useLayoutEffect;
+// This assignment is to extend the Navigator type to use effectiveType.
+const navigatorConnection = typeof navigator !== "undefined" && navigator.connection;
+// Adjust the config based on slow connection status (<= 70Kbps).
+const slowConnection = !IS_SERVER && navigatorConnection && ([
+    "slow-2g",
+    "2g"
+].includes(navigatorConnection.effectiveType) || navigatorConnection.saveData);
+// use WeakMap to store the object->key mapping
+// so the objects can be garbage collected.
+// WeakMap uses a hashtable under the hood, so the lookup
+// complexity is almost O(1).
+const table = new WeakMap();
+const isObjectType = (value, type)=>OBJECT.prototype.toString.call(value) === `[object ${type}]`;
+// counter of the key
+let counter = 0;
+// A stable hash implementation that supports:
+// - Fast and ensures unique hash properties
+// - Handles unserializable values
+// - Handles object key ordering
+// - Generates short results
+//
+// This is not a serialization function, and the result is not guaranteed to be
+// parsable.
+const stableHash = (arg)=>{
+    const type = typeof arg;
+    const isDate = isObjectType(arg, "Date");
+    const isRegex = isObjectType(arg, "RegExp");
+    const isPlainObject = isObjectType(arg, "Object");
+    let result;
+    let index;
+    if (OBJECT(arg) === arg && !isDate && !isRegex) {
+        // Object/function, not null/date/regexp. Use WeakMap to store the id first.
+        // If it's already hashed, directly return the result.
+        result = table.get(arg);
+        if (result) return result;
+        // Store the hash first for circular reference detection before entering the
+        // recursive `stableHash` calls.
+        // For other objects like set and map, we use this id directly as the hash.
+        result = ++counter + "~";
+        table.set(arg, result);
+        if (Array.isArray(arg)) {
+            // Array.
+            result = "@";
+            for(index = 0; index < arg.length; index++){
+                result += stableHash(arg[index]) + ",";
+            }
+            table.set(arg, result);
+        }
+        if (isPlainObject) {
+            // Object, sort keys.
+            result = "#";
+            const keys = OBJECT.keys(arg).sort();
+            while(!isUndefined(index = keys.pop())){
+                if (!isUndefined(arg[index])) {
+                    result += index + ":" + stableHash(arg[index]) + ",";
+                }
+            }
+            table.set(arg, result);
+        }
+    } else {
+        result = isDate ? arg.toJSON() : type == "symbol" ? arg.toString() : type == "string" ? JSON.stringify(arg) : "" + arg;
+    }
+    return result;
+};
+const serialize = (key)=>{
+    if (isFunction(key)) {
+        try {
+            key = key();
+        } catch (err) {
+            // dependencies not ready
+            key = "";
+        }
+    }
+    // Use the original key as the argument of fetcher. This can be a string or an
+    // array of values.
+    const args = key;
+    // If key is not falsy, or not an empty array, hash it.
+    key = typeof key == "string" ? key : (Array.isArray(key) ? key.length : key) ? stableHash(key) : "";
+    return [
+        key,
+        args
+    ];
+};
+// Global timestamp.
+let __timestamp = 0;
+const getTimestamp = ()=>++__timestamp;
+async function internalMutate(...args) {
+    const [cache, _key, _data, _opts] = args;
+    // When passing as a boolean, it's explicitly used to disable/enable
+    // revalidation.
+    const options = mergeObjects({
+        populateCache: true,
+        throwOnError: true
+    }, typeof _opts === "boolean" ? {
+        revalidate: _opts
+    } : _opts || {});
+    let populateCache = options.populateCache;
+    const rollbackOnErrorOption = options.rollbackOnError;
+    let optimisticData = options.optimisticData;
+    const rollbackOnError = (error)=>{
+        return typeof rollbackOnErrorOption === "function" ? rollbackOnErrorOption(error) : rollbackOnErrorOption !== false;
+    };
+    const throwOnError = options.throwOnError;
+    // If the second argument is a key filter, return the mutation results for all
+    // filtered keys.
+    if (isFunction(_key)) {
+        const keyFilter = _key;
+        const matchedKeys = [];
+        const it = cache.keys();
+        for (const key of it){
+            if (!/^\$(inf|sub)\$/.test(key) && keyFilter(cache.get(key)._k)) {
+                matchedKeys.push(key);
+            }
+        }
+        return Promise.all(matchedKeys.map(mutateByKey));
+    }
+    return mutateByKey(_key);
+    async function mutateByKey(_k) {
+        // Serialize key
+        const [key] = serialize(_k);
+        if (!key) return;
+        const [get, set] = createCacheHelper(cache, key);
+        const [EVENT_REVALIDATORS, MUTATION, FETCH, PRELOAD] = SWRGlobalState.get(cache);
+        const startRevalidate = ()=>{
+            const revalidators = EVENT_REVALIDATORS[key];
+            const revalidate = isFunction(options.revalidate) ? options.revalidate(get().data, _k) : options.revalidate !== false;
+            if (revalidate) {
+                // Invalidate the key by deleting the concurrent request markers so new
+                // requests will not be deduped.
+                delete FETCH[key];
+                delete PRELOAD[key];
+                if (revalidators && revalidators[0]) {
+                    return revalidators[0](MUTATE_EVENT).then(()=>get().data);
+                }
+            }
+            return get().data;
+        };
+        // If there is no new data provided, revalidate the key with current state.
+        if (args.length < 3) {
+            // Revalidate and broadcast state.
+            return startRevalidate();
+        }
+        let data = _data;
+        let error;
+        // Update global timestamps.
+        const beforeMutationTs = getTimestamp();
+        MUTATION[key] = [
+            beforeMutationTs,
+            0
+        ];
+        const hasOptimisticData = !isUndefined(optimisticData);
+        const state = get();
+        // `displayedData` is the current value on screen. It could be the optimistic value
+        // that is going to be overridden by a `committedData`, or get reverted back.
+        // `committedData` is the validated value that comes from a fetch or mutation.
+        const displayedData = state.data;
+        const currentData = state._c;
+        const committedData = isUndefined(currentData) ? displayedData : currentData;
+        // Do optimistic data update.
+        if (hasOptimisticData) {
+            optimisticData = isFunction(optimisticData) ? optimisticData(committedData, displayedData) : optimisticData;
+            // When we set optimistic data, backup the current committedData data in `_c`.
+            set({
+                data: optimisticData,
+                _c: committedData
+            });
+        }
+        if (isFunction(data)) {
+            // `data` is a function, call it passing current cache value.
+            try {
+                data = data(committedData);
+            } catch (err) {
+                // If it throws an error synchronously, we shouldn't update the cache.
+                error = err;
+            }
+        }
+        // `data` is a promise/thenable, resolve the final data first.
+        if (data && isPromiseLike(data)) {
+            // This means that the mutation is async, we need to check timestamps to
+            // avoid race conditions.
+            data = await data.catch((err)=>{
+                error = err;
+            });
+            // Check if other mutations have occurred since we've started this mutation.
+            // If there's a race we don't update cache or broadcast the change,
+            // just return the data.
+            if (beforeMutationTs !== MUTATION[key][0]) {
+                if (error) throw error;
+                return data;
+            } else if (error && hasOptimisticData && rollbackOnError(error)) {
+                // Rollback. Always populate the cache in this case but without
+                // transforming the data.
+                populateCache = true;
+                // Reset data to be the latest committed data, and clear the `_c` value.
+                set({
+                    data: committedData,
+                    _c: UNDEFINED
+                });
+            }
+        }
+        // If we should write back the cache after request.
+        if (populateCache) {
+            if (!error) {
+                // Transform the result into data.
+                if (isFunction(populateCache)) {
+                    const populateCachedData = populateCache(data, committedData);
+                    set({
+                        data: populateCachedData,
+                        error: UNDEFINED,
+                        _c: UNDEFINED
+                    });
+                } else {
+                    // Only update cached data and reset the error if there's no error. Data can be `undefined` here.
+                    set({
+                        data,
+                        error: UNDEFINED,
+                        _c: UNDEFINED
+                    });
+                }
+            }
+        }
+        // Reset the timestamp to mark the mutation has ended.
+        MUTATION[key][1] = getTimestamp();
+        // Update existing SWR Hooks' internal states:
+        Promise.resolve(startRevalidate()).then(()=>{
+            // The mutation and revalidation are ended, we can clear it since the data is
+            // not an optimistic value anymore.
+            set({
+                _c: UNDEFINED
+            });
+        });
+        // Throw error or return data
+        if (error) {
+            if (throwOnError) throw error;
+            return;
+        }
+        return data;
+    }
+}
+const revalidateAllKeys = (revalidators, type)=>{
+    for(const key in revalidators){
+        if (revalidators[key][0]) revalidators[key][0](type);
+    }
+};
+const initCache = (provider, options)=>{
+    // The global state for a specific provider will be used to deduplicate
+    // requests and store listeners. As well as a mutate function that is bound to
+    // the cache.
+    // The provider's global state might be already initialized. Let's try to get the
+    // global state associated with the provider first.
+    if (!SWRGlobalState.has(provider)) {
+        const opts = mergeObjects(defaultConfigOptions, options);
+        // If there's no global state bound to the provider, create a new one with the
+        // new mutate function.
+        const EVENT_REVALIDATORS = Object.create(null);
+        const mutate = internalMutate.bind(UNDEFINED, provider);
+        let unmount = noop;
+        const subscriptions = Object.create(null);
+        const subscribe = (key, callback)=>{
+            const subs = subscriptions[key] || [];
+            subscriptions[key] = subs;
+            subs.push(callback);
+            return ()=>subs.splice(subs.indexOf(callback), 1);
+        };
+        const setter = (key, value, prev)=>{
+            provider.set(key, value);
+            const subs = subscriptions[key];
+            if (subs) {
+                for (const fn of subs){
+                    fn(value, prev);
+                }
+            }
+        };
+        const initProvider = ()=>{
+            if (!SWRGlobalState.has(provider)) {
+                // Update the state if it's new, or if the provider has been extended.
+                SWRGlobalState.set(provider, [
+                    EVENT_REVALIDATORS,
+                    Object.create(null),
+                    Object.create(null),
+                    Object.create(null),
+                    mutate,
+                    setter,
+                    subscribe
+                ]);
+                if (!IS_SERVER) {
+                    // When listening to the native events for auto revalidations,
+                    // we intentionally put a delay (setTimeout) here to make sure they are
+                    // fired after immediate JavaScript executions, which can be
+                    // React's state updates.
+                    // This avoids some unnecessary revalidations such as
+                    // https://github.com/vercel/swr/issues/1680.
+                    const releaseFocus = opts.initFocus(setTimeout.bind(UNDEFINED, revalidateAllKeys.bind(UNDEFINED, EVENT_REVALIDATORS, FOCUS_EVENT)));
+                    const releaseReconnect = opts.initReconnect(setTimeout.bind(UNDEFINED, revalidateAllKeys.bind(UNDEFINED, EVENT_REVALIDATORS, RECONNECT_EVENT)));
+                    unmount = ()=>{
+                        releaseFocus && releaseFocus();
+                        releaseReconnect && releaseReconnect();
+                        // When un-mounting, we need to remove the cache provider from the state
+                        // storage too because it's a side-effect. Otherwise, when re-mounting we
+                        // will not re-register those event listeners.
+                        SWRGlobalState.delete(provider);
+                    };
+                }
+            }
+        };
+        initProvider();
+        // This is a new provider, we need to initialize it and setup DOM events
+        // listeners for `focus` and `reconnect` actions.
+        // We might want to inject an extra layer on top of `provider` in the future,
+        // such as key serialization, auto GC, etc.
+        // For now, it's just a `Map` interface without any modifications.
+        return [
+            provider,
+            mutate,
+            initProvider,
+            unmount
+        ];
+    }
+    return [
+        provider,
+        SWRGlobalState.get(provider)[4]
+    ];
+};
+// error retry
+const onErrorRetry = (_, __, config, revalidate, opts)=>{
+    const maxRetryCount = config.errorRetryCount;
+    const currentRetryCount = opts.retryCount;
+    // Exponential backoff
+    const timeout = ~~((Math.random() + 0.5) * (1 << (currentRetryCount < 8 ? currentRetryCount : 8))) * config.errorRetryInterval;
+    if (!isUndefined(maxRetryCount) && currentRetryCount > maxRetryCount) {
+        return;
+    }
+    setTimeout(revalidate, timeout, opts);
+};
+const compare = dequal;
+// Default cache provider
+const [cache, mutate] = initCache(new Map());
+// Default config
+const defaultConfig = mergeObjects({
+    // events
+    onLoadingSlow: noop,
+    onSuccess: noop,
+    onError: noop,
+    onErrorRetry,
+    onDiscarded: noop,
+    // switches
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    revalidateIfStale: true,
+    shouldRetryOnError: true,
+    // timeouts
+    errorRetryInterval: slowConnection ? 10000 : 5000,
+    focusThrottleInterval: 5 * 1000,
+    dedupingInterval: 2 * 1000,
+    loadingTimeout: slowConnection ? 5000 : 3000,
+    // providers
+    compare,
+    isPaused: ()=>false,
+    cache,
+    mutate,
+    fallback: {}
+}, preset);
+const mergeConfigs = (a, b)=>{
+    // Need to create a new object to avoid mutating the original here.
+    const v = mergeObjects(a, b);
+    // If two configs are provided, merge their `use` and `fallback` options.
+    if (b) {
+        const { use: u1, fallback: f1 } = a;
+        const { use: u2, fallback: f2 } = b;
+        if (u1 && u2) {
+            v.use = u1.concat(u2);
+        }
+        if (f1 && f2) {
+            v.fallback = mergeObjects(f1, f2);
+        }
+    }
+    return v;
+};
+const SWRConfigContext = /*#__PURE__*/ (0,react.createContext)({});
+const SWRConfig = (props)=>{
+    const { value } = props;
+    const parentConfig = (0,react.useContext)(SWRConfigContext);
+    const isFunctionalConfig = isFunction(value);
+    const config = (0,react.useMemo)(()=>isFunctionalConfig ? value(parentConfig) : value, [
+        isFunctionalConfig,
+        parentConfig,
+        value
+    ]);
+    // Extend parent context values and middleware.
+    const extendedConfig = (0,react.useMemo)(()=>isFunctionalConfig ? config : mergeConfigs(parentConfig, config), [
+        isFunctionalConfig,
+        parentConfig,
+        config
+    ]);
+    // Should not use the inherited provider.
+    const provider = config && config.provider;
+    // initialize the cache only on first access.
+    const cacheContextRef = (0,react.useRef)(UNDEFINED);
+    if (provider && !cacheContextRef.current) {
+        cacheContextRef.current = initCache(provider(extendedConfig.cache || cache), config);
+    }
+    const cacheContext = cacheContextRef.current;
+    // Override the cache if a new provider is given.
+    if (cacheContext) {
+        extendedConfig.cache = cacheContext[0];
+        extendedConfig.mutate = cacheContext[1];
+    }
+    // Unsubscribe events.
+    useIsomorphicLayoutEffect(()=>{
+        if (cacheContext) {
+            cacheContext[2] && cacheContext[2]();
+            return cacheContext[3];
+        }
+    }, []);
+    return /*#__PURE__*/ (0,react.createElement)(SWRConfigContext.Provider, mergeObjects(props, {
+        value: extendedConfig
+    }));
+};
+
+
+;// CONCATENATED MODULE: ./node_modules/swr/dist/_internal/constants.mjs
+const constants_INFINITE_PREFIX = "$inf$";
+
+
+;// CONCATENATED MODULE: ./node_modules/swr/dist/_internal/index.mjs
+
+
+
+
+
+
+
+
+// @ts-expect-error
+const enableDevtools = isWindowDefined && window.__SWR_DEVTOOLS_USE__;
+const use = enableDevtools ? window.__SWR_DEVTOOLS_USE__ : [];
+const setupDevTools = ()=>{
+    if (enableDevtools) {
+        // @ts-expect-error
+        window.__SWR_DEVTOOLS_REACT__ = react;
+    }
+};
+const normalize = (args)=>{
+    return isFunction(args[1]) ? [
+        args[0],
+        args[1],
+        args[2] || {}
+    ] : [
+        args[0],
+        null,
+        (args[1] === null ? args[2] : args[1]) || {}
+    ];
+};
+const useSWRConfig = ()=>{
+    return mergeObjects(defaultConfig, (0,react.useContext)(SWRConfigContext));
+};
+const preload = (key_, fetcher)=>{
+    const [key, fnArg] = serialize(key_);
+    const [, , , PRELOAD] = SWRGlobalState.get(cache);
+    // Prevent preload to be called multiple times before used.
+    if (PRELOAD[key]) return PRELOAD[key];
+    const req = fetcher(fnArg);
+    PRELOAD[key] = req;
+    return req;
+};
+const middleware = (useSWRNext)=>(key_, fetcher_, config)=>{
+        // fetcher might be a sync function, so this should not be an async function
+        const fetcher = fetcher_ && ((...args)=>{
+            const [key] = serialize(key_);
+            const [, , , PRELOAD] = SWRGlobalState.get(cache);
+            if (key.startsWith(constants_INFINITE_PREFIX)) {
+                // we want the infinite fetcher to be called.
+                // handling of the PRELOAD cache happens there.
+                return fetcher_(...args);
+            }
+            const req = PRELOAD[key];
+            if (isUndefined(req)) return fetcher_(...args);
+            delete PRELOAD[key];
+            return req;
+        });
+        return useSWRNext(key_, fetcher, config);
+    };
+const BUILT_IN_MIDDLEWARE = use.concat(middleware);
+// It's tricky to pass generic types as parameters, so we just directly override
+// the types here.
+const withArgs = (hook)=>{
+    return function useSWRArgs(...args) {
+        // Get the default and inherited configuration.
+        const fallbackConfig = useSWRConfig();
+        // Normalize arguments.
+        const [key, fn, _config] = normalize(args);
+        // Merge configurations.
+        const config = mergeConfigs(fallbackConfig, _config);
+        // Apply middleware
+        let next = hook;
+        const { use } = config;
+        const middleware = (use || []).concat(BUILT_IN_MIDDLEWARE);
+        for(let i = middleware.length; i--;){
+            next = middleware[i](next);
+        }
+        return next(key, fn || config.fetcher || null, config);
+    };
+};
+// Add a callback function to a list of keyed callback functions and return
+// the unsubscribe function.
+const subscribeCallback = (key, callbacks, callback)=>{
+    const keyedRevalidators = callbacks[key] || (callbacks[key] = []);
+    keyedRevalidators.push(callback);
+    return ()=>{
+        const index = keyedRevalidators.indexOf(callback);
+        if (index >= 0) {
+            // O(1): faster than splice
+            keyedRevalidators[index] = keyedRevalidators[keyedRevalidators.length - 1];
+            keyedRevalidators.pop();
+        }
+    };
+};
+// Create a custom hook with a middleware
+const withMiddleware = (useSWR, middleware)=>{
+    return (...args)=>{
+        const [key, fn, config] = normalize(args);
+        const uses = (config.use || []).concat(middleware);
+        return useSWR(key, fn, {
+            ...config,
+            use: uses
+        });
+    };
+};
+setupDevTools();
+
+
+;// CONCATENATED MODULE: ./node_modules/swr/dist/index/index.mjs
+
+
+
+
+// Shared state between server components and client components
+const index_noop = ()=>{};
+// Using noop() as the undefined value as undefined can be replaced
+// by something else. Prettier ignore and extra parentheses are necessary here
+// to ensure that tsc doesn't remove the __NOINLINE__ comment.
+// prettier-ignore
+const index_UNDEFINED = /*#__NOINLINE__*/ index_noop();
+const index_OBJECT = Object;
+const index_isUndefined = (v)=>v === index_UNDEFINED;
+const index_isFunction = (v)=>typeof v == "function";
+// use WeakMap to store the object->key mapping
+// so the objects can be garbage collected.
+// WeakMap uses a hashtable under the hood, so the lookup
+// complexity is almost O(1).
+const index_table = new WeakMap();
+const index_isObjectType = (value, type)=>index_OBJECT.prototype.toString.call(value) === `[object ${type}]`;
+// counter of the key
+let index_counter = 0;
+// A stable hash implementation that supports:
+// - Fast and ensures unique hash properties
+// - Handles unserializable values
+// - Handles object key ordering
+// - Generates short results
+//
+// This is not a serialization function, and the result is not guaranteed to be
+// parsable.
+const index_stableHash = (arg)=>{
+    const type = typeof arg;
+    const isDate = index_isObjectType(arg, "Date");
+    const isRegex = index_isObjectType(arg, "RegExp");
+    const isPlainObject = index_isObjectType(arg, "Object");
+    let result;
+    let index;
+    if (index_OBJECT(arg) === arg && !isDate && !isRegex) {
+        // Object/function, not null/date/regexp. Use WeakMap to store the id first.
+        // If it's already hashed, directly return the result.
+        result = index_table.get(arg);
+        if (result) return result;
+        // Store the hash first for circular reference detection before entering the
+        // recursive `stableHash` calls.
+        // For other objects like set and map, we use this id directly as the hash.
+        result = ++index_counter + "~";
+        index_table.set(arg, result);
+        if (Array.isArray(arg)) {
+            // Array.
+            result = "@";
+            for(index = 0; index < arg.length; index++){
+                result += index_stableHash(arg[index]) + ",";
+            }
+            index_table.set(arg, result);
+        }
+        if (isPlainObject) {
+            // Object, sort keys.
+            result = "#";
+            const keys = index_OBJECT.keys(arg).sort();
+            while(!index_isUndefined(index = keys.pop())){
+                if (!index_isUndefined(arg[index])) {
+                    result += index + ":" + index_stableHash(arg[index]) + ",";
+                }
+            }
+            index_table.set(arg, result);
+        }
+    } else {
+        result = isDate ? arg.toJSON() : type == "symbol" ? arg.toString() : type == "string" ? JSON.stringify(arg) : "" + arg;
+    }
+    return result;
+};
+const index_serialize = (key)=>{
+    if (index_isFunction(key)) {
+        try {
+            key = key();
+        } catch (err) {
+            // dependencies not ready
+            key = "";
+        }
+    }
+    // Use the original key as the argument of fetcher. This can be a string or an
+    // array of values.
+    const args = key;
+    // If key is not falsy, or not an empty array, hash it.
+    key = typeof key == "string" ? key : (Array.isArray(key) ? key.length : key) ? index_stableHash(key) : "";
+    return [
+        key,
+        args
+    ];
+};
+const unstable_serialize = (key)=>index_serialize(key)[0];
+/// <reference types="react/experimental" />
+const index_use = react.use || // This extra generic is to avoid TypeScript mixing up the generic and JSX sytax
+// and emitting an error.
+// We assume that this is only for the `use(thenable)` case, not `use(context)`.
+// https://github.com/facebook/react/blob/aed00dacfb79d17c53218404c52b1c7aa59c4a89/packages/react-server/src/ReactFizzThenable.js#L45
+((thenable)=>{
+    switch(thenable.status){
+        case "pending":
+            throw thenable;
+        case "fulfilled":
+            return thenable.value;
+        case "rejected":
+            throw thenable.reason;
+        default:
+            thenable.status = "pending";
+            thenable.then((v)=>{
+                thenable.status = "fulfilled";
+                thenable.value = v;
+            }, (e)=>{
+                thenable.status = "rejected";
+                thenable.reason = e;
+            });
+            throw thenable;
+    }
+});
+const WITH_DEDUPE = {
+    dedupe: true
+};
+const useSWRHandler = (_key, fetcher, config)=>{
+    const { cache, compare, suspense, fallbackData, revalidateOnMount, revalidateIfStale, refreshInterval, refreshWhenHidden, refreshWhenOffline, keepPreviousData } = config;
+    const [EVENT_REVALIDATORS, MUTATION, FETCH, PRELOAD] = SWRGlobalState.get(cache);
+    // `key` is the identifier of the SWR internal state,
+    // `fnArg` is the argument/arguments parsed from the key, which will be passed
+    // to the fetcher.
+    // All of them are derived from `_key`.
+    const [key, fnArg] = serialize(_key);
+    // If it's the initial render of this hook.
+    const initialMountedRef = (0,react.useRef)(false);
+    // If the hook is unmounted already. This will be used to prevent some effects
+    // to be called after unmounting.
+    const unmountedRef = (0,react.useRef)(false);
+    // Refs to keep the key and config.
+    const keyRef = (0,react.useRef)(key);
+    const fetcherRef = (0,react.useRef)(fetcher);
+    const configRef = (0,react.useRef)(config);
+    const getConfig = ()=>configRef.current;
+    const isActive = ()=>getConfig().isVisible() && getConfig().isOnline();
+    const [getCache, setCache, subscribeCache, getInitialCache] = createCacheHelper(cache, key);
+    const stateDependencies = (0,react.useRef)({}).current;
+    // Resolve the fallback data from either the inline option, or the global provider.
+    // If it's a promise, we simply let React suspend and resolve it for us.
+    const fallback = isUndefined(fallbackData) ? isUndefined(config.fallback) ? UNDEFINED : config.fallback[key] : fallbackData;
+    const isEqual = (prev, current)=>{
+        for(const _ in stateDependencies){
+            const t = _;
+            if (t === "data") {
+                if (!compare(prev[t], current[t])) {
+                    if (!isUndefined(prev[t])) {
+                        return false;
+                    }
+                    if (!compare(returnedData, current[t])) {
+                        return false;
+                    }
+                }
+            } else {
+                if (current[t] !== prev[t]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+    const getSnapshot = (0,react.useMemo)(()=>{
+        const shouldStartRequest = (()=>{
+            if (!key) return false;
+            if (!fetcher) return false;
+            // If `revalidateOnMount` is set, we take the value directly.
+            if (!isUndefined(revalidateOnMount)) return revalidateOnMount;
+            // If it's paused, we skip revalidation.
+            if (getConfig().isPaused()) return false;
+            if (suspense) return false;
+            return revalidateIfStale !== false;
+        })();
+        // Get the cache and merge it with expected states.
+        const getSelectedCache = (state)=>{
+            // We only select the needed fields from the state.
+            const snapshot = mergeObjects(state);
+            delete snapshot._k;
+            if (!shouldStartRequest) {
+                return snapshot;
+            }
+            return {
+                isValidating: true,
+                isLoading: true,
+                ...snapshot
+            };
+        };
+        const cachedData = getCache();
+        const initialData = getInitialCache();
+        const clientSnapshot = getSelectedCache(cachedData);
+        const serverSnapshot = cachedData === initialData ? clientSnapshot : getSelectedCache(initialData);
+        // To make sure that we are returning the same object reference to avoid
+        // unnecessary re-renders, we keep the previous snapshot and use deep
+        // comparison to check if we need to return a new one.
+        let memorizedSnapshot = clientSnapshot;
+        return [
+            ()=>{
+                const newSnapshot = getSelectedCache(getCache());
+                const compareResult = isEqual(newSnapshot, memorizedSnapshot);
+                if (compareResult) {
+                    // Mentally, we should always return the `memorizedSnapshot` here
+                    // as there's no change between the new and old snapshots.
+                    // However, since the `isEqual` function only compares selected fields,
+                    // the values of the unselected fields might be changed. That's
+                    // simply because we didn't track them.
+                    // To support the case in https://github.com/vercel/swr/pull/2576,
+                    // we need to update these fields in the `memorizedSnapshot` too
+                    // with direct mutations to ensure the snapshot is always up-to-date
+                    // even for the unselected fields, but only trigger re-renders when
+                    // the selected fields are changed.
+                    memorizedSnapshot.data = newSnapshot.data;
+                    memorizedSnapshot.isLoading = newSnapshot.isLoading;
+                    memorizedSnapshot.isValidating = newSnapshot.isValidating;
+                    memorizedSnapshot.error = newSnapshot.error;
+                    return memorizedSnapshot;
+                } else {
+                    memorizedSnapshot = newSnapshot;
+                    return newSnapshot;
+                }
+            },
+            ()=>serverSnapshot
+        ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        cache,
+        key
+    ]);
+    // Get the current state that SWR should return.
+    const cached = (0,shim.useSyncExternalStore)((0,react.useCallback)((callback)=>subscribeCache(key, (current, prev)=>{
+            if (!isEqual(prev, current)) callback();
+        }), [
+        cache,
+        key
+    ]), getSnapshot[0], getSnapshot[1]);
+    const isInitialMount = !initialMountedRef.current;
+    const hasRevalidator = EVENT_REVALIDATORS[key] && EVENT_REVALIDATORS[key].length > 0;
+    const cachedData = cached.data;
+    const data = isUndefined(cachedData) ? fallback && isPromiseLike(fallback) ? index_use(fallback) : fallback : cachedData;
+    const error = cached.error;
+    // Use a ref to store previously returned data. Use the initial data as its initial value.
+    const laggyDataRef = (0,react.useRef)(data);
+    const returnedData = keepPreviousData ? isUndefined(cachedData) ? isUndefined(laggyDataRef.current) ? data : laggyDataRef.current : cachedData : data;
+    // - Suspense mode and there's stale data for the initial render.
+    // - Not suspense mode and there is no fallback data and `revalidateIfStale` is enabled.
+    // - `revalidateIfStale` is enabled but `data` is not defined.
+    const shouldDoInitialRevalidation = (()=>{
+        // if a key already has revalidators and also has error, we should not trigger revalidation
+        if (hasRevalidator && !isUndefined(error)) return false;
+        // If `revalidateOnMount` is set, we take the value directly.
+        if (isInitialMount && !isUndefined(revalidateOnMount)) return revalidateOnMount;
+        // If it's paused, we skip revalidation.
+        if (getConfig().isPaused()) return false;
+        // Under suspense mode, it will always fetch on render if there is no
+        // stale data so no need to revalidate immediately mount it again.
+        // If data exists, only revalidate if `revalidateIfStale` is true.
+        if (suspense) return isUndefined(data) ? false : revalidateIfStale;
+        // If there is no stale data, we need to revalidate when mount;
+        // If `revalidateIfStale` is set to true, we will always revalidate.
+        return isUndefined(data) || revalidateIfStale;
+    })();
+    // Resolve the default validating state:
+    // If it's able to validate, and it should revalidate when mount, this will be true.
+    const defaultValidatingState = !!(key && fetcher && isInitialMount && shouldDoInitialRevalidation);
+    const isValidating = isUndefined(cached.isValidating) ? defaultValidatingState : cached.isValidating;
+    const isLoading = isUndefined(cached.isLoading) ? defaultValidatingState : cached.isLoading;
+    // The revalidation function is a carefully crafted wrapper of the original
+    // `fetcher`, to correctly handle the many edge cases.
+    const revalidate = (0,react.useCallback)(async (revalidateOpts)=>{
+        const currentFetcher = fetcherRef.current;
+        if (!key || !currentFetcher || unmountedRef.current || getConfig().isPaused()) {
+            return false;
+        }
+        let newData;
+        let startAt;
+        let loading = true;
+        const opts = revalidateOpts || {};
+        // If there is no ongoing concurrent request, or `dedupe` is not set, a
+        // new request should be initiated.
+        const shouldStartNewRequest = !FETCH[key] || !opts.dedupe;
+        /*
+         For React 17
+         Do unmount check for calls:
+         If key has changed during the revalidation, or the component has been
+         unmounted, old dispatch and old event callbacks should not take any
+         effect
+
+        For React 18
+        only check if key has changed
+        https://github.com/reactwg/react-18/discussions/82
+      */ const callbackSafeguard = ()=>{
+            if (IS_REACT_LEGACY) {
+                return !unmountedRef.current && key === keyRef.current && initialMountedRef.current;
+            }
+            return key === keyRef.current;
+        };
+        // The final state object when the request finishes.
+        const finalState = {
+            isValidating: false,
+            isLoading: false
+        };
+        const finishRequestAndUpdateState = ()=>{
+            setCache(finalState);
+        };
+        const cleanupState = ()=>{
+            // Check if it's still the same request before deleting it.
+            const requestInfo = FETCH[key];
+            if (requestInfo && requestInfo[1] === startAt) {
+                delete FETCH[key];
+            }
+        };
+        // Start fetching. Change the `isValidating` state, update the cache.
+        const initialState = {
+            isValidating: true
+        };
+        // It is in the `isLoading` state, if and only if there is no cached data.
+        // This bypasses fallback data and laggy data.
+        if (isUndefined(getCache().data)) {
+            initialState.isLoading = true;
+        }
+        try {
+            if (shouldStartNewRequest) {
+                setCache(initialState);
+                // If no cache is being rendered currently (it shows a blank page),
+                // we trigger the loading slow event.
+                if (config.loadingTimeout && isUndefined(getCache().data)) {
+                    setTimeout(()=>{
+                        if (loading && callbackSafeguard()) {
+                            getConfig().onLoadingSlow(key, config);
+                        }
+                    }, config.loadingTimeout);
+                }
+                // Start the request and save the timestamp.
+                // Key must be truthy if entering here.
+                FETCH[key] = [
+                    currentFetcher(fnArg),
+                    getTimestamp()
+                ];
+            }
+            // Wait until the ongoing request is done. Deduplication is also
+            // considered here.
+            ;
+            [newData, startAt] = FETCH[key];
+            newData = await newData;
+            if (shouldStartNewRequest) {
+                // If the request isn't interrupted, clean it up after the
+                // deduplication interval.
+                setTimeout(cleanupState, config.dedupingInterval);
+            }
+            // If there're other ongoing request(s), started after the current one,
+            // we need to ignore the current one to avoid possible race conditions:
+            //   req1------------------>res1        (current one)
+            //        req2---------------->res2
+            // the request that fired later will always be kept.
+            // The timestamp maybe be `undefined` or a number
+            if (!FETCH[key] || FETCH[key][1] !== startAt) {
+                if (shouldStartNewRequest) {
+                    if (callbackSafeguard()) {
+                        getConfig().onDiscarded(key);
+                    }
+                }
+                return false;
+            }
+            // Clear error.
+            finalState.error = UNDEFINED;
+            // If there're other mutations(s), that overlapped with the current revalidation:
+            // case 1:
+            //   req------------------>res
+            //       mutate------>end
+            // case 2:
+            //         req------------>res
+            //   mutate------>end
+            // case 3:
+            //   req------------------>res
+            //       mutate-------...---------->
+            // we have to ignore the revalidation result (res) because it's no longer fresh.
+            // meanwhile, a new revalidation should be triggered when the mutation ends.
+            const mutationInfo = MUTATION[key];
+            if (!isUndefined(mutationInfo) && // case 1
+            (startAt <= mutationInfo[0] || // case 2
+            startAt <= mutationInfo[1] || // case 3
+            mutationInfo[1] === 0)) {
+                finishRequestAndUpdateState();
+                if (shouldStartNewRequest) {
+                    if (callbackSafeguard()) {
+                        getConfig().onDiscarded(key);
+                    }
+                }
+                return false;
+            }
+            // Deep compare with the latest state to avoid extra re-renders.
+            // For local state, compare and assign.
+            const cacheData = getCache().data;
+            // Since the compare fn could be custom fn
+            // cacheData might be different from newData even when compare fn returns True
+            finalState.data = compare(cacheData, newData) ? cacheData : newData;
+            // Trigger the successful callback if it's the original request.
+            if (shouldStartNewRequest) {
+                if (callbackSafeguard()) {
+                    getConfig().onSuccess(newData, key, config);
+                }
+            }
+        } catch (err) {
+            cleanupState();
+            const currentConfig = getConfig();
+            const { shouldRetryOnError } = currentConfig;
+            // Not paused, we continue handling the error. Otherwise, discard it.
+            if (!currentConfig.isPaused()) {
+                // Get a new error, don't use deep comparison for errors.
+                finalState.error = err;
+                // Error event and retry logic. Only for the actual request, not
+                // deduped ones.
+                if (shouldStartNewRequest && callbackSafeguard()) {
+                    currentConfig.onError(err, key, currentConfig);
+                    if (shouldRetryOnError === true || isFunction(shouldRetryOnError) && shouldRetryOnError(err)) {
+                        if (!getConfig().revalidateOnFocus || !getConfig().revalidateOnReconnect || isActive()) {
+                            // If it's inactive, stop. It will auto-revalidate when
+                            // refocusing or reconnecting.
+                            // When retrying, deduplication is always enabled.
+                            currentConfig.onErrorRetry(err, key, currentConfig, (_opts)=>{
+                                const revalidators = EVENT_REVALIDATORS[key];
+                                if (revalidators && revalidators[0]) {
+                                    revalidators[0](ERROR_REVALIDATE_EVENT, _opts);
+                                }
+                            }, {
+                                retryCount: (opts.retryCount || 0) + 1,
+                                dedupe: true
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        // Mark loading as stopped.
+        loading = false;
+        // Update the current hook's state.
+        finishRequestAndUpdateState();
+        return true;
+    }, // `keyValidating` are depending on `key`, so we can exclude them from
+    // the deps array.
+    //
+    // FIXME:
+    // `fn` and `config` might be changed during the lifecycle,
+    // but they might be changed every render like this.
+    // `useSWR('key', () => fetch('/api/'), { suspense: true })`
+    // So we omit the values from the deps array
+    // even though it might cause unexpected behaviors.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+        key,
+        cache
+    ]);
+    // Similar to the global mutate but bound to the current cache and key.
+    // `cache` isn't allowed to change during the lifecycle.
+    const boundMutate = (0,react.useCallback)((...args)=>{
+        return internalMutate(cache, keyRef.current, ...args);
+    }, []);
+    // The logic for updating refs.
+    useIsomorphicLayoutEffect(()=>{
+        fetcherRef.current = fetcher;
+        configRef.current = config;
+        // Handle laggy data updates. If there's cached data of the current key,
+        // it'll be the correct reference.
+        if (!isUndefined(cachedData)) {
+            laggyDataRef.current = cachedData;
+        }
+    });
+    // After mounted or key changed.
+    useIsomorphicLayoutEffect(()=>{
+        if (!key) return;
+        const softRevalidate = revalidate.bind(UNDEFINED, WITH_DEDUPE);
+        let nextFocusRevalidatedAt = 0;
+        if (getConfig().revalidateOnFocus) {
+            const initNow = Date.now();
+            nextFocusRevalidatedAt = initNow + getConfig().focusThrottleInterval;
+        }
+        // Expose revalidators to global event listeners. So we can trigger
+        // revalidation from the outside.
+        const onRevalidate = (type, opts = {})=>{
+            if (type == FOCUS_EVENT) {
+                const now = Date.now();
+                if (getConfig().revalidateOnFocus && now > nextFocusRevalidatedAt && isActive()) {
+                    nextFocusRevalidatedAt = now + getConfig().focusThrottleInterval;
+                    softRevalidate();
+                }
+            } else if (type == RECONNECT_EVENT) {
+                if (getConfig().revalidateOnReconnect && isActive()) {
+                    softRevalidate();
+                }
+            } else if (type == MUTATE_EVENT) {
+                return revalidate();
+            } else if (type == ERROR_REVALIDATE_EVENT) {
+                return revalidate(opts);
+            }
+            return;
+        };
+        const unsubEvents = subscribeCallback(key, EVENT_REVALIDATORS, onRevalidate);
+        // Mark the component as mounted and update corresponding refs.
+        unmountedRef.current = false;
+        keyRef.current = key;
+        initialMountedRef.current = true;
+        // Keep the original key in the cache.
+        setCache({
+            _k: fnArg
+        });
+        // Trigger a revalidation
+        if (shouldDoInitialRevalidation) {
+            if (isUndefined(data) || IS_SERVER) {
+                // Revalidate immediately.
+                softRevalidate();
+            } else {
+                // Delay the revalidate if we have data to return so we won't block
+                // rendering.
+                rAF(softRevalidate);
+            }
+        }
+        return ()=>{
+            // Mark it as unmounted.
+            unmountedRef.current = true;
+            unsubEvents();
+        };
+    }, [
+        key
+    ]);
+    // Polling
+    useIsomorphicLayoutEffect(()=>{
+        let timer;
+        function next() {
+            // Use the passed interval
+            // ...or invoke the function with the updated data to get the interval
+            const interval = isFunction(refreshInterval) ? refreshInterval(getCache().data) : refreshInterval;
+            // We only start the next interval if `refreshInterval` is not 0, and:
+            // - `force` is true, which is the start of polling
+            // - or `timer` is not 0, which means the effect wasn't canceled
+            if (interval && timer !== -1) {
+                timer = setTimeout(execute, interval);
+            }
+        }
+        function execute() {
+            // Check if it's OK to execute:
+            // Only revalidate when the page is visible, online, and not errored.
+            if (!getCache().error && (refreshWhenHidden || getConfig().isVisible()) && (refreshWhenOffline || getConfig().isOnline())) {
+                revalidate(WITH_DEDUPE).then(next);
+            } else {
+                // Schedule the next interval to check again.
+                next();
+            }
+        }
+        next();
+        return ()=>{
+            if (timer) {
+                clearTimeout(timer);
+                timer = -1;
+            }
+        };
+    }, [
+        refreshInterval,
+        refreshWhenHidden,
+        refreshWhenOffline,
+        key
+    ]);
+    // Display debug info in React DevTools.
+    (0,react.useDebugValue)(returnedData);
+    // In Suspense mode, we can't return the empty `data` state.
+    // If there is an `error`, the `error` needs to be thrown to the error boundary.
+    // If there is no `error`, the `revalidation` promise needs to be thrown to
+    // the suspense boundary.
+    if (suspense && isUndefined(data) && key) {
+        // SWR should throw when trying to use Suspense on the server with React 18,
+        // without providing any fallback data. This causes hydration errors. See:
+        // https://github.com/vercel/swr/issues/1832
+        if (!IS_REACT_LEGACY && IS_SERVER) {
+            throw new Error("Fallback data is required when using Suspense in SSR.");
+        }
+        // Always update fetcher and config refs even with the Suspense mode.
+        fetcherRef.current = fetcher;
+        configRef.current = config;
+        unmountedRef.current = false;
+        const req = PRELOAD[key];
+        if (!isUndefined(req)) {
+            const promise = boundMutate(req);
+            index_use(promise);
+        }
+        if (isUndefined(error)) {
+            const promise = revalidate(WITH_DEDUPE);
+            if (!isUndefined(returnedData)) {
+                promise.status = "fulfilled";
+                promise.value = true;
+            }
+            index_use(promise);
+        } else {
+            throw error;
+        }
+    }
+    const swrResponse = {
+        mutate: boundMutate,
+        get data () {
+            stateDependencies.data = true;
+            return returnedData;
+        },
+        get error () {
+            stateDependencies.error = true;
+            return error;
+        },
+        get isValidating () {
+            stateDependencies.isValidating = true;
+            return isValidating;
+        },
+        get isLoading () {
+            stateDependencies.isLoading = true;
+            return isLoading;
+        }
+    };
+    return swrResponse;
+};
+const index_SWRConfig = OBJECT.defineProperty(SWRConfig, "defaultValue", {
+    value: defaultConfig
+});
+/**
+ * A hook to fetch data.
+ *
+ * @link https://swr.vercel.app
+ * @example
+ * ```jsx
+ * import useSWR from 'swr'
+ * function Profile() {
+ *   const { data, error, isLoading } = useSWR('/api/user', fetcher)
+ *   if (error) return <div>failed to load</div>
+ *   if (isLoading) return <div>loading...</div>
+ *   return <div>hello {data.name}!</div>
+ * }
+ * ```
+ */ const useSWR = withArgs(useSWRHandler);
+// useSWR
+
+
+;// CONCATENATED MODULE: ./node_modules/swr/dist/infinite/index.mjs
+
+
+
+
+
+// Shared state between server components and client components
+const infinite_noop = ()=>{};
+// Using noop() as the undefined value as undefined can be replaced
+// by something else. Prettier ignore and extra parentheses are necessary here
+// to ensure that tsc doesn't remove the __NOINLINE__ comment.
+// prettier-ignore
+const infinite_UNDEFINED = /*#__NOINLINE__*/ infinite_noop();
+const infinite_OBJECT = Object;
+const infinite_isUndefined = (v)=>v === infinite_UNDEFINED;
+const infinite_isFunction = (v)=>typeof v == "function";
+// use WeakMap to store the object->key mapping
+// so the objects can be garbage collected.
+// WeakMap uses a hashtable under the hood, so the lookup
+// complexity is almost O(1).
+const infinite_table = new WeakMap();
+const infinite_isObjectType = (value, type)=>infinite_OBJECT.prototype.toString.call(value) === `[object ${type}]`;
+// counter of the key
+let infinite_counter = 0;
+// A stable hash implementation that supports:
+// - Fast and ensures unique hash properties
+// - Handles unserializable values
+// - Handles object key ordering
+// - Generates short results
+//
+// This is not a serialization function, and the result is not guaranteed to be
+// parsable.
+const infinite_stableHash = (arg)=>{
+    const type = typeof arg;
+    const isDate = infinite_isObjectType(arg, "Date");
+    const isRegex = infinite_isObjectType(arg, "RegExp");
+    const isPlainObject = infinite_isObjectType(arg, "Object");
+    let result;
+    let index;
+    if (infinite_OBJECT(arg) === arg && !isDate && !isRegex) {
+        // Object/function, not null/date/regexp. Use WeakMap to store the id first.
+        // If it's already hashed, directly return the result.
+        result = infinite_table.get(arg);
+        if (result) return result;
+        // Store the hash first for circular reference detection before entering the
+        // recursive `stableHash` calls.
+        // For other objects like set and map, we use this id directly as the hash.
+        result = ++infinite_counter + "~";
+        infinite_table.set(arg, result);
+        if (Array.isArray(arg)) {
+            // Array.
+            result = "@";
+            for(index = 0; index < arg.length; index++){
+                result += infinite_stableHash(arg[index]) + ",";
+            }
+            infinite_table.set(arg, result);
+        }
+        if (isPlainObject) {
+            // Object, sort keys.
+            result = "#";
+            const keys = infinite_OBJECT.keys(arg).sort();
+            while(!infinite_isUndefined(index = keys.pop())){
+                if (!infinite_isUndefined(arg[index])) {
+                    result += index + ":" + infinite_stableHash(arg[index]) + ",";
+                }
+            }
+            infinite_table.set(arg, result);
+        }
+    } else {
+        result = isDate ? arg.toJSON() : type == "symbol" ? arg.toString() : type == "string" ? JSON.stringify(arg) : "" + arg;
+    }
+    return result;
+};
+const infinite_serialize = (key)=>{
+    if (infinite_isFunction(key)) {
+        try {
+            key = key();
+        } catch (err) {
+            // dependencies not ready
+            key = "";
+        }
+    }
+    // Use the original key as the argument of fetcher. This can be a string or an
+    // array of values.
+    const args = key;
+    // If key is not falsy, or not an empty array, hash it.
+    key = typeof key == "string" ? key : (Array.isArray(key) ? key.length : key) ? infinite_stableHash(key) : "";
+    return [
+        key,
+        args
+    ];
+};
+const getFirstPageKey = (getKey)=>{
+    return infinite_serialize(getKey ? getKey(0, null) : null)[0];
+};
+const infinite_unstable_serialize = (getKey)=>{
+    return INFINITE_PREFIX + getFirstPageKey(getKey);
+};
+// We have to several type castings here because `useSWRInfinite` is a special
+// hook where `key` and return type are not like the normal `useSWR` types.
+const EMPTY_PROMISE = Promise.resolve();
+const infinite = (useSWRNext)=>(getKey, fn, config)=>{
+        const didMountRef = (0,react.useRef)(false);
+        const { cache: cache$1, initialSize = 1, revalidateAll = false, persistSize = false, revalidateFirstPage = true, revalidateOnMount = false, parallel = false } = config;
+        const [, , , PRELOAD] = SWRGlobalState.get(cache);
+        // The serialized key of the first page. This key will be used to store
+        // metadata of this SWR infinite hook.
+        let infiniteKey;
+        try {
+            infiniteKey = getFirstPageKey(getKey);
+            if (infiniteKey) infiniteKey = constants_INFINITE_PREFIX + infiniteKey;
+        } catch (err) {
+        // Not ready yet.
+        }
+        const [get, set, subscribeCache] = createCacheHelper(cache$1, infiniteKey);
+        const getSnapshot = (0,react.useCallback)(()=>{
+            const size = isUndefined(get()._l) ? initialSize : get()._l;
+            return size;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [
+            cache$1,
+            infiniteKey,
+            initialSize
+        ]);
+        (0,shim.useSyncExternalStore)((0,react.useCallback)((callback)=>{
+            if (infiniteKey) return subscribeCache(infiniteKey, ()=>{
+                callback();
+            });
+            return ()=>{};
+        }, [
+            cache$1,
+            infiniteKey
+        ]), getSnapshot, getSnapshot);
+        const resolvePageSize = (0,react.useCallback)(()=>{
+            const cachedPageSize = get()._l;
+            return isUndefined(cachedPageSize) ? initialSize : cachedPageSize;
+        // `cache` isn't allowed to change during the lifecycle
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [
+            infiniteKey,
+            initialSize
+        ]);
+        // keep the last page size to restore it with the persistSize option
+        const lastPageSizeRef = (0,react.useRef)(resolvePageSize());
+        // When the page key changes, we reset the page size if it's not persisted
+        useIsomorphicLayoutEffect(()=>{
+            if (!didMountRef.current) {
+                didMountRef.current = true;
+                return;
+            }
+            if (infiniteKey) {
+                // If the key has been changed, we keep the current page size if persistSize is enabled
+                // Otherwise, we reset the page size to cached pageSize
+                set({
+                    _l: persistSize ? lastPageSizeRef.current : resolvePageSize()
+                });
+            }
+        // `initialSize` isn't allowed to change during the lifecycle
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [
+            infiniteKey,
+            cache$1
+        ]);
+        // Needs to check didMountRef during mounting, not in the fetcher
+        const shouldRevalidateOnMount = revalidateOnMount && !didMountRef.current;
+        // Actual SWR hook to load all pages in one fetcher.
+        const swr = useSWRNext(infiniteKey, async (key)=>{
+            // get the revalidate context
+            const forceRevalidateAll = get()._i;
+            const shouldRevalidatePage = get()._r;
+            set({
+                _r: UNDEFINED
+            });
+            // return an array of page data
+            const data = [];
+            const pageSize = resolvePageSize();
+            const [getCache] = createCacheHelper(cache$1, key);
+            const cacheData = getCache().data;
+            const revalidators = [];
+            let previousPageData = null;
+            for(let i = 0; i < pageSize; ++i){
+                const [pageKey, pageArg] = serialize(getKey(i, parallel ? null : previousPageData));
+                if (!pageKey) {
+                    break;
+                }
+                const [getSWRCache, setSWRCache] = createCacheHelper(cache$1, pageKey);
+                // Get the cached page data.
+                let pageData = getSWRCache().data;
+                // should fetch (or revalidate) if:
+                // - `revalidateAll` is enabled
+                // - `mutate()` called
+                // - the cache is missing
+                // - it's the first page and it's not the initial render
+                // - `revalidateOnMount` is enabled and it's on mount
+                // - cache for that page has changed
+                const shouldFetchPage = revalidateAll || forceRevalidateAll || isUndefined(pageData) || revalidateFirstPage && !i && !isUndefined(cacheData) || shouldRevalidateOnMount || cacheData && !isUndefined(cacheData[i]) && !config.compare(cacheData[i], pageData);
+                if (fn && (typeof shouldRevalidatePage === "function" ? shouldRevalidatePage(pageData, pageArg) : shouldFetchPage)) {
+                    const revalidate = async ()=>{
+                        const hasPreloadedRequest = pageKey in PRELOAD;
+                        if (!hasPreloadedRequest) {
+                            pageData = await fn(pageArg);
+                        } else {
+                            const req = PRELOAD[pageKey];
+                            // delete the preload cache key before resolving it
+                            // in case there's an error
+                            delete PRELOAD[pageKey];
+                            // get the page data from the preload cache
+                            pageData = await req;
+                        }
+                        setSWRCache({
+                            data: pageData,
+                            _k: pageArg
+                        });
+                        data[i] = pageData;
+                    };
+                    if (parallel) {
+                        revalidators.push(revalidate);
+                    } else {
+                        await revalidate();
+                    }
+                } else {
+                    data[i] = pageData;
+                }
+                if (!parallel) {
+                    previousPageData = pageData;
+                }
+            }
+            // flush all revalidateions in parallel
+            if (parallel) {
+                await Promise.all(revalidators.map((r)=>r()));
+            }
+            // once we executed the data fetching based on the context, clear the context
+            set({
+                _i: UNDEFINED
+            });
+            // return the data
+            return data;
+        }, config);
+        const mutate = (0,react.useCallback)(function(data, opts) {
+            // When passing as a boolean, it's explicitly used to disable/enable
+            // revalidation.
+            const options = typeof opts === "boolean" ? {
+                revalidate: opts
+            } : opts || {};
+            // Default to true.
+            const shouldRevalidate = options.revalidate !== false;
+            // It is possible that the key is still falsy.
+            if (!infiniteKey) return EMPTY_PROMISE;
+            if (shouldRevalidate) {
+                if (!isUndefined(data)) {
+                    // We only revalidate the pages that are changed
+                    set({
+                        _i: false,
+                        _r: options.revalidate
+                    });
+                } else {
+                    // Calling `mutate()`, we revalidate all pages
+                    set({
+                        _i: true,
+                        _r: options.revalidate
+                    });
+                }
+            }
+            return arguments.length ? swr.mutate(data, {
+                ...options,
+                revalidate: shouldRevalidate
+            }) : swr.mutate();
+        }, // eslint-disable-next-line react-hooks/exhaustive-deps
+        [
+            infiniteKey,
+            cache$1
+        ]);
+        // Extend the SWR API
+        const setSize = (0,react.useCallback)((arg)=>{
+            // It is possible that the key is still falsy.
+            if (!infiniteKey) return EMPTY_PROMISE;
+            const [, changeSize] = createCacheHelper(cache$1, infiniteKey);
+            let size;
+            if (isFunction(arg)) {
+                size = arg(resolvePageSize());
+            } else if (typeof arg == "number") {
+                size = arg;
+            }
+            if (typeof size != "number") return EMPTY_PROMISE;
+            changeSize({
+                _l: size
+            });
+            lastPageSizeRef.current = size;
+            // Calculate the page data after the size change.
+            const data = [];
+            const [getInfiniteCache] = createCacheHelper(cache$1, infiniteKey);
+            let previousPageData = null;
+            for(let i = 0; i < size; ++i){
+                const [pageKey] = serialize(getKey(i, previousPageData));
+                const [getCache] = createCacheHelper(cache$1, pageKey);
+                // Get the cached page data.
+                const pageData = pageKey ? getCache().data : UNDEFINED;
+                // Call `mutate` with infinte cache data if we can't get it from the page cache.
+                if (isUndefined(pageData)) {
+                    return mutate(getInfiniteCache().data);
+                }
+                data.push(pageData);
+                previousPageData = pageData;
+            }
+            return mutate(data);
+        }, // eslint-disable-next-line react-hooks/exhaustive-deps
+        [
+            infiniteKey,
+            cache$1,
+            mutate,
+            resolvePageSize
+        ]);
+        // Use getter functions to avoid unnecessary re-renders caused by triggering
+        // all the getters of the returned swr object.
+        return {
+            size: resolvePageSize(),
+            setSize,
+            mutate,
+            get data () {
+                return swr.data;
+            },
+            get error () {
+                return swr.error;
+            },
+            get isValidating () {
+                return swr.isValidating;
+            },
+            get isLoading () {
+                return swr.isLoading;
+            }
+        };
+    };
+const useSWRInfinite = withMiddleware(useSWR, infinite);
+
+
+;// CONCATENATED MODULE: ./node_modules/dequal/dist/index.mjs
+var dist_has = Object.prototype.hasOwnProperty;
+function find(iter, tar, key) {
+    for (key of iter.keys()){
+        if (dist_dequal(key, tar)) return key;
+    }
+}
+function dist_dequal(foo, bar) {
+    var ctor, len, tmp;
+    if (foo === bar) return true;
+    if (foo && bar && (ctor = foo.constructor) === bar.constructor) {
+        if (ctor === Date) return foo.getTime() === bar.getTime();
+        if (ctor === RegExp) return foo.toString() === bar.toString();
+        if (ctor === Array) {
+            if ((len = foo.length) === bar.length) {
+                while(len-- && dist_dequal(foo[len], bar[len]));
+            }
+            return len === -1;
+        }
+        if (ctor === Set) {
+            if (foo.size !== bar.size) {
+                return false;
+            }
+            for (len of foo){
+                tmp = len;
+                if (tmp && typeof tmp === "object") {
+                    tmp = find(bar, tmp);
+                    if (!tmp) return false;
+                }
+                if (!bar.has(tmp)) return false;
+            }
+            return true;
+        }
+        if (ctor === Map) {
+            if (foo.size !== bar.size) {
+                return false;
+            }
+            for (len of foo){
+                tmp = len[0];
+                if (tmp && typeof tmp === "object") {
+                    tmp = find(bar, tmp);
+                    if (!tmp) return false;
+                }
+                if (!dist_dequal(len[1], bar.get(tmp))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        if (ctor === ArrayBuffer) {
+            foo = new Uint8Array(foo);
+            bar = new Uint8Array(bar);
+        } else if (ctor === DataView) {
+            if ((len = foo.byteLength) === bar.byteLength) {
+                while(len-- && foo.getInt8(len) === bar.getInt8(len));
+            }
+            return len === -1;
+        }
+        if (ArrayBuffer.isView(foo)) {
+            if ((len = foo.byteLength) === bar.byteLength) {
+                while(len-- && foo[len] === bar[len]);
+            }
+            return len === -1;
+        }
+        if (!ctor || typeof foo === "object") {
+            len = 0;
+            for(ctor in foo){
+                if (dist_has.call(foo, ctor) && ++len && !dist_has.call(bar, ctor)) return false;
+                if (!(ctor in bar) || !dist_dequal(foo[ctor], bar[ctor])) return false;
+            }
+            return Object.keys(bar).length === len;
+        }
+    }
+    return foo !== foo && bar !== bar;
+}
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/react/index.mjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/react/hooks/createContextAndHook.ts
+
+function assertContextExists(contextVal, msgOrCtx) {
+    if (!contextVal) {
+        throw typeof msgOrCtx === "string" ? new Error(msgOrCtx) : new Error(`${msgOrCtx.displayName} not found`);
+    }
+}
+var createContextAndHook = (displayName, options)=>{
+    const { assertCtxFn = assertContextExists } = options || {};
+    const Ctx = /*#__PURE__*/ react.createContext(void 0);
+    Ctx.displayName = displayName;
+    const useCtx = ()=>{
+        const ctx = react.useContext(Ctx);
+        assertCtxFn(ctx, `${displayName} not found`);
+        return ctx.value;
+    };
+    const useCtxWithoutGuarantee = ()=>{
+        const ctx = react.useContext(Ctx);
+        return ctx ? ctx.value : {};
+    };
+    return [
+        Ctx,
+        useCtx,
+        useCtxWithoutGuarantee
+    ];
+};
+// src/react/contexts.tsx
+
+// src/react/clerk-swr.ts
+var clerk_swr_exports = {};
+(0,chunk_7ELT755Q/* __export */.r2)(clerk_swr_exports, {
+    useSWR: ()=>useSWR,
+    useSWRInfinite: ()=>useSWRInfinite
+});
+(0,chunk_7ELT755Q/* __reExport */.yA)(clerk_swr_exports, index_namespaceObject);
+
+
+
+// src/react/contexts.tsx
+var [ClerkInstanceContext, useClerkInstanceContext] = createContextAndHook("ClerkInstanceContext");
+var [UserContext, useUserContext] = createContextAndHook("UserContext");
+var [ClientContext, react_useClientContext] = createContextAndHook("ClientContext");
+var [SessionContext, react_useSessionContext] = createContextAndHook("SessionContext");
+var OptionsContext = /*#__PURE__*/ react.createContext({});
+function useOptionsContext() {
+    const context = React2.useContext(OptionsContext);
+    if (context === void 0) {
+        throw new Error("useOptions must be used within an OptionsContext");
+    }
+    return context;
+}
+var [OrganizationContextInternal, useOrganizationContext] = createContextAndHook("OrganizationContext");
+var OrganizationProvider = ({ children, organization, swrConfig })=>{
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(clerk_swr_exports.SWRConfig, {
+        value: swrConfig
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(OrganizationContextInternal.Provider, {
+        value: {
+            value: {
+                organization
+            }
+        }
+    }, children));
+};
+function useAssertWrappedByClerkProvider(displayNameOrFn) {
+    const ctx = react.useContext(ClerkInstanceContext);
+    if (!ctx) {
+        if (typeof displayNameOrFn === "function") {
+            displayNameOrFn();
+            return;
+        }
+        throw new Error(`${displayNameOrFn} can only be used within the <ClerkProvider /> component.
+
+Possible fixes:
+1. Ensure that the <ClerkProvider /> is correctly wrapping your application where this component is used.
+2. Check for multiple versions of the \`@clerk/shared\` package in your project. Use a tool like \`npm ls @clerk/shared\` to identify multiple versions, and update your dependencies to only rely on one.
+
+Learn more: https://clerk.com/docs/components/clerk-provider`.trim());
+    }
+}
+// src/react/hooks/usePagesOrInfinite.ts
+
+function getDifferentKeys(obj1, obj2) {
+    const keysSet = new Set(Object.keys(obj2));
+    const differentKeysObject = {};
+    for (const key1 of Object.keys(obj1)){
+        if (!keysSet.has(key1)) {
+            differentKeysObject[key1] = obj1[key1];
+        }
+    }
+    return differentKeysObject;
+}
+var useWithSafeValues = (params, defaultValues)=>{
+    const shouldUseDefaults = typeof params === "boolean" && params;
+    const initialPageRef = useRef(shouldUseDefaults ? defaultValues.initialPage : params?.initialPage ?? defaultValues.initialPage);
+    const pageSizeRef = useRef(shouldUseDefaults ? defaultValues.pageSize : params?.pageSize ?? defaultValues.pageSize);
+    const newObj = {};
+    for (const key of Object.keys(defaultValues)){
+        newObj[key] = shouldUseDefaults ? defaultValues[key] : params?.[key] ?? defaultValues[key];
+    }
+    return {
+        ...newObj,
+        initialPage: initialPageRef.current,
+        pageSize: pageSizeRef.current
+    };
+};
+var cachingSWROptions = {
+    dedupingInterval: 1e3 * 60,
+    focusThrottleInterval: 1e3 * 60 * 2
+};
+var usePagesOrInfinite = (params, fetcher, config, cacheKeys)=>{
+    const [paginatedPage, setPaginatedPage] = useState(params.initialPage ?? 1);
+    const initialPageRef = useRef(params.initialPage ?? 1);
+    const pageSizeRef = useRef(params.pageSize ?? 10);
+    const enabled = config.enabled ?? true;
+    const triggerInfinite = config.infinite ?? false;
+    const keepPreviousData = config.keepPreviousData ?? false;
+    const pagesCacheKey = {
+        ...cacheKeys,
+        ...params,
+        initialPage: paginatedPage,
+        pageSize: pageSizeRef.current
+    };
+    const { data: swrData, isValidating: swrIsValidating, isLoading: swrIsLoading, error: swrError, mutate: swrMutate } = default2(!triggerInfinite && !!fetcher && enabled ? pagesCacheKey : null, (cacheKeyParams)=>{
+        const requestParams = getDifferentKeys(cacheKeyParams, cacheKeys);
+        return fetcher?.(requestParams);
+    }, {
+        keepPreviousData,
+        ...cachingSWROptions
+    });
+    const { data: swrInfiniteData, isLoading: swrInfiniteIsLoading, isValidating: swrInfiniteIsValidating, error: swrInfiniteError, size, setSize, mutate: swrInfiniteMutate } = default3((pageIndex)=>{
+        if (!triggerInfinite || !enabled) {
+            return null;
+        }
+        return {
+            ...params,
+            ...cacheKeys,
+            initialPage: initialPageRef.current + pageIndex,
+            pageSize: pageSizeRef.current
+        };
+    }, (cacheKeyParams)=>{
+        const requestParams = getDifferentKeys(cacheKeyParams, cacheKeys);
+        return fetcher?.(requestParams);
+    }, cachingSWROptions);
+    const page = useMemo(()=>{
+        if (triggerInfinite) {
+            return size;
+        }
+        return paginatedPage;
+    }, [
+        triggerInfinite,
+        size,
+        paginatedPage
+    ]);
+    const fetchPage = useCallback((numberOrgFn)=>{
+        if (triggerInfinite) {
+            void setSize(numberOrgFn);
+            return;
+        }
+        return setPaginatedPage(numberOrgFn);
+    }, [
+        setSize
+    ]);
+    const data = useMemo(()=>{
+        if (triggerInfinite) {
+            return swrInfiniteData?.map((a)=>a?.data).flat() ?? [];
+        }
+        return swrData?.data ?? [];
+    }, [
+        triggerInfinite,
+        swrData,
+        swrInfiniteData
+    ]);
+    const count = useMemo(()=>{
+        if (triggerInfinite) {
+            return swrInfiniteData?.[swrInfiniteData?.length - 1]?.total_count || 0;
+        }
+        return swrData?.total_count ?? 0;
+    }, [
+        triggerInfinite,
+        swrData,
+        swrInfiniteData
+    ]);
+    const isLoading = triggerInfinite ? swrInfiniteIsLoading : swrIsLoading;
+    const isFetching = triggerInfinite ? swrInfiniteIsValidating : swrIsValidating;
+    const error = (triggerInfinite ? swrInfiniteError : swrError) ?? null;
+    const isError = !!error;
+    const fetchNext = useCallback(()=>{
+        fetchPage((n)=>Math.max(0, n + 1));
+    }, [
+        fetchPage
+    ]);
+    const fetchPrevious = useCallback(()=>{
+        fetchPage((n)=>Math.max(0, n - 1));
+    }, [
+        fetchPage
+    ]);
+    const offsetCount = (initialPageRef.current - 1) * pageSizeRef.current;
+    const pageCount = Math.ceil((count - offsetCount) / pageSizeRef.current);
+    const hasNextPage = count - offsetCount * pageSizeRef.current > page * pageSizeRef.current;
+    const hasPreviousPage = (page - 1) * pageSizeRef.current > offsetCount * pageSizeRef.current;
+    const setData = triggerInfinite ? (value)=>swrInfiniteMutate(value, {
+            revalidate: false
+        }) : (value)=>swrMutate(value, {
+            revalidate: false
+        });
+    const revalidate = triggerInfinite ? ()=>swrInfiniteMutate() : ()=>swrMutate();
+    return {
+        data,
+        count,
+        error,
+        isLoading,
+        isFetching,
+        isError,
+        page,
+        pageCount,
+        fetchPage,
+        fetchNext,
+        fetchPrevious,
+        hasNextPage,
+        hasPreviousPage,
+        // Let the hook return type define this type
+        revalidate,
+        // Let the hook return type define this type
+        setData
+    };
+};
+// src/react/hooks/useOrganization.tsx
+var undefinedPaginatedResource = {
+    data: void 0,
+    count: void 0,
+    error: void 0,
+    isLoading: false,
+    isFetching: false,
+    isError: false,
+    page: void 0,
+    pageCount: void 0,
+    fetchPage: void 0,
+    fetchNext: void 0,
+    fetchPrevious: void 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+    revalidate: void 0,
+    setData: void 0
+};
+function useOrganization(params) {
+    const { domains: domainListParams, membershipRequests: membershipRequestsListParams, memberships: membersListParams, invitations: invitationsListParams, subscriptions: subscriptionsListParams } = params || {};
+    useAssertWrappedByClerkProvider("useOrganization");
+    const { organization } = useOrganizationContext();
+    const session = react_useSessionContext();
+    const domainSafeValues = useWithSafeValues(domainListParams, {
+        initialPage: 1,
+        pageSize: 10,
+        keepPreviousData: false,
+        infinite: false,
+        enrollmentMode: void 0
+    });
+    const membershipRequestSafeValues = useWithSafeValues(membershipRequestsListParams, {
+        initialPage: 1,
+        pageSize: 10,
+        status: "pending",
+        keepPreviousData: false,
+        infinite: false
+    });
+    const membersSafeValues = useWithSafeValues(membersListParams, {
+        initialPage: 1,
+        pageSize: 10,
+        role: void 0,
+        keepPreviousData: false,
+        infinite: false,
+        query: void 0
+    });
+    const invitationsSafeValues = useWithSafeValues(invitationsListParams, {
+        initialPage: 1,
+        pageSize: 10,
+        status: [
+            "pending"
+        ],
+        keepPreviousData: false,
+        infinite: false
+    });
+    const subscriptionsSafeValues = useWithSafeValues(subscriptionsListParams, {
+        initialPage: 1,
+        pageSize: 10,
+        keepPreviousData: false,
+        infinite: false
+    });
+    const clerk = useClerkInstanceContext();
+    clerk.telemetry?.record(eventMethodCalled("useOrganization"));
+    const domainParams = typeof domainListParams === "undefined" ? void 0 : {
+        initialPage: domainSafeValues.initialPage,
+        pageSize: domainSafeValues.pageSize,
+        enrollmentMode: domainSafeValues.enrollmentMode
+    };
+    const membershipRequestParams = typeof membershipRequestsListParams === "undefined" ? void 0 : {
+        initialPage: membershipRequestSafeValues.initialPage,
+        pageSize: membershipRequestSafeValues.pageSize,
+        status: membershipRequestSafeValues.status
+    };
+    const membersParams = typeof membersListParams === "undefined" ? void 0 : {
+        initialPage: membersSafeValues.initialPage,
+        pageSize: membersSafeValues.pageSize,
+        role: membersSafeValues.role,
+        query: membersSafeValues.query
+    };
+    const invitationsParams = typeof invitationsListParams === "undefined" ? void 0 : {
+        initialPage: invitationsSafeValues.initialPage,
+        pageSize: invitationsSafeValues.pageSize,
+        status: invitationsSafeValues.status
+    };
+    const subscriptionsParams = typeof subscriptionsListParams === "undefined" ? void 0 : {
+        initialPage: subscriptionsSafeValues.initialPage,
+        pageSize: subscriptionsSafeValues.pageSize,
+        orgId: organization?.id
+    };
+    const domains = usePagesOrInfinite({
+        ...domainParams
+    }, organization?.getDomains, {
+        keepPreviousData: domainSafeValues.keepPreviousData,
+        infinite: domainSafeValues.infinite,
+        enabled: !!domainParams
+    }, {
+        type: "domains",
+        organizationId: organization?.id
+    });
+    const membershipRequests = usePagesOrInfinite({
+        ...membershipRequestParams
+    }, organization?.getMembershipRequests, {
+        keepPreviousData: membershipRequestSafeValues.keepPreviousData,
+        infinite: membershipRequestSafeValues.infinite,
+        enabled: !!membershipRequestParams
+    }, {
+        type: "membershipRequests",
+        organizationId: organization?.id
+    });
+    const memberships = usePagesOrInfinite(membersParams || {}, organization?.getMemberships, {
+        keepPreviousData: membersSafeValues.keepPreviousData,
+        infinite: membersSafeValues.infinite,
+        enabled: !!membersParams
+    }, {
+        type: "members",
+        organizationId: organization?.id
+    });
+    const invitations = usePagesOrInfinite({
+        ...invitationsParams
+    }, organization?.getInvitations, {
+        keepPreviousData: invitationsSafeValues.keepPreviousData,
+        infinite: invitationsSafeValues.infinite,
+        enabled: !!invitationsParams
+    }, {
+        type: "invitations",
+        organizationId: organization?.id
+    });
+    const subscriptions = usePagesOrInfinite({
+        ...subscriptionsParams
+    }, organization?.__experimental_getSubscriptions, {
+        keepPreviousData: subscriptionsSafeValues.keepPreviousData,
+        infinite: subscriptionsSafeValues.infinite,
+        enabled: !!subscriptionsParams
+    }, {
+        type: "subscriptions",
+        organizationId: organization?.id
+    });
+    if (organization === void 0) {
+        return {
+            isLoaded: false,
+            organization: void 0,
+            membership: void 0,
+            domains: undefinedPaginatedResource,
+            membershipRequests: undefinedPaginatedResource,
+            memberships: undefinedPaginatedResource,
+            invitations: undefinedPaginatedResource,
+            subscriptions: undefinedPaginatedResource
+        };
+    }
+    if (organization === null) {
+        return {
+            isLoaded: true,
+            organization: null,
+            membership: null,
+            domains: null,
+            membershipRequests: null,
+            memberships: null,
+            invitations: null,
+            subscriptions: null
+        };
+    }
+    if (!clerk.loaded && organization) {
+        return {
+            isLoaded: true,
+            organization,
+            membership: void 0,
+            domains: undefinedPaginatedResource,
+            membershipRequests: undefinedPaginatedResource,
+            memberships: undefinedPaginatedResource,
+            invitations: undefinedPaginatedResource,
+            subscriptions: undefinedPaginatedResource
+        };
+    }
+    return {
+        isLoaded: clerk.loaded,
+        organization,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        membership: getCurrentOrganizationMembership(session.user.organizationMemberships, organization.id),
+        // your membership in the current org
+        domains,
+        membershipRequests,
+        memberships,
+        invitations,
+        subscriptions
+    };
+}
+// src/react/hooks/useOrganizationList.tsx
+var undefinedPaginatedResource2 = {
+    data: void 0,
+    count: void 0,
+    error: void 0,
+    isLoading: false,
+    isFetching: false,
+    isError: false,
+    page: void 0,
+    pageCount: void 0,
+    fetchPage: void 0,
+    fetchNext: void 0,
+    fetchPrevious: void 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+    revalidate: void 0,
+    setData: void 0
+};
+function useOrganizationList(params) {
+    const { userMemberships, userInvitations, userSuggestions } = params || {};
+    useAssertWrappedByClerkProvider("useOrganizationList");
+    const userMembershipsSafeValues = useWithSafeValues(userMemberships, {
+        initialPage: 1,
+        pageSize: 10,
+        keepPreviousData: false,
+        infinite: false
+    });
+    const userInvitationsSafeValues = useWithSafeValues(userInvitations, {
+        initialPage: 1,
+        pageSize: 10,
+        status: "pending",
+        keepPreviousData: false,
+        infinite: false
+    });
+    const userSuggestionsSafeValues = useWithSafeValues(userSuggestions, {
+        initialPage: 1,
+        pageSize: 10,
+        status: "pending",
+        keepPreviousData: false,
+        infinite: false
+    });
+    const clerk = useClerkInstanceContext();
+    const user = useUserContext();
+    clerk.telemetry?.record(eventMethodCalled("useOrganizationList"));
+    const userMembershipsParams = typeof userMemberships === "undefined" ? void 0 : {
+        initialPage: userMembershipsSafeValues.initialPage,
+        pageSize: userMembershipsSafeValues.pageSize
+    };
+    const userInvitationsParams = typeof userInvitations === "undefined" ? void 0 : {
+        initialPage: userInvitationsSafeValues.initialPage,
+        pageSize: userInvitationsSafeValues.pageSize,
+        status: userInvitationsSafeValues.status
+    };
+    const userSuggestionsParams = typeof userSuggestions === "undefined" ? void 0 : {
+        initialPage: userSuggestionsSafeValues.initialPage,
+        pageSize: userSuggestionsSafeValues.pageSize,
+        status: userSuggestionsSafeValues.status
+    };
+    const isClerkLoaded = !!(clerk.loaded && user);
+    const memberships = usePagesOrInfinite(userMembershipsParams || {}, user?.getOrganizationMemberships, {
+        keepPreviousData: userMembershipsSafeValues.keepPreviousData,
+        infinite: userMembershipsSafeValues.infinite,
+        enabled: !!userMembershipsParams
+    }, {
+        type: "userMemberships",
+        userId: user?.id
+    });
+    const invitations = usePagesOrInfinite({
+        ...userInvitationsParams
+    }, user?.getOrganizationInvitations, {
+        keepPreviousData: userInvitationsSafeValues.keepPreviousData,
+        infinite: userInvitationsSafeValues.infinite,
+        enabled: !!userInvitationsParams
+    }, {
+        type: "userInvitations",
+        userId: user?.id
+    });
+    const suggestions = usePagesOrInfinite({
+        ...userSuggestionsParams
+    }, user?.getOrganizationSuggestions, {
+        keepPreviousData: userSuggestionsSafeValues.keepPreviousData,
+        infinite: userSuggestionsSafeValues.infinite,
+        enabled: !!userSuggestionsParams
+    }, {
+        type: "userSuggestions",
+        userId: user?.id
+    });
+    if (!isClerkLoaded) {
+        return {
+            isLoaded: false,
+            createOrganization: void 0,
+            setActive: void 0,
+            userMemberships: undefinedPaginatedResource2,
+            userInvitations: undefinedPaginatedResource2,
+            userSuggestions: undefinedPaginatedResource2
+        };
+    }
+    return {
+        isLoaded: isClerkLoaded,
+        setActive: clerk.setActive,
+        createOrganization: clerk.createOrganization,
+        userMemberships: memberships,
+        userInvitations: invitations,
+        userSuggestions: suggestions
+    };
+}
+// src/react/hooks/useSafeLayoutEffect.tsx
+
+var useSafeLayoutEffect =  false ? 0 : react.useEffect;
+// src/react/hooks/useClerk.ts
+var useClerk = ()=>{
+    useAssertWrappedByClerkProvider("useClerk");
+    return useClerkInstanceContext();
+};
+// src/react/hooks/useSession.ts
+var useSession = (options = {})=>{
+    useAssertWrappedByClerkProvider("useSession");
+    const session = react_useSessionContext();
+    const clerk = useClerk();
+    if (session === void 0) {
+        return {
+            isLoaded: false,
+            isSignedIn: void 0,
+            session: void 0
+        };
+    }
+    const pendingAsSignedOut = session?.status === "pending" && (options.treatPendingAsSignedOut ?? clerk.__internal_getOption("treatPendingAsSignedOut"));
+    const isSignedOut = session === null || pendingAsSignedOut;
+    if (isSignedOut) {
+        return {
+            isLoaded: true,
+            isSignedIn: false,
+            session: null
+        };
+    }
+    return {
+        isLoaded: true,
+        isSignedIn: true,
+        session
+    };
+};
+// src/react/hooks/useSessionList.ts
+var useSessionList = ()=>{
+    useAssertWrappedByClerkProvider("useSessionList");
+    const isomorphicClerk = useClerkInstanceContext();
+    const client = react_useClientContext();
+    if (!client) {
+        return {
+            isLoaded: false,
+            sessions: void 0,
+            setActive: void 0
+        };
+    }
+    return {
+        isLoaded: true,
+        sessions: client.sessions,
+        setActive: isomorphicClerk.setActive
+    };
+};
+// src/react/hooks/useUser.ts
+function useUser() {
+    useAssertWrappedByClerkProvider("useUser");
+    const user = useUserContext();
+    if (user === void 0) {
+        return {
+            isLoaded: false,
+            isSignedIn: void 0,
+            user: void 0
+        };
+    }
+    if (user === null) {
+        return {
+            isLoaded: true,
+            isSignedIn: false,
+            user: null
+        };
+    }
+    return {
+        isLoaded: true,
+        isSignedIn: true,
+        user
+    };
+}
+// src/react/hooks/useDeepEqualMemo.ts
+
+
+var useDeepEqualMemoize = (value)=>{
+    const ref = React4.useRef(value);
+    if (!deepEqual(value, ref.current)) {
+        ref.current = value;
+    }
+    return React4.useMemo(()=>ref.current, [
+        ref.current
+    ]);
+};
+var useDeepEqualMemo = (factory, dependencyArray)=>{
+    return React4.useMemo(factory, useDeepEqualMemoize(dependencyArray));
+};
+var isDeeplyEqual = dist_dequal;
+// src/react/hooks/useReverification.ts
+
+var CLERK_API_REVERIFICATION_ERROR_CODE = "session_reverification_required";
+async function resolveResult(result) {
+    try {
+        const r = await result;
+        if (r instanceof Response) {
+            return r.json();
+        }
+        return r;
+    } catch (e) {
+        if (isClerkAPIResponseError(e) && e.errors.find(({ code })=>code === CLERK_API_REVERIFICATION_ERROR_CODE)) {
+            return reverificationError();
+        }
+        throw e;
+    }
+}
+function createReverificationHandler(params) {
+    function assertReverification(fetcher) {
+        return async (...args)=>{
+            let result = await resolveResult(fetcher(...args));
+            if (isReverificationHint(result)) {
+                const resolvers = createDeferredPromise();
+                const isValidMetadata = validateReverificationConfig(result.clerk_error.metadata?.reverification);
+                const level = isValidMetadata ? isValidMetadata().level : void 0;
+                const cancel = ()=>{
+                    resolvers.reject(new ClerkRuntimeError("User cancelled attempted verification", {
+                        code: "reverification_cancelled"
+                    }));
+                };
+                const complete = ()=>{
+                    resolvers.resolve(true);
+                };
+                if (params.onNeedsReverification === void 0) {
+                    params.openUIComponent?.({
+                        level,
+                        afterVerification: complete,
+                        afterVerificationCancelled: cancel
+                    });
+                } else {
+                    params.telemetry?.record(eventMethodCalled("UserVerificationCustomUI"));
+                    params.onNeedsReverification({
+                        cancel,
+                        complete,
+                        level
+                    });
+                }
+                await resolvers.promise;
+                result = await resolveResult(fetcher(...args));
+            }
+            return result;
+        };
+    }
+    return assertReverification;
+}
+var useReverification = (fetcher, options)=>{
+    const { __internal_openReverification, telemetry } = useClerk();
+    const fetcherRef = useRef2(fetcher);
+    const optionsRef = useRef2(options);
+    const handleReverification = useMemo2(()=>{
+        const handler = createReverificationHandler({
+            openUIComponent: __internal_openReverification,
+            telemetry,
+            ...optionsRef.current
+        })(fetcherRef.current);
+        return handler;
+    }, [
+        __internal_openReverification,
+        fetcherRef.current,
+        optionsRef.current
+    ]);
+    useSafeLayoutEffect(()=>{
+        fetcherRef.current = fetcher;
+        optionsRef.current = options;
+    });
+    return handleReverification;
+};
+ //# sourceMappingURL=index.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/deprecated.mjs + 1 modules
+var deprecated = __webpack_require__(8428);
+;// CONCATENATED MODULE: ./node_modules/@clerk/clerk-react/dist/chunk-T2VIWQBM.mjs
+// src/errors/errorThrower.ts
+
+var chunk_T2VIWQBM_errorThrower = (0,error/* buildErrorThrower */.t5)({
+    packageName: "@clerk/clerk-react"
+});
+function setErrorThrowerOptions(options) {
+    chunk_T2VIWQBM_errorThrower.setMessages(options).setPackageName(options);
+}
+// src/hooks/useAuth.ts
+
+
+
+// src/contexts/AuthContext.ts
+
+var [AuthContext, useAuthContext] = createContextAndHook("AuthContext");
+// src/contexts/IsomorphicClerkContext.tsx
+
+var IsomorphicClerkContext = ClerkInstanceContext;
+var useIsomorphicClerkContext = useClerkInstanceContext;
+// src/errors/messages.ts
+var multipleClerkProvidersError = "You've added multiple <ClerkProvider> components in your React component tree. Wrap your components in a single <ClerkProvider>.";
+var multipleChildrenInButtonComponent = (name)=>`You've passed multiple children components to <${name}/>. You can only pass a single child component or text.`;
+var invalidStateError = "Invalid state. Feel free to submit a bug or reach out to support here: https://clerk.com/support";
+var unsupportedNonBrowserDomainOrProxyUrlFunction = "Unsupported usage of isSatellite, domain or proxyUrl. The usage of isSatellite, domain or proxyUrl as function is not supported in non-browser environments.";
+var userProfilePageRenderedError = "<UserProfile.Page /> component needs to be a direct child of `<UserProfile />` or `<UserButton />`.";
+var userProfileLinkRenderedError = "<UserProfile.Link /> component needs to be a direct child of `<UserProfile />` or `<UserButton />`.";
+var organizationProfilePageRenderedError = "<OrganizationProfile.Page /> component needs to be a direct child of `<OrganizationProfile />` or `<OrganizationSwitcher />`.";
+var organizationProfileLinkRenderedError = "<OrganizationProfile.Link /> component needs to be a direct child of `<OrganizationProfile />` or `<OrganizationSwitcher />`.";
+var customPagesIgnoredComponent = (componentName)=>`<${componentName} /> can only accept <${componentName}.Page /> and <${componentName}.Link /> as its children. Any other provided component will be ignored. Additionally, please ensure that the component is rendered in a client component.`;
+var customPageWrongProps = (componentName)=>`Missing props. <${componentName}.Page /> component requires the following props: url, label, labelIcon, alongside with children to be rendered inside the page.`;
+var customLinkWrongProps = (componentName)=>`Missing props. <${componentName}.Link /> component requires the following props: url, label and labelIcon.`;
+var chunk_T2VIWQBM_noPathProvidedError = (componentName)=>`The <${componentName}/> component uses path-based routing by default unless a different routing strategy is provided using the \`routing\` prop. When path-based routing is used, you need to provide the path where the component is mounted on by using the \`path\` prop. Example: <${componentName} path={'/my-path'} />`;
+var chunk_T2VIWQBM_incompatibleRoutingWithPathProvidedError = (componentName)=>`The \`path\` prop will only be respected when the Clerk component uses path-based routing. To resolve this error, pass \`routing='path'\` to the <${componentName}/> component, or drop the \`path\` prop to switch to hash-based routing. For more details please refer to our docs: https://clerk.com/docs`;
+var userButtonIgnoredComponent = `<UserButton /> can only accept <UserButton.UserProfilePage />, <UserButton.UserProfileLink /> and <UserButton.MenuItems /> as its children. Any other provided component will be ignored. Additionally, please ensure that the component is rendered in a client component.`;
+var customMenuItemsIgnoredComponent = "<UserButton.MenuItems /> component can only accept <UserButton.Action /> and <UserButton.Link /> as its children. Any other provided component will be ignored. Additionally, please ensure that the component is rendered in a client component.";
+var userButtonMenuItemsRenderedError = "<UserButton.MenuItems /> component needs to be a direct child of `<UserButton />`.";
+var userButtonMenuActionRenderedError = "<UserButton.Action /> component needs to be a direct child of `<UserButton.MenuItems />`.";
+var userButtonMenuLinkRenderedError = "<UserButton.Link /> component needs to be a direct child of `<UserButton.MenuItems />`.";
+var userButtonMenuItemLinkWrongProps = "Missing props. <UserButton.Link /> component requires the following props: href, label and labelIcon.";
+var userButtonMenuItemsActionWrongsProps = "Missing props. <UserButton.Action /> component requires the following props: label.";
+// src/hooks/useAssertWrappedByClerkProvider.ts
+
+var chunk_T2VIWQBM_useAssertWrappedByClerkProvider = (source)=>{
+    useAssertWrappedByClerkProvider(()=>{
+        chunk_T2VIWQBM_errorThrower.throwMissingClerkProviderError({
+            source
+        });
+    });
+};
+// src/hooks/utils.ts
+var clerkLoaded = (isomorphicClerk)=>{
+    return new Promise((resolve)=>{
+        const handler = (status)=>{
+            if ([
+                "ready",
+                "degraded"
+            ].includes(status)) {
+                resolve();
+                isomorphicClerk.off("status", handler);
+            }
+        };
+        isomorphicClerk.on("status", handler, {
+            notify: true
+        });
+    });
+};
+var createGetToken = (isomorphicClerk)=>{
+    return async (options)=>{
+        await clerkLoaded(isomorphicClerk);
+        if (!isomorphicClerk.session) {
+            return null;
+        }
+        return isomorphicClerk.session.getToken(options);
+    };
+};
+var createSignOut = (isomorphicClerk)=>{
+    return async (...args)=>{
+        await clerkLoaded(isomorphicClerk);
+        return isomorphicClerk.signOut(...args);
+    };
+};
+// src/hooks/useAuth.ts
+var useAuth = (initialAuthStateOrOptions = {})=>{
+    var _a, _b;
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("useAuth");
+    const { treatPendingAsSignedOut, ...rest } = initialAuthStateOrOptions != null ? initialAuthStateOrOptions : {};
+    const initialAuthState = rest;
+    const authContextFromHook = useAuthContext();
+    let authContext = authContextFromHook;
+    if (authContext.sessionId === void 0 && authContext.userId === void 0) {
+        authContext = initialAuthState != null ? initialAuthState : {};
+    }
+    const isomorphicClerk = useIsomorphicClerkContext();
+    const getToken = (0,react.useCallback)(createGetToken(isomorphicClerk), [
+        isomorphicClerk
+    ]);
+    const signOut = (0,react.useCallback)(createSignOut(isomorphicClerk), [
+        isomorphicClerk
+    ]);
+    (_a = isomorphicClerk.telemetry) == null ? void 0 : _a.record((0,telemetry/* eventMethodCalled */.J6)("useAuth", {
+        treatPendingAsSignedOut
+    }));
+    return useDerivedAuth({
+        ...authContext,
+        getToken,
+        signOut
+    }, {
+        treatPendingAsSignedOut: treatPendingAsSignedOut != null ? treatPendingAsSignedOut : (_b = isomorphicClerk.__internal_getOption) == null ? void 0 : _b.call(isomorphicClerk, "treatPendingAsSignedOut")
+    });
+};
+function useDerivedAuth(authObject, { treatPendingAsSignedOut = true } = {}) {
+    const { userId, orgId, orgRole, has, signOut, getToken, orgPermissions, factorVerificationAge, sessionClaims } = authObject != null ? authObject : {};
+    const derivedHas = (0,react.useCallback)((params)=>{
+        if (has) {
+            return has(params);
+        }
+        return (0,authorization/* createCheckAuthorization */.QL)({
+            userId,
+            orgId,
+            orgRole,
+            orgPermissions,
+            factorVerificationAge,
+            features: (sessionClaims == null ? void 0 : sessionClaims.fea) || "",
+            plans: (sessionClaims == null ? void 0 : sessionClaims.pla) || ""
+        })(params);
+    }, [
+        has,
+        userId,
+        orgId,
+        orgRole,
+        orgPermissions,
+        factorVerificationAge
+    ]);
+    const payload = (0,authorization/* resolveAuthState */.qB)({
+        authObject: {
+            ...authObject,
+            getToken,
+            signOut,
+            has: derivedHas
+        },
+        options: {
+            treatPendingAsSignedOut
+        }
+    });
+    if (!payload) {
+        return chunk_T2VIWQBM_errorThrower.throw(invalidStateError);
+    }
+    return payload;
+}
+// src/hooks/useEmailLink.ts
+
+function useEmailLink(resource) {
+    const { startEmailLinkFlow, cancelEmailLinkFlow } = React.useMemo(()=>resource.createEmailLinkFlow(), [
+        resource
+    ]);
+    React.useEffect(()=>{
+        return cancelEmailLinkFlow;
+    }, []);
+    return {
+        startEmailLinkFlow,
+        cancelEmailLinkFlow
+    };
+}
+// src/hooks/useSignIn.ts
+
+
+var useSignIn = ()=>{
+    var _a;
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("useSignIn");
+    const isomorphicClerk = useIsomorphicClerkContext();
+    const client = useClientContext();
+    (_a = isomorphicClerk.telemetry) == null ? void 0 : _a.record(eventMethodCalled2("useSignIn"));
+    if (!client) {
+        return {
+            isLoaded: false,
+            signIn: void 0,
+            setActive: void 0
+        };
+    }
+    return {
+        isLoaded: true,
+        signIn: client.signIn,
+        setActive: isomorphicClerk.setActive
+    };
+};
+// src/hooks/useSignUp.ts
+
+
+var useSignUp = ()=>{
+    var _a;
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("useSignUp");
+    const isomorphicClerk = useIsomorphicClerkContext();
+    const client = useClientContext2();
+    (_a = isomorphicClerk.telemetry) == null ? void 0 : _a.record(eventMethodCalled3("useSignUp"));
+    if (!client) {
+        return {
+            isLoaded: false,
+            signUp: void 0,
+            setActive: void 0
+        };
+    }
+    return {
+        isLoaded: true,
+        signUp: client.signUp,
+        setActive: isomorphicClerk.setActive
+    };
+};
+// src/hooks/index.ts
+
+// src/components/controlComponents.tsx
+
+
+// src/contexts/SessionContext.tsx
+
+// src/components/withClerk.tsx
+
+var withClerk = (Component, displayNameOrOptions)=>{
+    const passedDisplayedName = typeof displayNameOrOptions === "string" ? displayNameOrOptions : displayNameOrOptions == null ? void 0 : displayNameOrOptions.component;
+    const displayName = passedDisplayedName || Component.displayName || Component.name || "Component";
+    Component.displayName = displayName;
+    const options = typeof displayNameOrOptions === "string" ? void 0 : displayNameOrOptions;
+    const HOC = (props)=>{
+        chunk_T2VIWQBM_useAssertWrappedByClerkProvider(displayName || "withClerk");
+        const clerk = useIsomorphicClerkContext();
+        if (!clerk.loaded && !(options == null ? void 0 : options.renderWhileLoading)) {
+            return null;
+        }
+        return /* @__PURE__ */ /*#__PURE__*/ react.createElement(Component, {
+            ...props,
+            component: displayName,
+            clerk
+        });
+    };
+    HOC.displayName = `withClerk(${displayName})`;
+    return HOC;
+};
+// src/components/controlComponents.tsx
+var SignedIn = ({ children, treatPendingAsSignedOut })=>{
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("SignedIn");
+    const { userId } = useAuth({
+        treatPendingAsSignedOut
+    });
+    if (userId) {
+        return children;
+    }
+    return null;
+};
+var SignedOut = ({ children, treatPendingAsSignedOut })=>{
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("SignedOut");
+    const { userId } = useAuth({
+        treatPendingAsSignedOut
+    });
+    if (userId === null) {
+        return children;
+    }
+    return null;
+};
+var ClerkLoaded = ({ children })=>{
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("ClerkLoaded");
+    const isomorphicClerk = useIsomorphicClerkContext();
+    if (!isomorphicClerk.loaded) {
+        return null;
+    }
+    return children;
+};
+var ClerkLoading = ({ children })=>{
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("ClerkLoading");
+    const isomorphicClerk = useIsomorphicClerkContext();
+    if (isomorphicClerk.status !== "loading") {
+        return null;
+    }
+    return children;
+};
+var ClerkFailed = ({ children })=>{
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("ClerkFailed");
+    const isomorphicClerk = useIsomorphicClerkContext();
+    if (isomorphicClerk.status !== "error") {
+        return null;
+    }
+    return children;
+};
+var ClerkDegraded = ({ children })=>{
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("ClerkDegraded");
+    const isomorphicClerk = useIsomorphicClerkContext();
+    if (isomorphicClerk.status !== "degraded") {
+        return null;
+    }
+    return children;
+};
+var Protect = ({ children, fallback, treatPendingAsSignedOut, ...restAuthorizedParams })=>{
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("Protect");
+    const { isLoaded, has, userId } = useAuth({
+        treatPendingAsSignedOut
+    });
+    if (!isLoaded) {
+        return null;
+    }
+    const unauthorized = fallback != null ? fallback : null;
+    const authorized = children;
+    if (!userId) {
+        return unauthorized;
+    }
+    if (typeof restAuthorizedParams.condition === "function") {
+        if (restAuthorizedParams.condition(has)) {
+            return authorized;
+        }
+        return unauthorized;
+    }
+    if (restAuthorizedParams.role || restAuthorizedParams.permission || restAuthorizedParams.feature || restAuthorizedParams.plan) {
+        if (has(restAuthorizedParams)) {
+            return authorized;
+        }
+        return unauthorized;
+    }
+    return authorized;
+};
+var RedirectToSignIn = withClerk(({ clerk, ...props })=>{
+    const { client, session } = clerk;
+    const hasSignedInSessions = client.signedInSessions ? client.signedInSessions.length > 0 : // Compat for clerk-js<5.54.0 (which was released with the `signedInSessions` property)
+    client.activeSessions && client.activeSessions.length > 0;
+    react.useEffect(()=>{
+        if (session === null && hasSignedInSessions) {
+            void clerk.redirectToAfterSignOut();
+        } else {
+            void clerk.redirectToSignIn(props);
+        }
+    }, []);
+    return null;
+}, "RedirectToSignIn");
+var RedirectToSignUp = withClerk(({ clerk, ...props })=>{
+    react.useEffect(()=>{
+        void clerk.redirectToSignUp(props);
+    }, []);
+    return null;
+}, "RedirectToSignUp");
+var RedirectToUserProfile = withClerk(({ clerk })=>{
+    react.useEffect(()=>{
+        (0,deprecated/* deprecated */.x9)("RedirectToUserProfile", "Use the `redirectToUserProfile()` method instead.");
+        void clerk.redirectToUserProfile();
+    }, []);
+    return null;
+}, "RedirectToUserProfile");
+var RedirectToOrganizationProfile = withClerk(({ clerk })=>{
+    react.useEffect(()=>{
+        (0,deprecated/* deprecated */.x9)("RedirectToOrganizationProfile", "Use the `redirectToOrganizationProfile()` method instead.");
+        void clerk.redirectToOrganizationProfile();
+    }, []);
+    return null;
+}, "RedirectToOrganizationProfile");
+var RedirectToCreateOrganization = withClerk(({ clerk })=>{
+    react.useEffect(()=>{
+        (0,deprecated/* deprecated */.x9)("RedirectToCreateOrganization", "Use the `redirectToCreateOrganization()` method instead.");
+        void clerk.redirectToCreateOrganization();
+    }, []);
+    return null;
+}, "RedirectToCreateOrganization");
+var AuthenticateWithRedirectCallback = withClerk(({ clerk, ...handleRedirectCallbackParams })=>{
+    react.useEffect(()=>{
+        void clerk.handleRedirectCallback(handleRedirectCallbackParams);
+    }, []);
+    return null;
+}, "AuthenticateWithRedirectCallback");
+var MultisessionAppSupport = ({ children })=>{
+    chunk_T2VIWQBM_useAssertWrappedByClerkProvider("MultisessionAppSupport");
+    const session = useSessionContext();
+    return /* @__PURE__ */ /*#__PURE__*/ React3.createElement(React3.Fragment, {
+        key: session ? session.id : "no-users"
+    }, children);
+};
+ //# sourceMappingURL=chunk-T2VIWQBM.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/clerk-react/dist/chunk-OANWQR3B.mjs
 var __typeError = (msg)=>{
     throw TypeError(msg);
 };
-var __export = (target, all)=>{
-    for(var name in all)__defProp(target, name, {
-        get: all[name],
-        enumerable: true
-    });
+var __accessCheck = (obj, member, msg)=>member.has(obj) || __typeError("Cannot " + msg);
+var __privateGet = (obj, member, getter)=>(__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateAdd = (obj, member, value)=>member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+var __privateSet = (obj, member, value, setter)=>(__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
+var __privateMethod = (obj, member, method)=>(__accessCheck(obj, member, "access private method"), method);
+ //# sourceMappingURL=chunk-OANWQR3B.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-H6P3BF7R.mjs
+// src/versionSelector.ts
+var versionSelector = (clerkJSVersion, packageVersion = "5.62.1")=>{
+    if (clerkJSVersion) {
+        return clerkJSVersion;
+    }
+    const prereleaseTag = getPrereleaseTag(packageVersion);
+    if (prereleaseTag) {
+        if (prereleaseTag === "snapshot") {
+            return "5.62.1";
+        }
+        return prereleaseTag;
+    }
+    return getMajorVersion(packageVersion);
 };
-var __copyProps = (to, from, except, desc)=>{
-    if (from && typeof from === "object" || typeof from === "function") {
-        for (let key of __getOwnPropNames(from))if (!__hasOwnProp.call(to, key) && key !== except) __defProp(to, key, {
-            get: ()=>from[key],
-            enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
+var getPrereleaseTag = (packageVersion)=>packageVersion.trim().replace(/^v/, "").match(/-(.+?)(\.|$)/)?.[1];
+var getMajorVersion = (packageVersion)=>packageVersion.trim().replace(/^v/, "").split(".")[0];
+ //# sourceMappingURL=chunk-H6P3BF7R.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-6NDGN2IU.mjs
+// src/proxy.ts
+function isValidProxyUrl(key) {
+    if (!key) {
+        return true;
+    }
+    return isHttpOrHttps(key) || isProxyUrlRelative(key);
+}
+function isHttpOrHttps(key) {
+    return /^http(s)?:\/\//.test(key || "");
+}
+function isProxyUrlRelative(key) {
+    return key.startsWith("/");
+}
+function proxyUrlToAbsoluteURL(url) {
+    if (!url) {
+        return "";
+    }
+    return isProxyUrlRelative(url) ? new URL(url, window.location.origin).toString() : url;
+}
+ //# sourceMappingURL=chunk-6NDGN2IU.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-IFTVZ2LQ.mjs
+
+
+// src/url.ts
+function parseSearchParams(queryString = "") {
+    if (queryString.startsWith("?")) {
+        queryString = queryString.slice(1);
+    }
+    return new URLSearchParams(queryString);
+}
+function stripScheme(url = "") {
+    return (url || "").replace(/^.+:\/\//, "");
+}
+function addClerkPrefix(str) {
+    if (!str) {
+        return "";
+    }
+    let regex;
+    if (str.match(/^(clerk\.)+\w*$/)) {
+        regex = /(clerk\.)*(?=clerk\.)/;
+    } else if (str.match(/\.clerk.accounts/)) {
+        return str;
+    } else {
+        regex = /^(clerk\.)*/gi;
+    }
+    const stripped = str.replace(regex, "");
+    return `clerk.${stripped}`;
+}
+var getClerkJsMajorVersionOrTag = (frontendApi, version)=>{
+    if (!version && isStaging(frontendApi)) {
+        return "canary";
+    }
+    if (!version) {
+        return "latest";
+    }
+    return version.split(".")[0] || "latest";
+};
+var getScriptUrl = (frontendApi, { clerkJSVersion })=>{
+    const noSchemeFrontendApi = frontendApi.replace(/http(s)?:\/\//, "");
+    const major = getClerkJsMajorVersionOrTag(frontendApi, clerkJSVersion);
+    return `https://${noSchemeFrontendApi}/npm/@clerk/clerk-js@${clerkJSVersion || major}/dist/clerk.browser.js`;
+};
+function isLegacyDevAccountPortalOrigin(host) {
+    return LEGACY_DEV_INSTANCE_SUFFIXES.some((legacyDevSuffix)=>{
+        return host.startsWith("accounts.") && host.endsWith(legacyDevSuffix);
+    });
+}
+function isCurrentDevAccountPortalOrigin(host) {
+    return CURRENT_DEV_INSTANCE_SUFFIXES.some((currentDevSuffix)=>{
+        return host.endsWith(currentDevSuffix) && !host.endsWith(".clerk" + currentDevSuffix);
+    });
+}
+var TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
+function hasTrailingSlash(input = "", respectQueryAndFragment) {
+    if (!respectQueryAndFragment) {
+        return input.endsWith("/");
+    }
+    return TRAILING_SLASH_RE.test(input);
+}
+function withTrailingSlash(input = "", respectQueryAndFragment) {
+    if (!respectQueryAndFragment) {
+        return input.endsWith("/") ? input : input + "/";
+    }
+    if (hasTrailingSlash(input, true)) {
+        return input || "/";
+    }
+    let path = input;
+    let fragment = "";
+    const fragmentIndex = input.indexOf("#");
+    if (fragmentIndex >= 0) {
+        path = input.slice(0, fragmentIndex);
+        fragment = input.slice(fragmentIndex);
+        if (!path) {
+            return fragment;
+        }
+    }
+    const [s0, ...s] = path.split("?");
+    return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + fragment;
+}
+function withoutTrailingSlash(input = "", respectQueryAndFragment) {
+    if (!respectQueryAndFragment) {
+        return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/";
+    }
+    if (!hasTrailingSlash(input, true)) {
+        return input || "/";
+    }
+    let path = input;
+    let fragment = "";
+    const fragmentIndex = input.indexOf("#");
+    if (fragmentIndex >= 0) {
+        path = input.slice(0, fragmentIndex);
+        fragment = input.slice(fragmentIndex);
+    }
+    const [s0, ...s] = path.split("?");
+    return (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + fragment;
+}
+function hasLeadingSlash(input = "") {
+    return input.startsWith("/");
+}
+function withoutLeadingSlash(input = "") {
+    return (hasLeadingSlash(input) ? input.slice(1) : input) || "/";
+}
+function withLeadingSlash(input = "") {
+    return hasLeadingSlash(input) ? input : "/" + input;
+}
+function cleanDoubleSlashes(input = "") {
+    return input.split("://").map((string_)=>string_.replace(/\/{2,}/g, "/")).join("://");
+}
+function isNonEmptyURL(url) {
+    return url && url !== "/";
+}
+var JOIN_LEADING_SLASH_RE = /^\.?\//;
+function joinURL(base, ...input) {
+    let url = base || "";
+    for (const segment of input.filter((url2)=>isNonEmptyURL(url2))){
+        if (url) {
+            const _segment = segment.replace(JOIN_LEADING_SLASH_RE, "");
+            url = withTrailingSlash(url) + _segment;
+        } else {
+            url = segment;
+        }
+    }
+    return url;
+}
+var ABSOLUTE_URL_REGEX = /^[a-zA-Z][a-zA-Z\d+\-.]*?:/;
+var isAbsoluteUrl = (url)=>ABSOLUTE_URL_REGEX.test(url);
+ //# sourceMappingURL=chunk-IFTVZ2LQ.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-N2V3PKFE.mjs
+var chunk_N2V3PKFE = __webpack_require__(7571);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-E3R3SJ7O.mjs
+
+// src/loadScript.ts
+var NO_DOCUMENT_ERROR = "loadScript cannot be called when document does not exist";
+var NO_SRC_ERROR = "loadScript cannot be called without a src";
+async function loadScript(src = "", opts) {
+    const { async, defer, beforeLoad, crossOrigin, nonce } = opts || {};
+    const load = ()=>{
+        return new Promise((resolve, reject)=>{
+            if (!src) {
+                reject(new Error(NO_SRC_ERROR));
+            }
+            if (!document || !document.body) {
+                reject(NO_DOCUMENT_ERROR);
+            }
+            const script = document.createElement("script");
+            if (crossOrigin) script.setAttribute("crossorigin", crossOrigin);
+            script.async = async || false;
+            script.defer = defer || false;
+            script.addEventListener("load", ()=>{
+                script.remove();
+                resolve(script);
+            });
+            script.addEventListener("error", ()=>{
+                script.remove();
+                reject();
+            });
+            script.src = src;
+            script.nonce = nonce;
+            beforeLoad?.(script);
+            document.body.appendChild(script);
+        });
+    };
+    return (0,chunk_N2V3PKFE/* retry */.X)(load, {
+        shouldRetry: (_, iterations)=>iterations <= 5
+    });
+}
+ //# sourceMappingURL=chunk-E3R3SJ7O.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-G3VP5PJE.mjs + 1 modules
+var chunk_G3VP5PJE = __webpack_require__(3293);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-ZRKGQZMU.mjs
+
+
+
+
+
+
+// src/loadClerkJsScript.ts
+var FAILED_TO_LOAD_ERROR = "Clerk: Failed to load Clerk";
+var { isDevOrStagingUrl } = (0,chunk_G3VP5PJE/* createDevOrStagingUrlCache */.MY)();
+var chunk_ZRKGQZMU_errorThrower = (0,chunk_NT4JRXL3/* buildErrorThrower */.t5)({
+    packageName: "@clerk/shared"
+});
+function setClerkJsLoadingErrorPackageName(packageName) {
+    chunk_ZRKGQZMU_errorThrower.setPackageName({
+        packageName
+    });
+}
+var loadClerkJsScript = async (opts)=>{
+    const existingScript = document.querySelector("script[data-clerk-js-script]");
+    if (existingScript) {
+        return new Promise((resolve, reject)=>{
+            existingScript.addEventListener("load", ()=>{
+                resolve(existingScript);
+            });
+            existingScript.addEventListener("error", ()=>{
+                reject(FAILED_TO_LOAD_ERROR);
+            });
         });
     }
-    return to;
+    if (!opts?.publishableKey) {
+        chunk_ZRKGQZMU_errorThrower.throwMissingPublishableKeyError();
+        return;
+    }
+    return loadScript(clerkJsScriptUrl(opts), {
+        async: true,
+        crossOrigin: "anonymous",
+        nonce: opts.nonce,
+        beforeLoad: applyClerkJsScriptAttributes(opts)
+    }).catch(()=>{
+        throw new Error(FAILED_TO_LOAD_ERROR);
+    });
 };
-var __reExport = (target, mod, secondTarget)=>(__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
-var __accessCheck = (obj, member, msg)=>member.has(obj) || __typeError("Cannot " + msg);
-var chunk_7ELT755Q_privateGet = (obj, member, getter)=>(__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
-var chunk_7ELT755Q_privateAdd = (obj, member, value)=>member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-var chunk_7ELT755Q_privateSet = (obj, member, value, setter)=>(__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
-var chunk_7ELT755Q_privateMethod = (obj, member, method)=>(__accessCheck(obj, member, "access private method"), method);
- //# sourceMappingURL=chunk-7ELT755Q.mjs.map
+var clerkJsScriptUrl = (opts)=>{
+    const { clerkJSUrl, clerkJSVariant, clerkJSVersion, proxyUrl, domain, publishableKey } = opts;
+    if (clerkJSUrl) {
+        return clerkJSUrl;
+    }
+    let scriptHost = "";
+    if (!!proxyUrl && isValidProxyUrl(proxyUrl)) {
+        scriptHost = proxyUrlToAbsoluteURL(proxyUrl).replace(/http(s)?:\/\//, "");
+    } else if (domain && !isDevOrStagingUrl((0,chunk_G3VP5PJE/* parsePublishableKey */.nQ)(publishableKey)?.frontendApi || "")) {
+        scriptHost = addClerkPrefix(domain);
+    } else {
+        scriptHost = (0,chunk_G3VP5PJE/* parsePublishableKey */.nQ)(publishableKey)?.frontendApi || "";
+    }
+    const variant = clerkJSVariant ? `${clerkJSVariant.replace(/\.+$/, "")}.` : "";
+    const version = versionSelector(clerkJSVersion);
+    return `https://${scriptHost}/npm/@clerk/clerk-js@${version}/dist/clerk.${variant}browser.js`;
+};
+var buildClerkJsScriptAttributes = (options)=>{
+    const obj = {};
+    if (options.publishableKey) {
+        obj["data-clerk-publishable-key"] = options.publishableKey;
+    }
+    if (options.proxyUrl) {
+        obj["data-clerk-proxy-url"] = options.proxyUrl;
+    }
+    if (options.domain) {
+        obj["data-clerk-domain"] = options.domain;
+    }
+    if (options.nonce) {
+        obj.nonce = options.nonce;
+    }
+    return obj;
+};
+var applyClerkJsScriptAttributes = (options)=>(script)=>{
+        const attributes = buildClerkJsScriptAttributes(options);
+        for(const attribute in attributes){
+            script.setAttribute(attribute, attributes[attribute]);
+        }
+    };
+ //# sourceMappingURL=chunk-ZRKGQZMU.mjs.map
 
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/loadClerkJsScript.mjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+ //# sourceMappingURL=loadClerkJsScript.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/utils/index.mjs + 1 modules
+var utils = __webpack_require__(1620);
+// EXTERNAL MODULE: ./node_modules/react-dom/index.js
+var react_dom = __webpack_require__(4337);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-CFXQSUF6.mjs
+// src/object.ts
+var without = (obj, ...props)=>{
+    const copy = {
+        ...obj
+    };
+    for (const prop of props){
+        delete copy[prop];
+    }
+    return copy;
+};
+var removeUndefined = (obj)=>{
+    return Object.entries(obj).reduce((acc, [key, value])=>{
+        if (value !== void 0 && value !== null) {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
+};
+var applyFunctionToObj = (obj, fn)=>{
+    const result = {};
+    for(const key in obj){
+        result[key] = fn(obj[key], key);
+    }
+    return result;
+};
+var filterProps = (obj, filter)=>{
+    const result = {};
+    for(const key in obj){
+        if (obj[key] && filter(obj[key])) {
+            result[key] = obj[key];
+        }
+    }
+    return result;
+};
+ //# sourceMappingURL=chunk-CFXQSUF6.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/object.mjs
+
+
+ //# sourceMappingURL=object.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/keys.mjs
+var keys = __webpack_require__(9389);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-ZIXJBK4O.mjs
+// src/deriveState.ts
+var deriveState = (clerkOperational, state, initialState)=>{
+    if (!clerkOperational && initialState) {
+        return deriveFromSsrInitialState(initialState);
+    }
+    return deriveFromClientSideState(state);
+};
+var deriveFromSsrInitialState = (initialState)=>{
+    const userId = initialState.userId;
+    const user = initialState.user;
+    const sessionId = initialState.sessionId;
+    const sessionStatus = initialState.sessionStatus;
+    const sessionClaims = initialState.sessionClaims;
+    const session = initialState.session;
+    const organization = initialState.organization;
+    const orgId = initialState.orgId;
+    const orgRole = initialState.orgRole;
+    const orgPermissions = initialState.orgPermissions;
+    const orgSlug = initialState.orgSlug;
+    const actor = initialState.actor;
+    const factorVerificationAge = initialState.factorVerificationAge;
+    return {
+        userId,
+        user,
+        sessionId,
+        session,
+        sessionStatus,
+        sessionClaims,
+        organization,
+        orgId,
+        orgRole,
+        orgPermissions,
+        orgSlug,
+        actor,
+        factorVerificationAge
+    };
+};
+var deriveFromClientSideState = (state)=>{
+    const userId = state.user ? state.user.id : state.user;
+    const user = state.user;
+    const sessionId = state.session ? state.session.id : state.session;
+    const session = state.session;
+    const sessionStatus = state.session?.status;
+    const sessionClaims = state.session ? state.session.lastActiveToken?.jwt?.claims : null;
+    const factorVerificationAge = state.session ? state.session.factorVerificationAge : null;
+    const actor = session?.actor;
+    const organization = state.organization;
+    const orgId = state.organization ? state.organization.id : state.organization;
+    const orgSlug = organization?.slug;
+    const membership = organization ? user?.organizationMemberships?.find((om)=>om.organization.id === orgId) : organization;
+    const orgPermissions = membership ? membership.permissions : membership;
+    const orgRole = membership ? membership.role : membership;
+    return {
+        userId,
+        user,
+        sessionId,
+        session,
+        sessionStatus,
+        sessionClaims,
+        organization,
+        orgId,
+        orgRole,
+        orgSlug,
+        orgPermissions,
+        actor,
+        factorVerificationAge
+    };
+};
+ //# sourceMappingURL=chunk-ZIXJBK4O.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/deriveState.mjs
+
+
+ //# sourceMappingURL=deriveState.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-JKSAJ6AV.mjs
+// src/browser.ts
+function inBrowser() {
+    return "undefined" !== "undefined";
+}
+var botAgents = [
+    "bot",
+    "spider",
+    "crawl",
+    "APIs-Google",
+    "AdsBot",
+    "Googlebot",
+    "mediapartners",
+    "Google Favicon",
+    "FeedFetcher",
+    "Google-Read-Aloud",
+    "DuplexWeb-Google",
+    "googleweblight",
+    "bing",
+    "yandex",
+    "baidu",
+    "duckduck",
+    "yahoo",
+    "ecosia",
+    "ia_archiver",
+    "facebook",
+    "instagram",
+    "pinterest",
+    "reddit",
+    "slack",
+    "twitter",
+    "whatsapp",
+    "youtube",
+    "semrush"
+];
+var botAgentRegex = new RegExp(botAgents.join("|"), "i");
+function userAgentIsRobot(userAgent) {
+    return !userAgent ? false : botAgentRegex.test(userAgent);
+}
+function isValidBrowser() {
+    const navigator = inBrowser() ? window?.navigator : null;
+    if (!navigator) {
+        return false;
+    }
+    return !userAgentIsRobot(navigator?.userAgent) && !navigator?.webdriver;
+}
+function isBrowserOnline() {
+    const navigator = inBrowser() ? window?.navigator : null;
+    if (!navigator) {
+        return false;
+    }
+    const isNavigatorOnline = navigator?.onLine;
+    const isExperimentalConnectionOnline = navigator?.connection?.rtt !== 0 && navigator?.connection?.downlink !== 0;
+    return isExperimentalConnectionOnline && isNavigatorOnline;
+}
+function isValidBrowserOnline() {
+    return isBrowserOnline() && isValidBrowser();
+}
+ //# sourceMappingURL=chunk-JKSAJ6AV.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/browser.mjs
+
+
+ //# sourceMappingURL=browser.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-GVKBGR5N.mjs
+// src/eventBus.ts
+var _on = (eventToHandlersMap, latestPayloadMap, event, handler, opts)=>{
+    const { notify } = opts || {};
+    let handlers = eventToHandlersMap.get(event);
+    if (!handlers) {
+        handlers = [];
+        eventToHandlersMap.set(event, handlers);
+    }
+    handlers.push(handler);
+    if (notify && latestPayloadMap.has(event)) {
+        handler(latestPayloadMap.get(event));
+    }
+};
+var _dispatch = (eventToHandlersMap, event, payload)=>(eventToHandlersMap.get(event) || []).map((h)=>h(payload));
+var _off = (eventToHandlersMap, event, handler)=>{
+    const handlers = eventToHandlersMap.get(event);
+    if (handlers) {
+        if (handler) {
+            handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+        } else {
+            eventToHandlersMap.set(event, []);
+        }
+    }
+};
+var createEventBus = ()=>{
+    const eventToHandlersMap = /* @__PURE__ */ new Map();
+    const latestPayloadMap = /* @__PURE__ */ new Map();
+    const eventToPredispatchHandlersMap = /* @__PURE__ */ new Map();
+    const emit = (event, payload)=>{
+        latestPayloadMap.set(event, payload);
+        _dispatch(eventToPredispatchHandlersMap, event, payload);
+        _dispatch(eventToHandlersMap, event, payload);
+    };
+    return {
+        // Subscribe to an event
+        on: (...args)=>_on(eventToHandlersMap, latestPayloadMap, ...args),
+        // Subscribe to an event with priority
+        // Registered handlers with `prioritizedOn` will be called before handlers registered with `on`
+        prioritizedOn: (...args)=>_on(eventToPredispatchHandlersMap, latestPayloadMap, ...args),
+        // Dispatch an event
+        emit,
+        // Unsubscribe from an event
+        off: (...args)=>_off(eventToHandlersMap, ...args),
+        // Unsubscribe from an event with priority
+        // Unsubscribes handlers only registered with `prioritizedOn`
+        prioritizedOff: (...args)=>_off(eventToPredispatchHandlersMap, ...args),
+        // Internal utilities
+        internal: {
+            retrieveListeners: (event)=>eventToHandlersMap.get(event) || []
+        }
+    };
+};
+ //# sourceMappingURL=chunk-GVKBGR5N.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/clerkEventBus.mjs
+
+
+// src/clerkEventBus.ts
+var clerkEvents = {
+    Status: "status"
+};
+var createClerkEventBus = ()=>{
+    return createEventBus();
+};
+ //# sourceMappingURL=clerkEventBus.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/clerk-react/dist/index.mjs
+
+
+// src/polyfills.ts
+if (false) {}
+// src/index.ts
+
+// src/components/uiComponents.tsx
+
+
+// src/utils/childrenUtils.tsx
+
+var assertSingleChild = (children)=>(name)=>{
+        try {
+            return react.Children.only(children);
+        } catch  {
+            return chunk_T2VIWQBM_errorThrower.throw(multipleChildrenInButtonComponent(name));
+        }
+    };
+var normalizeWithDefaultValue = (children, defaultText)=>{
+    if (!children) {
+        children = defaultText;
+    }
+    if (typeof children === "string") {
+        children = /* @__PURE__ */ /*#__PURE__*/ react.createElement("button", null, children);
+    }
+    return children;
+};
+var safeExecute = (cb)=>(...args)=>{
+        if (cb && typeof cb === "function") {
+            return cb(...args);
+        }
+    };
+// src/utils/isConstructor.ts
+function isConstructor(f) {
+    return typeof f === "function";
+}
+// src/utils/useMaxAllowedInstancesGuard.tsx
+
+var counts = /* @__PURE__ */ new Map();
+function useMaxAllowedInstancesGuard(name, error, maxCount = 1) {
+    react.useEffect(()=>{
+        const count = counts.get(name) || 0;
+        if (count == maxCount) {
+            return chunk_T2VIWQBM_errorThrower.throw(error);
+        }
+        counts.set(name, count + 1);
+        return ()=>{
+            counts.set(name, (counts.get(name) || 1) - 1);
+        };
+    }, []);
+}
+function withMaxAllowedInstancesGuard(WrappedComponent, name, error) {
+    const displayName = WrappedComponent.displayName || WrappedComponent.name || name || "Component";
+    const Hoc = (props)=>{
+        useMaxAllowedInstancesGuard(name, error);
+        return /* @__PURE__ */ /*#__PURE__*/ react.createElement(WrappedComponent, {
+            ...props
+        });
+    };
+    Hoc.displayName = `withMaxAllowedInstancesGuard(${displayName})`;
+    return Hoc;
+}
+// src/utils/useCustomElementPortal.tsx
+
+
+var useCustomElementPortal = (elements)=>{
+    const initialState = Array(elements.length).fill(null);
+    const [nodes, setNodes] = (0,react.useState)(initialState);
+    return elements.map((el, index)=>({
+            id: el.id,
+            mount: (node)=>setNodes((prevState)=>prevState.map((n, i)=>i === index ? node : n)),
+            unmount: ()=>setNodes((prevState)=>prevState.map((n, i)=>i === index ? null : n)),
+            portal: ()=>/* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, nodes[index] ? /*#__PURE__*/ (0,react_dom.createPortal)(el.component, nodes[index]) : null)
+        }));
+};
+// src/utils/useCustomPages.tsx
+
+
+// src/utils/componentValidation.ts
+
+var isThatComponent = (v, component)=>{
+    return !!v && /*#__PURE__*/ react.isValidElement(v) && (v == null ? void 0 : v.type) === component;
+};
+// src/utils/useCustomPages.tsx
+var useUserProfileCustomPages = (children, options)=>{
+    const reorderItemsLabels = [
+        "account",
+        "security"
+    ];
+    return useCustomPages({
+        children,
+        reorderItemsLabels,
+        LinkComponent: UserProfileLink,
+        PageComponent: UserProfilePage,
+        MenuItemsComponent: MenuItems,
+        componentName: "UserProfile"
+    }, options);
+};
+var useOrganizationProfileCustomPages = (children, options)=>{
+    const reorderItemsLabels = [
+        "general",
+        "members"
+    ];
+    return useCustomPages({
+        children,
+        reorderItemsLabels,
+        LinkComponent: OrganizationProfileLink,
+        PageComponent: OrganizationProfilePage,
+        componentName: "OrganizationProfile"
+    }, options);
+};
+var useSanitizedChildren = (children)=>{
+    const sanitizedChildren = [];
+    const excludedComponents = [
+        OrganizationProfileLink,
+        OrganizationProfilePage,
+        MenuItems,
+        UserProfilePage,
+        UserProfileLink
+    ];
+    react.Children.forEach(children, (child)=>{
+        if (!excludedComponents.some((component)=>isThatComponent(child, component))) {
+            sanitizedChildren.push(child);
+        }
+    });
+    return sanitizedChildren;
+};
+var useCustomPages = (params, options)=>{
+    const { children, LinkComponent, PageComponent, MenuItemsComponent, reorderItemsLabels, componentName } = params;
+    const { allowForAnyChildren = false } = options || {};
+    const validChildren = [];
+    react.Children.forEach(children, (child)=>{
+        if (!isThatComponent(child, PageComponent) && !isThatComponent(child, LinkComponent) && !isThatComponent(child, MenuItemsComponent)) {
+            if (child && !allowForAnyChildren) {
+                (0,utils/* logErrorInDevMode */.yJ)(customPagesIgnoredComponent(componentName));
+            }
+            return;
+        }
+        const { props } = child;
+        const { children: children2, label, url, labelIcon } = props;
+        if (isThatComponent(child, PageComponent)) {
+            if (isReorderItem(props, reorderItemsLabels)) {
+                validChildren.push({
+                    label
+                });
+            } else if (isCustomPage(props)) {
+                validChildren.push({
+                    label,
+                    labelIcon,
+                    children: children2,
+                    url
+                });
+            } else {
+                (0,utils/* logErrorInDevMode */.yJ)(customPageWrongProps(componentName));
+                return;
+            }
+        }
+        if (isThatComponent(child, LinkComponent)) {
+            if (isExternalLink(props)) {
+                validChildren.push({
+                    label,
+                    labelIcon,
+                    url
+                });
+            } else {
+                (0,utils/* logErrorInDevMode */.yJ)(customLinkWrongProps(componentName));
+                return;
+            }
+        }
+    });
+    const customPageContents = [];
+    const customPageLabelIcons = [];
+    const customLinkLabelIcons = [];
+    validChildren.forEach((cp, index)=>{
+        if (isCustomPage(cp)) {
+            customPageContents.push({
+                component: cp.children,
+                id: index
+            });
+            customPageLabelIcons.push({
+                component: cp.labelIcon,
+                id: index
+            });
+            return;
+        }
+        if (isExternalLink(cp)) {
+            customLinkLabelIcons.push({
+                component: cp.labelIcon,
+                id: index
+            });
+        }
+    });
+    const customPageContentsPortals = useCustomElementPortal(customPageContents);
+    const customPageLabelIconsPortals = useCustomElementPortal(customPageLabelIcons);
+    const customLinkLabelIconsPortals = useCustomElementPortal(customLinkLabelIcons);
+    const customPages = [];
+    const customPagesPortals = [];
+    validChildren.forEach((cp, index)=>{
+        if (isReorderItem(cp, reorderItemsLabels)) {
+            customPages.push({
+                label: cp.label
+            });
+            return;
+        }
+        if (isCustomPage(cp)) {
+            const { portal: contentPortal, mount, unmount } = customPageContentsPortals.find((p)=>p.id === index);
+            const { portal: labelPortal, mount: mountIcon, unmount: unmountIcon } = customPageLabelIconsPortals.find((p)=>p.id === index);
+            customPages.push({
+                label: cp.label,
+                url: cp.url,
+                mount,
+                unmount,
+                mountIcon,
+                unmountIcon
+            });
+            customPagesPortals.push(contentPortal);
+            customPagesPortals.push(labelPortal);
+            return;
+        }
+        if (isExternalLink(cp)) {
+            const { portal: labelPortal, mount: mountIcon, unmount: unmountIcon } = customLinkLabelIconsPortals.find((p)=>p.id === index);
+            customPages.push({
+                label: cp.label,
+                url: cp.url,
+                mountIcon,
+                unmountIcon
+            });
+            customPagesPortals.push(labelPortal);
+            return;
+        }
+    });
+    return {
+        customPages,
+        customPagesPortals
+    };
+};
+var isReorderItem = (childProps, validItems)=>{
+    const { children, label, url, labelIcon } = childProps;
+    return !children && !url && !labelIcon && validItems.some((v)=>v === label);
+};
+var isCustomPage = (childProps)=>{
+    const { children, label, url, labelIcon } = childProps;
+    return !!children && !!url && !!labelIcon && !!label;
+};
+var isExternalLink = (childProps)=>{
+    const { children, label, url, labelIcon } = childProps;
+    return !children && !!url && !!labelIcon && !!label;
+};
+// src/utils/useCustomMenuItems.tsx
+
+
+var useUserButtonCustomMenuItems = (children)=>{
+    const reorderItemsLabels = [
+        "manageAccount",
+        "signOut"
+    ];
+    return useCustomMenuItems({
+        children,
+        reorderItemsLabels,
+        MenuItemsComponent: MenuItems,
+        MenuActionComponent: MenuAction,
+        MenuLinkComponent: MenuLink,
+        UserProfileLinkComponent: UserProfileLink,
+        UserProfilePageComponent: UserProfilePage
+    });
+};
+var useCustomMenuItems = ({ children, MenuItemsComponent, MenuActionComponent, MenuLinkComponent, UserProfileLinkComponent, UserProfilePageComponent, reorderItemsLabels })=>{
+    const validChildren = [];
+    const customMenuItems = [];
+    const customMenuItemsPortals = [];
+    react.Children.forEach(children, (child)=>{
+        if (!isThatComponent(child, MenuItemsComponent) && !isThatComponent(child, UserProfileLinkComponent) && !isThatComponent(child, UserProfilePageComponent)) {
+            if (child) {
+                (0,utils/* logErrorInDevMode */.yJ)(userButtonIgnoredComponent);
+            }
+            return;
+        }
+        if (isThatComponent(child, UserProfileLinkComponent) || isThatComponent(child, UserProfilePageComponent)) {
+            return;
+        }
+        const { props } = child;
+        react.Children.forEach(props.children, (child2)=>{
+            if (!isThatComponent(child2, MenuActionComponent) && !isThatComponent(child2, MenuLinkComponent)) {
+                if (child2) {
+                    (0,utils/* logErrorInDevMode */.yJ)(customMenuItemsIgnoredComponent);
+                }
+                return;
+            }
+            const { props: props2 } = child2;
+            const { label, labelIcon, href, onClick, open } = props2;
+            if (isThatComponent(child2, MenuActionComponent)) {
+                if (isReorderItem2(props2, reorderItemsLabels)) {
+                    validChildren.push({
+                        label
+                    });
+                } else if (isCustomMenuItem(props2)) {
+                    const baseItem = {
+                        label,
+                        labelIcon
+                    };
+                    if (onClick !== void 0) {
+                        validChildren.push({
+                            ...baseItem,
+                            onClick
+                        });
+                    } else if (open !== void 0) {
+                        validChildren.push({
+                            ...baseItem,
+                            open: open.startsWith("/") ? open : `/${open}`
+                        });
+                    } else {
+                        (0,utils/* logErrorInDevMode */.yJ)("Custom menu item must have either onClick or open property");
+                        return;
+                    }
+                } else {
+                    (0,utils/* logErrorInDevMode */.yJ)(userButtonMenuItemsActionWrongsProps);
+                    return;
+                }
+            }
+            if (isThatComponent(child2, MenuLinkComponent)) {
+                if (isExternalLink2(props2)) {
+                    validChildren.push({
+                        label,
+                        labelIcon,
+                        href
+                    });
+                } else {
+                    (0,utils/* logErrorInDevMode */.yJ)(userButtonMenuItemLinkWrongProps);
+                    return;
+                }
+            }
+        });
+    });
+    const customMenuItemLabelIcons = [];
+    const customLinkLabelIcons = [];
+    validChildren.forEach((mi, index)=>{
+        if (isCustomMenuItem(mi)) {
+            customMenuItemLabelIcons.push({
+                component: mi.labelIcon,
+                id: index
+            });
+        }
+        if (isExternalLink2(mi)) {
+            customLinkLabelIcons.push({
+                component: mi.labelIcon,
+                id: index
+            });
+        }
+    });
+    const customMenuItemLabelIconsPortals = useCustomElementPortal(customMenuItemLabelIcons);
+    const customLinkLabelIconsPortals = useCustomElementPortal(customLinkLabelIcons);
+    validChildren.forEach((mi, index)=>{
+        if (isReorderItem2(mi, reorderItemsLabels)) {
+            customMenuItems.push({
+                label: mi.label
+            });
+        }
+        if (isCustomMenuItem(mi)) {
+            const { portal: iconPortal, mount: mountIcon, unmount: unmountIcon } = customMenuItemLabelIconsPortals.find((p)=>p.id === index);
+            const menuItem = {
+                label: mi.label,
+                mountIcon,
+                unmountIcon
+            };
+            if ("onClick" in mi) {
+                menuItem.onClick = mi.onClick;
+            } else if ("open" in mi) {
+                menuItem.open = mi.open;
+            }
+            customMenuItems.push(menuItem);
+            customMenuItemsPortals.push(iconPortal);
+        }
+        if (isExternalLink2(mi)) {
+            const { portal: iconPortal, mount: mountIcon, unmount: unmountIcon } = customLinkLabelIconsPortals.find((p)=>p.id === index);
+            customMenuItems.push({
+                label: mi.label,
+                href: mi.href,
+                mountIcon,
+                unmountIcon
+            });
+            customMenuItemsPortals.push(iconPortal);
+        }
+    });
+    return {
+        customMenuItems,
+        customMenuItemsPortals
+    };
+};
+var isReorderItem2 = (childProps, validItems)=>{
+    const { children, label, onClick, labelIcon } = childProps;
+    return !children && !onClick && !labelIcon && validItems.some((v)=>v === label);
+};
+var isCustomMenuItem = (childProps)=>{
+    const { label, labelIcon, onClick, open } = childProps;
+    return !!labelIcon && !!label && (typeof onClick === "function" || typeof open === "string");
+};
+var isExternalLink2 = (childProps)=>{
+    const { label, href, labelIcon } = childProps;
+    return !!href && !!labelIcon && !!label;
+};
+// src/utils/useWaitForComponentMount.ts
+
+function waitForElementChildren(options) {
+    const { root = document == null ? void 0 : document.body, selector, timeout = 0 } = options;
+    return new Promise((resolve, reject)=>{
+        if (!root) {
+            reject(new Error("No root element provided"));
+            return;
+        }
+        let elementToWatch = root;
+        if (selector) {
+            elementToWatch = root == null ? void 0 : root.querySelector(selector);
+        }
+        const isElementAlreadyPresent = (elementToWatch == null ? void 0 : elementToWatch.childElementCount) && elementToWatch.childElementCount > 0;
+        if (isElementAlreadyPresent) {
+            resolve();
+            return;
+        }
+        const observer = new MutationObserver((mutationsList)=>{
+            for (const mutation of mutationsList){
+                if (mutation.type === "childList") {
+                    if (!elementToWatch && selector) {
+                        elementToWatch = root == null ? void 0 : root.querySelector(selector);
+                    }
+                    if ((elementToWatch == null ? void 0 : elementToWatch.childElementCount) && elementToWatch.childElementCount > 0) {
+                        observer.disconnect();
+                        resolve();
+                        return;
+                    }
+                }
+            }
+        });
+        observer.observe(root, {
+            childList: true,
+            subtree: true
+        });
+        if (timeout > 0) {
+            setTimeout(()=>{
+                observer.disconnect();
+                reject(new Error(`Timeout waiting for element children`));
+            }, timeout);
+        }
+    });
+}
+function useWaitForComponentMount(component) {
+    const watcherRef = (0,react.useRef)();
+    const [status, setStatus] = (0,react.useState)("rendering");
+    (0,react.useEffect)(()=>{
+        if (!component) {
+            throw new Error("Clerk: no component name provided, unable to detect mount.");
+        }
+        if (false) {}
+    }, [
+        component
+    ]);
+    return status;
+}
+// src/components/ClerkHostRenderer.tsx
+
+
+
+var isMountProps = (props)=>{
+    return "mount" in props;
+};
+var isOpenProps = (props)=>{
+    return "open" in props;
+};
+var stripMenuItemIconHandlers = (menuItems)=>{
+    return menuItems == null ? void 0 : menuItems.map(({ mountIcon, unmountIcon, ...rest })=>rest);
+};
+var ClerkHostRenderer = class extends react.PureComponent {
+    constructor(){
+        super(...arguments);
+        this.rootRef = /*#__PURE__*/ react.createRef();
+    }
+    componentDidUpdate(_prevProps) {
+        var _a, _b, _c, _d;
+        if (!isMountProps(_prevProps) || !isMountProps(this.props)) {
+            return;
+        }
+        const prevProps = without(_prevProps.props, "customPages", "customMenuItems", "children");
+        const newProps = without(this.props.props, "customPages", "customMenuItems", "children");
+        const customPagesChanged = ((_a = prevProps.customPages) == null ? void 0 : _a.length) !== ((_b = newProps.customPages) == null ? void 0 : _b.length);
+        const customMenuItemsChanged = ((_c = prevProps.customMenuItems) == null ? void 0 : _c.length) !== ((_d = newProps.customMenuItems) == null ? void 0 : _d.length);
+        const prevMenuItemsWithoutHandlers = stripMenuItemIconHandlers(_prevProps.props.customMenuItems);
+        const newMenuItemsWithoutHandlers = stripMenuItemIconHandlers(this.props.props.customMenuItems);
+        if (!isDeeplyEqual(prevProps, newProps) || !isDeeplyEqual(prevMenuItemsWithoutHandlers, newMenuItemsWithoutHandlers) || customPagesChanged || customMenuItemsChanged) {
+            if (this.rootRef.current) {
+                this.props.updateProps({
+                    node: this.rootRef.current,
+                    props: this.props.props
+                });
+            }
+        }
+    }
+    componentDidMount() {
+        if (this.rootRef.current) {
+            if (isMountProps(this.props)) {
+                this.props.mount(this.rootRef.current, this.props.props);
+            }
+            if (isOpenProps(this.props)) {
+                this.props.open(this.props.props);
+            }
+        }
+    }
+    componentWillUnmount() {
+        if (this.rootRef.current) {
+            if (isMountProps(this.props)) {
+                this.props.unmount(this.rootRef.current);
+            }
+            if (isOpenProps(this.props)) {
+                this.props.close();
+            }
+        }
+    }
+    render() {
+        const { hideRootHtmlElement = false } = this.props;
+        const rootAttributes = {
+            ref: this.rootRef,
+            ...this.props.rootProps,
+            ...this.props.component && {
+                "data-clerk-component": this.props.component
+            }
+        };
+        return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, !hideRootHtmlElement && /* @__PURE__ */ /*#__PURE__*/ react.createElement("div", {
+            ...rootAttributes
+        }), this.props.children);
+    }
+};
+// src/components/uiComponents.tsx
+var CustomPortalsRenderer = (props)=>{
+    var _a, _b;
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, (_a = props == null ? void 0 : props.customPagesPortals) == null ? void 0 : _a.map((portal, index)=>/*#__PURE__*/ (0,react.createElement)(portal, {
+            key: index
+        })), (_b = props == null ? void 0 : props.customMenuItemsPortals) == null ? void 0 : _b.map((portal, index)=>/*#__PURE__*/ (0,react.createElement)(portal, {
+            key: index
+        })));
+};
+var SignIn = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        mount: clerk.mountSignIn,
+        unmount: clerk.unmountSignIn,
+        updateProps: clerk.__unstable__updateProps,
+        props,
+        rootProps: rendererRootProps
+    }));
+}, {
+    component: "SignIn",
+    renderWhileLoading: true
+});
+var SignUp = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        mount: clerk.mountSignUp,
+        unmount: clerk.unmountSignUp,
+        updateProps: clerk.__unstable__updateProps,
+        props,
+        rootProps: rendererRootProps
+    }));
+}, {
+    component: "SignUp",
+    renderWhileLoading: true
+});
+function UserProfilePage({ children }) {
+    (0,utils/* logErrorInDevMode */.yJ)(userProfilePageRenderedError);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, children);
+}
+function UserProfileLink({ children }) {
+    (0,utils/* logErrorInDevMode */.yJ)(userProfileLinkRenderedError);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, children);
+}
+var _UserProfile = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    const { customPages, customPagesPortals } = useUserProfileCustomPages(props.children);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        mount: clerk.mountUserProfile,
+        unmount: clerk.unmountUserProfile,
+        updateProps: clerk.__unstable__updateProps,
+        props: {
+            ...props,
+            customPages
+        },
+        rootProps: rendererRootProps
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(CustomPortalsRenderer, {
+        customPagesPortals
+    })));
+}, {
+    component: "UserProfile",
+    renderWhileLoading: true
+});
+var UserProfile = Object.assign(_UserProfile, {
+    Page: UserProfilePage,
+    Link: UserProfileLink
+});
+var UserButtonContext = /*#__PURE__*/ (0,react.createContext)({
+    mount: ()=>{},
+    unmount: ()=>{},
+    updateProps: ()=>{}
+});
+var _UserButton = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    const { customPages, customPagesPortals } = useUserProfileCustomPages(props.children, {
+        allowForAnyChildren: !!props.__experimental_asProvider
+    });
+    const userProfileProps = Object.assign(props.userProfileProps || {}, {
+        customPages
+    });
+    const { customMenuItems, customMenuItemsPortals } = useUserButtonCustomMenuItems(props.children);
+    const sanitizedChildren = useSanitizedChildren(props.children);
+    const passableProps = {
+        mount: clerk.mountUserButton,
+        unmount: clerk.unmountUserButton,
+        updateProps: clerk.__unstable__updateProps,
+        props: {
+            ...props,
+            userProfileProps,
+            customMenuItems
+        }
+    };
+    const portalProps = {
+        customPagesPortals,
+        customMenuItemsPortals
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(UserButtonContext.Provider, {
+        value: passableProps
+    }, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        ...passableProps,
+        hideRootHtmlElement: !!props.__experimental_asProvider,
+        rootProps: rendererRootProps
+    }, props.__experimental_asProvider ? sanitizedChildren : null, /* @__PURE__ */ /*#__PURE__*/ react.createElement(CustomPortalsRenderer, {
+        ...portalProps
+    })));
+}, {
+    component: "UserButton",
+    renderWhileLoading: true
+});
+function MenuItems({ children }) {
+    (0,utils/* logErrorInDevMode */.yJ)(userButtonMenuItemsRenderedError);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, children);
+}
+function MenuAction({ children }) {
+    (0,utils/* logErrorInDevMode */.yJ)(userButtonMenuActionRenderedError);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, children);
+}
+function MenuLink({ children }) {
+    (0,utils/* logErrorInDevMode */.yJ)(userButtonMenuLinkRenderedError);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, children);
+}
+function UserButtonOutlet(outletProps) {
+    const providerProps = (0,react.useContext)(UserButtonContext);
+    const portalProps = {
+        ...providerProps,
+        props: {
+            ...providerProps.props,
+            ...outletProps
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        ...portalProps
+    });
+}
+var UserButton = Object.assign(_UserButton, {
+    UserProfilePage,
+    UserProfileLink,
+    MenuItems,
+    Action: MenuAction,
+    Link: MenuLink,
+    __experimental_Outlet: UserButtonOutlet
+});
+function OrganizationProfilePage({ children }) {
+    (0,utils/* logErrorInDevMode */.yJ)(organizationProfilePageRenderedError);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, children);
+}
+function OrganizationProfileLink({ children }) {
+    (0,utils/* logErrorInDevMode */.yJ)(organizationProfileLinkRenderedError);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, children);
+}
+var _OrganizationProfile = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    const { customPages, customPagesPortals } = useOrganizationProfileCustomPages(props.children);
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        mount: clerk.mountOrganizationProfile,
+        unmount: clerk.unmountOrganizationProfile,
+        updateProps: clerk.__unstable__updateProps,
+        props: {
+            ...props,
+            customPages
+        },
+        rootProps: rendererRootProps
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(CustomPortalsRenderer, {
+        customPagesPortals
+    })));
+}, {
+    component: "OrganizationProfile",
+    renderWhileLoading: true
+});
+var OrganizationProfile = Object.assign(_OrganizationProfile, {
+    Page: OrganizationProfilePage,
+    Link: OrganizationProfileLink
+});
+var CreateOrganization = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        mount: clerk.mountCreateOrganization,
+        unmount: clerk.unmountCreateOrganization,
+        updateProps: clerk.__unstable__updateProps,
+        props,
+        rootProps: rendererRootProps
+    }));
+}, {
+    component: "CreateOrganization",
+    renderWhileLoading: true
+});
+var OrganizationSwitcherContext = /*#__PURE__*/ (0,react.createContext)({
+    mount: ()=>{},
+    unmount: ()=>{},
+    updateProps: ()=>{}
+});
+var _OrganizationSwitcher = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    const { customPages, customPagesPortals } = useOrganizationProfileCustomPages(props.children, {
+        allowForAnyChildren: !!props.__experimental_asProvider
+    });
+    const organizationProfileProps = Object.assign(props.organizationProfileProps || {}, {
+        customPages
+    });
+    const sanitizedChildren = useSanitizedChildren(props.children);
+    const passableProps = {
+        mount: clerk.mountOrganizationSwitcher,
+        unmount: clerk.unmountOrganizationSwitcher,
+        updateProps: clerk.__unstable__updateProps,
+        props: {
+            ...props,
+            organizationProfileProps
+        },
+        rootProps: rendererRootProps,
+        component
+    };
+    clerk.__experimental_prefetchOrganizationSwitcher();
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(OrganizationSwitcherContext.Provider, {
+        value: passableProps
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        ...passableProps,
+        hideRootHtmlElement: !!props.__experimental_asProvider
+    }, props.__experimental_asProvider ? sanitizedChildren : null, /* @__PURE__ */ /*#__PURE__*/ react.createElement(CustomPortalsRenderer, {
+        customPagesPortals
+    }))));
+}, {
+    component: "OrganizationSwitcher",
+    renderWhileLoading: true
+});
+function OrganizationSwitcherOutlet(outletProps) {
+    const providerProps = (0,react.useContext)(OrganizationSwitcherContext);
+    const portalProps = {
+        ...providerProps,
+        props: {
+            ...providerProps.props,
+            ...outletProps
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        ...portalProps
+    });
+}
+var OrganizationSwitcher = Object.assign(_OrganizationSwitcher, {
+    OrganizationProfilePage,
+    OrganizationProfileLink,
+    __experimental_Outlet: OrganizationSwitcherOutlet
+});
+var OrganizationList = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        mount: clerk.mountOrganizationList,
+        unmount: clerk.unmountOrganizationList,
+        updateProps: clerk.__unstable__updateProps,
+        props,
+        rootProps: rendererRootProps
+    }));
+}, {
+    component: "OrganizationList",
+    renderWhileLoading: true
+});
+var GoogleOneTap = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        open: clerk.openGoogleOneTap,
+        close: clerk.closeGoogleOneTap,
+        updateProps: clerk.__unstable__updateProps,
+        props,
+        rootProps: rendererRootProps
+    }));
+}, {
+    component: "GoogleOneTap",
+    renderWhileLoading: true
+});
+var Waitlist = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        mount: clerk.mountWaitlist,
+        unmount: clerk.unmountWaitlist,
+        updateProps: clerk.__unstable__updateProps,
+        props,
+        rootProps: rendererRootProps
+    }));
+}, {
+    component: "Waitlist",
+    renderWhileLoading: true
+});
+var __experimental_PricingTable = withClerk(({ clerk, component, fallback, ...props })=>{
+    const mountingStatus = useWaitForComponentMount(component);
+    const shouldShowFallback = mountingStatus === "rendering" || !clerk.loaded;
+    const rendererRootProps = {
+        ...shouldShowFallback && fallback && {
+            style: {
+                display: "none"
+            }
+        }
+    };
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(react.Fragment, null, shouldShowFallback && fallback, clerk.loaded && /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkHostRenderer, {
+        component,
+        mount: clerk.__experimental_mountPricingTable,
+        unmount: clerk.__experimental_unmountPricingTable,
+        updateProps: clerk.__unstable__updateProps,
+        props,
+        rootProps: rendererRootProps
+    }));
+}, {
+    component: "__experimental_PricingTable",
+    renderWhileLoading: true
+});
+// src/components/SignInButton.tsx
+
+var SignInButton = withClerk(({ clerk, children, ...props })=>{
+    const { signUpFallbackRedirectUrl, forceRedirectUrl, fallbackRedirectUrl, signUpForceRedirectUrl, mode, initialValues, withSignUp, oauthFlow, ...rest } = props;
+    children = normalizeWithDefaultValue(children, "Sign in");
+    const child = assertSingleChild(children)("SignInButton");
+    const clickHandler = ()=>{
+        const opts = {
+            forceRedirectUrl,
+            fallbackRedirectUrl,
+            signUpFallbackRedirectUrl,
+            signUpForceRedirectUrl,
+            initialValues,
+            withSignUp,
+            oauthFlow
+        };
+        if (mode === "modal") {
+            return clerk.openSignIn({
+                ...opts,
+                appearance: props.appearance
+            });
+        }
+        return clerk.redirectToSignIn({
+            ...opts,
+            signInFallbackRedirectUrl: fallbackRedirectUrl,
+            signInForceRedirectUrl: forceRedirectUrl
+        });
+    };
+    const wrappedChildClickHandler = async (e)=>{
+        if (child && typeof child === "object" && "props" in child) {
+            await safeExecute(child.props.onClick)(e);
+        }
+        return clickHandler();
+    };
+    const childProps = {
+        ...rest,
+        onClick: wrappedChildClickHandler
+    };
+    return /*#__PURE__*/ react.cloneElement(child, childProps);
+}, {
+    component: "SignInButton",
+    renderWhileLoading: true
+});
+// src/components/SignUpButton.tsx
+
+var SignUpButton = withClerk(({ clerk, children, ...props })=>{
+    const { fallbackRedirectUrl, forceRedirectUrl, signInFallbackRedirectUrl, signInForceRedirectUrl, mode, unsafeMetadata, initialValues, oauthFlow, ...rest } = props;
+    children = normalizeWithDefaultValue(children, "Sign up");
+    const child = assertSingleChild(children)("SignUpButton");
+    const clickHandler = ()=>{
+        const opts = {
+            fallbackRedirectUrl,
+            forceRedirectUrl,
+            signInFallbackRedirectUrl,
+            signInForceRedirectUrl,
+            unsafeMetadata,
+            initialValues,
+            oauthFlow
+        };
+        if (mode === "modal") {
+            return clerk.openSignUp({
+                ...opts,
+                appearance: props.appearance
+            });
+        }
+        return clerk.redirectToSignUp({
+            ...opts,
+            signUpFallbackRedirectUrl: fallbackRedirectUrl,
+            signUpForceRedirectUrl: forceRedirectUrl
+        });
+    };
+    const wrappedChildClickHandler = async (e)=>{
+        if (child && typeof child === "object" && "props" in child) {
+            await safeExecute(child.props.onClick)(e);
+        }
+        return clickHandler();
+    };
+    const childProps = {
+        ...rest,
+        onClick: wrappedChildClickHandler
+    };
+    return /*#__PURE__*/ react.cloneElement(child, childProps);
+}, {
+    component: "SignUpButton",
+    renderWhileLoading: true
+});
+// src/components/SignOutButton.tsx
+
+var SignOutButton = withClerk(({ clerk, children, ...props })=>{
+    const { redirectUrl = "/", signOutOptions, ...rest } = props;
+    children = normalizeWithDefaultValue(children, "Sign out");
+    const child = assertSingleChild(children)("SignOutButton");
+    const clickHandler = ()=>clerk.signOut({
+            redirectUrl,
+            ...signOutOptions
+        });
+    const wrappedChildClickHandler = async (e)=>{
+        await safeExecute(child.props.onClick)(e);
+        return clickHandler();
+    };
+    const childProps = {
+        ...rest,
+        onClick: wrappedChildClickHandler
+    };
+    return /*#__PURE__*/ react.cloneElement(child, childProps);
+}, {
+    component: "SignOutButton",
+    renderWhileLoading: true
+});
+// src/components/SignInWithMetamaskButton.tsx
+
+var SignInWithMetamaskButton = withClerk(({ clerk, children, ...props })=>{
+    const { redirectUrl, ...rest } = props;
+    children = normalizeWithDefaultValue(children, "Sign in with Metamask");
+    const child = assertSingleChild(children)("SignInWithMetamaskButton");
+    const clickHandler = async ()=>{
+        async function authenticate() {
+            await clerk.authenticateWithMetamask({
+                redirectUrl: redirectUrl || void 0
+            });
+        }
+        void authenticate();
+    };
+    const wrappedChildClickHandler = async (e)=>{
+        await safeExecute(child.props.onClick)(e);
+        return clickHandler();
+    };
+    const childProps = {
+        ...rest,
+        onClick: wrappedChildClickHandler
+    };
+    return /*#__PURE__*/ react.cloneElement(child, childProps);
+}, {
+    component: "SignInWithMetamask",
+    renderWhileLoading: true
+});
+// src/contexts/ClerkProvider.tsx
+
+
+// src/contexts/ClerkContextProvider.tsx
+
+
+
+// src/isomorphicClerk.ts
+
+
+
+
+if (typeof globalThis.__BUILD_DISABLE_RHC__ === "undefined") {
+    globalThis.__BUILD_DISABLE_RHC__ = false;
+}
+var SDK_METADATA = {
+    name: "@clerk/clerk-react",
+    version: "5.30.0",
+    environment: "production"
+};
+var _status, _domain, _proxyUrl, _publishableKey, _eventBus, _instance, _IsomorphicClerk_instances, waitForClerkJS_fn;
+var _IsomorphicClerk = class _IsomorphicClerk {
+    constructor(options){
+        __privateAdd(this, _IsomorphicClerk_instances);
+        this.clerkjs = null;
+        this.preopenOneTap = null;
+        this.preopenUserVerification = null;
+        this.preopenSignIn = null;
+        this.preopenCheckout = null;
+        this.preopenSubscriptionDetails = null;
+        this.preopenSignUp = null;
+        this.preopenUserProfile = null;
+        this.preopenOrganizationProfile = null;
+        this.preopenCreateOrganization = null;
+        this.preOpenWaitlist = null;
+        this.premountSignInNodes = /* @__PURE__ */ new Map();
+        this.premountSignUpNodes = /* @__PURE__ */ new Map();
+        this.premountUserProfileNodes = /* @__PURE__ */ new Map();
+        this.premountUserButtonNodes = /* @__PURE__ */ new Map();
+        this.premountOrganizationProfileNodes = /* @__PURE__ */ new Map();
+        this.premountCreateOrganizationNodes = /* @__PURE__ */ new Map();
+        this.premountOrganizationSwitcherNodes = /* @__PURE__ */ new Map();
+        this.premountOrganizationListNodes = /* @__PURE__ */ new Map();
+        this.premountMethodCalls = /* @__PURE__ */ new Map();
+        this.premountWaitlistNodes = /* @__PURE__ */ new Map();
+        this.premountPricingTableNodes = /* @__PURE__ */ new Map();
+        // A separate Map of `addListener` method calls to handle multiple listeners.
+        this.premountAddListenerCalls = /* @__PURE__ */ new Map();
+        this.loadedListeners = [];
+        __privateAdd(this, _status, "loading");
+        __privateAdd(this, _domain);
+        __privateAdd(this, _proxyUrl);
+        __privateAdd(this, _publishableKey);
+        __privateAdd(this, _eventBus, createClerkEventBus());
+        this.buildSignInUrl = (opts)=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildSignInUrl(opts)) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildSignInUrl", callback);
+            }
+        };
+        this.buildSignUpUrl = (opts)=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildSignUpUrl(opts)) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildSignUpUrl", callback);
+            }
+        };
+        this.buildAfterSignInUrl = (...args)=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildAfterSignInUrl(...args)) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildAfterSignInUrl", callback);
+            }
+        };
+        this.buildAfterSignUpUrl = (...args)=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildAfterSignUpUrl(...args)) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildAfterSignUpUrl", callback);
+            }
+        };
+        this.buildAfterSignOutUrl = ()=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildAfterSignOutUrl()) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildAfterSignOutUrl", callback);
+            }
+        };
+        this.buildAfterMultiSessionSingleSignOutUrl = ()=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildAfterMultiSessionSingleSignOutUrl()) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildAfterMultiSessionSingleSignOutUrl", callback);
+            }
+        };
+        this.buildUserProfileUrl = ()=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildUserProfileUrl()) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildUserProfileUrl", callback);
+            }
+        };
+        this.buildCreateOrganizationUrl = ()=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildCreateOrganizationUrl()) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildCreateOrganizationUrl", callback);
+            }
+        };
+        this.buildOrganizationProfileUrl = ()=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildOrganizationProfileUrl()) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildOrganizationProfileUrl", callback);
+            }
+        };
+        this.buildWaitlistUrl = ()=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildWaitlistUrl()) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildWaitlistUrl", callback);
+            }
+        };
+        this.buildUrlWithAuth = (to)=>{
+            const callback = ()=>{
+                var _a;
+                return ((_a = this.clerkjs) == null ? void 0 : _a.buildUrlWithAuth(to)) || "";
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("buildUrlWithAuth", callback);
+            }
+        };
+        this.handleUnauthenticated = async ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.handleUnauthenticated();
+            };
+            if (this.clerkjs && this.loaded) {
+                void callback();
+            } else {
+                this.premountMethodCalls.set("handleUnauthenticated", callback);
+            }
+        };
+        this.on = (...args)=>{
+            var _a;
+            if ((_a = this.clerkjs) == null ? void 0 : _a.on) {
+                return this.clerkjs.on(...args);
+            } else {
+                __privateGet(this, _eventBus).on(...args);
+            }
+        };
+        this.off = (...args)=>{
+            var _a;
+            if ((_a = this.clerkjs) == null ? void 0 : _a.off) {
+                return this.clerkjs.off(...args);
+            } else {
+                __privateGet(this, _eventBus).off(...args);
+            }
+        };
+        /**
+     * @deprecated Please use `addStatusListener`. This api will be removed in the next major.
+     */ this.addOnLoaded = (cb)=>{
+            this.loadedListeners.push(cb);
+            if (this.loaded) {
+                this.emitLoaded();
+            }
+        };
+        /**
+     * @deprecated Please use `__internal_setStatus`. This api will be removed in the next major.
+     */ this.emitLoaded = ()=>{
+            this.loadedListeners.forEach((cb)=>cb());
+            this.loadedListeners = [];
+        };
+        this.beforeLoad = (clerkjs)=>{
+            if (!clerkjs) {
+                throw new Error("Failed to hydrate latest Clerk JS");
+            }
+        };
+        this.hydrateClerkJS = (clerkjs)=>{
+            var _a;
+            if (!clerkjs) {
+                throw new Error("Failed to hydrate latest Clerk JS");
+            }
+            this.clerkjs = clerkjs;
+            this.premountMethodCalls.forEach((cb)=>cb());
+            this.premountAddListenerCalls.forEach((listenerHandlers, listener)=>{
+                listenerHandlers.nativeUnsubscribe = clerkjs.addListener(listener);
+            });
+            (_a = __privateGet(this, _eventBus).internal.retrieveListeners("status")) == null ? void 0 : _a.forEach((listener)=>{
+                this.on("status", listener, {
+                    notify: true
+                });
+            });
+            if (this.preopenSignIn !== null) {
+                clerkjs.openSignIn(this.preopenSignIn);
+            }
+            if (this.preopenCheckout !== null) {
+                clerkjs.__internal_openCheckout(this.preopenCheckout);
+            }
+            if (this.preopenSubscriptionDetails !== null) {
+                clerkjs.__internal_openSubscriptionDetails(this.preopenSubscriptionDetails);
+            }
+            if (this.preopenSignUp !== null) {
+                clerkjs.openSignUp(this.preopenSignUp);
+            }
+            if (this.preopenUserProfile !== null) {
+                clerkjs.openUserProfile(this.preopenUserProfile);
+            }
+            if (this.preopenUserVerification !== null) {
+                clerkjs.__internal_openReverification(this.preopenUserVerification);
+            }
+            if (this.preopenOneTap !== null) {
+                clerkjs.openGoogleOneTap(this.preopenOneTap);
+            }
+            if (this.preopenOrganizationProfile !== null) {
+                clerkjs.openOrganizationProfile(this.preopenOrganizationProfile);
+            }
+            if (this.preopenCreateOrganization !== null) {
+                clerkjs.openCreateOrganization(this.preopenCreateOrganization);
+            }
+            if (this.preOpenWaitlist !== null) {
+                clerkjs.openWaitlist(this.preOpenWaitlist);
+            }
+            this.premountSignInNodes.forEach((props, node)=>{
+                clerkjs.mountSignIn(node, props);
+            });
+            this.premountSignUpNodes.forEach((props, node)=>{
+                clerkjs.mountSignUp(node, props);
+            });
+            this.premountUserProfileNodes.forEach((props, node)=>{
+                clerkjs.mountUserProfile(node, props);
+            });
+            this.premountUserButtonNodes.forEach((props, node)=>{
+                clerkjs.mountUserButton(node, props);
+            });
+            this.premountOrganizationListNodes.forEach((props, node)=>{
+                clerkjs.mountOrganizationList(node, props);
+            });
+            this.premountWaitlistNodes.forEach((props, node)=>{
+                clerkjs.mountWaitlist(node, props);
+            });
+            this.premountPricingTableNodes.forEach((props, node)=>{
+                clerkjs.__experimental_mountPricingTable(node, props);
+            });
+            if (typeof this.clerkjs.status === "undefined") {
+                __privateGet(this, _eventBus).emit(clerkEvents.Status, "ready");
+            }
+            this.emitLoaded();
+            return this.clerkjs;
+        };
+        this.__unstable__updateProps = async (props)=>{
+            const clerkjs = await __privateMethod(this, _IsomorphicClerk_instances, waitForClerkJS_fn).call(this);
+            if (clerkjs && "__unstable__updateProps" in clerkjs) {
+                return clerkjs.__unstable__updateProps(props);
+            }
+        };
+        this.__experimental_nextTask = async (params)=>{
+            if (this.clerkjs) {
+                return this.clerkjs.__experimental_nextTask(params);
+            } else {
+                return Promise.reject();
+            }
+        };
+        /**
+     * `setActive` can be used to set the active session and/or organization.
+     */ this.setActive = (params)=>{
+            if (this.clerkjs) {
+                return this.clerkjs.setActive(params);
+            } else {
+                return Promise.reject();
+            }
+        };
+        this.openSignIn = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.openSignIn(props);
+            } else {
+                this.preopenSignIn = props;
+            }
+        };
+        this.closeSignIn = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.closeSignIn();
+            } else {
+                this.preopenSignIn = null;
+            }
+        };
+        this.__internal_openCheckout = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.__internal_openCheckout(props);
+            } else {
+                this.preopenCheckout = props;
+            }
+        };
+        this.__internal_closeCheckout = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.__internal_closeCheckout();
+            } else {
+                this.preopenCheckout = null;
+            }
+        };
+        this.__internal_openSubscriptionDetails = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.__internal_openSubscriptionDetails(props);
+            } else {
+                this.preopenSubscriptionDetails = props;
+            }
+        };
+        this.__internal_closeSubscriptionDetails = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.__internal_closeSubscriptionDetails();
+            } else {
+                this.preopenSubscriptionDetails = null;
+            }
+        };
+        this.__internal_openReverification = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.__internal_openReverification(props);
+            } else {
+                this.preopenUserVerification = props;
+            }
+        };
+        this.__internal_closeReverification = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.__internal_closeReverification();
+            } else {
+                this.preopenUserVerification = null;
+            }
+        };
+        this.openGoogleOneTap = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.openGoogleOneTap(props);
+            } else {
+                this.preopenOneTap = props;
+            }
+        };
+        this.closeGoogleOneTap = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.closeGoogleOneTap();
+            } else {
+                this.preopenOneTap = null;
+            }
+        };
+        this.openUserProfile = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.openUserProfile(props);
+            } else {
+                this.preopenUserProfile = props;
+            }
+        };
+        this.closeUserProfile = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.closeUserProfile();
+            } else {
+                this.preopenUserProfile = null;
+            }
+        };
+        this.openOrganizationProfile = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.openOrganizationProfile(props);
+            } else {
+                this.preopenOrganizationProfile = props;
+            }
+        };
+        this.closeOrganizationProfile = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.closeOrganizationProfile();
+            } else {
+                this.preopenOrganizationProfile = null;
+            }
+        };
+        this.openCreateOrganization = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.openCreateOrganization(props);
+            } else {
+                this.preopenCreateOrganization = props;
+            }
+        };
+        this.closeCreateOrganization = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.closeCreateOrganization();
+            } else {
+                this.preopenCreateOrganization = null;
+            }
+        };
+        this.openWaitlist = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.openWaitlist(props);
+            } else {
+                this.preOpenWaitlist = props;
+            }
+        };
+        this.closeWaitlist = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.closeWaitlist();
+            } else {
+                this.preOpenWaitlist = null;
+            }
+        };
+        this.openSignUp = (props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.openSignUp(props);
+            } else {
+                this.preopenSignUp = props;
+            }
+        };
+        this.closeSignUp = ()=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.closeSignUp();
+            } else {
+                this.preopenSignUp = null;
+            }
+        };
+        this.mountSignIn = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountSignIn(node, props);
+            } else {
+                this.premountSignInNodes.set(node, props);
+            }
+        };
+        this.unmountSignIn = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountSignIn(node);
+            } else {
+                this.premountSignInNodes.delete(node);
+            }
+        };
+        this.mountSignUp = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountSignUp(node, props);
+            } else {
+                this.premountSignUpNodes.set(node, props);
+            }
+        };
+        this.unmountSignUp = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountSignUp(node);
+            } else {
+                this.premountSignUpNodes.delete(node);
+            }
+        };
+        this.mountUserProfile = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountUserProfile(node, props);
+            } else {
+                this.premountUserProfileNodes.set(node, props);
+            }
+        };
+        this.unmountUserProfile = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountUserProfile(node);
+            } else {
+                this.premountUserProfileNodes.delete(node);
+            }
+        };
+        this.mountOrganizationProfile = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountOrganizationProfile(node, props);
+            } else {
+                this.premountOrganizationProfileNodes.set(node, props);
+            }
+        };
+        this.unmountOrganizationProfile = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountOrganizationProfile(node);
+            } else {
+                this.premountOrganizationProfileNodes.delete(node);
+            }
+        };
+        this.mountCreateOrganization = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountCreateOrganization(node, props);
+            } else {
+                this.premountCreateOrganizationNodes.set(node, props);
+            }
+        };
+        this.unmountCreateOrganization = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountCreateOrganization(node);
+            } else {
+                this.premountCreateOrganizationNodes.delete(node);
+            }
+        };
+        this.mountOrganizationSwitcher = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountOrganizationSwitcher(node, props);
+            } else {
+                this.premountOrganizationSwitcherNodes.set(node, props);
+            }
+        };
+        this.unmountOrganizationSwitcher = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountOrganizationSwitcher(node);
+            } else {
+                this.premountOrganizationSwitcherNodes.delete(node);
+            }
+        };
+        this.__experimental_prefetchOrganizationSwitcher = ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.__experimental_prefetchOrganizationSwitcher();
+            };
+            if (this.clerkjs && this.loaded) {
+                void callback();
+            } else {
+                this.premountMethodCalls.set("__experimental_prefetchOrganizationSwitcher", callback);
+            }
+        };
+        this.mountOrganizationList = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountOrganizationList(node, props);
+            } else {
+                this.premountOrganizationListNodes.set(node, props);
+            }
+        };
+        this.unmountOrganizationList = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountOrganizationList(node);
+            } else {
+                this.premountOrganizationListNodes.delete(node);
+            }
+        };
+        this.mountUserButton = (node, userButtonProps)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountUserButton(node, userButtonProps);
+            } else {
+                this.premountUserButtonNodes.set(node, userButtonProps);
+            }
+        };
+        this.unmountUserButton = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountUserButton(node);
+            } else {
+                this.premountUserButtonNodes.delete(node);
+            }
+        };
+        this.mountWaitlist = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.mountWaitlist(node, props);
+            } else {
+                this.premountWaitlistNodes.set(node, props);
+            }
+        };
+        this.unmountWaitlist = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.unmountWaitlist(node);
+            } else {
+                this.premountWaitlistNodes.delete(node);
+            }
+        };
+        this.__experimental_mountPricingTable = (node, props)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.__experimental_mountPricingTable(node, props);
+            } else {
+                this.premountPricingTableNodes.set(node, props);
+            }
+        };
+        this.__experimental_unmountPricingTable = (node)=>{
+            if (this.clerkjs && this.loaded) {
+                this.clerkjs.__experimental_unmountPricingTable(node);
+            } else {
+                this.premountPricingTableNodes.delete(node);
+            }
+        };
+        this.addListener = (listener)=>{
+            if (this.clerkjs) {
+                return this.clerkjs.addListener(listener);
+            } else {
+                const unsubscribe = ()=>{
+                    var _a;
+                    const listenerHandlers = this.premountAddListenerCalls.get(listener);
+                    if (listenerHandlers) {
+                        (_a = listenerHandlers.nativeUnsubscribe) == null ? void 0 : _a.call(listenerHandlers);
+                        this.premountAddListenerCalls.delete(listener);
+                    }
+                };
+                this.premountAddListenerCalls.set(listener, {
+                    unsubscribe,
+                    nativeUnsubscribe: void 0
+                });
+                return unsubscribe;
+            }
+        };
+        this.navigate = (to)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.navigate(to);
+            };
+            if (this.clerkjs && this.loaded) {
+                void callback();
+            } else {
+                this.premountMethodCalls.set("navigate", callback);
+            }
+        };
+        this.redirectWithAuth = async (...args)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectWithAuth(...args);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("redirectWithAuth", callback);
+                return;
+            }
+        };
+        this.redirectToSignIn = async (opts)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToSignIn(opts);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("redirectToSignIn", callback);
+                return;
+            }
+        };
+        this.redirectToSignUp = async (opts)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToSignUp(opts);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("redirectToSignUp", callback);
+                return;
+            }
+        };
+        this.redirectToUserProfile = async ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToUserProfile();
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("redirectToUserProfile", callback);
+                return;
+            }
+        };
+        this.redirectToAfterSignUp = ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToAfterSignUp();
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("redirectToAfterSignUp", callback);
+            }
+        };
+        this.redirectToAfterSignIn = ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToAfterSignIn();
+            };
+            if (this.clerkjs && this.loaded) {
+                callback();
+            } else {
+                this.premountMethodCalls.set("redirectToAfterSignIn", callback);
+            }
+        };
+        this.redirectToAfterSignOut = ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToAfterSignOut();
+            };
+            if (this.clerkjs && this.loaded) {
+                callback();
+            } else {
+                this.premountMethodCalls.set("redirectToAfterSignOut", callback);
+            }
+        };
+        this.redirectToOrganizationProfile = async ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToOrganizationProfile();
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("redirectToOrganizationProfile", callback);
+                return;
+            }
+        };
+        this.redirectToCreateOrganization = async ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToCreateOrganization();
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("redirectToCreateOrganization", callback);
+                return;
+            }
+        };
+        this.redirectToWaitlist = async ()=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.redirectToWaitlist();
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("redirectToWaitlist", callback);
+                return;
+            }
+        };
+        this.handleRedirectCallback = async (params)=>{
+            var _a;
+            const callback = ()=>{
+                var _a2;
+                return (_a2 = this.clerkjs) == null ? void 0 : _a2.handleRedirectCallback(params);
+            };
+            if (this.clerkjs && this.loaded) {
+                void ((_a = callback()) == null ? void 0 : _a.catch(()=>{}));
+            } else {
+                this.premountMethodCalls.set("handleRedirectCallback", callback);
+            }
+        };
+        this.handleGoogleOneTapCallback = async (signInOrUp, params)=>{
+            var _a;
+            const callback = ()=>{
+                var _a2;
+                return (_a2 = this.clerkjs) == null ? void 0 : _a2.handleGoogleOneTapCallback(signInOrUp, params);
+            };
+            if (this.clerkjs && this.loaded) {
+                void ((_a = callback()) == null ? void 0 : _a.catch(()=>{}));
+            } else {
+                this.premountMethodCalls.set("handleGoogleOneTapCallback", callback);
+            }
+        };
+        this.handleEmailLinkVerification = async (params)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.handleEmailLinkVerification(params);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("handleEmailLinkVerification", callback);
+            }
+        };
+        this.authenticateWithMetamask = async (params)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.authenticateWithMetamask(params);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("authenticateWithMetamask", callback);
+            }
+        };
+        this.authenticateWithCoinbaseWallet = async (params)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.authenticateWithCoinbaseWallet(params);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("authenticateWithCoinbaseWallet", callback);
+            }
+        };
+        this.authenticateWithOKXWallet = async (params)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.authenticateWithOKXWallet(params);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("authenticateWithOKXWallet", callback);
+            }
+        };
+        this.authenticateWithWeb3 = async (params)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.authenticateWithWeb3(params);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("authenticateWithWeb3", callback);
+            }
+        };
+        this.authenticateWithGoogleOneTap = async (params)=>{
+            const clerkjs = await __privateMethod(this, _IsomorphicClerk_instances, waitForClerkJS_fn).call(this);
+            return clerkjs.authenticateWithGoogleOneTap(params);
+        };
+        this.createOrganization = async (params)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.createOrganization(params);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("createOrganization", callback);
+            }
+        };
+        this.getOrganization = async (organizationId)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.getOrganization(organizationId);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("getOrganization", callback);
+            }
+        };
+        this.joinWaitlist = async (params)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.joinWaitlist(params);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("joinWaitlist", callback);
+            }
+        };
+        this.signOut = async (...args)=>{
+            const callback = ()=>{
+                var _a;
+                return (_a = this.clerkjs) == null ? void 0 : _a.signOut(...args);
+            };
+            if (this.clerkjs && this.loaded) {
+                return callback();
+            } else {
+                this.premountMethodCalls.set("signOut", callback);
+            }
+        };
+        const { Clerk = null, publishableKey } = options || {};
+        __privateSet(this, _publishableKey, publishableKey);
+        __privateSet(this, _proxyUrl, options == null ? void 0 : options.proxyUrl);
+        __privateSet(this, _domain, options == null ? void 0 : options.domain);
+        this.options = options;
+        this.Clerk = Clerk;
+        this.mode = inBrowser() ? "browser" : "server";
+        if (!this.options.sdkMetadata) {
+            this.options.sdkMetadata = SDK_METADATA;
+        }
+        __privateGet(this, _eventBus).emit(clerkEvents.Status, "loading");
+        __privateGet(this, _eventBus).prioritizedOn(clerkEvents.Status, (status)=>__privateSet(this, _status, status));
+        if (__privateGet(this, _publishableKey)) {
+            void this.loadClerkJS();
+        }
+    }
+    get publishableKey() {
+        return __privateGet(this, _publishableKey);
+    }
+    get loaded() {
+        var _a;
+        return ((_a = this.clerkjs) == null ? void 0 : _a.loaded) || false;
+    }
+    get status() {
+        var _a;
+        if (!this.clerkjs) {
+            return __privateGet(this, _status);
+        }
+        return ((_a = this.clerkjs) == null ? void 0 : _a.status) || /**
+     * Support older clerk-js versions.
+     * If clerk-js is available but `.status` is missing it we need to fallback to `.loaded`.
+     * Since "degraded" an "error" did not exist before,
+     * map "loaded" to "ready" and "not loaded" to "loading".
+     */ (this.clerkjs.loaded ? "ready" : "loading");
+    }
+    static getOrCreateInstance(options) {
+        if (!inBrowser() || !__privateGet(this, _instance) || options.Clerk && __privateGet(this, _instance).Clerk !== options.Clerk || // Allow hot swapping PKs on the client
+        __privateGet(this, _instance).publishableKey !== options.publishableKey) {
+            __privateSet(this, _instance, new _IsomorphicClerk(options));
+        }
+        return __privateGet(this, _instance);
+    }
+    static clearInstance() {
+        __privateSet(this, _instance, null);
+    }
+    get domain() {
+        if (false) {}
+        if (typeof __privateGet(this, _domain) === "function") {
+            return chunk_T2VIWQBM_errorThrower.throw(unsupportedNonBrowserDomainOrProxyUrlFunction);
+        }
+        return __privateGet(this, _domain) || "";
+    }
+    get proxyUrl() {
+        if (false) {}
+        if (typeof __privateGet(this, _proxyUrl) === "function") {
+            return chunk_T2VIWQBM_errorThrower.throw(unsupportedNonBrowserDomainOrProxyUrlFunction);
+        }
+        return __privateGet(this, _proxyUrl) || "";
+    }
+    /**
+   * Accesses private options from the `Clerk` instance and defaults to
+   * `IsomorphicClerk` options when in SSR context.
+   *  @internal
+   */ __internal_getOption(key) {
+        var _a, _b;
+        return ((_a = this.clerkjs) == null ? void 0 : _a.__internal_getOption) ? (_b = this.clerkjs) == null ? void 0 : _b.__internal_getOption(key) : this.options[key];
+    }
+    get sdkMetadata() {
+        var _a;
+        return ((_a = this.clerkjs) == null ? void 0 : _a.sdkMetadata) || this.options.sdkMetadata || void 0;
+    }
+    get instanceType() {
+        var _a;
+        return (_a = this.clerkjs) == null ? void 0 : _a.instanceType;
+    }
+    get frontendApi() {
+        var _a;
+        return ((_a = this.clerkjs) == null ? void 0 : _a.frontendApi) || "";
+    }
+    get isStandardBrowser() {
+        var _a;
+        return ((_a = this.clerkjs) == null ? void 0 : _a.isStandardBrowser) || this.options.standardBrowser || false;
+    }
+    get isSatellite() {
+        if (false) {}
+        if (typeof this.options.isSatellite === "function") {
+            return chunk_T2VIWQBM_errorThrower.throw(unsupportedNonBrowserDomainOrProxyUrlFunction);
+        }
+        return false;
+    }
+    async loadClerkJS() {
+        var _a;
+        if (this.mode !== "browser" || this.loaded) {
+            return;
+        }
+        if (false) {}
+        try {
+            if (this.Clerk) {
+                let c;
+                if (isConstructor(this.Clerk)) {
+                    c = new this.Clerk(__privateGet(this, _publishableKey), {
+                        proxyUrl: this.proxyUrl,
+                        domain: this.domain
+                    });
+                    this.beforeLoad(c);
+                    await c.load(this.options);
+                } else {
+                    c = this.Clerk;
+                    if (!c.loaded) {
+                        this.beforeLoad(c);
+                        await c.load(this.options);
+                    }
+                }
+                global.Clerk = c;
+            } else if (!__BUILD_DISABLE_RHC__) {
+                if (!global.Clerk) {
+                    await loadClerkJsScript({
+                        ...this.options,
+                        publishableKey: __privateGet(this, _publishableKey),
+                        proxyUrl: this.proxyUrl,
+                        domain: this.domain,
+                        nonce: this.options.nonce
+                    });
+                }
+                if (!global.Clerk) {
+                    throw new Error("Failed to download latest ClerkJS. Contact support@clerk.com.");
+                }
+                this.beforeLoad(global.Clerk);
+                await global.Clerk.load(this.options);
+            }
+            if ((_a = global.Clerk) == null ? void 0 : _a.loaded) {
+                return this.hydrateClerkJS(global.Clerk);
+            }
+            return;
+        } catch (err) {
+            const error = err;
+            __privateGet(this, _eventBus).emit(clerkEvents.Status, "error");
+            console.error(error.stack || error.message || error);
+            return;
+        }
+    }
+    get version() {
+        var _a;
+        return (_a = this.clerkjs) == null ? void 0 : _a.version;
+    }
+    get client() {
+        if (this.clerkjs) {
+            return this.clerkjs.client;
+        } else {
+            return void 0;
+        }
+    }
+    get session() {
+        if (this.clerkjs) {
+            return this.clerkjs.session;
+        } else {
+            return void 0;
+        }
+    }
+    get user() {
+        if (this.clerkjs) {
+            return this.clerkjs.user;
+        } else {
+            return void 0;
+        }
+    }
+    get organization() {
+        if (this.clerkjs) {
+            return this.clerkjs.organization;
+        } else {
+            return void 0;
+        }
+    }
+    get telemetry() {
+        if (this.clerkjs) {
+            return this.clerkjs.telemetry;
+        } else {
+            return void 0;
+        }
+    }
+    get __unstable__environment() {
+        if (this.clerkjs) {
+            return this.clerkjs.__unstable__environment;
+        } else {
+            return void 0;
+        }
+    }
+    get isSignedIn() {
+        if (this.clerkjs) {
+            return this.clerkjs.isSignedIn;
+        } else {
+            return false;
+        }
+    }
+    get __experimental_commerce() {
+        var _a;
+        return (_a = this.clerkjs) == null ? void 0 : _a.__experimental_commerce;
+    }
+    __unstable__setEnvironment(...args) {
+        if (this.clerkjs && "__unstable__setEnvironment" in this.clerkjs) {
+            this.clerkjs.__unstable__setEnvironment(args);
+        } else {
+            return void 0;
+        }
+    }
+};
+_status = new WeakMap();
+_domain = new WeakMap();
+_proxyUrl = new WeakMap();
+_publishableKey = new WeakMap();
+_eventBus = new WeakMap();
+_instance = new WeakMap();
+_IsomorphicClerk_instances = new WeakSet();
+waitForClerkJS_fn = function() {
+    return new Promise((resolve)=>{
+        this.addOnLoaded(()=>resolve(this.clerkjs));
+    });
+};
+__privateAdd(_IsomorphicClerk, _instance);
+var IsomorphicClerk = _IsomorphicClerk;
+// src/contexts/ClerkContextProvider.tsx
+function ClerkContextProvider(props) {
+    const { isomorphicClerkOptions, initialState, children } = props;
+    const { isomorphicClerk: clerk, clerkStatus } = useLoadedIsomorphicClerk(isomorphicClerkOptions);
+    const [state, setState] = react.useState({
+        client: clerk.client,
+        session: clerk.session,
+        user: clerk.user,
+        organization: clerk.organization
+    });
+    react.useEffect(()=>{
+        return clerk.addListener((e)=>setState({
+                ...e
+            }));
+    }, []);
+    const derivedState = deriveState(clerk.loaded, state, initialState);
+    const clerkCtx = react.useMemo(()=>({
+            value: clerk
+        }), [
+        // Only update the clerk reference on status change
+        clerkStatus
+    ]);
+    const clientCtx = react.useMemo(()=>({
+            value: state.client
+        }), [
+        state.client
+    ]);
+    const { sessionId, sessionStatus, sessionClaims, session, userId, user, orgId, actor, organization, orgRole, orgSlug, orgPermissions, factorVerificationAge } = derivedState;
+    const authCtx = react.useMemo(()=>{
+        const value = {
+            sessionId,
+            sessionStatus,
+            sessionClaims,
+            userId,
+            actor,
+            orgId,
+            orgRole,
+            orgSlug,
+            orgPermissions,
+            factorVerificationAge
+        };
+        return {
+            value
+        };
+    }, [
+        sessionId,
+        sessionStatus,
+        userId,
+        actor,
+        orgId,
+        orgRole,
+        orgSlug,
+        factorVerificationAge,
+        sessionClaims == null ? void 0 : sessionClaims.__raw
+    ]);
+    const sessionCtx = react.useMemo(()=>({
+            value: session
+        }), [
+        sessionId,
+        session
+    ]);
+    const userCtx = react.useMemo(()=>({
+            value: user
+        }), [
+        userId,
+        user
+    ]);
+    const organizationCtx = react.useMemo(()=>{
+        const value = {
+            organization
+        };
+        return {
+            value
+        };
+    }, [
+        orgId,
+        organization
+    ]);
+    return(// @ts-expect-error value passed is of type IsomorphicClerk where the context expects LoadedClerk
+    /* @__PURE__ */ /*#__PURE__*/ react.createElement(IsomorphicClerkContext.Provider, {
+        value: clerkCtx
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClientContext.Provider, {
+        value: clientCtx
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(SessionContext.Provider, {
+        value: sessionCtx
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(OrganizationProvider, {
+        ...organizationCtx.value
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(AuthContext.Provider, {
+        value: authCtx
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(UserContext.Provider, {
+        value: userCtx
+    }, children)))))));
+}
+var useLoadedIsomorphicClerk = (options)=>{
+    const isomorphicClerk = react.useMemo(()=>IsomorphicClerk.getOrCreateInstance(options), []);
+    const [clerkStatus, setStatus] = react.useState(isomorphicClerk.status);
+    react.useEffect(()=>{
+        void isomorphicClerk.__unstable__updateProps({
+            appearance: options.appearance
+        });
+    }, [
+        options.appearance
+    ]);
+    react.useEffect(()=>{
+        void isomorphicClerk.__unstable__updateProps({
+            options
+        });
+    }, [
+        options.localization
+    ]);
+    react.useEffect(()=>{
+        isomorphicClerk.on("status", setStatus);
+        return ()=>isomorphicClerk.off("status", setStatus);
+    }, [
+        isomorphicClerk
+    ]);
+    react.useEffect(()=>{
+        return ()=>{
+            IsomorphicClerk.clearInstance();
+        };
+    }, []);
+    return {
+        isomorphicClerk,
+        clerkStatus
+    };
+};
+// src/contexts/ClerkProvider.tsx
+function ClerkProviderBase(props) {
+    const { initialState, children, __internal_bypassMissingPublishableKey, ...restIsomorphicClerkOptions } = props;
+    const { publishableKey = "", Clerk: userInitialisedClerk } = restIsomorphicClerkOptions;
+    if (!userInitialisedClerk && !__internal_bypassMissingPublishableKey) {
+        if (!publishableKey) {
+            chunk_T2VIWQBM_errorThrower.throwMissingPublishableKeyError();
+        } else if (publishableKey && !(0,keys/* isPublishableKey */.x9)(publishableKey)) {
+            chunk_T2VIWQBM_errorThrower.throwInvalidPublishableKeyError({
+                key: publishableKey
+            });
+        }
+    }
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkContextProvider, {
+        initialState,
+        isomorphicClerkOptions: restIsomorphicClerkOptions
+    }, children);
+}
+var ClerkProvider = withMaxAllowedInstancesGuard(ClerkProviderBase, "ClerkProvider", multipleClerkProvidersError);
+ClerkProvider.displayName = "ClerkProvider";
+// src/index.ts
+setErrorThrowerOptions({
+    packageName: "@clerk/clerk-react"
+});
+setClerkJsLoadingErrorPackageName("@clerk/clerk-react");
+ //# sourceMappingURL=index.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-CYDR2ZSA.mjs
+// src/logger.ts
+var loggedMessages = /* @__PURE__ */ new Set();
+var logger = {
+    /**
+   * A custom logger that ensures messages are logged only once.
+   * Reduces noise and duplicated messages when logs are in a hot codepath.
+   */ warnOnce: (msg)=>{
+        if (loggedMessages.has(msg)) {
+            return;
+        }
+        loggedMessages.add(msg);
+        console.warn(msg);
+    },
+    logOnce: (msg)=>{
+        if (loggedMessages.has(msg)) {
+            return;
+        }
+        console.log(msg);
+        loggedMessages.add(msg);
+    }
+};
+ //# sourceMappingURL=chunk-CYDR2ZSA.mjs.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/logger.mjs
+
+
+ //# sourceMappingURL=logger.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/next/dynamic.js
+var dynamic = __webpack_require__(5507);
+// EXTERNAL MODULE: ./node_modules/next/navigation.js
+var navigation = __webpack_require__(6304);
+// EXTERNAL MODULE: ./node_modules/next/package.json
+var next_package = __webpack_require__(3972);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/client-boundary/hooks/useSafeLayoutEffect.js
+
+
+const useSafeLayoutEffect_useSafeLayoutEffect =  false ? 0 : react.useEffect;
+ //# sourceMappingURL=useSafeLayoutEffect.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/client-boundary/NextOptionsContext.js
+
+
+const ClerkNextOptionsCtx = /*#__PURE__*/ react.createContext(void 0);
+ClerkNextOptionsCtx.displayName = "ClerkNextOptionsCtx";
+const useClerkNextOptions = ()=>{
+    const ctx = react.useContext(ClerkNextOptionsCtx);
+    return ctx == null ? void 0 : ctx.value;
+};
+const ClerkNextOptionsProvider = (props)=>{
+    const { children, options } = props;
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkNextOptionsCtx.Provider, {
+        value: {
+            value: options
+        }
+    }, children);
+};
+ //# sourceMappingURL=NextOptionsContext.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/clerk-react/dist/internal.mjs
+
+
+// src/hooks/useRoutingProps.ts
+function useRoutingProps(componentName, props, routingOptions) {
+    const path = props.path || (routingOptions == null ? void 0 : routingOptions.path);
+    const routing = props.routing || (routingOptions == null ? void 0 : routingOptions.routing) || "path";
+    if (routing === "path") {
+        if (!path) {
+            return errorThrower.throw(noPathProvidedError(componentName));
+        }
+        return {
+            ...routingOptions,
+            ...props,
+            routing: "path"
+        };
+    }
+    if (props.path) {
+        return errorThrower.throw(incompatibleRoutingWithPathProvidedError(componentName));
+    }
+    return {
+        ...routingOptions,
+        ...props,
+        path: void 0
+    };
+}
+// src/internal.ts
+
+ //# sourceMappingURL=internal.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/next/script.js
+var script = __webpack_require__(9034);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/utils/clerk-js-script.js
+
+
+
+
+
+
+function ClerkJSScript(props) {
+    const { publishableKey, clerkJSUrl, clerkJSVersion, clerkJSVariant, nonce } = useClerkNextOptions();
+    const { domain, proxyUrl } = useClerk();
+    if (!publishableKey) {
+        return null;
+    }
+    const options = {
+        domain,
+        proxyUrl,
+        publishableKey,
+        clerkJSUrl,
+        clerkJSVersion,
+        clerkJSVariant,
+        nonce
+    };
+    const scriptUrl = clerkJsScriptUrl(options);
+    const Script = props.router === "app" ? "script" : script["default"];
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(Script, {
+        src: scriptUrl,
+        "data-clerk-js-script": true,
+        async: true,
+        defer: props.router === "pages" ? false : void 0,
+        crossOrigin: "anonymous",
+        strategy: props.router === "pages" ? "beforeInteractive" : void 0,
+        ...buildClerkJsScriptAttributes(options)
+    });
+}
+ //# sourceMappingURL=clerk-js-script.js.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/nextjs/dist/esm/utils/feature-flags.js
+var feature_flags = __webpack_require__(9413);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/underscore.mjs
+var underscore = __webpack_require__(4904);
+// EXTERNAL MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/constants.js + 2 modules
+var constants = __webpack_require__(7724);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/utils/mergeNextClerkPropsWithEnv.js
+
+
+
+const mergeNextClerkPropsWithEnv = (props)=>{
+    var _a;
+    return {
+        ...props,
+        publishableKey: props.publishableKey || "pk_test_your_publishable_key_here" || 0,
+        clerkJSUrl: props.clerkJSUrl || process.env.NEXT_PUBLIC_CLERK_JS_URL,
+        clerkJSVersion: props.clerkJSVersion || process.env.NEXT_PUBLIC_CLERK_JS_VERSION,
+        proxyUrl: props.proxyUrl || process.env.NEXT_PUBLIC_CLERK_PROXY_URL || "",
+        domain: props.domain || process.env.NEXT_PUBLIC_CLERK_DOMAIN || "",
+        isSatellite: props.isSatellite || (0,underscore/* isTruthy */.fQ)(process.env.NEXT_PUBLIC_CLERK_IS_SATELLITE),
+        signInUrl: props.signInUrl || process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL || "",
+        signUpUrl: props.signUpUrl || process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL || "",
+        signInForceRedirectUrl: props.signInForceRedirectUrl || process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL || "",
+        signUpForceRedirectUrl: props.signUpForceRedirectUrl || process.env.NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL || "",
+        signInFallbackRedirectUrl: props.signInFallbackRedirectUrl || process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL || "",
+        signUpFallbackRedirectUrl: props.signUpFallbackRedirectUrl || process.env.NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL || "",
+        afterSignInUrl: props.afterSignInUrl || process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL || "",
+        afterSignUpUrl: props.afterSignUpUrl || process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL || "",
+        telemetry: (_a = props.telemetry) != null ? _a : {
+            disabled: (0,underscore/* isTruthy */.fQ)(process.env.NEXT_PUBLIC_CLERK_TELEMETRY_DISABLED),
+            debug: (0,underscore/* isTruthy */.fQ)(process.env.NEXT_PUBLIC_CLERK_TELEMETRY_DEBUG)
+        },
+        sdkMetadata: constants/* SDK_METADATA */.nE
+    };
+};
+ //# sourceMappingURL=mergeNextClerkPropsWithEnv.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/client-boundary/hooks/usePagesRouter.js
+
+
+const usePagesRouter = ()=>{
+    return {
+        pagesRouter: (0,compat_router.useRouter)()
+    };
+};
+ //# sourceMappingURL=usePagesRouter.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/utils/router-telemetry.js
+
+
+
+
+const RouterTelemetry = ()=>{
+    var _a, _b;
+    const clerk = useClerk();
+    const { pagesRouter } = usePagesRouter();
+    (_b = clerk.telemetry) == null ? void 0 : _b.record((0,telemetry/* eventFrameworkMetadata */.kD)({
+        router: pagesRouter ? "pages" : "app",
+        ...((_a = globalThis == null ? void 0 : globalThis.next) == null ? void 0 : _a.version) ? {
+            nextjsVersion: globalThis.next.version
+        } : {}
+    }));
+    return null;
+};
+ //# sourceMappingURL=router-telemetry.js.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/nextjs/dist/esm/utils/sdk-versions.js
+var sdk_versions = __webpack_require__(6163);
+// EXTERNAL MODULE: ./node_modules/next/headers.js
+var headers = __webpack_require__(2479);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js
+"use server";
+
+async function invalidateCacheAction() {
+    void (await (0,headers.cookies)()).delete(`__clerk_invalidate_cache_cookie_${Date.now()}`);
+}
+
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/utils/removeBasePath.js
+
+function removeBasePath(to) {
+    let destination = to;
+    const basePath = "";
+    if (basePath && destination.startsWith(basePath)) {
+        destination = destination.slice(basePath.length);
+    }
+    return destination;
+}
+ //# sourceMappingURL=removeBasePath.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/app-router/client/useInternalNavFun.js
+
+
+
+
+const getClerkNavigationObject = (name)=>{
+    var _a, _b, _c;
+    (_a = window.__clerk_internal_navigations) != null ? _a : window.__clerk_internal_navigations = {};
+    (_c = (_b = window.__clerk_internal_navigations)[name]) != null ? _c : _b[name] = {};
+    return window.__clerk_internal_navigations[name];
+};
+const useInternalNavFun = (props)=>{
+    const { windowNav, routerNav, name } = props;
+    const pathname = (0,navigation.usePathname)();
+    const [isPending, startTransition] = (0,react.useTransition)();
+    if (windowNav) {
+        getClerkNavigationObject(name).fun = (to, opts)=>{
+            return new Promise((res)=>{
+                var _a, _b, _c;
+                (_b = (_a = getClerkNavigationObject(name)).promisesBuffer) != null ? _b : _a.promisesBuffer = [];
+                (_c = getClerkNavigationObject(name).promisesBuffer) == null ? void 0 : _c.push(res);
+                startTransition(()=>{
+                    var _a2, _b2, _c2;
+                    if (((_a2 = opts == null ? void 0 : opts.__internal_metadata) == null ? void 0 : _a2.navigationType) === "internal") {
+                        const state = ((_c2 = (_b2 = window.next) == null ? void 0 : _b2.version) != null ? _c2 : "") < "14.1.0" ? history.state : null;
+                        windowNav(state, "", to);
+                    } else {
+                        routerNav(removeBasePath(to));
+                    }
+                });
+            });
+        };
+    }
+    const flushPromises = ()=>{
+        var _a;
+        (_a = getClerkNavigationObject(name).promisesBuffer) == null ? void 0 : _a.forEach((resolve)=>resolve());
+        getClerkNavigationObject(name).promisesBuffer = [];
+    };
+    (0,react.useEffect)(()=>{
+        flushPromises();
+        return flushPromises;
+    }, []);
+    (0,react.useEffect)(()=>{
+        if (!isPending) {
+            flushPromises();
+        }
+    }, [
+        pathname,
+        isPending
+    ]);
+    return (0,react.useCallback)((to, metadata)=>{
+        return getClerkNavigationObject(name).fun(to, metadata);
+    }, []);
+};
+ //# sourceMappingURL=useInternalNavFun.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/app-router/client/useAwaitablePush.js
+"use client";
+
+
+
+const useAwaitablePush = ()=>{
+    const router = (0,navigation.useRouter)();
+    return useInternalNavFun({
+        windowNav:  false ? 0 : void 0,
+        routerNav: router.push.bind(router),
+        name: "push"
+    });
+};
+ //# sourceMappingURL=useAwaitablePush.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/app-router/client/useAwaitableReplace.js
+"use client";
+
+
+
+const useAwaitableReplace = ()=>{
+    const router = (0,navigation.useRouter)();
+    return useInternalNavFun({
+        windowNav:  false ? 0 : void 0,
+        routerNav: router.replace.bind(router),
+        name: "replace"
+    });
+};
+ //# sourceMappingURL=useAwaitableReplace.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/app-router/client/ClerkProvider.js
+"use client";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const LazyCreateKeylessApplication = (0,dynamic["default"])(()=>Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 3911)).then((m)=>m.KeylessCreatorOrReader), {
+    loadableGenerated: {
+        modules: [
+            "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> " + "./keyless-creator-reader.js"
+        ]
+    }
+});
+const NextClientClerkProvider = (props)=>{
+    if (sdk_versions/* isNextWithUnstableServerActions */.F) {
+        const deprecationWarning = `Clerk:
+Your current Next.js version (${next_package/* version */.i8}) will be deprecated in the next major release of "@clerk/nextjs". Please upgrade to next@14.1.0 or later.`;
+        if (inBrowser()) {
+            logger.warnOnce(deprecationWarning);
+        } else {
+            logger.logOnce(`
+\x1B[43m----------
+${deprecationWarning}
+----------\x1B[0m
+`);
+        }
+    }
+    const { __unstable_invokeMiddlewareOnAuthStateChange = true, children } = props;
+    const router = (0,navigation.useRouter)();
+    const push = useAwaitablePush();
+    const replace = useAwaitableReplace();
+    const [isPending, startTransition] = (0,react.useTransition)();
+    const isNested = Boolean(useClerkNextOptions());
+    if (isNested) {
+        return props.children;
+    }
+    (0,react.useEffect)(()=>{
+        var _a;
+        if (!isPending) {
+            (_a = window.__clerk_internal_invalidateCachePromise) == null ? void 0 : _a.call(window);
+        }
+    }, [
+        isPending
+    ]);
+    useSafeLayoutEffect_useSafeLayoutEffect(()=>{
+        window.__unstable__onBeforeSetActive = (intent)=>{
+            return new Promise((resolve)=>{
+                var _a;
+                window.__clerk_internal_invalidateCachePromise = resolve;
+                const nextVersion = ((_a = window == null ? void 0 : window.next) == null ? void 0 : _a.version) || "";
+                if (nextVersion.startsWith("13")) {
+                    startTransition(()=>{
+                        router.refresh();
+                    });
+                } else if (nextVersion.startsWith("15") && intent === "sign-out") {
+                    resolve();
+                } else {
+                    void invalidateCacheAction().then(()=>resolve());
+                }
+            });
+        };
+        window.__unstable__onAfterSetActive = ()=>{
+            if (__unstable_invokeMiddlewareOnAuthStateChange) {
+                return router.refresh();
+            }
+        };
+    }, []);
+    const mergedProps = mergeNextClerkPropsWithEnv({
+        ...props,
+        // @ts-expect-error Error because of the stricter types of internal `push`
+        routerPush: push,
+        // @ts-expect-error Error because of the stricter types of internal `replace`
+        routerReplace: replace
+    });
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkNextOptionsProvider, {
+        options: mergedProps
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkProvider, {
+        ...mergedProps
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(RouterTelemetry, null), /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkJSScript, {
+        router: "app"
+    }), children));
+};
+const ClientClerkProvider = (props)=>{
+    const { children, disableKeyless = false, ...rest } = props;
+    const safePublishableKey = mergeNextClerkPropsWithEnv(rest).publishableKey;
+    if (safePublishableKey || !feature_flags/* canUseKeyless */.h || disableKeyless) {
+        return /* @__PURE__ */ /*#__PURE__*/ react.createElement(NextClientClerkProvider, {
+            ...rest
+        }, children);
+    }
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(LazyCreateKeylessApplication, null, /* @__PURE__ */ /*#__PURE__*/ react.createElement(NextClientClerkProvider, {
+        ...rest
+    }, children));
+};
+ //# sourceMappingURL=ClerkProvider.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/router.js
+var router = __webpack_require__(3561);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/utils/invalidateNextRouterCache.js
+
+const invalidateNextRouterCache = ()=>{
+    if (true) {
+        return;
+    }
+    const invalidate = (cache)=>{
+        Object.keys(cache).forEach((key)=>{
+            delete cache[key];
+        });
+    };
+    try {
+        invalidate(window.next.router.sdc);
+        invalidate(window.next.router.sbc);
+    } catch  {
+        return;
+    }
+};
+ //# sourceMappingURL=invalidateNextRouterCache.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/pages/ClerkProvider.js
+
+
+
+
+
+
+
+
+
+
+
+
+setErrorThrowerOptions({
+    packageName: "@clerk/nextjs"
+});
+setClerkJsLoadingErrorPackageName("@clerk/nextjs");
+function ClerkProvider_ClerkProvider({ children, ...props }) {
+    var _a;
+    const { __unstable_invokeMiddlewareOnAuthStateChange = true } = props;
+    const { push, replace } = (0,router.useRouter)();
+    ClerkProvider.displayName = "ReactClerkProvider";
+    useSafeLayoutEffect_useSafeLayoutEffect(()=>{
+        window.__unstable__onBeforeSetActive = invalidateNextRouterCache;
+    }, []);
+    useSafeLayoutEffect_useSafeLayoutEffect(()=>{
+        window.__unstable__onAfterSetActive = ()=>{
+            if (__unstable_invokeMiddlewareOnAuthStateChange) {
+                void push(window.location.href);
+            }
+        };
+    }, []);
+    const navigate = (to)=>push(removeBasePath(to));
+    const replaceNavigate = (to)=>replace(removeBasePath(to));
+    const mergedProps = mergeNextClerkPropsWithEnv({
+        ...props,
+        routerPush: navigate,
+        routerReplace: replaceNavigate
+    });
+    const initialState = ((_a = props.authServerSideProps) == null ? void 0 : _a.__clerk_ssr_state) || props.__clerk_ssr_state;
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkNextOptionsProvider, {
+        options: mergedProps
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkProvider, {
+        ...mergedProps,
+        initialState
+    }, /* @__PURE__ */ /*#__PURE__*/ react.createElement(RouterTelemetry, null), /* @__PURE__ */ /*#__PURE__*/ react.createElement(ClerkJSScript, {
+        router: "pages"
+    }), children));
+}
+ //# sourceMappingURL=ClerkProvider.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/client-boundary/ClerkProvider.js
+"use client";
+
+
+
+
+
+function client_boundary_ClerkProvider_ClerkProvider(props) {
+    const router = (0,compat_router.useRouter)();
+    const Provider = router ? ClerkProvider_ClerkProvider : ClientClerkProvider;
+    return /* @__PURE__ */ /*#__PURE__*/ react.createElement(Provider, {
+        ...props
+    });
+}
+ //# sourceMappingURL=ClerkProvider.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/index.js
+
+
+
+
+
+const esm_ClerkProvider = client_boundary_ClerkProvider_ClerkProvider;
+const esm_SignedIn = SignedIn;
+const esm_SignedOut = SignedOut;
+const esm_Protect = Protect;
+ //# sourceMappingURL=index.js.map
+
+;// CONCATENATED MODULE: ./middleware.ts
+
+/* harmony default export */ const middleware_0 = ((0,esm_namespaceObject.authMiddleware)({
+    publicRoutes: [
+        "/",
+        "/generator"
+    ]
+}));
+const config = {
+    matcher: [
+        "/((?!.*\\..*|_next).*)",
+        "/",
+        "/(api|trpc)(.*)"
+    ]
+};
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-middleware-loader.js?absolutePagePath=private-next-root-dir%2Fmiddleware.ts&page=%2Fmiddleware&rootDir=C%3A%5CUsers%5CAKhal%5COneDrive%5CDokumente%5CGitHub%5Cmvp_gpt&matchers=W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpPyg%2FOlxcLygoPyEuKlxcLi4qfF9uZXh0KS4qKSkoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKCg%2FIS4qXFwuLip8X25leHQpLiopIn0seyJyZWdleHAiOiJeKD86XFwvKF9uZXh0XFwvZGF0YVxcL1teL117MSx9KSk%2FKD86XFwvKFxcLz9pbmRleHxcXC8%2FaW5kZXhcXC5qc29uKSk%2FW1xcLyNcXD9dPyQiLCJvcmlnaW5hbFNvdXJjZSI6Ii8ifSx7InJlZ2V4cCI6Il4oPzpcXC8oX25leHRcXC9kYXRhXFwvW14vXXsxLH0pKT8oPzpcXC8oYXBpfHRycGMpKSguKikoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKGFwaXx0cnBjKSguKikifV0%3D&preferredRegion=&middlewareConfig=eyJtYXRjaGVycyI6W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpPyg%2FOlxcLygoPyEuKlxcLi4qfF9uZXh0KS4qKSkoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKCg%2FIS4qXFwuLip8X25leHQpLiopIn0seyJyZWdleHAiOiJeKD86XFwvKF9uZXh0XFwvZGF0YVxcL1teL117MSx9KSk%2FKD86XFwvKFxcLz9pbmRleHxcXC8%2FaW5kZXhcXC5qc29uKSk%2FW1xcLyNcXD9dPyQiLCJvcmlnaW5hbFNvdXJjZSI6Ii8ifSx7InJlZ2V4cCI6Il4oPzpcXC8oX25leHRcXC9kYXRhXFwvW14vXXsxLH0pKT8oPzpcXC8oYXBpfHRycGMpKSguKikoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKGFwaXx0cnBjKSguKikifV19!
+
+
+// Import the userland code.
+
+const mod = {
+    ...middleware_namespaceObject
+};
+const handler = mod.middleware || mod.default;
+const page = "/middleware";
+if (typeof handler !== "function") {
+    throw new Error(`The Middleware "${page}" must export a \`middleware\` or a \`default\` function`);
+}
+function nHandler(opts) {
+    return adapter({
+        ...opts,
+        page,
+        handler
+    });
+}
+
+//# sourceMappingURL=middleware.js.map
+
+/***/ }),
+
+/***/ 3911:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  KeylessCreatorOrReader: () => (/* binding */ KeylessCreatorOrReader)
+});
+
+// EXTERNAL MODULE: ./node_modules/next/navigation.js
+var navigation = __webpack_require__(6304);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(167);
+// EXTERNAL MODULE: ./node_modules/next/headers.js
+var next_headers = __webpack_require__(2479);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/error.mjs
+var error = __webpack_require__(9659);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/errorThrower.js
+
+
+const errorThrower = (0,error/* buildErrorThrower */.t5)({
+    packageName: "@clerk/nextjs"
+});
+ //# sourceMappingURL=errorThrower.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/keyless.js
+
+
+const keylessCookiePrefix = `__clerk_keys_`;
+async function hashString(str) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map((b)=>b.toString(16).padStart(2, "0")).join("");
+    return hashHex.slice(0, 16);
+}
+async function keyless_getKeylessCookieName() {
+    const PATH = process.env.PWD;
+    if (!PATH) {
+        return `${keylessCookiePrefix}${0}`;
+    }
+    const lastThreeDirs = PATH.split("/").filter(Boolean).slice(-3).reverse().join("/");
+    const hash = await hashString(lastThreeDirs);
+    return `${keylessCookiePrefix}${hash}`;
+}
+async function keyless_getKeylessCookieValue(getter) {
+    if (!canUseKeyless) {
+        return void 0;
+    }
+    const keylessCookieName = await keyless_getKeylessCookieName();
+    let keyless;
+    try {
+        if (keylessCookieName) {
+            keyless = JSON.parse(getter(keylessCookieName) || "{}");
+        }
+    } catch  {
+        keyless = void 0;
+    }
+    return keyless;
+}
+ //# sourceMappingURL=keyless.js.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/nextjs/dist/esm/utils/feature-flags.js
+var feature_flags = __webpack_require__(9413);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js
+"use server";
+
+
+
+
+
+
+const keylessCookieConfig = {
+    secure: false,
+    httpOnly: false,
+    sameSite: "lax"
+};
+async function syncKeylessConfigAction(args) {
+    const { claimUrl, publishableKey, secretKey, returnUrl } = args;
+    const cookieStore = await cookies();
+    const request = new Request("https://placeholder.com", {
+        headers: await headers()
+    });
+    const keyless = await getKeylessCookieValue((name)=>{
+        var _a;
+        return (_a = cookieStore.get(name)) == null ? void 0 : _a.value;
+    });
+    const pksMatch = (keyless == null ? void 0 : keyless.publishableKey) === publishableKey;
+    const sksMatch = (keyless == null ? void 0 : keyless.secretKey) === secretKey;
+    if (pksMatch && sksMatch) {
+        return;
+    }
+    cookieStore.set(await getKeylessCookieName(), JSON.stringify({
+        claimUrl,
+        publishableKey,
+        secretKey
+    }), keylessCookieConfig);
+    if (detectClerkMiddleware(request)) {
+        redirect(`/clerk-sync-keyless?returnUrl=${returnUrl}`, RedirectType.replace);
+        return;
+    }
+    return;
+}
+async function createOrReadKeylessAction() {
+    if (!feature_flags/* canUseKeyless */.h) {
+        return null;
+    }
+    const result = await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 173)).then((m)=>m.createOrReadKeyless()).catch(()=>null);
+    if (!result) {
+        errorThrower.throwMissingPublishableKeyError();
+        return null;
+    }
+    const { clerkDevelopmentCache, createKeylessModeMessage } = await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 8916));
+    clerkDevelopmentCache == null ? void 0 : clerkDevelopmentCache.log({
+        cacheKey: result.publishableKey,
+        msg: createKeylessModeMessage(result)
+    });
+    const { claimUrl, publishableKey, secretKey, apiKeysUrl } = result;
+    void (await (0,next_headers.cookies)()).set(await keyless_getKeylessCookieName(), JSON.stringify({
+        claimUrl,
+        publishableKey,
+        secretKey
+    }), keylessCookieConfig);
+    return {
+        claimUrl,
+        publishableKey,
+        apiKeysUrl
+    };
+}
+async function deleteKeylessAction() {
+    if (!canUseKeyless) {
+        return;
+    }
+    await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 173)).then((m)=>m.removeKeyless()).catch(()=>{});
+    return;
+}
+
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/app-router/client/keyless-creator-reader.js
+
+
+
+
+const KeylessCreatorOrReader = (props)=>{
+    var _a;
+    const { children } = props;
+    const segments = (0,navigation.useSelectedLayoutSegments)();
+    const isNotFoundRoute = ((_a = segments[0]) == null ? void 0 : _a.startsWith("/_not-found")) || false;
+    const [state, fetchKeys] = react.useActionState(createOrReadKeylessAction, null);
+    (0,react.useEffect)(()=>{
+        if (isNotFoundRoute) {
+            return;
+        }
+        react.startTransition(()=>{
+            fetchKeys();
+        });
+    }, [
+        isNotFoundRoute
+    ]);
+    if (!/*#__PURE__*/ react.isValidElement(children)) {
+        return children;
+    }
+    return /*#__PURE__*/ react.cloneElement(children, {
+        key: state == null ? void 0 : state.publishableKey,
+        publishableKey: state == null ? void 0 : state.publishableKey,
+        __internal_keyless_claimKeylessApplicationUrl: state == null ? void 0 : state.claimUrl,
+        __internal_keyless_copyInstanceKeysUrl: state == null ? void 0 : state.apiKeysUrl,
+        __internal_bypassMissingPublishableKey: true
+    });
+};
+ //# sourceMappingURL=keyless-creator-reader.js.map
+
+
+/***/ }),
+
+/***/ 7724:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  T5: () => (/* binding */ API_URL),
+  Gn: () => (/* binding */ API_VERSION),
+  yK: () => (/* binding */ DOMAIN),
+  lo: () => (/* binding */ IS_SATELLITE),
+  tH: () => (/* binding */ KEYLESS_DISABLED),
+  NM: () => (/* binding */ PROXY_URL),
+  Am: () => (/* binding */ PUBLISHABLE_KEY),
+  nE: () => (/* binding */ SDK_METADATA),
+  Cn: () => (/* binding */ SECRET_KEY),
+  w4: () => (/* binding */ TELEMETRY_DEBUG),
+  CY: () => (/* binding */ TELEMETRY_DISABLED)
+});
+
+// UNUSED EXPORTS: CLERK_JS_URL, CLERK_JS_VERSION, ENCRYPTION_KEY, SIGN_IN_URL, SIGN_UP_URL
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-G3VP5PJE.mjs + 1 modules
+var chunk_G3VP5PJE = __webpack_require__(3293);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-I6MTSTOF.mjs
+var chunk_I6MTSTOF = __webpack_require__(9438);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-NNO3XJ5E.mjs
+
+
+// src/apiUrlFromPublishableKey.ts
+var apiUrlFromPublishableKey = (publishableKey)=>{
+    const frontendApi = (0,chunk_G3VP5PJE/* parsePublishableKey */.nQ)(publishableKey)?.frontendApi;
+    if (frontendApi?.startsWith("clerk.") && chunk_I6MTSTOF/* LEGACY_DEV_INSTANCE_SUFFIXES */.mv.some((suffix)=>frontendApi?.endsWith(suffix))) {
+        return chunk_I6MTSTOF/* PROD_API_URL */.Xv;
+    }
+    if (chunk_I6MTSTOF/* LOCAL_ENV_SUFFIXES */.iF.some((suffix)=>frontendApi?.endsWith(suffix))) {
+        return chunk_I6MTSTOF/* LOCAL_API_URL */.Fo;
+    }
+    if (chunk_I6MTSTOF/* STAGING_ENV_SUFFIXES */.cM.some((suffix)=>frontendApi?.endsWith(suffix))) {
+        return chunk_I6MTSTOF/* STAGING_API_URL */.Iq;
+    }
+    return chunk_I6MTSTOF/* PROD_API_URL */.Xv;
+};
+ //# sourceMappingURL=chunk-NNO3XJ5E.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-7ELT755Q.mjs
+var chunk_7ELT755Q = __webpack_require__(7032);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/apiUrlFromPublishableKey.mjs
+
+
+
+
+
+
+ //# sourceMappingURL=apiUrlFromPublishableKey.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/underscore.mjs
+var underscore = __webpack_require__(4904);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/constants.js
+
+
+
+const CLERK_JS_VERSION = process.env.NEXT_PUBLIC_CLERK_JS_VERSION || "";
+const CLERK_JS_URL = process.env.NEXT_PUBLIC_CLERK_JS_URL || "";
+const API_VERSION = process.env.CLERK_API_VERSION || "v1";
+const SECRET_KEY = process.env.CLERK_SECRET_KEY || "";
+const PUBLISHABLE_KEY = "pk_test_your_publishable_key_here" || 0;
+const ENCRYPTION_KEY = process.env.CLERK_ENCRYPTION_KEY || "";
+const API_URL = process.env.CLERK_API_URL || apiUrlFromPublishableKey(PUBLISHABLE_KEY);
+const DOMAIN = process.env.NEXT_PUBLIC_CLERK_DOMAIN || "";
+const PROXY_URL = process.env.NEXT_PUBLIC_CLERK_PROXY_URL || "";
+const IS_SATELLITE = (0,underscore/* isTruthy */.fQ)(process.env.NEXT_PUBLIC_CLERK_IS_SATELLITE) || false;
+const SIGN_IN_URL = process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL || "";
+const SIGN_UP_URL = process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL || "";
+const SDK_METADATA = {
+    name: "@clerk/nextjs",
+    version: "6.18.0",
+    environment: "production"
+};
+const TELEMETRY_DISABLED = (0,underscore/* isTruthy */.fQ)(process.env.NEXT_PUBLIC_CLERK_TELEMETRY_DISABLED);
+const TELEMETRY_DEBUG = (0,underscore/* isTruthy */.fQ)(process.env.NEXT_PUBLIC_CLERK_TELEMETRY_DEBUG);
+const KEYLESS_DISABLED = (0,underscore/* isTruthy */.fQ)(process.env.NEXT_PUBLIC_CLERK_KEYLESS_DISABLED) || false;
+ //# sourceMappingURL=constants.js.map
+
+
+/***/ }),
+
+/***/ 8916:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   clerkDevelopmentCache: () => (/* binding */ clerkDevelopmentCache),
+/* harmony export */   createKeylessModeMessage: () => (/* binding */ createKeylessModeMessage)
+/* harmony export */ });
+/* unused harmony export createConfirmationMessage */
+/* harmony import */ var _clerk_shared_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1620);
+
+
+const THROTTLE_DURATION_MS = 10 * 60 * 1e3;
+function createClerkDevCache() {
+    if (!(0,_clerk_shared_utils__WEBPACK_IMPORTED_MODULE_0__/* .isDevelopmentEnvironment */ .vf)()) {
+        return;
+    }
+    if (!__webpack_require__.g.__clerk_internal_keyless_logger) {
+        __webpack_require__.g.__clerk_internal_keyless_logger = {
+            __cache: /* @__PURE__ */ new Map(),
+            log: function({ cacheKey, msg }) {
+                var _a;
+                if (this.__cache.has(cacheKey) && Date.now() < (((_a = this.__cache.get(cacheKey)) == null ? void 0 : _a.expiresAt) || 0)) {
+                    return;
+                }
+                console.log(msg);
+                this.__cache.set(cacheKey, {
+                    expiresAt: Date.now() + THROTTLE_DURATION_MS
+                });
+            },
+            run: async function(callback, { cacheKey, onSuccessStale = THROTTLE_DURATION_MS, onErrorStale = THROTTLE_DURATION_MS }) {
+                var _a, _b;
+                if (this.__cache.has(cacheKey) && Date.now() < (((_a = this.__cache.get(cacheKey)) == null ? void 0 : _a.expiresAt) || 0)) {
+                    return (_b = this.__cache.get(cacheKey)) == null ? void 0 : _b.data;
+                }
+                try {
+                    const result = await callback();
+                    this.__cache.set(cacheKey, {
+                        expiresAt: Date.now() + onSuccessStale,
+                        data: result
+                    });
+                    return result;
+                } catch (e) {
+                    this.__cache.set(cacheKey, {
+                        expiresAt: Date.now() + onErrorStale
+                    });
+                    throw e;
+                }
+            }
+        };
+    }
+    return globalThis.__clerk_internal_keyless_logger;
+}
+const createKeylessModeMessage = (keys)=>{
+    return `
+\x1B[35m
+[Clerk]:\x1B[0m You are running in keyless mode.
+You can \x1B[35mclaim your keys\x1B[0m by visiting ${keys.claimUrl}
+`;
+};
+const createConfirmationMessage = ()=>{
+    return `
+\x1B[35m
+[Clerk]:\x1B[0m Your application is running with your claimed keys.
+You can safely remove the \x1B[35m.clerk/\x1B[0m from your project.
+`;
+};
+const clerkDevelopmentCache = createClerkDevCache();
+ //# sourceMappingURL=keyless-log-cache.js.map
+
+
+/***/ }),
+
+/***/ 173:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  createOrReadKeyless: () => (/* binding */ createOrReadKeyless),
+  removeKeyless: () => (/* binding */ removeKeyless),
+  safeParseClerkFile: () => (/* binding */ safeParseClerkFile)
+});
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-7ELT755Q.mjs
+var chunk_7ELT755Q = __webpack_require__(7032);
 ;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/url.mjs
 
 
@@ -2070,469 +8111,19 @@ var chunk_7ELT755Q_privateMethod = (obj, member, method)=>(__accessCheck(obj, me
 
  //# sourceMappingURL=url.mjs.map
 
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-N2V3PKFE.mjs
-// src/retry.ts
-var defaultOptions = {
-    initialDelay: 125,
-    maxDelayBetweenRetries: 0,
-    factor: 2,
-    shouldRetry: (_, iteration)=>iteration < 5,
-    retryImmediately: false,
-    jitter: true
-};
-var RETRY_IMMEDIATELY_DELAY = 100;
-var sleep = async (ms)=>new Promise((s)=>setTimeout(s, ms));
-var applyJitter = (delay, jitter)=>{
-    return jitter ? delay * (1 + Math.random()) : delay;
-};
-var createExponentialDelayAsyncFn = (opts)=>{
-    let timesCalled = 0;
-    const calculateDelayInMs = ()=>{
-        const constant = opts.initialDelay;
-        const base = opts.factor;
-        let delay = constant * Math.pow(base, timesCalled);
-        delay = applyJitter(delay, opts.jitter);
-        return Math.min(opts.maxDelayBetweenRetries || delay, delay);
-    };
-    return async ()=>{
-        await sleep(calculateDelayInMs());
-        timesCalled++;
-    };
-};
-var retry = async (callback, options = {})=>{
-    let iterations = 0;
-    const { shouldRetry, initialDelay, maxDelayBetweenRetries, factor, retryImmediately, jitter } = {
-        ...defaultOptions,
-        ...options
-    };
-    const delay = createExponentialDelayAsyncFn({
-        initialDelay,
-        maxDelayBetweenRetries,
-        factor,
-        jitter
-    });
-    while(true){
-        try {
-            return await callback();
-        } catch (e) {
-            iterations++;
-            if (!shouldRetry(e, iterations)) {
-                throw e;
-            }
-            if (retryImmediately && iterations === 1) {
-                await sleep(applyJitter(RETRY_IMMEDIATELY_DELAY, jitter));
-            } else {
-                await delay();
-            }
-        }
-    }
-};
- //# sourceMappingURL=chunk-N2V3PKFE.mjs.map
-
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-N2V3PKFE.mjs
+var chunk_N2V3PKFE = __webpack_require__(7571);
 ;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/retry.mjs
 
 
  //# sourceMappingURL=retry.mjs.map
 
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-I6MTSTOF.mjs
-// src/constants.ts
-var chunk_I6MTSTOF_LEGACY_DEV_INSTANCE_SUFFIXES = (/* unused pure expression or super */ null && ([
-    ".lcl.dev",
-    ".lclstage.dev",
-    ".lclclerk.com"
-]));
-var CURRENT_DEV_INSTANCE_SUFFIXES = (/* unused pure expression or super */ null && ([
-    ".accounts.dev",
-    ".accountsstage.dev",
-    ".accounts.lclclerk.com"
-]));
-var DEV_OR_STAGING_SUFFIXES = [
-    ".lcl.dev",
-    ".stg.dev",
-    ".lclstage.dev",
-    ".stgstage.dev",
-    ".dev.lclclerk.com",
-    ".stg.lclclerk.com",
-    ".accounts.lclclerk.com",
-    "accountsstage.dev",
-    "accounts.dev"
-];
-var LOCAL_ENV_SUFFIXES = (/* unused pure expression or super */ null && ([
-    ".lcl.dev",
-    "lclstage.dev",
-    ".lclclerk.com",
-    ".accounts.lclclerk.com"
-]));
-var STAGING_ENV_SUFFIXES = (/* unused pure expression or super */ null && ([
-    ".accountsstage.dev"
-]));
-var LOCAL_API_URL = "https://api.lclclerk.com";
-var STAGING_API_URL = "https://api.clerkstage.dev";
-var PROD_API_URL = "https://api.clerk.com";
-function iconImageUrl(id, format = "svg") {
-    return `https://img.clerk.com/static/${id}.${format}`;
-}
- //# sourceMappingURL=chunk-I6MTSTOF.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-G3VP5PJE.mjs
-
-
-
-// src/keys.ts
-var PUBLISHABLE_KEY_LIVE_PREFIX = "pk_live_";
-var PUBLISHABLE_KEY_TEST_PREFIX = "pk_test_";
-var PUBLISHABLE_FRONTEND_API_DEV_REGEX = /^(([a-z]+)-){2}([0-9]{1,2})\.clerk\.accounts([a-z.]*)(dev|com)$/i;
-function buildPublishableKey(frontendApi) {
-    const isDevKey = PUBLISHABLE_FRONTEND_API_DEV_REGEX.test(frontendApi) || frontendApi.startsWith("clerk.") && LEGACY_DEV_INSTANCE_SUFFIXES.some((s)=>frontendApi.endsWith(s));
-    const keyPrefix = isDevKey ? PUBLISHABLE_KEY_TEST_PREFIX : PUBLISHABLE_KEY_LIVE_PREFIX;
-    return `${keyPrefix}${isomorphicBtoa(`${frontendApi}$`)}`;
-}
-function chunk_G3VP5PJE_parsePublishableKey(key, options = {}) {
-    key = key || "";
-    if (!key || !isPublishableKey(key)) {
-        if (options.fatal && !key) {
-            throw new Error("Publishable key is missing. Ensure that your publishable key is correctly configured. Double-check your environment configuration for your keys, or access them here: https://dashboard.clerk.com/last-active?path=api-keys");
-        }
-        if (options.fatal && !isPublishableKey(key)) {
-            throw new Error("Publishable key not valid.");
-        }
-        return null;
-    }
-    const instanceType = key.startsWith(PUBLISHABLE_KEY_LIVE_PREFIX) ? "production" : "development";
-    let frontendApi = isomorphicAtob(key.split("_")[2]);
-    frontendApi = frontendApi.slice(0, -1);
-    if (options.proxyUrl) {
-        frontendApi = options.proxyUrl;
-    } else if (instanceType !== "development" && options.domain) {
-        frontendApi = `clerk.${options.domain}`;
-    }
-    return {
-        instanceType,
-        frontendApi
-    };
-}
-function isPublishableKey(key = "") {
-    try {
-        const hasValidPrefix = key.startsWith(PUBLISHABLE_KEY_LIVE_PREFIX) || key.startsWith(PUBLISHABLE_KEY_TEST_PREFIX);
-        const hasValidFrontendApiPostfix = isomorphicAtob(key.split("_")[2] || "").endsWith("$");
-        return hasValidPrefix && hasValidFrontendApiPostfix;
-    } catch  {
-        return false;
-    }
-}
-function createDevOrStagingUrlCache() {
-    const devOrStagingUrlCache = /* @__PURE__ */ new Map();
-    return {
-        isDevOrStagingUrl: (url)=>{
-            if (!url) {
-                return false;
-            }
-            const hostname = typeof url === "string" ? url : url.hostname;
-            let res = devOrStagingUrlCache.get(hostname);
-            if (res === void 0) {
-                res = DEV_OR_STAGING_SUFFIXES.some((s)=>hostname.endsWith(s));
-                devOrStagingUrlCache.set(hostname, res);
-            }
-            return res;
-        }
-    };
-}
-function isDevelopmentFromPublishableKey(apiKey) {
-    return apiKey.startsWith("test_") || apiKey.startsWith("pk_test_");
-}
-function isProductionFromPublishableKey(apiKey) {
-    return apiKey.startsWith("live_") || apiKey.startsWith("pk_live_");
-}
-function chunk_G3VP5PJE_isDevelopmentFromSecretKey(apiKey) {
-    return apiKey.startsWith("test_") || apiKey.startsWith("sk_test_");
-}
-function isProductionFromSecretKey(apiKey) {
-    return apiKey.startsWith("live_") || apiKey.startsWith("sk_live_");
-}
-async function chunk_G3VP5PJE_getCookieSuffix(publishableKey, subtle = globalThis.crypto.subtle) {
-    const data = new TextEncoder().encode(publishableKey);
-    const digest = await subtle.digest("sha-1", data);
-    const stringDigest = String.fromCharCode(...new Uint8Array(digest));
-    return isomorphicBtoa(stringDigest).replace(/\+/gi, "-").replace(/\//gi, "_").substring(0, 8);
-}
-var chunk_G3VP5PJE_getSuffixedCookieName = (cookieName, cookieSuffix)=>{
-    return `${cookieName}_${cookieSuffix}`;
-};
- //# sourceMappingURL=chunk-G3VP5PJE.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/keys.mjs
-
-
-
-
-
- //# sourceMappingURL=keys.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-UEY4AZIP.mjs
-
-// src/deprecated.ts
-var displayedWarnings = /* @__PURE__ */ new Set();
-var chunk_UEY4AZIP_deprecated = (fnName, warning, key)=>{
-    const hideWarning = isTestEnvironment() || isProductionEnvironment();
-    const messageId = key ?? fnName;
-    if (displayedWarnings.has(messageId) || hideWarning) {
-        return;
-    }
-    displayedWarnings.add(messageId);
-    console.warn(`Clerk - DEPRECATION WARNING: "${fnName}" is deprecated and will be removed in the next major release.
-${warning}`);
-};
-var deprecatedProperty = (cls, propName, warning, isStatic = false)=>{
-    const target = isStatic ? cls : cls.prototype;
-    let value = target[propName];
-    Object.defineProperty(target, propName, {
-        get () {
-            chunk_UEY4AZIP_deprecated(propName, warning, `${cls.name}:${propName}`);
-            return value;
-        },
-        set (v) {
-            value = v;
-        }
-    });
-};
-var deprecatedObjectProperty = (obj, propName, warning, key)=>{
-    let value = obj[propName];
-    Object.defineProperty(obj, propName, {
-        get () {
-            chunk_UEY4AZIP_deprecated(propName, warning, key);
-            return value;
-        },
-        set (v) {
-            value = v;
-        }
-    });
-};
- //# sourceMappingURL=chunk-UEY4AZIP.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/deprecated.mjs
-
-
-
- //# sourceMappingURL=deprecated.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-NT4JRXL3.mjs
-// src/error.ts
-function isUnauthorizedError(e) {
-    const status = e?.status;
-    const code = e?.errors?.[0]?.code;
-    return code === "authentication_invalid" && status === 401;
-}
-function isCaptchaError(e) {
-    return [
-        "captcha_invalid",
-        "captcha_not_enabled",
-        "captcha_missing_token"
-    ].includes(e.errors[0].code);
-}
-function is4xxError(e) {
-    const status = e?.status;
-    return !!status && status >= 400 && status < 500;
-}
-function isNetworkError(e) {
-    const message = (`${e.message}${e.name}` || "").toLowerCase().replace(/\s+/g, "");
-    return message.includes("networkerror");
-}
-function isKnownError(error) {
-    return isClerkAPIResponseError(error) || isMetamaskError(error) || isClerkRuntimeError(error);
-}
-function isClerkAPIResponseError(err) {
-    return "clerkError" in err;
-}
-function isClerkRuntimeError(err) {
-    return "clerkRuntimeError" in err;
-}
-function isReverificationCancelledError(err) {
-    return isClerkRuntimeError(err) && err.code === "reverification_cancelled";
-}
-function isMetamaskError(err) {
-    return "code" in err && [
-        4001,
-        32602,
-        32603
-    ].includes(err.code) && "message" in err;
-}
-function isUserLockedError(err) {
-    return isClerkAPIResponseError(err) && err.errors?.[0]?.code === "user_locked";
-}
-function isPasswordPwnedError(err) {
-    return isClerkAPIResponseError(err) && err.errors?.[0]?.code === "form_password_pwned";
-}
-function parseErrors(data = []) {
-    return data.length > 0 ? data.map(chunk_NT4JRXL3_parseError) : [];
-}
-function chunk_NT4JRXL3_parseError(error) {
-    return {
-        code: error.code,
-        message: error.message,
-        longMessage: error.long_message,
-        meta: {
-            paramName: error?.meta?.param_name,
-            sessionId: error?.meta?.session_id,
-            emailAddresses: error?.meta?.email_addresses,
-            identifiers: error?.meta?.identifiers,
-            zxcvbn: error?.meta?.zxcvbn
-        }
-    };
-}
-function errorToJSON(error) {
-    return {
-        code: error?.code || "",
-        message: error?.message || "",
-        long_message: error?.longMessage,
-        meta: {
-            param_name: error?.meta?.paramName,
-            session_id: error?.meta?.sessionId,
-            email_addresses: error?.meta?.emailAddresses,
-            identifiers: error?.meta?.identifiers,
-            zxcvbn: error?.meta?.zxcvbn
-        }
-    };
-}
-var chunk_NT4JRXL3_ClerkAPIResponseError = class _ClerkAPIResponseError extends (/* unused pure expression or super */ null && (Error)) {
-    constructor(message, { data, status, clerkTraceId, retryAfter }){
-        super(message);
-        this.toString = ()=>{
-            let message = `[${this.name}]
-Message:${this.message}
-Status:${this.status}
-Serialized errors: ${this.errors.map((e)=>JSON.stringify(e))}`;
-            if (this.clerkTraceId) {
-                message += `
-Clerk Trace ID: ${this.clerkTraceId}`;
-            }
-            return message;
-        };
-        Object.setPrototypeOf(this, _ClerkAPIResponseError.prototype);
-        this.status = status;
-        this.message = message;
-        this.clerkTraceId = clerkTraceId;
-        this.retryAfter = retryAfter;
-        this.clerkError = true;
-        this.errors = parseErrors(data);
-    }
-};
-var ClerkRuntimeError = class _ClerkRuntimeError extends (/* unused pure expression or super */ null && (Error)) {
-    constructor(message, { code }){
-        const prefix = "\uD83D\uDD12 Clerk:";
-        const regex = new RegExp(prefix.replace(" ", "\\s*"), "i");
-        const sanitized = message.replace(regex, "");
-        const _message = `${prefix} ${sanitized.trim()}
-
-(code="${code}")
-`;
-        super(_message);
-        /**
-     * Returns a string representation of the error.
-     *
-     * @returns {string} A formatted string with the error name and message.
-     */ this.toString = ()=>{
-            return `[${this.name}]
-Message:${this.message}`;
-        };
-        Object.setPrototypeOf(this, _ClerkRuntimeError.prototype);
-        this.code = code;
-        this.message = _message;
-        this.clerkRuntimeError = true;
-        this.name = "ClerkRuntimeError";
-    }
-};
-var EmailLinkError = class _EmailLinkError extends (/* unused pure expression or super */ null && (Error)) {
-    constructor(code){
-        super(code);
-        this.code = code;
-        this.name = "EmailLinkError";
-        Object.setPrototypeOf(this, _EmailLinkError.prototype);
-    }
-};
-function isEmailLinkError(err) {
-    return err.name === "EmailLinkError";
-}
-var EmailLinkErrorCode = {
-    Expired: "expired",
-    Failed: "failed",
-    ClientMismatch: "client_mismatch"
-};
-var EmailLinkErrorCodeStatus = {
-    Expired: "expired",
-    Failed: "failed",
-    ClientMismatch: "client_mismatch"
-};
-var DefaultMessages = Object.freeze({
-    InvalidProxyUrlErrorMessage: `The proxyUrl passed to Clerk is invalid. The expected value for proxyUrl is an absolute URL or a relative path with a leading '/'. (key={{url}})`,
-    InvalidPublishableKeyErrorMessage: `The publishableKey passed to Clerk is invalid. You can get your Publishable key at https://dashboard.clerk.com/last-active?path=api-keys. (key={{key}})`,
-    MissingPublishableKeyErrorMessage: `Missing publishableKey. You can get your key at https://dashboard.clerk.com/last-active?path=api-keys.`,
-    MissingSecretKeyErrorMessage: `Missing secretKey. You can get your key at https://dashboard.clerk.com/last-active?path=api-keys.`,
-    MissingClerkProvider: `{{source}} can only be used within the <ClerkProvider /> component. Learn more: https://clerk.com/docs/components/clerk-provider`
-});
-function buildErrorThrower({ packageName, customMessages }) {
-    let pkg = packageName;
-    const messages = {
-        ...DefaultMessages,
-        ...customMessages
-    };
-    function buildMessage(rawMessage, replacements) {
-        if (!replacements) {
-            return `${pkg}: ${rawMessage}`;
-        }
-        let msg = rawMessage;
-        const matches = rawMessage.matchAll(/{{([a-zA-Z0-9-_]+)}}/g);
-        for (const match of matches){
-            const replacement = (replacements[match[1]] || "").toString();
-            msg = msg.replace(`{{${match[1]}}}`, replacement);
-        }
-        return `${pkg}: ${msg}`;
-    }
-    return {
-        setPackageName ({ packageName: packageName2 }) {
-            if (typeof packageName2 === "string") {
-                pkg = packageName2;
-            }
-            return this;
-        },
-        setMessages ({ customMessages: customMessages2 }) {
-            Object.assign(messages, customMessages2 || {});
-            return this;
-        },
-        throwInvalidPublishableKeyError (params) {
-            throw new Error(buildMessage(messages.InvalidPublishableKeyErrorMessage, params));
-        },
-        throwInvalidProxyUrl (params) {
-            throw new Error(buildMessage(messages.InvalidProxyUrlErrorMessage, params));
-        },
-        throwMissingPublishableKeyError () {
-            throw new Error(buildMessage(messages.MissingPublishableKeyErrorMessage));
-        },
-        throwMissingSecretKeyError () {
-            throw new Error(buildMessage(messages.MissingSecretKeyErrorMessage));
-        },
-        throwMissingClerkProviderError (params) {
-            throw new Error(buildMessage(messages.MissingClerkProvider, params));
-        },
-        throw (message) {
-            throw new Error(buildMessage(message));
-        }
-    };
-}
-var ClerkWebAuthnError = class extends (/* unused pure expression or super */ null && (ClerkRuntimeError)) {
-    constructor(message, { code }){
-        super(message, {
-            code
-        });
-        this.code = code;
-    }
-};
- //# sourceMappingURL=chunk-NT4JRXL3.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/error.mjs
-
-
- //# sourceMappingURL=error.mjs.map
-
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/keys.mjs
+var keys = __webpack_require__(9389);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/deprecated.mjs + 1 modules
+var deprecated = __webpack_require__(8428);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/error.mjs
+var dist_error = __webpack_require__(9659);
 ;// CONCATENATED MODULE: ./node_modules/@clerk/backend/dist/chunk-LWOXHF4E.mjs
 // src/util/shared.ts
 
@@ -2541,10 +8132,10 @@ var ClerkWebAuthnError = class extends (/* unused pure expression or super */ nu
 
 
 
-var chunk_LWOXHF4E_errorThrower = buildErrorThrower({
+var errorThrower = (0,dist_error/* buildErrorThrower */.t5)({
     packageName: "@clerk/backend"
 });
-var { isDevOrStagingUrl } = createDevOrStagingUrlCache();
+var { isDevOrStagingUrl } = (0,keys/* createDevOrStagingUrlCache */.MY)();
  //# sourceMappingURL=chunk-LWOXHF4E.mjs.map
 
 ;// CONCATENATED MODULE: ./node_modules/@clerk/backend/dist/chunk-5JS2VYLU.mjs
@@ -2552,7 +8143,7 @@ var { isDevOrStagingUrl } = createDevOrStagingUrlCache();
 var TokenVerificationErrorCode = {
     InvalidSecretKey: "clerk_key_invalid"
 };
-var chunk_5JS2VYLU_TokenVerificationErrorReason = {
+var TokenVerificationErrorReason = {
     TokenExpired: "token-expired",
     TokenInvalid: "token-invalid",
     TokenInvalidAlgorithm: "token-invalid-algorithm",
@@ -2569,14 +8160,14 @@ var chunk_5JS2VYLU_TokenVerificationErrorReason = {
     JWKFailedToResolve: "jwk-failed-to-resolve",
     JWKKidMismatch: "jwk-kid-mismatch"
 };
-var chunk_5JS2VYLU_TokenVerificationErrorAction = {
+var TokenVerificationErrorAction = {
     ContactSupport: "Contact support@clerk.com",
     EnsureClerkJWT: "Make sure that this is a valid Clerk generate JWT.",
     SetClerkJWTKey: "Set the CLERK_JWT_KEY environment variable.",
     SetClerkSecretKey: "Set the CLERK_SECRET_KEY environment variable.",
     EnsureClockSync: "Make sure your system clock is in sync (e.g. turn off and on automatic time synchronization)."
 };
-var chunk_5JS2VYLU_TokenVerificationError = class _TokenVerificationError extends Error {
+var TokenVerificationError = class _TokenVerificationError extends Error {
     constructor({ action, message, reason }){
         super(message);
         Object.setPrototypeOf(this, _TokenVerificationError.prototype);
@@ -2598,18 +8189,8 @@ var SignJWTError = class extends (/* unused pure expression or super */ null && 
 ;// CONCATENATED MODULE: ./node_modules/@clerk/backend/dist/runtime/browser/crypto.mjs
 const webcrypto = crypto;
 
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-TETGTEI2.mjs
-// src/isomorphicAtob.ts
-var chunk_TETGTEI2_isomorphicAtob = (data)=>{
-    if (typeof atob !== "undefined" && typeof atob === "function") {
-        return atob(data);
-    } else if (typeof global !== "undefined" && global.Buffer) {
-        return new global.Buffer(data, "base64").toString();
-    }
-    return data;
-};
- //# sourceMappingURL=chunk-TETGTEI2.mjs.map
-
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-TETGTEI2.mjs
+var chunk_TETGTEI2 = __webpack_require__(6998);
 ;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/isomorphicAtob.mjs
 
 
@@ -2620,7 +8201,7 @@ var chunk_TETGTEI2_isomorphicAtob = (data)=>{
 // src/runtime.ts
 
 var globalFetch = fetch.bind(globalThis);
-var chunk_TQCJZF7D_runtime = {
+var runtime = {
     crypto: webcrypto,
     get fetch () {
         return  false ? 0 : globalFetch;
@@ -2635,7 +8216,7 @@ var chunk_TQCJZF7D_runtime = {
 // src/util/rfc4648.ts
 var base64url = {
     parse (string, opts) {
-        return chunk_TQCJZF7D_parse(string, base64UrlEncoding, opts);
+        return parse(string, base64UrlEncoding, opts);
     },
     stringify (data, opts) {
         return stringify(data, base64UrlEncoding, opts);
@@ -2645,7 +8226,7 @@ var base64UrlEncoding = {
     chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_",
     bits: 6
 };
-function chunk_TQCJZF7D_parse(string, encoding, opts = {}) {
+function parse(string, encoding, opts = {}) {
     if (!encoding.codes) {
         encoding.codes = {};
         for(let i = 0; i < encoding.chars.length; ++i){
@@ -2750,48 +8331,48 @@ var assertAudienceClaim = (aud, audience)=>{
     }
     if (typeof aud === "string") {
         if (!audienceList.includes(aud)) {
-            throw new chunk_5JS2VYLU_TokenVerificationError({
-                action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-                reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenVerificationFailed,
+            throw new TokenVerificationError({
+                action: TokenVerificationErrorAction.EnsureClerkJWT,
+                reason: TokenVerificationErrorReason.TokenVerificationFailed,
                 message: `Invalid JWT audience claim (aud) ${JSON.stringify(aud)}. Is not included in "${JSON.stringify(audienceList)}".`
             });
         }
     } else if (isArrayString(aud)) {
         if (!aud.some((a)=>audienceList.includes(a))) {
-            throw new chunk_5JS2VYLU_TokenVerificationError({
-                action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-                reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenVerificationFailed,
+            throw new TokenVerificationError({
+                action: TokenVerificationErrorAction.EnsureClerkJWT,
+                reason: TokenVerificationErrorReason.TokenVerificationFailed,
                 message: `Invalid JWT audience claim array (aud) ${JSON.stringify(aud)}. Is not included in "${JSON.stringify(audienceList)}".`
             });
         }
     }
 };
-var chunk_TQCJZF7D_assertHeaderType = (typ)=>{
+var assertHeaderType = (typ)=>{
     if (typeof typ === "undefined") {
         return;
     }
     if (typ !== "JWT") {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenInvalid,
+        throw new TokenVerificationError({
+            action: TokenVerificationErrorAction.EnsureClerkJWT,
+            reason: TokenVerificationErrorReason.TokenInvalid,
             message: `Invalid JWT type ${JSON.stringify(typ)}. Expected "JWT".`
         });
     }
 };
-var chunk_TQCJZF7D_assertHeaderAlgorithm = (alg)=>{
+var assertHeaderAlgorithm = (alg)=>{
     if (!algs.includes(alg)) {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenInvalidAlgorithm,
+        throw new TokenVerificationError({
+            action: TokenVerificationErrorAction.EnsureClerkJWT,
+            reason: TokenVerificationErrorReason.TokenInvalidAlgorithm,
             message: `Invalid JWT algorithm ${JSON.stringify(alg)}. Supported: ${algs}.`
         });
     }
 };
 var assertSubClaim = (sub)=>{
     if (typeof sub !== "string") {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenVerificationFailed,
+        throw new TokenVerificationError({
+            action: TokenVerificationErrorAction.EnsureClerkJWT,
+            reason: TokenVerificationErrorReason.TokenVerificationFailed,
             message: `Subject claim (sub) is required and must be a string. Received ${JSON.stringify(sub)}.`
         });
     }
@@ -2801,17 +8382,17 @@ var assertAuthorizedPartiesClaim = (azp, authorizedParties)=>{
         return;
     }
     if (!authorizedParties.includes(azp)) {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenInvalidAuthorizedParties,
+        throw new TokenVerificationError({
+            reason: TokenVerificationErrorReason.TokenInvalidAuthorizedParties,
             message: `Invalid JWT Authorized party claim (azp) ${JSON.stringify(azp)}. Expected "${authorizedParties}".`
         });
     }
 };
 var assertExpirationClaim = (exp, clockSkewInMs)=>{
     if (typeof exp !== "number") {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenVerificationFailed,
+        throw new TokenVerificationError({
+            action: TokenVerificationErrorAction.EnsureClerkJWT,
+            reason: TokenVerificationErrorReason.TokenVerificationFailed,
             message: `Invalid JWT expiry date claim (exp) ${JSON.stringify(exp)}. Expected number.`
         });
     }
@@ -2820,8 +8401,8 @@ var assertExpirationClaim = (exp, clockSkewInMs)=>{
     expiryDate.setUTCSeconds(exp);
     const expired = expiryDate.getTime() <= currentDate.getTime() - clockSkewInMs;
     if (expired) {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenExpired,
+        throw new TokenVerificationError({
+            reason: TokenVerificationErrorReason.TokenExpired,
             message: `JWT is expired. Expiry date: ${expiryDate.toUTCString()}, Current date: ${currentDate.toUTCString()}.`
         });
     }
@@ -2831,9 +8412,9 @@ var assertActivationClaim = (nbf, clockSkewInMs)=>{
         return;
     }
     if (typeof nbf !== "number") {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenVerificationFailed,
+        throw new TokenVerificationError({
+            action: TokenVerificationErrorAction.EnsureClerkJWT,
+            reason: TokenVerificationErrorReason.TokenVerificationFailed,
             message: `Invalid JWT not before date claim (nbf) ${JSON.stringify(nbf)}. Expected number.`
         });
     }
@@ -2842,8 +8423,8 @@ var assertActivationClaim = (nbf, clockSkewInMs)=>{
     notBeforeDate.setUTCSeconds(nbf);
     const early = notBeforeDate.getTime() > currentDate.getTime() + clockSkewInMs;
     if (early) {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenNotActiveYet,
+        throw new TokenVerificationError({
+            reason: TokenVerificationErrorReason.TokenNotActiveYet,
             message: `JWT cannot be used prior to not before date claim (nbf). Not before date: ${notBeforeDate.toUTCString()}; Current date: ${currentDate.toUTCString()};`
         });
     }
@@ -2853,9 +8434,9 @@ var assertIssuedAtClaim = (iat, clockSkewInMs)=>{
         return;
     }
     if (typeof iat !== "number") {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenVerificationFailed,
+        throw new TokenVerificationError({
+            action: TokenVerificationErrorAction.EnsureClerkJWT,
+            reason: TokenVerificationErrorReason.TokenVerificationFailed,
             message: `Invalid JWT issued at date claim (iat) ${JSON.stringify(iat)}. Expected number.`
         });
     }
@@ -2864,8 +8445,8 @@ var assertIssuedAtClaim = (iat, clockSkewInMs)=>{
     issuedAtDate.setUTCSeconds(iat);
     const postIssued = issuedAtDate.getTime() > currentDate.getTime() + clockSkewInMs;
     if (postIssued) {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenIatInTheFuture,
+        throw new TokenVerificationError({
+            reason: TokenVerificationErrorReason.TokenIatInTheFuture,
             message: `JWT issued at date claim (iat) is in the future. Issued at date: ${issuedAtDate.toUTCString()}; Current date: ${currentDate.toUTCString()};`
         });
     }
@@ -2874,7 +8455,7 @@ var assertIssuedAtClaim = (iat, clockSkewInMs)=>{
 
 function pemToBuffer(secret) {
     const trimmed = secret.replace(/-----BEGIN.*?-----/g, "").replace(/-----END.*?-----/g, "").replace(/\s/g, "");
-    const decoded = chunk_TETGTEI2_isomorphicAtob(trimmed);
+    const decoded = (0,chunk_TETGTEI2/* isomorphicAtob */.S)(trimmed);
     const buffer = new ArrayBuffer(decoded.length);
     const bufView = new Uint8Array(buffer);
     for(let i = 0, strLen = decoded.length; i < strLen; i++){
@@ -2884,19 +8465,19 @@ function pemToBuffer(secret) {
 }
 function importKey(key, algorithm, keyUsage) {
     if (typeof key === "object") {
-        return chunk_TQCJZF7D_runtime.crypto.subtle.importKey("jwk", key, algorithm, false, [
+        return runtime.crypto.subtle.importKey("jwk", key, algorithm, false, [
             keyUsage
         ]);
     }
     const keyData = pemToBuffer(key);
     const format = keyUsage === "sign" ? "pkcs8" : "spki";
-    return chunk_TQCJZF7D_runtime.crypto.subtle.importKey(format, keyData, algorithm, false, [
+    return runtime.crypto.subtle.importKey(format, keyData, algorithm, false, [
         keyUsage
     ]);
 }
 // src/jwt/verifyJwt.ts
 var DEFAULT_CLOCK_SKEW_IN_SECONDS = 5 * 1e3;
-async function chunk_TQCJZF7D_hasValidSignature(jwt, key) {
+async function hasValidSignature(jwt, key) {
     const { header, signature, raw } = jwt;
     const encoder = new TextEncoder();
     const data = encoder.encode([
@@ -2906,28 +8487,28 @@ async function chunk_TQCJZF7D_hasValidSignature(jwt, key) {
     const algorithm = getCryptoAlgorithm(header.alg);
     try {
         const cryptoKey = await importKey(key, algorithm, "verify");
-        const verified = await chunk_TQCJZF7D_runtime.crypto.subtle.verify(algorithm.name, cryptoKey, signature, data);
+        const verified = await runtime.crypto.subtle.verify(algorithm.name, cryptoKey, signature, data);
         return {
             data: verified
         };
     } catch (error) {
         return {
             errors: [
-                new chunk_5JS2VYLU_TokenVerificationError({
-                    reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenInvalidSignature,
+                new TokenVerificationError({
+                    reason: TokenVerificationErrorReason.TokenInvalidSignature,
                     message: error?.message
                 })
             ]
         };
     }
 }
-function chunk_TQCJZF7D_decodeJwt(token) {
+function decodeJwt(token) {
     const tokenParts = (token || "").toString().split(".");
     if (tokenParts.length !== 3) {
         return {
             errors: [
-                new chunk_5JS2VYLU_TokenVerificationError({
-                    reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenInvalid,
+                new TokenVerificationError({
+                    reason: TokenVerificationErrorReason.TokenInvalid,
                     message: `Invalid JWT form. A JWT consists of three parts separated by dots.`
                 })
             ]
@@ -2962,7 +8543,7 @@ function chunk_TQCJZF7D_decodeJwt(token) {
 async function verifyJwt(token, options) {
     const { audience, authorizedParties, clockSkewInMs, key } = options;
     const clockSkew = clockSkewInMs || DEFAULT_CLOCK_SKEW_IN_SECONDS;
-    const { data: decoded, errors } = chunk_TQCJZF7D_decodeJwt(token);
+    const { data: decoded, errors } = decodeJwt(token);
     if (errors) {
         return {
             errors
@@ -2971,8 +8552,8 @@ async function verifyJwt(token, options) {
     const { header, payload } = decoded;
     try {
         const { typ, alg } = header;
-        chunk_TQCJZF7D_assertHeaderType(typ);
-        chunk_TQCJZF7D_assertHeaderAlgorithm(alg);
+        assertHeaderType(typ);
+        assertHeaderAlgorithm(alg);
         const { azp, sub, aud, iat, exp, nbf } = payload;
         assertSubClaim(sub);
         assertAudienceClaim([
@@ -2991,13 +8572,13 @@ async function verifyJwt(token, options) {
             ]
         };
     }
-    const { data: signatureValid, errors: signatureErrors } = await chunk_TQCJZF7D_hasValidSignature(decoded, key);
+    const { data: signatureValid, errors: signatureErrors } = await hasValidSignature(decoded, key);
     if (signatureErrors) {
         return {
             errors: [
-                new chunk_5JS2VYLU_TokenVerificationError({
-                    action: chunk_5JS2VYLU_TokenVerificationErrorAction.EnsureClerkJWT,
-                    reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenVerificationFailed,
+                new TokenVerificationError({
+                    action: TokenVerificationErrorAction.EnsureClerkJWT,
+                    reason: TokenVerificationErrorReason.TokenVerificationFailed,
                     message: `Error verifying JWT signature. ${signatureErrors[0]}`
                 })
             ]
@@ -3006,8 +8587,8 @@ async function verifyJwt(token, options) {
     if (!signatureValid) {
         return {
             errors: [
-                new chunk_5JS2VYLU_TokenVerificationError({
-                    reason: chunk_5JS2VYLU_TokenVerificationErrorReason.TokenInvalidSignature,
+                new TokenVerificationError({
+                    reason: TokenVerificationErrorReason.TokenInvalidSignature,
                     message: "JWT signature is invalid."
                 })
             ]
@@ -3020,239 +8601,11 @@ async function verifyJwt(token, options) {
  //# sourceMappingURL=chunk-TQCJZF7D.mjs.map
 
 // EXTERNAL MODULE: ./node_modules/snakecase-keys/index.js
-var snakecase_keys = __webpack_require__(543);
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-LGJNYDTY.mjs
-// src/authorization.ts
-var TYPES_TO_OBJECTS = {
-    strict_mfa: {
-        afterMinutes: 10,
-        level: "multi_factor"
-    },
-    strict: {
-        afterMinutes: 10,
-        level: "second_factor"
-    },
-    moderate: {
-        afterMinutes: 60,
-        level: "second_factor"
-    },
-    lax: {
-        afterMinutes: 1440,
-        level: "second_factor"
-    }
-};
-var ALLOWED_LEVELS = /* @__PURE__ */ new Set([
-    "first_factor",
-    "second_factor",
-    "multi_factor"
-]);
-var ALLOWED_TYPES = /* @__PURE__ */ new Set([
-    "strict_mfa",
-    "strict",
-    "moderate",
-    "lax"
-]);
-var isValidMaxAge = (maxAge)=>typeof maxAge === "number" && maxAge > 0;
-var isValidLevel = (level)=>ALLOWED_LEVELS.has(level);
-var isValidVerificationType = (type)=>ALLOWED_TYPES.has(type);
-var checkOrgAuthorization = (params, options)=>{
-    const { orgId, orgRole, orgPermissions } = options;
-    if (!params.role && !params.permission) {
-        return null;
-    }
-    if (!orgId || !orgRole || !orgPermissions) {
-        return null;
-    }
-    if (params.permission) {
-        return orgPermissions.includes(params.permission);
-    }
-    if (params.role) {
-        return orgRole === params.role;
-    }
-    return null;
-};
-var checkForFeatureOrPlan = (claim, featureOrPlan)=>{
-    const { org: orgFeatures, user: userFeatures } = chunk_LGJNYDTY_splitByScope(claim);
-    const [scope, _id] = featureOrPlan.split(":");
-    const id = _id || scope;
-    if (scope === "org") {
-        return orgFeatures.includes(id);
-    } else if (scope === "user") {
-        return userFeatures.includes(id);
-    } else {
-        return [
-            ...orgFeatures,
-            ...userFeatures
-        ].includes(id);
-    }
-};
-var checkBillingAuthorization = (params, options)=>{
-    const { features, plans } = options;
-    if (params.feature && features) {
-        return checkForFeatureOrPlan(features, params.feature);
-    }
-    if (params.plan && plans) {
-        return checkForFeatureOrPlan(plans, params.plan);
-    }
-    return null;
-};
-var chunk_LGJNYDTY_splitByScope = (fea)=>{
-    const features = fea ? fea.split(",").map((f)=>f.trim()) : [];
-    return {
-        org: features.filter((f)=>f.split(":")[0].includes("o")).map((f)=>f.split(":")[1]),
-        user: features.filter((f)=>f.split(":")[0].includes("u")).map((f)=>f.split(":")[1])
-    };
-};
-var validateReverificationConfig = (config)=>{
-    if (!config) {
-        return false;
-    }
-    const convertConfigToObject = (config2)=>{
-        if (typeof config2 === "string") {
-            return TYPES_TO_OBJECTS[config2];
-        }
-        return config2;
-    };
-    const isValidStringValue = typeof config === "string" && isValidVerificationType(config);
-    const isValidObjectValue = typeof config === "object" && isValidLevel(config.level) && isValidMaxAge(config.afterMinutes);
-    if (isValidStringValue || isValidObjectValue) {
-        return convertConfigToObject.bind(null, config);
-    }
-    return false;
-};
-var checkReverificationAuthorization = (params, { factorVerificationAge })=>{
-    if (!params.reverification || !factorVerificationAge) {
-        return null;
-    }
-    const isValidReverification = validateReverificationConfig(params.reverification);
-    if (!isValidReverification) {
-        return null;
-    }
-    const { level, afterMinutes } = isValidReverification();
-    const [factor1Age, factor2Age] = factorVerificationAge;
-    const isValidFactor1 = factor1Age !== -1 ? afterMinutes > factor1Age : null;
-    const isValidFactor2 = factor2Age !== -1 ? afterMinutes > factor2Age : null;
-    switch(level){
-        case "first_factor":
-            return isValidFactor1;
-        case "second_factor":
-            return factor2Age !== -1 ? isValidFactor2 : isValidFactor1;
-        case "multi_factor":
-            return factor2Age === -1 ? isValidFactor1 : isValidFactor1 && isValidFactor2;
-    }
-};
-var chunk_LGJNYDTY_createCheckAuthorization = (options)=>{
-    return (params)=>{
-        if (!options.userId) {
-            return false;
-        }
-        const billingAuthorization = checkBillingAuthorization(params, options);
-        const orgAuthorization = checkOrgAuthorization(params, options);
-        const reverificationAuthorization = checkReverificationAuthorization(params, options);
-        if ([
-            billingAuthorization || orgAuthorization,
-            reverificationAuthorization
-        ].some((a)=>a === null)) {
-            return [
-                billingAuthorization || orgAuthorization,
-                reverificationAuthorization
-            ].some((a)=>a === true);
-        }
-        return [
-            billingAuthorization || orgAuthorization,
-            reverificationAuthorization
-        ].every((a)=>a === true);
-    };
-};
-var resolveAuthState = ({ authObject: { sessionId, sessionStatus, userId, actor, orgId, orgRole, orgSlug, signOut, getToken, has, sessionClaims }, options: { treatPendingAsSignedOut = true } })=>{
-    if (sessionId === void 0 && userId === void 0) {
-        return {
-            isLoaded: false,
-            isSignedIn: void 0,
-            sessionId,
-            sessionClaims: void 0,
-            userId,
-            actor: void 0,
-            orgId: void 0,
-            orgRole: void 0,
-            orgSlug: void 0,
-            has: void 0,
-            signOut,
-            getToken
-        };
-    }
-    if (sessionId === null && userId === null) {
-        return {
-            isLoaded: true,
-            isSignedIn: false,
-            sessionId,
-            userId,
-            sessionClaims: null,
-            actor: null,
-            orgId: null,
-            orgRole: null,
-            orgSlug: null,
-            has: ()=>false,
-            signOut,
-            getToken
-        };
-    }
-    if (treatPendingAsSignedOut && sessionStatus === "pending") {
-        return {
-            isLoaded: true,
-            isSignedIn: false,
-            sessionId: null,
-            userId: null,
-            sessionClaims: null,
-            actor: null,
-            orgId: null,
-            orgRole: null,
-            orgSlug: null,
-            has: ()=>false,
-            signOut,
-            getToken
-        };
-    }
-    if (!!sessionId && !!sessionClaims && !!userId && !!orgId && !!orgRole) {
-        return {
-            isLoaded: true,
-            isSignedIn: true,
-            sessionId,
-            sessionClaims,
-            userId,
-            actor: actor || null,
-            orgId,
-            orgRole,
-            orgSlug: orgSlug || null,
-            has,
-            signOut,
-            getToken
-        };
-    }
-    if (!!sessionId && !!sessionClaims && !!userId && !orgId) {
-        return {
-            isLoaded: true,
-            isSignedIn: true,
-            sessionId,
-            sessionClaims,
-            userId,
-            actor: actor || null,
-            orgId: null,
-            orgRole: null,
-            orgSlug: null,
-            has,
-            signOut,
-            getToken
-        };
-    }
-};
- //# sourceMappingURL=chunk-LGJNYDTY.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/authorization.mjs
-
-
- //# sourceMappingURL=authorization.mjs.map
-
+var snakecase_keys = __webpack_require__(7543);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/authorization.mjs
+var authorization = __webpack_require__(5912);
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-LGJNYDTY.mjs
+var chunk_LGJNYDTY = __webpack_require__(2396);
 ;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/jwtPayloadParser.mjs
 
 
@@ -3291,7 +8644,7 @@ function buildOrgPermissions({ features, permissions, featurePermissionMap }) {
     }
     return orgPermissions;
 }
-var jwtPayloadParser_experimental_JWTPayloadToAuthObjectProperties = (claims)=>{
+var __experimental_JWTPayloadToAuthObjectProperties = (claims)=>{
     let orgId;
     let orgRole;
     let orgSlug;
@@ -3307,7 +8660,7 @@ var jwtPayloadParser_experimental_JWTPayloadToAuthObjectProperties = (claims)=>{
                     if (claims.o?.rol) {
                         orgRole = `org:${claims.o?.rol}`;
                     }
-                    const { org } = splitByScope(claims.fea);
+                    const { org } = (0,chunk_LGJNYDTY/* splitByScope */.Ly)(claims.fea);
                     const { permissions, featurePermissionMap } = parsePermissions({
                         per: claims.o?.per,
                         fpm: claims.o?.fpm
@@ -3343,7 +8696,257 @@ var jwtPayloadParser_experimental_JWTPayloadToAuthObjectProperties = (claims)=>{
  //# sourceMappingURL=jwtPayloadParser.mjs.map
 
 // EXTERNAL MODULE: ./node_modules/cookie/dist/index.js
-var dist = __webpack_require__(408);
+var dist = __webpack_require__(6408);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-JJHTUJGL.mjs
+// src/compiled/path-to-regexp/index.js
+function _(r) {
+    for(var n = [], e = 0; e < r.length;){
+        var a = r[e];
+        if (a === "*" || a === "+" || a === "?") {
+            n.push({
+                type: "MODIFIER",
+                index: e,
+                value: r[e++]
+            });
+            continue;
+        }
+        if (a === "\\") {
+            n.push({
+                type: "ESCAPED_CHAR",
+                index: e++,
+                value: r[e++]
+            });
+            continue;
+        }
+        if (a === "{") {
+            n.push({
+                type: "OPEN",
+                index: e,
+                value: r[e++]
+            });
+            continue;
+        }
+        if (a === "}") {
+            n.push({
+                type: "CLOSE",
+                index: e,
+                value: r[e++]
+            });
+            continue;
+        }
+        if (a === ":") {
+            for(var u = "", t = e + 1; t < r.length;){
+                var c = r.charCodeAt(t);
+                if (c >= 48 && c <= 57 || c >= 65 && c <= 90 || c >= 97 && c <= 122 || c === 95) {
+                    u += r[t++];
+                    continue;
+                }
+                break;
+            }
+            if (!u) throw new TypeError("Missing parameter name at ".concat(e));
+            n.push({
+                type: "NAME",
+                index: e,
+                value: u
+            }), e = t;
+            continue;
+        }
+        if (a === "(") {
+            var o = 1, m = "", t = e + 1;
+            if (r[t] === "?") throw new TypeError('Pattern cannot start with "?" at '.concat(t));
+            for(; t < r.length;){
+                if (r[t] === "\\") {
+                    m += r[t++] + r[t++];
+                    continue;
+                }
+                if (r[t] === ")") {
+                    if (o--, o === 0) {
+                        t++;
+                        break;
+                    }
+                } else if (r[t] === "(" && (o++, r[t + 1] !== "?")) throw new TypeError("Capturing groups are not allowed at ".concat(t));
+                m += r[t++];
+            }
+            if (o) throw new TypeError("Unbalanced pattern at ".concat(e));
+            if (!m) throw new TypeError("Missing pattern at ".concat(e));
+            n.push({
+                type: "PATTERN",
+                index: e,
+                value: m
+            }), e = t;
+            continue;
+        }
+        n.push({
+            type: "CHAR",
+            index: e,
+            value: r[e++]
+        });
+    }
+    return n.push({
+        type: "END",
+        index: e,
+        value: ""
+    }), n;
+}
+function F(r, n) {
+    n === void 0 && (n = {});
+    for(var e = _(r), a = n.prefixes, u = a === void 0 ? "./" : a, t = n.delimiter, c = t === void 0 ? "/#?" : t, o = [], m = 0, h = 0, p = "", f = function(l) {
+        if (h < e.length && e[h].type === l) return e[h++].value;
+    }, w = function(l) {
+        var v = f(l);
+        if (v !== void 0) return v;
+        var E = e[h], N = E.type, S = E.index;
+        throw new TypeError("Unexpected ".concat(N, " at ").concat(S, ", expected ").concat(l));
+    }, d = function() {
+        for(var l = "", v; v = f("CHAR") || f("ESCAPED_CHAR");)l += v;
+        return l;
+    }, M = function(l) {
+        for(var v = 0, E = c; v < E.length; v++){
+            var N = E[v];
+            if (l.indexOf(N) > -1) return true;
+        }
+        return false;
+    }, A = function(l) {
+        var v = o[o.length - 1], E = l || (v && typeof v == "string" ? v : "");
+        if (v && !E) throw new TypeError('Must have text between two parameters, missing text after "'.concat(v.name, '"'));
+        return !E || M(E) ? "[^".concat(s(c), "]+?") : "(?:(?!".concat(s(E), ")[^").concat(s(c), "])+?");
+    }; h < e.length;){
+        var T = f("CHAR"), x = f("NAME"), C = f("PATTERN");
+        if (x || C) {
+            var g = T || "";
+            u.indexOf(g) === -1 && (p += g, g = ""), p && (o.push(p), p = ""), o.push({
+                name: x || m++,
+                prefix: g,
+                suffix: "",
+                pattern: C || A(g),
+                modifier: f("MODIFIER") || ""
+            });
+            continue;
+        }
+        var i = T || f("ESCAPED_CHAR");
+        if (i) {
+            p += i;
+            continue;
+        }
+        p && (o.push(p), p = "");
+        var R = f("OPEN");
+        if (R) {
+            var g = d(), y = f("NAME") || "", O = f("PATTERN") || "", b = d();
+            w("CLOSE"), o.push({
+                name: y || (O ? m++ : ""),
+                pattern: y && !O ? A(g) : O,
+                prefix: g,
+                suffix: b,
+                modifier: f("MODIFIER") || ""
+            });
+            continue;
+        }
+        w("END");
+    }
+    return o;
+}
+function H(r, n) {
+    var e = [], a = P(r, e, n);
+    return I(a, e, n);
+}
+function I(r, n, e) {
+    e === void 0 && (e = {});
+    var a = e.decode, u = a === void 0 ? function(t) {
+        return t;
+    } : a;
+    return function(t) {
+        var c = r.exec(t);
+        if (!c) return false;
+        for(var o = c[0], m = c.index, h = /* @__PURE__ */ Object.create(null), p = function(w) {
+            if (c[w] === void 0) return "continue";
+            var d = n[w - 1];
+            d.modifier === "*" || d.modifier === "+" ? h[d.name] = c[w].split(d.prefix + d.suffix).map(function(M) {
+                return u(M, d);
+            }) : h[d.name] = u(c[w], d);
+        }, f = 1; f < c.length; f++)p(f);
+        return {
+            path: o,
+            index: m,
+            params: h
+        };
+    };
+}
+function s(r) {
+    return r.replace(/([.+*?=^!:${}()[\]|/\\])/g, "\\$1");
+}
+function D(r) {
+    return r && r.sensitive ? "" : "i";
+}
+function $(r, n) {
+    if (!n) return r;
+    for(var e = /\((?:\?<(.*?)>)?(?!\?)/g, a = 0, u = e.exec(r.source); u;)n.push({
+        name: u[1] || a++,
+        prefix: "",
+        suffix: "",
+        modifier: "",
+        pattern: ""
+    }), u = e.exec(r.source);
+    return r;
+}
+function W(r, n, e) {
+    var a = r.map(function(u) {
+        return P(u, n, e).source;
+    });
+    return new RegExp("(?:".concat(a.join("|"), ")"), D(e));
+}
+function L(r, n, e) {
+    return U(F(r, e), n, e);
+}
+function U(r, n, e) {
+    e === void 0 && (e = {});
+    for(var a = e.strict, u = a === void 0 ? false : a, t = e.start, c = t === void 0 ? true : t, o = e.end, m = o === void 0 ? true : o, h = e.encode, p = h === void 0 ? function(v) {
+        return v;
+    } : h, f = e.delimiter, w = f === void 0 ? "/#?" : f, d = e.endsWith, M = d === void 0 ? "" : d, A = "[".concat(s(M), "]|$"), T = "[".concat(s(w), "]"), x = c ? "^" : "", C = 0, g = r; C < g.length; C++){
+        var i = g[C];
+        if (typeof i == "string") x += s(p(i));
+        else {
+            var R = s(p(i.prefix)), y = s(p(i.suffix));
+            if (i.pattern) if (n && n.push(i), R || y) if (i.modifier === "+" || i.modifier === "*") {
+                var O = i.modifier === "*" ? "?" : "";
+                x += "(?:".concat(R, "((?:").concat(i.pattern, ")(?:").concat(y).concat(R, "(?:").concat(i.pattern, "))*)").concat(y, ")").concat(O);
+            } else x += "(?:".concat(R, "(").concat(i.pattern, ")").concat(y, ")").concat(i.modifier);
+            else {
+                if (i.modifier === "+" || i.modifier === "*") throw new TypeError('Can not repeat "'.concat(i.name, '" without a prefix and suffix'));
+                x += "(".concat(i.pattern, ")").concat(i.modifier);
+            }
+            else x += "(?:".concat(R).concat(y, ")").concat(i.modifier);
+        }
+    }
+    if (m) u || (x += "".concat(T, "?")), x += e.endsWith ? "(?=".concat(A, ")") : "$";
+    else {
+        var b = r[r.length - 1], l = typeof b == "string" ? T.indexOf(b[b.length - 1]) > -1 : b === void 0;
+        u || (x += "(?:".concat(T, "(?=").concat(A, "))?")), l || (x += "(?=".concat(T, "|").concat(A, ")"));
+    }
+    return new RegExp(x, D(e));
+}
+function P(r, n, e) {
+    return r instanceof RegExp ? $(r, n) : Array.isArray(r) ? W(r, n, e) : L(r, n, e);
+}
+// src/pathToRegexp.ts
+var pathToRegexp = (path)=>{
+    try {
+        return P(path);
+    } catch (e) {
+        throw new Error(`Invalid path: ${path}.
+Consult the documentation of path-to-regexp here: https://github.com/pillarjs/path-to-regexp/tree/6.x
+${e.message}`);
+    }
+};
+function match(str, options) {
+    try {
+        return H(str, options);
+    } catch (e) {
+        throw new Error(`Invalid path and options: Consult the documentation of path-to-regexp here: https://github.com/pillarjs/path-to-regexp/tree/6.x
+${e.message}`);
+    }
+}
+ //# sourceMappingURL=chunk-JJHTUJGL.mjs.map
+
 ;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/pathToRegexp.mjs
 
 
@@ -3418,7 +9021,7 @@ var Headers2 = {
 var ContentTypes = {
     Json: "application/json"
 };
-var chunk_LFAHZTE6_constants = {
+var constants = {
     Attributes,
     Cookies,
     Headers: Headers2,
@@ -3444,7 +9047,7 @@ var AbstractAPI = class {
 };
 // src/api/endpoints/ActorTokenApi.ts
 var basePath = "/actor_tokens";
-var ActorTokenAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var ActorTokenAPI = class extends AbstractAPI {
     async create(params) {
         return this.request({
             method: "POST",
@@ -3462,7 +9065,7 @@ var ActorTokenAPI = class extends (/* unused pure expression or super */ null &&
 };
 // src/api/endpoints/AccountlessApplicationsAPI.ts
 var basePath2 = "/accountless_applications";
-var AccountlessApplicationAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var AccountlessApplicationAPI = class extends AbstractAPI {
     async createAccountlessApplication() {
         return this.request({
             method: "POST",
@@ -3478,7 +9081,7 @@ var AccountlessApplicationAPI = class extends (/* unused pure expression or supe
 };
 // src/api/endpoints/AllowlistIdentifierApi.ts
 var basePath3 = "/allowlist_identifiers";
-var AllowlistIdentifierAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var AllowlistIdentifierAPI = class extends AbstractAPI {
     async getAllowlistIdentifierList(params = {}) {
         return this.request({
             method: "GET",
@@ -3506,7 +9109,7 @@ var AllowlistIdentifierAPI = class extends (/* unused pure expression or super *
 };
 // src/api/endpoints/BetaFeaturesApi.ts
 var basePath4 = "/beta_features";
-var BetaFeaturesAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var BetaFeaturesAPI = class extends AbstractAPI {
     /**
    * Change the domain of a production instance.
    *
@@ -3526,7 +9129,7 @@ var BetaFeaturesAPI = class extends (/* unused pure expression or super */ null 
 };
 // src/api/endpoints/BlocklistIdentifierApi.ts
 var basePath5 = "/blocklist_identifiers";
-var BlocklistIdentifierAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var BlocklistIdentifierAPI = class extends AbstractAPI {
     async getBlocklistIdentifierList(params = {}) {
         return this.request({
             method: "GET",
@@ -3551,7 +9154,7 @@ var BlocklistIdentifierAPI = class extends (/* unused pure expression or super *
 };
 // src/api/endpoints/ClientApi.ts
 var basePath6 = "/clients";
-var ClientAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var ClientAPI = class extends AbstractAPI {
     async getClientList(params = {}) {
         return this.request({
             method: "GET",
@@ -3581,7 +9184,7 @@ var ClientAPI = class extends (/* unused pure expression or super */ null && (Ab
 };
 // src/api/endpoints/DomainApi.ts
 var basePath7 = "/domains";
-var DomainAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var DomainAPI = class extends AbstractAPI {
     async list() {
         return this.request({
             method: "GET",
@@ -3622,7 +9225,7 @@ var DomainAPI = class extends (/* unused pure expression or super */ null && (Ab
 };
 // src/api/endpoints/EmailAddressApi.ts
 var basePath8 = "/email_addresses";
-var EmailAddressAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var EmailAddressAPI = class extends AbstractAPI {
     async getEmailAddress(emailAddressId) {
         this.requireId(emailAddressId);
         return this.request({
@@ -3655,7 +9258,7 @@ var EmailAddressAPI = class extends (/* unused pure expression or super */ null 
 };
 // src/api/endpoints/InstanceApi.ts
 var basePath9 = "/instance";
-var InstanceAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var InstanceAPI = class extends AbstractAPI {
     async get() {
         return this.request({
             method: "GET",
@@ -3686,7 +9289,7 @@ var InstanceAPI = class extends (/* unused pure expression or super */ null && (
 };
 // src/api/endpoints/InvitationApi.ts
 var basePath10 = "/invitations";
-var InvitationAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var InvitationAPI = class extends AbstractAPI {
     async getInvitationList(params = {}) {
         return this.request({
             method: "GET",
@@ -3714,7 +9317,7 @@ var InvitationAPI = class extends (/* unused pure expression or super */ null &&
 };
 // src/api/endpoints/JwksApi.ts
 var basePath11 = "/jwks";
-var JwksAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var JwksAPI = class extends AbstractAPI {
     async getJwks() {
         return this.request({
             method: "GET",
@@ -3724,7 +9327,7 @@ var JwksAPI = class extends (/* unused pure expression or super */ null && (Abst
 };
 // src/api/endpoints/JwtTemplatesApi.ts
 var basePath12 = "/jwt_templates";
-var JwtTemplatesApi = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var JwtTemplatesApi = class extends AbstractAPI {
     async list(params = {}) {
         return this.request({
             method: "GET",
@@ -3768,7 +9371,7 @@ var JwtTemplatesApi = class extends (/* unused pure expression or super */ null 
 };
 // src/api/endpoints/OrganizationApi.ts
 var basePath13 = "/organizations";
-var OrganizationAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var OrganizationAPI = class extends AbstractAPI {
     async getOrganizationList(params) {
         return this.request({
             method: "GET",
@@ -3959,7 +9562,7 @@ var OrganizationAPI = class extends (/* unused pure expression or super */ null 
 };
 // src/api/endpoints/OAuthApplicationsApi.ts
 var basePath14 = "/oauth_applications";
-var OAuthApplicationsApi = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var OAuthApplicationsApi = class extends AbstractAPI {
     async list(params = {}) {
         return this.request({
             method: "GET",
@@ -4007,7 +9610,7 @@ var OAuthApplicationsApi = class extends (/* unused pure expression or super */ 
 };
 // src/api/endpoints/PhoneNumberApi.ts
 var basePath15 = "/phone_numbers";
-var PhoneNumberAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var PhoneNumberAPI = class extends AbstractAPI {
     async getPhoneNumber(phoneNumberId) {
         this.requireId(phoneNumberId);
         return this.request({
@@ -4040,7 +9643,7 @@ var PhoneNumberAPI = class extends (/* unused pure expression or super */ null &
 };
 // src/api/endpoints/ProxyCheckApi.ts
 var basePath16 = "/proxy_checks";
-var ProxyCheckAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var ProxyCheckAPI = class extends AbstractAPI {
     async verify(params) {
         return this.request({
             method: "POST",
@@ -4051,7 +9654,7 @@ var ProxyCheckAPI = class extends (/* unused pure expression or super */ null &&
 };
 // src/api/endpoints/RedirectUrlApi.ts
 var basePath17 = "/redirect_urls";
-var RedirectUrlAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var RedirectUrlAPI = class extends AbstractAPI {
     async getRedirectUrlList() {
         return this.request({
             method: "GET",
@@ -4085,7 +9688,7 @@ var RedirectUrlAPI = class extends (/* unused pure expression or super */ null &
 };
 // src/api/endpoints/SamlConnectionApi.ts
 var basePath18 = "/saml_connections";
-var SamlConnectionAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var SamlConnectionAPI = class extends AbstractAPI {
     async getSamlConnectionList(params = {}) {
         return this.request({
             method: "GET",
@@ -4125,7 +9728,7 @@ var SamlConnectionAPI = class extends (/* unused pure expression or super */ nul
 };
 // src/api/endpoints/SessionApi.ts
 var basePath19 = "/sessions";
-var SessionAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var SessionAPI = class extends AbstractAPI {
     async getSessionList(params = {}) {
         return this.request({
             method: "GET",
@@ -4189,7 +9792,7 @@ var SessionAPI = class extends (/* unused pure expression or super */ null && (A
 };
 // src/api/endpoints/SignInTokenApi.ts
 var basePath20 = "/sign_in_tokens";
-var SignInTokenAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var SignInTokenAPI = class extends AbstractAPI {
     async createSignInToken(params) {
         return this.request({
             method: "POST",
@@ -4207,7 +9810,7 @@ var SignInTokenAPI = class extends (/* unused pure expression or super */ null &
 };
 // src/api/endpoints/SignUpApi.ts
 var basePath21 = "/sign_ups";
-var SignUpAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var SignUpAPI = class extends AbstractAPI {
     async get(signUpAttemptId) {
         this.requireId(signUpAttemptId);
         return this.request({
@@ -4226,7 +9829,7 @@ var SignUpAPI = class extends (/* unused pure expression or super */ null && (Ab
 };
 // src/api/endpoints/TestingTokenApi.ts
 var basePath22 = "/testing_tokens";
-var TestingTokenAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var TestingTokenAPI = class extends AbstractAPI {
     async createTestingToken() {
         return this.request({
             method: "POST",
@@ -4236,7 +9839,7 @@ var TestingTokenAPI = class extends (/* unused pure expression or super */ null 
 };
 // src/api/endpoints/UserApi.ts
 var basePath23 = "/users";
-var UserAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var UserAPI = class extends AbstractAPI {
     async getUserList(params = {}) {
         const { limit, offset, orderBy, ...userCountParams } = params;
         const [data, totalCount] = await Promise.all([
@@ -4311,7 +9914,7 @@ var UserAPI = class extends (/* unused pure expression or super */ null && (Abst
         const hasPrefix = provider.startsWith("oauth_");
         const _provider = hasPrefix ? provider : `oauth_${provider}`;
         if (hasPrefix) {
-            deprecated("getUserOauthAccessToken(userId, provider)", "Remove the `oauth_` prefix from the `provider` argument.");
+            (0,deprecated/* deprecated */.x9)("getUserOauthAccessToken(userId, provider)", "Remove the `oauth_` prefix from the `provider` argument.");
         }
         return this.request({
             method: "GET",
@@ -4447,7 +10050,7 @@ var UserAPI = class extends (/* unused pure expression or super */ null && (Abst
 };
 // src/api/endpoints/WaitlistEntryApi.ts
 var basePath24 = "/waitlist_entries";
-var WaitlistEntryAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var WaitlistEntryAPI = class extends AbstractAPI {
     async list(params = {}) {
         return this.request({
             method: "GET",
@@ -4465,7 +10068,7 @@ var WaitlistEntryAPI = class extends (/* unused pure expression or super */ null
 };
 // src/api/endpoints/WebhookApi.ts
 var basePath25 = "/webhooks";
-var WebhookAPI = class extends (/* unused pure expression or super */ null && (AbstractAPI)) {
+var WebhookAPI = class extends AbstractAPI {
     async createSvixApp() {
         return this.request({
             method: "POST",
@@ -4495,7 +10098,7 @@ function assertValidSecretKey(val) {
     }
 }
 function assertValidPublishableKey(val) {
-    parsePublishableKey(val, {
+    (0,keys/* parsePublishableKey */.nQ)(val, {
         fatal: true
     });
 }
@@ -5363,7 +10966,7 @@ function buildRequest(options) {
         const url = joinPaths(apiUrl, apiVersion, path);
         const finalUrl = new URL(url);
         if (queryParams) {
-            const snakecasedQueryParams = snakecaseKeys({
+            const snakecasedQueryParams = snakecase_keys({
                 ...queryParams
             });
             for (const [key, val] of Object.entries(snakecasedQueryParams)){
@@ -5394,7 +10997,7 @@ function buildRequest(options) {
                 headers["Content-Type"] = "application/json";
                 const hasBody = method !== "GET" && bodyParams && Object.keys(bodyParams).length > 0;
                 const body = hasBody ? {
-                    body: JSON.stringify(snakecaseKeys(bodyParams, {
+                    body: JSON.stringify(snakecase_keys(bodyParams, {
                         deep: false
                     }))
                 } : null;
@@ -5404,12 +11007,12 @@ function buildRequest(options) {
                     ...body
                 });
             }
-            const isJSONResponse = res?.headers && res.headers?.get(chunk_LFAHZTE6_constants.Headers.ContentType) === chunk_LFAHZTE6_constants.ContentTypes.Json;
+            const isJSONResponse = res?.headers && res.headers?.get(constants.Headers.ContentType) === constants.ContentTypes.Json;
             const responseBody = await (isJSONResponse ? res.json() : res.text());
             if (!res.ok) {
                 return {
                     data: null,
-                    errors: chunk_LFAHZTE6_parseErrors(responseBody),
+                    errors: parseErrors(responseBody),
                     status: res?.status,
                     statusText: res?.statusText,
                     clerkTraceId: getTraceId(responseBody, res?.headers),
@@ -5435,7 +11038,7 @@ function buildRequest(options) {
             }
             return {
                 data: null,
-                errors: chunk_LFAHZTE6_parseErrors(err),
+                errors: parseErrors(err),
                 status: res?.status,
                 statusText: res?.statusText,
                 clerkTraceId: getTraceId(err, res?.headers),
@@ -5459,10 +11062,10 @@ function getRetryAfter(headers) {
     if (isNaN(value)) return;
     return value;
 }
-function chunk_LFAHZTE6_parseErrors(data) {
+function parseErrors(data) {
     if (!!data && typeof data === "object" && "errors" in data) {
         const errors = data.errors;
-        return errors.length > 0 ? errors.map(parseError) : [];
+        return errors.length > 0 ? errors.map(dist_error/* parseError */.nU) : [];
     }
     return [];
 }
@@ -5470,7 +11073,7 @@ function withLegacyRequestReturn(cb) {
     return async (...args)=>{
         const { data, errors, totalCount, status, statusText, clerkTraceId, retryAfter } = await cb(...args);
         if (errors) {
-            const error = new ClerkAPIResponseError(statusText || "", {
+            const error = new dist_error/* ClerkAPIResponseError */.gO(statusText || "", {
                 data: [],
                 status,
                 clerkTraceId,
@@ -5489,7 +11092,7 @@ function withLegacyRequestReturn(cb) {
     };
 }
 // src/api/factory.ts
-function chunk_LFAHZTE6_createBackendApiClient(options) {
+function createBackendApiClient(options) {
     const request = buildRequest(options);
     return {
         __experimental_accountlessApplications: new AccountlessApplicationAPI(buildRequest({
@@ -5539,7 +11142,7 @@ var createDebug = (data)=>{
 };
 function signedInAuthObject(authenticateContext, sessionToken, sessionClaims) {
     const { actor, sessionId, sessionStatus, userId, orgId, orgRole, orgSlug, orgPermissions, factorVerificationAge } = __experimental_JWTPayloadToAuthObjectProperties(sessionClaims);
-    const apiClient = chunk_LFAHZTE6_createBackendApiClient(authenticateContext);
+    const apiClient = createBackendApiClient(authenticateContext);
     const getToken = createGetToken({
         sessionId,
         sessionToken,
@@ -5557,7 +11160,7 @@ function signedInAuthObject(authenticateContext, sessionToken, sessionClaims) {
         orgPermissions,
         factorVerificationAge,
         getToken,
-        has: createCheckAuthorization({
+        has: (0,authorization/* createCheckAuthorization */.QL)({
             orgId,
             orgRole,
             orgPermissions,
@@ -5694,17 +11297,17 @@ var withDebugHeaders = (requestState)=>{
     const headers = new Headers(requestState.headers || {});
     if (requestState.message) {
         try {
-            headers.set(chunk_LFAHZTE6_constants.Headers.AuthMessage, requestState.message);
+            headers.set(constants.Headers.AuthMessage, requestState.message);
         } catch  {}
     }
     if (requestState.reason) {
         try {
-            headers.set(chunk_LFAHZTE6_constants.Headers.AuthReason, requestState.reason);
+            headers.set(constants.Headers.AuthReason, requestState.reason);
         } catch  {}
     }
     if (requestState.status) {
         try {
-            headers.set(chunk_LFAHZTE6_constants.Headers.AuthStatus, requestState.status);
+            headers.set(constants.Headers.AuthStatus, requestState.status);
         } catch  {}
     }
     requestState.headers = headers;
@@ -5713,7 +11316,7 @@ var withDebugHeaders = (requestState)=>{
 // src/tokens/clerkRequest.ts
 
 // src/tokens/clerkUrl.ts
-var ClerkUrl = class extends (/* unused pure expression or super */ null && (URL)) {
+var ClerkUrl = class extends URL {
     isCrossOrigin(other) {
         return this.origin !== new URL(other.toString()).origin;
     }
@@ -5722,7 +11325,7 @@ var createClerkUrl = (...args)=>{
     return new ClerkUrl(...args);
 };
 // src/tokens/clerkRequest.ts
-var ClerkRequest = class extends (/* unused pure expression or super */ null && (Request)) {
+var ClerkRequest = class extends Request {
     constructor(input, init){
         const url = typeof input !== "string" && "url" in input ? input.url : String(input);
         super(url, init || typeof input === "string" ? void 0 : input);
@@ -5743,9 +11346,9 @@ var ClerkRequest = class extends (/* unused pure expression or super */ null && 
    * TODO add detailed description of the issues this solves
    */ deriveUrlFromHeaders(req) {
         const initialUrl = new URL(req.url);
-        const forwardedProto = req.headers.get(chunk_LFAHZTE6_constants.Headers.ForwardedProto);
-        const forwardedHost = req.headers.get(chunk_LFAHZTE6_constants.Headers.ForwardedHost);
-        const host = req.headers.get(chunk_LFAHZTE6_constants.Headers.Host);
+        const forwardedProto = req.headers.get(constants.Headers.ForwardedProto);
+        const forwardedHost = req.headers.get(constants.Headers.ForwardedHost);
+        const host = req.headers.get(constants.Headers.Host);
         const protocol = initialUrl.protocol;
         const resolvedHost = this.getFirstValueFromHeader(forwardedHost) ?? host;
         const resolvedProtocol = this.getFirstValueFromHeader(forwardedProto) ?? protocol?.replace(/[:/]/, "");
@@ -5759,7 +11362,7 @@ var ClerkRequest = class extends (/* unused pure expression or super */ null && 
         return value?.split(",")[0];
     }
     parseCookies(req) {
-        const cookiesRecord = parse(this.decodeCookieValue(req.headers.get("cookie") || ""));
+        const cookiesRecord = (0,dist/* parse */.Qc)(this.decodeCookieValue(req.headers.get("cookie") || ""));
         return new Map(Object.entries(cookiesRecord));
     }
     decodeCookieValue(str) {
@@ -5790,10 +11393,10 @@ var RSA_SUFFIX = "IDAQAB";
 function loadClerkJWKFromLocal(localKey) {
     if (!getFromCache(LocalJwkKid)) {
         if (!localKey) {
-            throw new chunk_5JS2VYLU_TokenVerificationError({
-                action: chunk_5JS2VYLU_TokenVerificationErrorAction.SetClerkJWTKey,
+            throw new TokenVerificationError({
+                action: TokenVerificationErrorAction.SetClerkJWTKey,
                 message: "Missing local JWK.",
-                reason: chunk_5JS2VYLU_TokenVerificationErrorReason.LocalJWKMissing
+                reason: TokenVerificationErrorReason.LocalJWKMissing
             });
         }
         const modulus = localKey.replace(/\r\n|\n|\r/g, "").replace(PEM_HEADER, "").replace(PEM_TRAILER, "").replace(RSA_PREFIX, "").replace(RSA_SUFFIX, "").replace(/\+/g, "-").replace(/\//g, "_");
@@ -5810,19 +11413,19 @@ function loadClerkJWKFromLocal(localKey) {
 async function loadClerkJWKFromRemote({ secretKey, apiUrl = API_URL, apiVersion = API_VERSION, kid, skipJwksCache }) {
     if (skipJwksCache || cacheHasExpired() || !getFromCache(kid)) {
         if (!secretKey) {
-            throw new chunk_5JS2VYLU_TokenVerificationError({
-                action: chunk_5JS2VYLU_TokenVerificationErrorAction.ContactSupport,
+            throw new TokenVerificationError({
+                action: TokenVerificationErrorAction.ContactSupport,
                 message: "Failed to load JWKS from Clerk Backend or Frontend API.",
-                reason: chunk_5JS2VYLU_TokenVerificationErrorReason.RemoteJWKFailedToLoad
+                reason: TokenVerificationErrorReason.RemoteJWKFailedToLoad
             });
         }
         const fetcher = ()=>fetchJWKSFromBAPI(apiUrl, secretKey, apiVersion);
-        const { keys } = await retry(fetcher);
+        const { keys } = await (0,chunk_N2V3PKFE/* retry */.X)(fetcher);
         if (!keys || !keys.length) {
-            throw new chunk_5JS2VYLU_TokenVerificationError({
-                action: chunk_5JS2VYLU_TokenVerificationErrorAction.ContactSupport,
+            throw new TokenVerificationError({
+                action: TokenVerificationErrorAction.ContactSupport,
                 message: "The JWKS endpoint did not contain any signing keys. Contact support@clerk.com.",
-                reason: chunk_5JS2VYLU_TokenVerificationErrorReason.RemoteJWKFailedToLoad
+                reason: TokenVerificationErrorReason.RemoteJWKFailedToLoad
             });
         }
         keys.forEach((key)=>setInCache(key));
@@ -5831,25 +11434,25 @@ async function loadClerkJWKFromRemote({ secretKey, apiUrl = API_URL, apiVersion 
     if (!jwk) {
         const cacheValues = getCacheValues();
         const jwkKeys = cacheValues.map((jwk2)=>jwk2.kid).sort().join(", ");
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: `Go to your Dashboard and validate your secret and public keys are correct. ${chunk_5JS2VYLU_TokenVerificationErrorAction.ContactSupport} if the issue persists.`,
+        throw new TokenVerificationError({
+            action: `Go to your Dashboard and validate your secret and public keys are correct. ${TokenVerificationErrorAction.ContactSupport} if the issue persists.`,
             message: `Unable to find a signing key in JWKS that matches the kid='${kid}' of the provided session token. Please make sure that the __session cookie or the HTTP authorization header contain a Clerk-generated session JWT. The following kid is available: ${jwkKeys}`,
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.JWKKidMismatch
+            reason: TokenVerificationErrorReason.JWKKidMismatch
         });
     }
     return jwk;
 }
 async function fetchJWKSFromBAPI(apiUrl, key, apiVersion) {
     if (!key) {
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: chunk_5JS2VYLU_TokenVerificationErrorAction.SetClerkSecretKey,
+        throw new TokenVerificationError({
+            action: TokenVerificationErrorAction.SetClerkSecretKey,
             message: "Missing Clerk Secret Key or API Key. Go to https://dashboard.clerk.com and get your key for your instance.",
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.RemoteJWKFailedToLoad
+            reason: TokenVerificationErrorReason.RemoteJWKFailedToLoad
         });
     }
     const url = new URL(apiUrl);
     url.pathname = joinPaths(url.pathname, apiVersion, "/jwks");
-    const response = await chunk_TQCJZF7D_runtime.fetch(url.href, {
+    const response = await runtime.fetch(url.href, {
         headers: {
             Authorization: `Bearer ${key}`,
             "Clerk-API-Version": SUPPORTED_BAPI_VERSION,
@@ -5861,17 +11464,17 @@ async function fetchJWKSFromBAPI(apiUrl, key, apiVersion) {
         const json = await response.json();
         const invalidSecretKeyError = getErrorObjectByCode(json?.errors, TokenVerificationErrorCode.InvalidSecretKey);
         if (invalidSecretKeyError) {
-            const reason = chunk_5JS2VYLU_TokenVerificationErrorReason.InvalidSecretKey;
-            throw new chunk_5JS2VYLU_TokenVerificationError({
-                action: chunk_5JS2VYLU_TokenVerificationErrorAction.ContactSupport,
+            const reason = TokenVerificationErrorReason.InvalidSecretKey;
+            throw new TokenVerificationError({
+                action: TokenVerificationErrorAction.ContactSupport,
                 message: invalidSecretKeyError.message,
                 reason
             });
         }
-        throw new chunk_5JS2VYLU_TokenVerificationError({
-            action: chunk_5JS2VYLU_TokenVerificationErrorAction.ContactSupport,
+        throw new TokenVerificationError({
+            action: TokenVerificationErrorAction.ContactSupport,
             message: `Error loading Clerk JWKS from ${url.href} with code=${response.status}`,
-            reason: chunk_5JS2VYLU_TokenVerificationErrorReason.RemoteJWKFailedToLoad
+            reason: TokenVerificationErrorReason.RemoteJWKFailedToLoad
         });
     }
     return response.json();
@@ -5894,7 +11497,7 @@ var getErrorObjectByCode = (errors, code)=>{
 };
 // src/tokens/verify.ts
 async function verifyToken(token, options) {
-    const { data: decodedResult, errors } = chunk_TQCJZF7D_decodeJwt(token);
+    const { data: decodedResult, errors } = decodeJwt(token);
     if (errors) {
         return {
             errors
@@ -5914,10 +11517,10 @@ async function verifyToken(token, options) {
         } else {
             return {
                 errors: [
-                    new chunk_5JS2VYLU_TokenVerificationError({
-                        action: chunk_5JS2VYLU_TokenVerificationErrorAction.SetClerkJWTKey,
+                    new TokenVerificationError({
+                        action: TokenVerificationErrorAction.SetClerkJWTKey,
                         message: "Failed to resolve JWK during verification.",
-                        reason: chunk_5JS2VYLU_TokenVerificationErrorReason.JWKFailedToResolve
+                        reason: TokenVerificationErrorReason.JWKFailedToResolve
                     })
                 ]
             };
@@ -5956,10 +11559,10 @@ var AuthenticateContext = class {
         return this.sessionTokenInCookie || this.sessionTokenInHeader;
     }
     usesSuffixedCookies() {
-        const suffixedClientUat = this.getSuffixedCookie(chunk_LFAHZTE6_constants.Cookies.ClientUat);
-        const clientUat = this.getCookie(chunk_LFAHZTE6_constants.Cookies.ClientUat);
-        const suffixedSession = this.getSuffixedCookie(chunk_LFAHZTE6_constants.Cookies.Session) || "";
-        const session = this.getCookie(chunk_LFAHZTE6_constants.Cookies.Session) || "";
+        const suffixedClientUat = this.getSuffixedCookie(constants.Cookies.ClientUat);
+        const clientUat = this.getCookie(constants.Cookies.ClientUat);
+        const suffixedSession = this.getSuffixedCookie(constants.Cookies.Session) || "";
+        const session = this.getCookie(constants.Cookies.Session) || "";
         if (session && !this.tokenHasIssuer(session)) {
             return false;
         }
@@ -5993,7 +11596,7 @@ var AuthenticateContext = class {
     initPublishableKeyValues(options) {
         assertValidPublishableKey(options.publishableKey);
         this.publishableKey = options.publishableKey;
-        const pk = parsePublishableKey(this.publishableKey, {
+        const pk = (0,keys/* parsePublishableKey */.nQ)(this.publishableKey, {
             fatal: true,
             proxyUrl: options.proxyUrl,
             domain: options.domain
@@ -6002,25 +11605,25 @@ var AuthenticateContext = class {
         this.frontendApi = pk.frontendApi;
     }
     initHeaderValues() {
-        this.sessionTokenInHeader = this.parseAuthorizationHeader(this.getHeader(chunk_LFAHZTE6_constants.Headers.Authorization));
-        this.origin = this.getHeader(chunk_LFAHZTE6_constants.Headers.Origin);
-        this.host = this.getHeader(chunk_LFAHZTE6_constants.Headers.Host);
-        this.forwardedHost = this.getHeader(chunk_LFAHZTE6_constants.Headers.ForwardedHost);
-        this.forwardedProto = this.getHeader(chunk_LFAHZTE6_constants.Headers.CloudFrontForwardedProto) || this.getHeader(chunk_LFAHZTE6_constants.Headers.ForwardedProto);
-        this.referrer = this.getHeader(chunk_LFAHZTE6_constants.Headers.Referrer);
-        this.userAgent = this.getHeader(chunk_LFAHZTE6_constants.Headers.UserAgent);
-        this.secFetchDest = this.getHeader(chunk_LFAHZTE6_constants.Headers.SecFetchDest);
-        this.accept = this.getHeader(chunk_LFAHZTE6_constants.Headers.Accept);
+        this.sessionTokenInHeader = this.parseAuthorizationHeader(this.getHeader(constants.Headers.Authorization));
+        this.origin = this.getHeader(constants.Headers.Origin);
+        this.host = this.getHeader(constants.Headers.Host);
+        this.forwardedHost = this.getHeader(constants.Headers.ForwardedHost);
+        this.forwardedProto = this.getHeader(constants.Headers.CloudFrontForwardedProto) || this.getHeader(constants.Headers.ForwardedProto);
+        this.referrer = this.getHeader(constants.Headers.Referrer);
+        this.userAgent = this.getHeader(constants.Headers.UserAgent);
+        this.secFetchDest = this.getHeader(constants.Headers.SecFetchDest);
+        this.accept = this.getHeader(constants.Headers.Accept);
     }
     initCookieValues() {
-        this.sessionTokenInCookie = this.getSuffixedOrUnSuffixedCookie(chunk_LFAHZTE6_constants.Cookies.Session);
-        this.refreshTokenInCookie = this.getSuffixedCookie(chunk_LFAHZTE6_constants.Cookies.Refresh);
-        this.clientUat = Number.parseInt(this.getSuffixedOrUnSuffixedCookie(chunk_LFAHZTE6_constants.Cookies.ClientUat) || "") || 0;
+        this.sessionTokenInCookie = this.getSuffixedOrUnSuffixedCookie(constants.Cookies.Session);
+        this.refreshTokenInCookie = this.getSuffixedCookie(constants.Cookies.Refresh);
+        this.clientUat = Number.parseInt(this.getSuffixedOrUnSuffixedCookie(constants.Cookies.ClientUat) || "") || 0;
     }
     initHandshakeValues() {
-        this.devBrowserToken = this.getQueryParam(chunk_LFAHZTE6_constants.QueryParameters.DevBrowser) || this.getSuffixedOrUnSuffixedCookie(chunk_LFAHZTE6_constants.Cookies.DevBrowser);
-        this.handshakeToken = this.getQueryParam(chunk_LFAHZTE6_constants.QueryParameters.Handshake) || this.getCookie(chunk_LFAHZTE6_constants.Cookies.Handshake);
-        this.handshakeRedirectLoopCounter = Number(this.getCookie(chunk_LFAHZTE6_constants.Cookies.RedirectCount)) || 0;
+        this.devBrowserToken = this.getQueryParam(constants.QueryParameters.DevBrowser) || this.getSuffixedOrUnSuffixedCookie(constants.Cookies.DevBrowser);
+        this.handshakeToken = this.getQueryParam(constants.QueryParameters.Handshake) || this.getCookie(constants.Cookies.Handshake);
+        this.handshakeRedirectLoopCounter = Number(this.getCookie(constants.Cookies.RedirectCount)) || 0;
     }
     getQueryParam(name) {
         return this.clerkRequest.clerkUrl.searchParams.get(name);
@@ -6032,7 +11635,7 @@ var AuthenticateContext = class {
         return this.clerkRequest.cookies.get(name) || void 0;
     }
     getSuffixedCookie(name) {
-        return this.getCookie(getSuffixedCookieName(name, this.cookieSuffix)) || void 0;
+        return this.getCookie((0,keys/* getSuffixedCookieName */._d)(name, this.cookieSuffix)) || void 0;
     }
     getSuffixedOrUnSuffixedCookie(cookieName) {
         if (this.usesSuffixedCookies()) {
@@ -6076,7 +11679,7 @@ var AuthenticateContext = class {
     }
 };
 var createAuthenticateContext = async (clerkRequest, options)=>{
-    const cookieSuffix = options.publishableKey ? await getCookieSuffix(options.publishableKey, runtime.crypto.subtle) : "";
+    const cookieSuffix = options.publishableKey ? await (0,keys/* getCookieSuffix */.P)(options.publishableKey, runtime.crypto.subtle) : "";
     return new AuthenticateContext(cookieSuffix, clerkRequest, options);
 };
 // src/tokens/cookie.ts
@@ -6156,7 +11759,7 @@ var RefreshTokenErrorReason = {
     UnexpectedBAPIError: "unexpected-bapi-error"
 };
 function assertSignInUrlExists(signInUrl, key) {
-    if (!signInUrl && isDevelopmentFromSecretKey(key)) {
+    if (!signInUrl && (0,keys/* isDevelopmentFromSecretKey */.CY)(key)) {
         throw new Error(`Missing signInUrl. Pass a signInUrl for dev instances if an app is satellite`);
     }
 }
@@ -6202,8 +11805,8 @@ async function authenticateRequest(request, options) {
     const organizationSyncTargetMatchers = computeOrganizationSyncTargetMatchers(options.organizationSyncOptions);
     function removeDevBrowserFromURL(url) {
         const updatedURL = new URL(url);
-        updatedURL.searchParams.delete(chunk_LFAHZTE6_constants.QueryParameters.DevBrowser);
-        updatedURL.searchParams.delete(chunk_LFAHZTE6_constants.QueryParameters.LegacyDevBrowser);
+        updatedURL.searchParams.delete(constants.QueryParameters.DevBrowser);
+        updatedURL.searchParams.delete(constants.QueryParameters.LegacyDevBrowser);
         return updatedURL;
     }
     function buildRedirectToHandshake({ handshakeReason }) {
@@ -6211,10 +11814,10 @@ async function authenticateRequest(request, options) {
         const frontendApiNoProtocol = authenticateContext.frontendApi.replace(/http(s)?:\/\//, "");
         const url = new URL(`https://${frontendApiNoProtocol}/v1/client/handshake`);
         url.searchParams.append("redirect_url", redirectUrl?.href || "");
-        url.searchParams.append(chunk_LFAHZTE6_constants.QueryParameters.SuffixedCookies, authenticateContext.usesSuffixedCookies().toString());
-        url.searchParams.append(chunk_LFAHZTE6_constants.QueryParameters.HandshakeReason, handshakeReason);
+        url.searchParams.append(constants.QueryParameters.SuffixedCookies, authenticateContext.usesSuffixedCookies().toString());
+        url.searchParams.append(constants.QueryParameters.HandshakeReason, handshakeReason);
         if (authenticateContext.instanceType === "development" && authenticateContext.devBrowserToken) {
-            url.searchParams.append(chunk_LFAHZTE6_constants.QueryParameters.DevBrowser, authenticateContext.devBrowserToken);
+            url.searchParams.append(constants.QueryParameters.DevBrowser, authenticateContext.devBrowserToken);
         }
         const toActivate = getOrganizationSyncTarget(authenticateContext.clerkUrl, options.organizationSyncOptions, organizationSyncTargetMatchers);
         if (toActivate) {
@@ -6224,7 +11827,7 @@ async function authenticateRequest(request, options) {
             });
         }
         return new Headers({
-            [chunk_LFAHZTE6_constants.Headers.Location]: url.href
+            [constants.Headers.Location]: url.href
         });
     }
     async function resolveHandshake() {
@@ -6237,16 +11840,16 @@ async function authenticateRequest(request, options) {
         let sessionToken = "";
         cookiesToSet.forEach((x)=>{
             headers.append("Set-Cookie", x);
-            if (getCookieName(x).startsWith(chunk_LFAHZTE6_constants.Cookies.Session)) {
+            if (getCookieName(x).startsWith(constants.Cookies.Session)) {
                 sessionToken = getCookieValue(x);
             }
         });
         if (authenticateContext.instanceType === "development") {
             const newUrl = new URL(authenticateContext.clerkUrl);
-            newUrl.searchParams.delete(chunk_LFAHZTE6_constants.QueryParameters.Handshake);
-            newUrl.searchParams.delete(chunk_LFAHZTE6_constants.QueryParameters.HandshakeHelp);
-            headers.append(chunk_LFAHZTE6_constants.Headers.Location, newUrl.toString());
-            headers.set(chunk_LFAHZTE6_constants.Headers.CacheControl, "no-store");
+            newUrl.searchParams.delete(constants.QueryParameters.Handshake);
+            newUrl.searchParams.delete(constants.QueryParameters.HandshakeHelp);
+            headers.append(constants.Headers.Location, newUrl.toString());
+            headers.set(constants.Headers.CacheControl, "no-store");
         }
         if (sessionToken === "") {
             return signedOut(authenticateContext, AuthErrorReason.SessionTokenMissing, "", headers);
@@ -6405,7 +12008,7 @@ ${error.getFullMessage()}`);
         let sessionToken = "";
         cookiesToSet.forEach((x)=>{
             headers.append("Set-Cookie", x);
-            if (getCookieName(x).startsWith(chunk_LFAHZTE6_constants.Cookies.Session)) {
+            if (getCookieName(x).startsWith(constants.Cookies.Session)) {
                 sessionToken = getCookieValue(x);
             }
         });
@@ -6436,8 +12039,8 @@ ${error.getFullMessage()}`);
             const handshakeHeaders = headers ?? buildRedirectToHandshake({
                 handshakeReason: reason
             });
-            if (handshakeHeaders.get(chunk_LFAHZTE6_constants.Headers.Location)) {
-                handshakeHeaders.set(chunk_LFAHZTE6_constants.Headers.CacheControl, "no-store");
+            if (handshakeHeaders.get(constants.Headers.Location)) {
+                handshakeHeaders.set(constants.Headers.CacheControl, "no-store");
             }
             const isRedirectLoop = setHandshakeInfiniteRedirectionLoopHeaders(handshakeHeaders);
             if (isRedirectLoop) {
@@ -6496,7 +12099,7 @@ ${error.getFullMessage()}`);
             return true;
         }
         const newCounterValue = authenticateContext.handshakeRedirectLoopCounter + 1;
-        const cookieName = chunk_LFAHZTE6_constants.Cookies.RedirectCount;
+        const cookieName = constants.Cookies.RedirectCount;
         headers.append("Set-Cookie", `${cookieName}=${newCounterValue}; SameSite=Lax; HttpOnly; Max-Age=3`);
         return false;
     }
@@ -6522,30 +12125,30 @@ ${error.getFullMessage()}`);
                 }
             }
         }
-        if (authenticateContext.instanceType === "development" && authenticateContext.clerkUrl.searchParams.has(chunk_LFAHZTE6_constants.QueryParameters.DevBrowser)) {
+        if (authenticateContext.instanceType === "development" && authenticateContext.clerkUrl.searchParams.has(constants.QueryParameters.DevBrowser)) {
             return handleMaybeHandshakeStatus(authenticateContext, AuthErrorReason.DevBrowserSync, "");
         }
         const isRequestEligibleForMultiDomainSync = authenticateContext.isSatellite && authenticateContext.secFetchDest === "document";
         if (authenticateContext.instanceType === "production" && isRequestEligibleForMultiDomainSync) {
             return handleMaybeHandshakeStatus(authenticateContext, AuthErrorReason.SatelliteCookieNeedsSyncing, "");
         }
-        if (authenticateContext.instanceType === "development" && isRequestEligibleForMultiDomainSync && !authenticateContext.clerkUrl.searchParams.has(chunk_LFAHZTE6_constants.QueryParameters.ClerkSynced)) {
+        if (authenticateContext.instanceType === "development" && isRequestEligibleForMultiDomainSync && !authenticateContext.clerkUrl.searchParams.has(constants.QueryParameters.ClerkSynced)) {
             const redirectURL = new URL(authenticateContext.signInUrl);
-            redirectURL.searchParams.append(chunk_LFAHZTE6_constants.QueryParameters.ClerkRedirectUrl, authenticateContext.clerkUrl.toString());
+            redirectURL.searchParams.append(constants.QueryParameters.ClerkRedirectUrl, authenticateContext.clerkUrl.toString());
             const headers = new Headers({
-                [chunk_LFAHZTE6_constants.Headers.Location]: redirectURL.toString()
+                [constants.Headers.Location]: redirectURL.toString()
             });
             return handleMaybeHandshakeStatus(authenticateContext, AuthErrorReason.SatelliteCookieNeedsSyncing, "", headers);
         }
-        const redirectUrl = new URL(authenticateContext.clerkUrl).searchParams.get(chunk_LFAHZTE6_constants.QueryParameters.ClerkRedirectUrl);
+        const redirectUrl = new URL(authenticateContext.clerkUrl).searchParams.get(constants.QueryParameters.ClerkRedirectUrl);
         if (authenticateContext.instanceType === "development" && !authenticateContext.isSatellite && redirectUrl) {
             const redirectBackToSatelliteUrl = new URL(redirectUrl);
             if (authenticateContext.devBrowserToken) {
-                redirectBackToSatelliteUrl.searchParams.append(chunk_LFAHZTE6_constants.QueryParameters.DevBrowser, authenticateContext.devBrowserToken);
+                redirectBackToSatelliteUrl.searchParams.append(constants.QueryParameters.DevBrowser, authenticateContext.devBrowserToken);
             }
-            redirectBackToSatelliteUrl.searchParams.append(chunk_LFAHZTE6_constants.QueryParameters.ClerkSynced, "true");
+            redirectBackToSatelliteUrl.searchParams.append(constants.QueryParameters.ClerkSynced, "true");
             const headers = new Headers({
-                [chunk_LFAHZTE6_constants.Headers.Location]: redirectBackToSatelliteUrl.toString()
+                [constants.Headers.Location]: redirectBackToSatelliteUrl.toString()
             });
             return handleMaybeHandshakeStatus(authenticateContext, AuthErrorReason.PrimaryRespondsToSyncing, "", headers);
         }
@@ -6746,7 +12349,7 @@ function mergePreDefinedOptions(preDefinedOptions, options) {
     });
 }
 // src/tokens/factory.ts
-var chunk_LFAHZTE6_defaultOptions = {
+var defaultOptions = {
     secretKey: "",
     jwtKey: "",
     apiUrl: void 0,
@@ -6757,8 +12360,8 @@ var chunk_LFAHZTE6_defaultOptions = {
     domain: "",
     audience: ""
 };
-function chunk_LFAHZTE6_createAuthenticateRequest(params) {
-    const buildTimeOptions = mergePreDefinedOptions(chunk_LFAHZTE6_defaultOptions, params.options);
+function createAuthenticateRequest(params) {
+    const buildTimeOptions = mergePreDefinedOptions(defaultOptions, params.options);
     const apiClient = params.apiClient;
     const authenticateRequest2 = (request, options = {})=>{
         const { apiUrl, apiVersion } = buildTimeOptions;
@@ -6802,419 +12405,8 @@ function withLegacySyncReturn(cb) {
 }
  //# sourceMappingURL=chunk-P263NW7Z.mjs.map
 
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-RWYTRAIK.mjs
-// src/underscore.ts
-var toSentence = (items)=>{
-    if (items.length == 0) {
-        return "";
-    }
-    if (items.length == 1) {
-        return items[0];
-    }
-    let sentence = items.slice(0, -1).join(", ");
-    sentence += `, or ${items.slice(-1)}`;
-    return sentence;
-};
-var IP_V4_ADDRESS_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-function isIPV4Address(str) {
-    return IP_V4_ADDRESS_REGEX.test(str || "");
-}
-function titleize(str) {
-    const s = str || "";
-    return s.charAt(0).toUpperCase() + s.slice(1);
-}
-function snakeToCamel(str) {
-    return str ? str.replace(/([-_][a-z])/g, (match)=>match.toUpperCase().replace(/-|_/, "")) : "";
-}
-function camelToSnake(str) {
-    return str ? str.replace(/[A-Z]/g, (letter)=>`_${letter.toLowerCase()}`) : "";
-}
-var createDeepObjectTransformer = (transform)=>{
-    const deepTransform = (obj)=>{
-        if (!obj) {
-            return obj;
-        }
-        if (Array.isArray(obj)) {
-            return obj.map((el)=>{
-                if (typeof el === "object" || Array.isArray(el)) {
-                    return deepTransform(el);
-                }
-                return el;
-            });
-        }
-        const copy = {
-            ...obj
-        };
-        const keys = Object.keys(copy);
-        for (const oldName of keys){
-            const newName = transform(oldName.toString());
-            if (newName !== oldName) {
-                copy[newName] = copy[oldName];
-                delete copy[oldName];
-            }
-            if (typeof copy[newName] === "object") {
-                copy[newName] = deepTransform(copy[newName]);
-            }
-        }
-        return copy;
-    };
-    return deepTransform;
-};
-var deepCamelToSnake = createDeepObjectTransformer(camelToSnake);
-var deepSnakeToCamel = createDeepObjectTransformer(snakeToCamel);
-function chunk_RWYTRAIK_isTruthy(value) {
-    if (typeof value === `boolean`) {
-        return value;
-    }
-    if (value === void 0 || value === null) {
-        return false;
-    }
-    if (typeof value === `string`) {
-        if (value.toLowerCase() === `true`) {
-            return true;
-        }
-        if (value.toLowerCase() === `false`) {
-            return false;
-        }
-    }
-    const number = parseInt(value, 10);
-    if (isNaN(number)) {
-        return false;
-    }
-    if (number > 0) {
-        return true;
-    }
-    return false;
-}
-function getNonUndefinedValues(obj) {
-    return Object.entries(obj).reduce((acc, [key, value])=>{
-        if (value !== void 0) {
-            acc[key] = value;
-        }
-        return acc;
-    }, {});
-}
- //# sourceMappingURL=chunk-RWYTRAIK.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-L6WULBPV.mjs
-
-
-
-// src/telemetry/throttler.ts
-var DEFAULT_CACHE_TTL_MS = 864e5;
-var _storageKey, _cacheTtl, _TelemetryEventThrottler_instances, generateKey_fn, cache_get, isValidBrowser_get;
-var TelemetryEventThrottler = class {
-    constructor(){
-        __privateAdd(this, _TelemetryEventThrottler_instances);
-        __privateAdd(this, _storageKey, "clerk_telemetry_throttler");
-        __privateAdd(this, _cacheTtl, DEFAULT_CACHE_TTL_MS);
-    }
-    isEventThrottled(payload) {
-        if (!__privateGet(this, _TelemetryEventThrottler_instances, isValidBrowser_get)) {
-            return false;
-        }
-        const now = Date.now();
-        const key = __privateMethod(this, _TelemetryEventThrottler_instances, generateKey_fn).call(this, payload);
-        const entry = __privateGet(this, _TelemetryEventThrottler_instances, cache_get)?.[key];
-        if (!entry) {
-            const updatedCache = {
-                ...__privateGet(this, _TelemetryEventThrottler_instances, cache_get),
-                [key]: now
-            };
-            localStorage.setItem(__privateGet(this, _storageKey), JSON.stringify(updatedCache));
-        }
-        const shouldInvalidate = entry && now - entry > __privateGet(this, _cacheTtl);
-        if (shouldInvalidate) {
-            const updatedCache = __privateGet(this, _TelemetryEventThrottler_instances, cache_get);
-            delete updatedCache[key];
-            localStorage.setItem(__privateGet(this, _storageKey), JSON.stringify(updatedCache));
-        }
-        return !!entry;
-    }
-};
-_storageKey = new WeakMap();
-_cacheTtl = new WeakMap();
-_TelemetryEventThrottler_instances = new WeakSet();
-/**
- * Generates a consistent unique key for telemetry events by sorting payload properties.
- * This ensures that payloads with identical content in different orders produce the same key.
- */ generateKey_fn = function(event) {
-    const { sk: _sk, pk: _pk, payload, ...rest } = event;
-    const sanitizedEvent = {
-        ...payload,
-        ...rest
-    };
-    return JSON.stringify(Object.keys({
-        ...payload,
-        ...rest
-    }).sort().map((key)=>sanitizedEvent[key]));
-};
-cache_get = function() {
-    const cacheString = localStorage.getItem(chunk_7ELT755Q_privateGet(this, _storageKey));
-    if (!cacheString) {
-        return {};
-    }
-    return JSON.parse(cacheString);
-};
-isValidBrowser_get = function() {
-    if (true) {
-        return false;
-    }
-    const storage = window.localStorage;
-    if (!storage) {
-        return false;
-    }
-    try {
-        const testKey = "test";
-        storage.setItem(testKey, testKey);
-        storage.removeItem(testKey);
-        return true;
-    } catch (err) {
-        const isQuotaExceededError = err instanceof DOMException && // Check error names for different browsers
-        (err.name === "QuotaExceededError" || err.name === "NS_ERROR_DOM_QUOTA_REACHED");
-        if (isQuotaExceededError && storage.length > 0) {
-            storage.removeItem(chunk_7ELT755Q_privateGet(this, _storageKey));
-        }
-        return false;
-    }
-};
-// src/telemetry/collector.ts
-var DEFAULT_CONFIG = {
-    samplingRate: 1,
-    maxBufferSize: 5,
-    // Production endpoint: https://clerk-telemetry.com
-    // Staging endpoint: https://staging.clerk-telemetry.com
-    // Local: http://localhost:8787
-    endpoint: "https://clerk-telemetry.com"
-};
-var _config, _eventThrottler, _metadata, _buffer, _pendingFlush, _TelemetryCollector_instances, shouldRecord_fn, shouldBeSampled_fn, scheduleFlush_fn, flush_fn, logEvent_fn, getSDKMetadata_fn, preparePayload_fn;
-var chunk_L6WULBPV_TelemetryCollector = class {
-    constructor(options){
-        __privateAdd(this, _TelemetryCollector_instances);
-        __privateAdd(this, _config);
-        __privateAdd(this, _eventThrottler);
-        __privateAdd(this, _metadata, {});
-        __privateAdd(this, _buffer, []);
-        __privateAdd(this, _pendingFlush);
-        __privateSet(this, _config, {
-            maxBufferSize: options.maxBufferSize ?? DEFAULT_CONFIG.maxBufferSize,
-            samplingRate: options.samplingRate ?? DEFAULT_CONFIG.samplingRate,
-            disabled: options.disabled ?? false,
-            debug: options.debug ?? false,
-            endpoint: DEFAULT_CONFIG.endpoint
-        });
-        if (!options.clerkVersion && "undefined" === "undefined") {
-            __privateGet(this, _metadata).clerkVersion = "";
-        } else {
-            __privateGet(this, _metadata).clerkVersion = options.clerkVersion ?? "";
-        }
-        __privateGet(this, _metadata).sdk = options.sdk;
-        __privateGet(this, _metadata).sdkVersion = options.sdkVersion;
-        __privateGet(this, _metadata).publishableKey = options.publishableKey ?? "";
-        const parsedKey = parsePublishableKey(options.publishableKey);
-        if (parsedKey) {
-            __privateGet(this, _metadata).instanceType = parsedKey.instanceType;
-        }
-        if (options.secretKey) {
-            __privateGet(this, _metadata).secretKey = options.secretKey.substring(0, 16);
-        }
-        __privateSet(this, _eventThrottler, new TelemetryEventThrottler());
-    }
-    get isEnabled() {
-        if (__privateGet(this, _metadata).instanceType !== "development") {
-            return false;
-        }
-        if (__privateGet(this, _config).disabled || typeof process !== "undefined" && isTruthy(process.env.CLERK_TELEMETRY_DISABLED)) {
-            return false;
-        }
-        if (false) {}
-        return true;
-    }
-    get isDebug() {
-        return __privateGet(this, _config).debug || typeof process !== "undefined" && isTruthy(process.env.CLERK_TELEMETRY_DEBUG);
-    }
-    record(event) {
-        const preparedPayload = __privateMethod(this, _TelemetryCollector_instances, preparePayload_fn).call(this, event.event, event.payload);
-        __privateMethod(this, _TelemetryCollector_instances, logEvent_fn).call(this, preparedPayload.event, preparedPayload);
-        if (!__privateMethod(this, _TelemetryCollector_instances, shouldRecord_fn).call(this, preparedPayload, event.eventSamplingRate)) {
-            return;
-        }
-        __privateGet(this, _buffer).push(preparedPayload);
-        __privateMethod(this, _TelemetryCollector_instances, scheduleFlush_fn).call(this);
-    }
-};
-_config = new WeakMap();
-_eventThrottler = new WeakMap();
-_metadata = new WeakMap();
-_buffer = new WeakMap();
-_pendingFlush = new WeakMap();
-_TelemetryCollector_instances = new WeakSet();
-shouldRecord_fn = function(preparedPayload, eventSamplingRate) {
-    return this.isEnabled && !this.isDebug && chunk_7ELT755Q_privateMethod(this, _TelemetryCollector_instances, shouldBeSampled_fn).call(this, preparedPayload, eventSamplingRate);
-};
-shouldBeSampled_fn = function(preparedPayload, eventSamplingRate) {
-    const randomSeed = Math.random();
-    const toBeSampled = randomSeed <= chunk_7ELT755Q_privateGet(this, _config).samplingRate && (typeof eventSamplingRate === "undefined" || randomSeed <= eventSamplingRate);
-    if (!toBeSampled) {
-        return false;
-    }
-    return !chunk_7ELT755Q_privateGet(this, _eventThrottler).isEventThrottled(preparedPayload);
-};
-scheduleFlush_fn = function() {
-    if (true) {
-        chunk_7ELT755Q_privateMethod(this, _TelemetryCollector_instances, flush_fn).call(this);
-        return;
-    }
-    const isBufferFull = chunk_7ELT755Q_privateGet(this, _buffer).length >= chunk_7ELT755Q_privateGet(this, _config).maxBufferSize;
-    if (isBufferFull) {
-        if (chunk_7ELT755Q_privateGet(this, _pendingFlush)) {
-            const cancel = typeof cancelIdleCallback !== "undefined" ? cancelIdleCallback : clearTimeout;
-            cancel(chunk_7ELT755Q_privateGet(this, _pendingFlush));
-        }
-        chunk_7ELT755Q_privateMethod(this, _TelemetryCollector_instances, flush_fn).call(this);
-        return;
-    }
-    if (chunk_7ELT755Q_privateGet(this, _pendingFlush)) {
-        return;
-    }
-    if ("requestIdleCallback" in window) {
-        chunk_7ELT755Q_privateSet(this, _pendingFlush, requestIdleCallback(()=>{
-            chunk_7ELT755Q_privateMethod(this, _TelemetryCollector_instances, flush_fn).call(this);
-        }));
-    } else {
-        chunk_7ELT755Q_privateSet(this, _pendingFlush, setTimeout(()=>{
-            chunk_7ELT755Q_privateMethod(this, _TelemetryCollector_instances, flush_fn).call(this);
-        }, 0));
-    }
-};
-flush_fn = function() {
-    fetch(new URL("/v1/event", chunk_7ELT755Q_privateGet(this, _config).endpoint), {
-        method: "POST",
-        // TODO: We send an array here with that idea that we can eventually send multiple events.
-        body: JSON.stringify({
-            events: chunk_7ELT755Q_privateGet(this, _buffer)
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).catch(()=>void 0).then(()=>{
-        chunk_7ELT755Q_privateSet(this, _buffer, []);
-    }).catch(()=>void 0);
-};
-/**
- * If running in debug mode, log the event and its payload to the console.
- */ logEvent_fn = function(event, payload) {
-    if (!this.isDebug) {
-        return;
-    }
-    if (typeof console.groupCollapsed !== "undefined") {
-        console.groupCollapsed("[clerk/telemetry]", event);
-        console.log(payload);
-        console.groupEnd();
-    } else {
-        console.log("[clerk/telemetry]", event, payload);
-    }
-};
-/**
- * If in browser, attempt to lazily grab the SDK metadata from the Clerk singleton, otherwise fallback to the initially passed in values.
- *
- * This is necessary because the sdkMetadata can be set by the host SDK after the TelemetryCollector is instantiated.
- */ getSDKMetadata_fn = function() {
-    let sdkMetadata = {
-        name: chunk_7ELT755Q_privateGet(this, _metadata).sdk,
-        version: chunk_7ELT755Q_privateGet(this, _metadata).sdkVersion
-    };
-    if (false) {}
-    return sdkMetadata;
-};
-/**
- * Append relevant metadata from the Clerk singleton to the event payload.
- */ preparePayload_fn = function(event, payload) {
-    const sdkMetadata = chunk_7ELT755Q_privateMethod(this, _TelemetryCollector_instances, getSDKMetadata_fn).call(this);
-    return {
-        event,
-        cv: chunk_7ELT755Q_privateGet(this, _metadata).clerkVersion ?? "",
-        it: chunk_7ELT755Q_privateGet(this, _metadata).instanceType ?? "",
-        sdk: sdkMetadata.name,
-        sdkv: sdkMetadata.version,
-        ...chunk_7ELT755Q_privateGet(this, _metadata).publishableKey ? {
-            pk: chunk_7ELT755Q_privateGet(this, _metadata).publishableKey
-        } : {},
-        ...chunk_7ELT755Q_privateGet(this, _metadata).secretKey ? {
-            sk: chunk_7ELT755Q_privateGet(this, _metadata).secretKey
-        } : {},
-        payload
-    };
-};
-// src/telemetry/events/component-mounted.ts
-var EVENT_COMPONENT_MOUNTED = "COMPONENT_MOUNTED";
-var EVENT_COMPONENT_OPENED = "COMPONENT_OPENED";
-var EVENT_SAMPLING_RATE = 0.1;
-function createPrebuiltComponentEvent(event) {
-    return function(component, props, additionalPayload) {
-        return {
-            event,
-            eventSamplingRate: EVENT_SAMPLING_RATE,
-            payload: {
-                component,
-                appearanceProp: Boolean(props?.appearance),
-                baseTheme: Boolean(props?.appearance?.baseTheme),
-                elements: Boolean(props?.appearance?.elements),
-                variables: Boolean(props?.appearance?.variables),
-                ...additionalPayload
-            }
-        };
-    };
-}
-function eventPrebuiltComponentMounted(component, props, additionalPayload) {
-    return createPrebuiltComponentEvent(EVENT_COMPONENT_MOUNTED)(component, props, additionalPayload);
-}
-function eventPrebuiltComponentOpened(component, props, additionalPayload) {
-    return createPrebuiltComponentEvent(EVENT_COMPONENT_OPENED)(component, props, additionalPayload);
-}
-function eventComponentMounted(component, props = {}) {
-    return {
-        event: EVENT_COMPONENT_MOUNTED,
-        eventSamplingRate: EVENT_SAMPLING_RATE,
-        payload: {
-            component,
-            ...props
-        }
-    };
-}
-// src/telemetry/events/method-called.ts
-var EVENT_METHOD_CALLED = "METHOD_CALLED";
-function eventMethodCalled(method, payload) {
-    return {
-        event: EVENT_METHOD_CALLED,
-        payload: {
-            method,
-            ...payload
-        }
-    };
-}
-// src/telemetry/events/framework-metadata.ts
-var EVENT_FRAMEWORK_METADATA = "FRAMEWORK_METADATA";
-var EVENT_SAMPLING_RATE2 = 0.1;
-function eventFrameworkMetadata(payload) {
-    return {
-        event: EVENT_FRAMEWORK_METADATA,
-        eventSamplingRate: EVENT_SAMPLING_RATE2,
-        payload
-    };
-}
- //# sourceMappingURL=chunk-L6WULBPV.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/telemetry.mjs
-
-
-
-
-
-
-
- //# sourceMappingURL=telemetry.mjs.map
-
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/telemetry.mjs
+var dist_telemetry = __webpack_require__(6888);
 ;// CONCATENATED MODULE: ./node_modules/@clerk/backend/dist/index.mjs
 
 
@@ -7233,7 +12425,7 @@ function createClerkClient(options) {
         options: opts,
         apiClient
     });
-    const telemetry = new TelemetryCollector({
+    const telemetry = new dist_telemetry/* TelemetryCollector */.NS({
         ...options.telemetry,
         publishableKey: opts.publishableKey,
         secretKey: opts.secretKey,
@@ -7251,210 +12443,254 @@ function createClerkClient(options) {
 }
  //# sourceMappingURL=index.mjs.map
 
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/buildAccountsBaseUrl.mjs
+// EXTERNAL MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/constants.js + 2 modules
+var server_constants = __webpack_require__(7724);
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/createClerkClient.js
 
-// src/buildAccountsBaseUrl.ts
-function buildAccountsBaseUrl_buildAccountsBaseUrl(frontendApi) {
-    if (!frontendApi) {
-        return "";
+
+
+const clerkClientDefaultOptions = {
+    secretKey: server_constants/* SECRET_KEY */.Cn,
+    publishableKey: server_constants/* PUBLISHABLE_KEY */.Am,
+    apiUrl: server_constants/* API_URL */.T5,
+    apiVersion: server_constants/* API_VERSION */.Gn,
+    userAgent: `${"@clerk/nextjs"}@${"6.18.0"}`,
+    proxyUrl: server_constants/* PROXY_URL */.NM,
+    domain: server_constants/* DOMAIN */.yK,
+    isSatellite: server_constants/* IS_SATELLITE */.lo,
+    sdkMetadata: server_constants/* SDK_METADATA */.nE,
+    telemetry: {
+        disabled: server_constants/* TELEMETRY_DISABLED */.CY,
+        debug: server_constants/* TELEMETRY_DEBUG */.w4
     }
-    const accountsBaseUrl = frontendApi.replace(/clerk\.accountsstage\./, "accountsstage.").replace(/clerk\.accounts\.|clerk\./, "accounts.");
-    return `https://${accountsBaseUrl}`;
-}
- //# sourceMappingURL=buildAccountsBaseUrl.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/authorization-errors.mjs
-
-
- //# sourceMappingURL=authorization-errors.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/backend/dist/internal.mjs
-
-
-
-
-// src/createRedirect.ts
-
-var buildUrl = (_baseUrl, _targetUrl, _returnBackUrl, _devBrowserToken)=>{
-    if (_baseUrl === "") {
-        return legacyBuildUrl(_targetUrl.toString(), _returnBackUrl?.toString());
-    }
-    const baseUrl = new URL(_baseUrl);
-    const returnBackUrl = _returnBackUrl ? new URL(_returnBackUrl, baseUrl) : void 0;
-    const res = new URL(_targetUrl, baseUrl);
-    if (returnBackUrl) {
-        res.searchParams.set("redirect_url", returnBackUrl.toString());
-    }
-    if (_devBrowserToken && baseUrl.hostname !== res.hostname) {
-        res.searchParams.set(constants.QueryParameters.DevBrowser, _devBrowserToken);
-    }
-    return res.toString();
 };
-var legacyBuildUrl = (targetUrl, redirectUrl)=>{
-    let url;
-    if (!targetUrl.startsWith("http")) {
-        if (!redirectUrl || !redirectUrl.startsWith("http")) {
-            throw new Error("destination url or return back url should be an absolute path url!");
-        }
-        const baseURL = new URL(redirectUrl);
-        url = new URL(targetUrl, baseURL.origin);
-    } else {
-        url = new URL(targetUrl);
-    }
-    if (redirectUrl) {
-        url.searchParams.set("redirect_url", redirectUrl);
-    }
-    return url.toString();
-};
-var createRedirect = (params)=>{
-    const { publishableKey, redirectAdapter, signInUrl, signUpUrl, baseUrl, sessionStatus } = params;
-    const parsedPublishableKey = parsePublishableKey(publishableKey);
-    const frontendApi = parsedPublishableKey?.frontendApi;
-    const isDevelopment = parsedPublishableKey?.instanceType === "development";
-    const accountsBaseUrl = buildAccountsBaseUrl(frontendApi);
-    const hasPendingStatus = sessionStatus === "pending";
-    const redirectToTasks = (url, { returnBackUrl })=>{
-        return redirectAdapter(buildUrl(baseUrl, `${url}/tasks`, returnBackUrl, isDevelopment ? params.devBrowserToken : null));
-    };
-    const redirectToSignUp = ({ returnBackUrl } = {})=>{
-        if (!signUpUrl && !accountsBaseUrl) {
-            errorThrower.throwMissingPublishableKeyError();
-        }
-        const accountsSignUpUrl = `${accountsBaseUrl}/sign-up`;
-        function buildSignUpUrl(signIn) {
-            if (!signIn) {
-                return;
-            }
-            const url = new URL(signIn, baseUrl);
-            url.pathname = `${url.pathname}/create`;
-            return url.toString();
-        }
-        const targetUrl = signUpUrl || buildSignUpUrl(signInUrl) || accountsSignUpUrl;
-        if (hasPendingStatus) {
-            return redirectToTasks(targetUrl, {
-                returnBackUrl
-            });
-        }
-        return redirectAdapter(buildUrl(baseUrl, targetUrl, returnBackUrl, isDevelopment ? params.devBrowserToken : null));
-    };
-    const redirectToSignIn = ({ returnBackUrl } = {})=>{
-        if (!signInUrl && !accountsBaseUrl) {
-            errorThrower.throwMissingPublishableKeyError();
-        }
-        const accountsSignInUrl = `${accountsBaseUrl}/sign-in`;
-        const targetUrl = signInUrl || accountsSignInUrl;
-        if (hasPendingStatus) {
-            return redirectToTasks(targetUrl, {
-                returnBackUrl
-            });
-        }
-        return redirectAdapter(buildUrl(baseUrl, targetUrl, returnBackUrl, isDevelopment ? params.devBrowserToken : null));
-    };
-    return {
-        redirectToSignUp,
-        redirectToSignIn
-    };
-};
-// src/util/decorateObjectWithResources.ts
-var decorateObjectWithResources = async (obj, authObj, opts)=>{
-    const { loadSession, loadUser, loadOrganization } = opts || {};
-    const { userId, sessionId, orgId } = authObj;
-    const { sessions, users, organizations } = createBackendApiClient({
-        ...opts
+const createClerkClientWithOptions = (options)=>createClerkClient({
+        ...clerkClientDefaultOptions,
+        ...options
     });
-    const [sessionResp, userResp, organizationResp] = await Promise.all([
-        loadSession && sessionId ? sessions.getSession(sessionId) : Promise.resolve(void 0),
-        loadUser && userId ? users.getUser(userId) : Promise.resolve(void 0),
-        loadOrganization && orgId ? organizations.getOrganization({
-            organizationId: orgId
-        }) : Promise.resolve(void 0)
-    ]);
-    const resources = stripPrivateDataFromObject({
-        session: sessionResp,
-        user: userResp,
-        organization: organizationResp
-    });
-    return Object.assign(obj, resources);
-};
-function stripPrivateDataFromObject(authObject) {
-    const user = authObject.user ? {
-        ...authObject.user
-    } : authObject.user;
-    const organization = authObject.organization ? {
-        ...authObject.organization
-    } : authObject.organization;
-    prunePrivateMetadata(user);
-    prunePrivateMetadata(organization);
-    return {
-        ...authObject,
-        user,
-        organization
+ //# sourceMappingURL=createClerkClient.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/chunk-BUSYA2B4.js
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __commonJS = (cb, mod)=>function __require() {
+        return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = {
+            exports: {}
+        }).exports, mod), mod.exports;
     };
-}
-function prunePrivateMetadata(resource) {
-    if (resource) {
-        if ("privateMetadata" in resource) {
-            delete resource["privateMetadata"];
-        }
-        if ("private_metadata" in resource) {
-            delete resource["private_metadata"];
-        }
+ //# sourceMappingURL=chunk-BUSYA2B4.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/runtime/browser/safe-node-apis.js
+
+var require_safe_node_apis = __commonJS({
+    "src/runtime/browser/safe-node-apis.js" (exports, module) {
+        const fs = void 0;
+        const path = void 0;
+        const cwd = void 0;
+        module.exports = {
+            fs,
+            path,
+            cwd
+        };
     }
-    return resource;
-}
-// src/internal.ts
+});
+/* harmony default export */ const safe_node_apis = (require_safe_node_apis()); //# sourceMappingURL=safe-node-apis.js.map
 
- //# sourceMappingURL=internal.mjs.map
-
-;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/index.js
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/fs/utils.js
 
 
-
-
-
-
-
-
-
-
- //# sourceMappingURL=index.js.map
-
-;// CONCATENATED MODULE: ./middleware.ts
-
-/* harmony default export */ const middleware = ((0,server_namespaceObject.authMiddleware)());
-const config = {
-    matcher: [
-        "/admin/:path*",
-        "/agent/:path*"
-    ]
+const throwMissingFsModule = (module)=>{
+    throw new Error(`Clerk: ${module} is missing. This is an internal error. Please contact Clerk's support.`);
 };
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-middleware-loader.js?absolutePagePath=private-next-root-dir%2Fmiddleware.ts&page=%2Fmiddleware&rootDir=C%3A%5CUsers%5CAKhal%5COneDrive%5CDokumente%5CGitHub%5Cmvp_gpt&matchers=W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpP1xcL2FkbWluKD86XFwvKCg%2FOlteXFwvI1xcP10rPykoPzpcXC8oPzpbXlxcLyNcXD9dKz8pKSopKT8oLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvYWRtaW4vOnBhdGgqIn0seyJyZWdleHAiOiJeKD86XFwvKF9uZXh0XFwvZGF0YVxcL1teL117MSx9KSk%2FXFwvYWdlbnQoPzpcXC8oKD86W15cXC8jXFw%2FXSs%2FKSg%2FOlxcLyg%2FOlteXFwvI1xcP10rPykpKikpPyguanNvbik%2FW1xcLyNcXD9dPyQiLCJvcmlnaW5hbFNvdXJjZSI6Ii9hZ2VudC86cGF0aCoifV0%3D&preferredRegion=&middlewareConfig=eyJtYXRjaGVycyI6W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpP1xcL2FkbWluKD86XFwvKCg%2FOlteXFwvI1xcP10rPykoPzpcXC8oPzpbXlxcLyNcXD9dKz8pKSopKT8oLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvYWRtaW4vOnBhdGgqIn0seyJyZWdleHAiOiJeKD86XFwvKF9uZXh0XFwvZGF0YVxcL1teL117MSx9KSk%2FXFwvYWdlbnQoPzpcXC8oKD86W15cXC8jXFw%2FXSs%2FKSg%2FOlxcLyg%2FOlteXFwvI1xcP10rPykpKikpPyguanNvbik%2FW1xcLyNcXD9dPyQiLCJvcmlnaW5hbFNvdXJjZSI6Ii9hZ2VudC86cGF0aCoifV19!
-
-
-// Import the userland code.
-
-const mod = {
-    ...middleware_namespaceObject
+const nodeFsOrThrow = ()=>{
+    if (!safe_node_apis.fs) {
+        throwMissingFsModule("fs");
+    }
+    return safe_node_apis.fs;
 };
-const handler = mod.middleware || mod.default;
-const page = "/middleware";
-if (typeof handler !== "function") {
-    throw new Error(`The Middleware "${page}" must export a \`middleware\` or a \`default\` function`);
+const nodePathOrThrow = ()=>{
+    if (!safe_node_apis.path) {
+        throwMissingFsModule("path");
+    }
+    return safe_node_apis.path;
+};
+const nodeCwdOrThrow = ()=>{
+    if (!safe_node_apis.cwd) {
+        throwMissingFsModule("cwd");
+    }
+    return safe_node_apis.cwd;
+};
+ //# sourceMappingURL=utils.js.map
+
+;// CONCATENATED MODULE: ./node_modules/@clerk/nextjs/dist/esm/server/keyless-node.js
+
+
+
+const CLERK_HIDDEN = ".clerk";
+const CLERK_LOCK = "clerk.lock";
+function updateGitignore() {
+    const { existsSync, writeFileSync, readFileSync, appendFileSync } = nodeFsOrThrow();
+    const path = nodePathOrThrow();
+    const cwd = nodeCwdOrThrow();
+    const gitignorePath = path.join(cwd(), ".gitignore");
+    if (!existsSync(gitignorePath)) {
+        writeFileSync(gitignorePath, "");
+    }
+    const gitignoreContent = readFileSync(gitignorePath, "utf-8");
+    const COMMENT = `# clerk configuration (can include secrets)`;
+    if (!gitignoreContent.includes(CLERK_HIDDEN + "/")) {
+        appendFileSync(gitignorePath, `
+${COMMENT}
+/${CLERK_HIDDEN}/
+`);
+    }
 }
-function nHandler(opts) {
-    return adapter({
-        ...opts,
-        page,
-        handler
+const generatePath = (...slugs)=>{
+    const path = nodePathOrThrow();
+    const cwd = nodeCwdOrThrow();
+    return path.join(cwd(), CLERK_HIDDEN, ...slugs);
+};
+const _TEMP_DIR_NAME = ".tmp";
+const getKeylessConfigurationPath = ()=>generatePath(_TEMP_DIR_NAME, "keyless.json");
+const getKeylessReadMePath = ()=>generatePath(_TEMP_DIR_NAME, "README.md");
+let isCreatingFile = false;
+function safeParseClerkFile() {
+    const { readFileSync } = nodeFsOrThrow();
+    try {
+        const CONFIG_PATH = getKeylessConfigurationPath();
+        let fileAsString;
+        try {
+            fileAsString = readFileSync(CONFIG_PATH, {
+                encoding: "utf-8"
+            }) || "{}";
+        } catch  {
+            fileAsString = "{}";
+        }
+        return JSON.parse(fileAsString);
+    } catch  {
+        return void 0;
+    }
+}
+const lockFileWriting = ()=>{
+    const { writeFileSync } = nodeFsOrThrow();
+    isCreatingFile = true;
+    writeFileSync(CLERK_LOCK, // In the rare case, the file persists give the developer enough context.
+    "This file can be deleted. Please delete this file and refresh your application", {
+        encoding: "utf8",
+        mode: "0777",
+        flag: "w"
     });
+};
+const unlockFileWriting = ()=>{
+    const { rmSync } = nodeFsOrThrow();
+    try {
+        rmSync(CLERK_LOCK, {
+            force: true,
+            recursive: true
+        });
+    } catch  {}
+    isCreatingFile = false;
+};
+const isFileWritingLocked = ()=>{
+    const { existsSync } = nodeFsOrThrow();
+    return isCreatingFile || existsSync(CLERK_LOCK);
+};
+async function createOrReadKeyless() {
+    const { writeFileSync, mkdirSync } = nodeFsOrThrow();
+    if (isFileWritingLocked()) {
+        return null;
+    }
+    lockFileWriting();
+    const CONFIG_PATH = getKeylessConfigurationPath();
+    const README_PATH = getKeylessReadMePath();
+    mkdirSync(generatePath(_TEMP_DIR_NAME), {
+        recursive: true
+    });
+    updateGitignore();
+    const envVarsMap = safeParseClerkFile();
+    if ((envVarsMap == null ? void 0 : envVarsMap.publishableKey) && (envVarsMap == null ? void 0 : envVarsMap.secretKey)) {
+        unlockFileWriting();
+        return envVarsMap;
+    }
+    const client = createClerkClientWithOptions({});
+    const accountlessApplication = await client.__experimental_accountlessApplications.createAccountlessApplication().catch(()=>null);
+    if (accountlessApplication) {
+        writeFileSync(CONFIG_PATH, JSON.stringify(accountlessApplication), {
+            encoding: "utf8",
+            mode: "0777",
+            flag: "w"
+        });
+        const README_NOTIFICATION = `
+## DO NOT COMMIT
+This directory is auto-generated from \`@clerk/nextjs\` because you are running in Keyless mode. Avoid committing the \`.clerk/\` directory as it includes the secret key of the unclaimed instance.
+  `;
+        writeFileSync(README_PATH, README_NOTIFICATION, {
+            encoding: "utf8",
+            mode: "0777",
+            flag: "w"
+        });
+    }
+    unlockFileWriting();
+    return accountlessApplication;
 }
+function removeKeyless() {
+    const { rmSync } = nodeFsOrThrow();
+    if (isFileWritingLocked()) {
+        return void 0;
+    }
+    lockFileWriting();
+    try {
+        rmSync(generatePath(), {
+            force: true,
+            recursive: true
+        });
+    } catch  {}
+    unlockFileWriting();
+}
+ //# sourceMappingURL=keyless-node.js.map
 
-//# sourceMappingURL=middleware.js.map
 
 /***/ }),
 
-/***/ 408:
+/***/ 9413:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   h: () => (/* binding */ canUseKeyless)
+/* harmony export */ });
+/* harmony import */ var _clerk_shared_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1620);
+/* harmony import */ var _server_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7724);
+/* harmony import */ var _sdk_versions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6163);
+
+
+
+
+const canUseKeyless = !_sdk_versions__WEBPACK_IMPORTED_MODULE_1__/* .isNextWithUnstableServerActions */ .F && // Next.js will inline the value of 'development' or 'production' on the client bundle, so this is client-safe.
+(0,_clerk_shared_utils__WEBPACK_IMPORTED_MODULE_0__/* .isDevelopmentEnvironment */ .vf)() && !_server_constants__WEBPACK_IMPORTED_MODULE_2__/* .KEYLESS_DISABLED */ .tH;
+ //# sourceMappingURL=feature-flags.js.map
+
+
+/***/ }),
+
+/***/ 6163:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   F: () => (/* binding */ isNextWithUnstableServerActions)
+/* harmony export */ });
+/* unused harmony export isNext13 */
+/* harmony import */ var next_package_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3972);
+
+
+const isNext13 = next_package_json__WEBPACK_IMPORTED_MODULE_0__/* .version */ .i8.startsWith("13.");
+const isNextWithUnstableServerActions = isNext13 || next_package_json__WEBPACK_IMPORTED_MODULE_0__/* .version */ .i8.startsWith("14.0");
+ //# sourceMappingURL=sdk-versions.js.map
+
+
+/***/ }),
+
+/***/ 6408:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7463,7 +12699,7 @@ var __webpack_unused_export__;
 __webpack_unused_export__ = ({
     value: true
 });
-__webpack_unused_export__ = parse;
+exports.Qc = parse;
 __webpack_unused_export__ = serialize;
 /**
  * RegExp to match cookie-name in RFC 6265 sec 4.1.1
@@ -7736,7 +12972,47 @@ module.exports.mapObjectSkip = mapObjectSkip;
 
 /***/ }),
 
-/***/ 492:
+/***/ 5774:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+module.exports = __webpack_require__(3332);
+
+
+/***/ }),
+
+/***/ 3332:
+/***/ ((module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+Object.defineProperty(exports, "useRouter", ({
+    enumerable: true,
+    get: function() {
+        return useRouter;
+    }
+}));
+const _react = __webpack_require__(167);
+const _routercontextsharedruntime = __webpack_require__(7228);
+function useRouter() {
+    return (0, _react.useContext)(_routercontextsharedruntime.RouterContext);
+}
+if ((typeof exports.default === "function" || typeof exports.default === "object" && exports.default !== null) && typeof exports.default.__esModule === "undefined") {
+    Object.defineProperty(exports.default, "__esModule", {
+        value: true
+    });
+    Object.assign(exports.default, exports);
+    module.exports = exports.default;
+} //# sourceMappingURL=router.js.map
+
+
+/***/ }),
+
+/***/ 7492:
 /***/ ((module) => {
 
 "use strict";
@@ -8102,7 +13378,7 @@ function normalizeCookie(cookie = {
 
 /***/ }),
 
-/***/ 842:
+/***/ 7842:
 /***/ ((module) => {
 
 "use strict";
@@ -8226,6 +13502,13567 @@ var __dirname = "/";
     })();
     module.exports = e;
 })();
+
+
+/***/ }),
+
+/***/ 7357:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+var __webpack_unused_export__;
+
+__webpack_unused_export__ = ({
+    value: true
+});
+/**
+ * Tokenize input string.
+ */ function lexer(str) {
+    var tokens = [];
+    var i = 0;
+    while(i < str.length){
+        var char = str[i];
+        if (char === "*" || char === "+" || char === "?") {
+            tokens.push({
+                type: "MODIFIER",
+                index: i,
+                value: str[i++]
+            });
+            continue;
+        }
+        if (char === "\\") {
+            tokens.push({
+                type: "ESCAPED_CHAR",
+                index: i++,
+                value: str[i++]
+            });
+            continue;
+        }
+        if (char === "{") {
+            tokens.push({
+                type: "OPEN",
+                index: i,
+                value: str[i++]
+            });
+            continue;
+        }
+        if (char === "}") {
+            tokens.push({
+                type: "CLOSE",
+                index: i,
+                value: str[i++]
+            });
+            continue;
+        }
+        if (char === ":") {
+            var name = "";
+            var j = i + 1;
+            while(j < str.length){
+                var code = str.charCodeAt(j);
+                if (// `0-9`
+                code >= 48 && code <= 57 || // `A-Z`
+                code >= 65 && code <= 90 || // `a-z`
+                code >= 97 && code <= 122 || // `_`
+                code === 95) {
+                    name += str[j++];
+                    continue;
+                }
+                break;
+            }
+            if (!name) throw new TypeError("Missing parameter name at " + i);
+            tokens.push({
+                type: "NAME",
+                index: i,
+                value: name
+            });
+            i = j;
+            continue;
+        }
+        if (char === "(") {
+            var count = 1;
+            var pattern = "";
+            var j = i + 1;
+            if (str[j] === "?") {
+                throw new TypeError('Pattern cannot start with "?" at ' + j);
+            }
+            while(j < str.length){
+                if (str[j] === "\\") {
+                    pattern += str[j++] + str[j++];
+                    continue;
+                }
+                if (str[j] === ")") {
+                    count--;
+                    if (count === 0) {
+                        j++;
+                        break;
+                    }
+                } else if (str[j] === "(") {
+                    count++;
+                    if (str[j + 1] !== "?") {
+                        throw new TypeError("Capturing groups are not allowed at " + j);
+                    }
+                }
+                pattern += str[j++];
+            }
+            if (count) throw new TypeError("Unbalanced pattern at " + i);
+            if (!pattern) throw new TypeError("Missing pattern at " + i);
+            tokens.push({
+                type: "PATTERN",
+                index: i,
+                value: pattern
+            });
+            i = j;
+            continue;
+        }
+        tokens.push({
+            type: "CHAR",
+            index: i,
+            value: str[i++]
+        });
+    }
+    tokens.push({
+        type: "END",
+        index: i,
+        value: ""
+    });
+    return tokens;
+}
+/**
+ * Parse a string for the raw tokens.
+ */ function parse(str, options) {
+    if (options === void 0) {
+        options = {};
+    }
+    var tokens = lexer(str);
+    var _a = options.prefixes, prefixes = _a === void 0 ? "./" : _a;
+    var defaultPattern = "[^" + escapeString(options.delimiter || "/#?") + "]+?";
+    var result = [];
+    var key = 0;
+    var i = 0;
+    var path = "";
+    var tryConsume = function(type) {
+        if (i < tokens.length && tokens[i].type === type) return tokens[i++].value;
+    };
+    var mustConsume = function(type) {
+        var value = tryConsume(type);
+        if (value !== undefined) return value;
+        var _a = tokens[i], nextType = _a.type, index = _a.index;
+        throw new TypeError("Unexpected " + nextType + " at " + index + ", expected " + type);
+    };
+    var consumeText = function() {
+        var result = "";
+        var value;
+        // tslint:disable-next-line
+        while(value = tryConsume("CHAR") || tryConsume("ESCAPED_CHAR")){
+            result += value;
+        }
+        return result;
+    };
+    while(i < tokens.length){
+        var char = tryConsume("CHAR");
+        var name = tryConsume("NAME");
+        var pattern = tryConsume("PATTERN");
+        if (name || pattern) {
+            var prefix = char || "";
+            if (prefixes.indexOf(prefix) === -1) {
+                path += prefix;
+                prefix = "";
+            }
+            if (path) {
+                result.push(path);
+                path = "";
+            }
+            result.push({
+                name: name || key++,
+                prefix: prefix,
+                suffix: "",
+                pattern: pattern || defaultPattern,
+                modifier: tryConsume("MODIFIER") || ""
+            });
+            continue;
+        }
+        var value = char || tryConsume("ESCAPED_CHAR");
+        if (value) {
+            path += value;
+            continue;
+        }
+        if (path) {
+            result.push(path);
+            path = "";
+        }
+        var open = tryConsume("OPEN");
+        if (open) {
+            var prefix = consumeText();
+            var name_1 = tryConsume("NAME") || "";
+            var pattern_1 = tryConsume("PATTERN") || "";
+            var suffix = consumeText();
+            mustConsume("CLOSE");
+            result.push({
+                name: name_1 || (pattern_1 ? key++ : ""),
+                pattern: name_1 && !pattern_1 ? defaultPattern : pattern_1,
+                prefix: prefix,
+                suffix: suffix,
+                modifier: tryConsume("MODIFIER") || ""
+            });
+            continue;
+        }
+        mustConsume("END");
+    }
+    return result;
+}
+__webpack_unused_export__ = parse;
+/**
+ * Compile a string to a template function for the path.
+ */ function compile(str, options) {
+    return tokensToFunction(parse(str, options), options);
+}
+__webpack_unused_export__ = compile;
+/**
+ * Expose a method for transforming tokens into the path function.
+ */ function tokensToFunction(tokens, options) {
+    if (options === void 0) {
+        options = {};
+    }
+    var reFlags = flags(options);
+    var _a = options.encode, encode = _a === void 0 ? function(x) {
+        return x;
+    } : _a, _b = options.validate, validate = _b === void 0 ? true : _b;
+    // Compile all the tokens into regexps.
+    var matches = tokens.map(function(token) {
+        if (typeof token === "object") {
+            return new RegExp("^(?:" + token.pattern + ")$", reFlags);
+        }
+    });
+    return function(data) {
+        var path = "";
+        for(var i = 0; i < tokens.length; i++){
+            var token = tokens[i];
+            if (typeof token === "string") {
+                path += token;
+                continue;
+            }
+            var value = data ? data[token.name] : undefined;
+            var optional = token.modifier === "?" || token.modifier === "*";
+            var repeat = token.modifier === "*" || token.modifier === "+";
+            if (Array.isArray(value)) {
+                if (!repeat) {
+                    throw new TypeError('Expected "' + token.name + '" to not repeat, but got an array');
+                }
+                if (value.length === 0) {
+                    if (optional) continue;
+                    throw new TypeError('Expected "' + token.name + '" to not be empty');
+                }
+                for(var j = 0; j < value.length; j++){
+                    var segment = encode(value[j], token);
+                    if (validate && !matches[i].test(segment)) {
+                        throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '", but got "' + segment + '"');
+                    }
+                    path += token.prefix + segment + token.suffix;
+                }
+                continue;
+            }
+            if (typeof value === "string" || typeof value === "number") {
+                var segment = encode(String(value), token);
+                if (validate && !matches[i].test(segment)) {
+                    throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but got "' + segment + '"');
+                }
+                path += token.prefix + segment + token.suffix;
+                continue;
+            }
+            if (optional) continue;
+            var typeOfMessage = repeat ? "an array" : "a string";
+            throw new TypeError('Expected "' + token.name + '" to be ' + typeOfMessage);
+        }
+        return path;
+    };
+}
+__webpack_unused_export__ = tokensToFunction;
+/**
+ * Create path match function from `path-to-regexp` spec.
+ */ function match(str, options) {
+    var keys = [];
+    var re = pathToRegexp(str, keys, options);
+    return regexpToFunction(re, keys, options);
+}
+__webpack_unused_export__ = match;
+/**
+ * Create a path match function from `path-to-regexp` output.
+ */ function regexpToFunction(re, keys, options) {
+    if (options === void 0) {
+        options = {};
+    }
+    var _a = options.decode, decode = _a === void 0 ? function(x) {
+        return x;
+    } : _a;
+    return function(pathname) {
+        var m = re.exec(pathname);
+        if (!m) return false;
+        var path = m[0], index = m.index;
+        var params = Object.create(null);
+        var _loop_1 = function(i) {
+            // tslint:disable-next-line
+            if (m[i] === undefined) return "continue";
+            var key = keys[i - 1];
+            if (key.modifier === "*" || key.modifier === "+") {
+                params[key.name] = m[i].split(key.prefix + key.suffix).map(function(value) {
+                    return decode(value, key);
+                });
+            } else {
+                params[key.name] = decode(m[i], key);
+            }
+        };
+        for(var i = 1; i < m.length; i++){
+            _loop_1(i);
+        }
+        return {
+            path: path,
+            index: index,
+            params: params
+        };
+    };
+}
+__webpack_unused_export__ = regexpToFunction;
+/**
+ * Escape a regular expression string.
+ */ function escapeString(str) {
+    return str.replace(/([.+*?=^!:${}()[\]|/\\])/g, "\\$1");
+}
+/**
+ * Get the flags for a regexp from the options.
+ */ function flags(options) {
+    return options && options.sensitive ? "" : "i";
+}
+/**
+ * Pull out keys from a regexp.
+ */ function regexpToRegexp(path, keys) {
+    if (!keys) return path;
+    // Use a negative lookahead to match only capturing groups.
+    var groups = path.source.match(/\((?!\?)/g);
+    if (groups) {
+        for(var i = 0; i < groups.length; i++){
+            keys.push({
+                name: i,
+                prefix: "",
+                suffix: "",
+                modifier: "",
+                pattern: ""
+            });
+        }
+    }
+    return path;
+}
+/**
+ * Transform an array into a regexp.
+ */ function arrayToRegexp(paths, keys, options) {
+    var parts = paths.map(function(path) {
+        return pathToRegexp(path, keys, options).source;
+    });
+    return new RegExp("(?:" + parts.join("|") + ")", flags(options));
+}
+/**
+ * Create a path regexp from string input.
+ */ function stringToRegexp(path, keys, options) {
+    return tokensToRegexp(parse(path, options), keys, options);
+}
+/**
+ * Expose a function for taking tokens and returning a RegExp.
+ */ function tokensToRegexp(tokens, keys, options) {
+    if (options === void 0) {
+        options = {};
+    }
+    var _a = options.strict, strict = _a === void 0 ? false : _a, _b = options.start, start = _b === void 0 ? true : _b, _c = options.end, end = _c === void 0 ? true : _c, _d = options.encode, encode = _d === void 0 ? function(x) {
+        return x;
+    } : _d;
+    var endsWith = "[" + escapeString(options.endsWith || "") + "]|$";
+    var delimiter = "[" + escapeString(options.delimiter || "/#?") + "]";
+    var route = start ? "^" : "";
+    // Iterate over the tokens and create our regexp string.
+    for(var _i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++){
+        var token = tokens_1[_i];
+        if (typeof token === "string") {
+            route += escapeString(encode(token));
+        } else {
+            var prefix = escapeString(encode(token.prefix));
+            var suffix = escapeString(encode(token.suffix));
+            if (token.pattern) {
+                if (keys) keys.push(token);
+                if (prefix || suffix) {
+                    if (token.modifier === "+" || token.modifier === "*") {
+                        var mod = token.modifier === "*" ? "?" : "";
+                        route += "(?:" + prefix + "((?:" + token.pattern + ")(?:" + suffix + prefix + "(?:" + token.pattern + "))*)" + suffix + ")" + mod;
+                    } else {
+                        route += "(?:" + prefix + "(" + token.pattern + ")" + suffix + ")" + token.modifier;
+                    }
+                } else {
+                    route += "(" + token.pattern + ")" + token.modifier;
+                }
+            } else {
+                route += "(?:" + prefix + suffix + ")" + token.modifier;
+            }
+        }
+    }
+    if (end) {
+        if (!strict) route += delimiter + "?";
+        route += !options.endsWith ? "$" : "(?=" + endsWith + ")";
+    } else {
+        var endToken = tokens[tokens.length - 1];
+        var isEndDelimited = typeof endToken === "string" ? delimiter.indexOf(endToken[endToken.length - 1]) > -1 : endToken === undefined;
+        if (!strict) {
+            route += "(?:" + delimiter + "(?=" + endsWith + "))?";
+        }
+        if (!isEndDelimited) {
+            route += "(?=" + delimiter + "|" + endsWith + ")";
+        }
+    }
+    return new RegExp(route, flags(options));
+}
+__webpack_unused_export__ = tokensToRegexp;
+/**
+ * Normalize the given path string, returning a regular expression.
+ *
+ * An empty array can be passed in for the keys, which will hold the
+ * placeholder key descriptions. For example, using `/user/:id`, `keys` will
+ * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
+ */ function pathToRegexp(path, keys, options) {
+    if (path instanceof RegExp) return regexpToRegexp(path, keys);
+    if (Array.isArray(path)) return arrayToRegexp(path, keys, options);
+    return stringToRegexp(path, keys, options);
+}
+__webpack_unused_export__ = pathToRegexp; //# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
+/***/ 384:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   H4: () => (/* binding */ NEXT_RSC_UNION_QUERY),
+/* harmony export */   i4: () => (/* binding */ RSC),
+/* harmony export */   ph: () => (/* binding */ NEXT_ROUTER_STATE_TREE),
+/* harmony export */   pz: () => (/* binding */ NEXT_ROUTER_PREFETCH),
+/* harmony export */   vu: () => (/* binding */ FLIGHT_PARAMETERS)
+/* harmony export */ });
+/* unused harmony exports ACTION, NEXT_URL, RSC_CONTENT_TYPE_HEADER, RSC_VARY_HEADER */
+const RSC = "RSC";
+const ACTION = "Next-Action";
+const NEXT_ROUTER_STATE_TREE = "Next-Router-State-Tree";
+const NEXT_ROUTER_PREFETCH = "Next-Router-Prefetch";
+const NEXT_URL = "Next-Url";
+const RSC_CONTENT_TYPE_HEADER = "text/x-component";
+const RSC_VARY_HEADER = RSC + ", " + NEXT_ROUTER_STATE_TREE + ", " + NEXT_ROUTER_PREFETCH + ", " + NEXT_URL;
+const FLIGHT_PARAMETERS = [
+    [
+        RSC
+    ],
+    [
+        NEXT_ROUTER_STATE_TREE
+    ],
+    [
+        NEXT_ROUTER_PREFETCH
+    ]
+];
+const NEXT_RSC_UNION_QUERY = "_rsc"; //# sourceMappingURL=app-router-headers.js.map
+
+
+/***/ }),
+
+/***/ 5101:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  bailoutToClientRendering: () => (/* binding */ bailoutToClientRendering)
+});
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/lazy-dynamic/no-ssr-error.js
+// This has to be a shared module which is shared between client component error boundary and dynamic component
+const NEXT_DYNAMIC_NO_SSR_CODE = "NEXT_DYNAMIC_NO_SSR_CODE"; //# sourceMappingURL=no-ssr-error.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/lazy-dynamic/dynamic-no-ssr.js
+"use client";
+
+function suspense() {
+    const error = new Error(NEXT_DYNAMIC_NO_SSR_CODE);
+    error.digest = NEXT_DYNAMIC_NO_SSR_CODE;
+    throw error;
+}
+function NoSSR(param) {
+    let { children } = param;
+    if (true) {
+        suspense();
+    }
+    return children;
+} //# sourceMappingURL=dynamic-no-ssr.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/components/static-generation-async-storage.external.js
+var static_generation_async_storage_external = __webpack_require__(5391);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/bailout-to-client-rendering.js
+
+
+function bailoutToClientRendering() {
+    const staticGenerationStore = static_generation_async_storage_external/* staticGenerationAsyncStorage */.A.getStore();
+    if (staticGenerationStore == null ? void 0 : staticGenerationStore.forceStatic) {
+        return true;
+    }
+    if (staticGenerationStore == null ? void 0 : staticGenerationStore.isStaticGeneration) {
+        suspense();
+    }
+    return false;
+} //# sourceMappingURL=bailout-to-client-rendering.js.map
+
+
+/***/ }),
+
+/***/ 7791:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  cookies: () => (/* binding */ headers_cookies)
+});
+
+// UNUSED EXPORTS: draftMode, headers
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/adapters/request-cookies.js
+var request_cookies = __webpack_require__(480);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/adapters/headers.js
+var headers = __webpack_require__(6537);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/server/web/spec-extension/cookies.js
+var cookies = __webpack_require__(3072);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/components/request-async-storage.external.js
+var request_async_storage_external = __webpack_require__(1070);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/components/async-local-storage.js
+var async_local_storage = __webpack_require__(6778);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/action-async-storage.external.js
+
+const actionAsyncStorage = (0,async_local_storage/* createAsyncLocalStorage */.P)(); //# sourceMappingURL=action-async-storage.external.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/hooks-server-context.js
+const DYNAMIC_ERROR_CODE = "DYNAMIC_SERVER_USAGE";
+class DynamicServerError extends Error {
+    constructor(type){
+        super("Dynamic server usage: " + type);
+        this.digest = DYNAMIC_ERROR_CODE;
+    }
+} //# sourceMappingURL=hooks-server-context.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/components/static-generation-async-storage.external.js
+var static_generation_async_storage_external = __webpack_require__(5391);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/static-generation-bailout.js
+
+
+class StaticGenBailoutError extends Error {
+    constructor(...args){
+        super(...args);
+        this.code = "NEXT_STATIC_GEN_BAILOUT";
+    }
+}
+function formatErrorMessage(reason, opts) {
+    const { dynamic, link } = opts || {};
+    const suffix = link ? " See more info here: " + link : "";
+    return "Page" + (dynamic ? ' with `dynamic = "' + dynamic + '"`' : "") + " couldn't be rendered statically because it used `" + reason + "`." + suffix;
+}
+const static_generation_bailout_staticGenerationBailout = (reason, opts)=>{
+    const staticGenerationStore = static_generation_async_storage_external/* staticGenerationAsyncStorage */.A.getStore();
+    if (staticGenerationStore == null ? void 0 : staticGenerationStore.forceStatic) {
+        return true;
+    }
+    if (staticGenerationStore == null ? void 0 : staticGenerationStore.dynamicShouldError) {
+        var _opts_dynamic;
+        throw new StaticGenBailoutError(formatErrorMessage(reason, {
+            ...opts,
+            dynamic: (_opts_dynamic = opts == null ? void 0 : opts.dynamic) != null ? _opts_dynamic : "error"
+        }));
+    }
+    if (staticGenerationStore) {
+        staticGenerationStore.revalidate = 0;
+        if (!(opts == null ? void 0 : opts.dynamic)) {
+            // we can statically prefetch pages that opt into dynamic,
+            // but not things like headers/cookies
+            staticGenerationStore.staticPrefetchBailout = true;
+        }
+    }
+    if (staticGenerationStore == null ? void 0 : staticGenerationStore.isStaticGeneration) {
+        const err = new DynamicServerError(formatErrorMessage(reason, {
+            ...opts,
+            // this error should be caught by Next to bail out of static generation
+            // in case it's uncaught, this link provides some additional context as to why
+            link: "https://nextjs.org/docs/messages/dynamic-server-error"
+        }));
+        staticGenerationStore.dynamicUsageDescription = reason;
+        staticGenerationStore.dynamicUsageStack = err.stack;
+        throw err;
+    }
+    return false;
+}; //# sourceMappingURL=static-generation-bailout.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/draft-mode.js
+
+class draft_mode_DraftMode {
+    get isEnabled() {
+        return this._provider.isEnabled;
+    }
+    enable() {
+        if (staticGenerationBailout("draftMode().enable()")) {
+            return;
+        }
+        return this._provider.enable();
+    }
+    disable() {
+        if (staticGenerationBailout("draftMode().disable()")) {
+            return;
+        }
+        return this._provider.disable();
+    }
+    constructor(provider){
+        this._provider = provider;
+    }
+} //# sourceMappingURL=draft-mode.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/headers.js
+
+
+
+
+
+
+
+function headers_headers() {
+    if (staticGenerationBailout("headers", {
+        link: "https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic#dynamic-rendering"
+    })) {
+        return HeadersAdapter.seal(new Headers({}));
+    }
+    const requestStore = requestAsyncStorage.getStore();
+    if (!requestStore) {
+        throw new Error("Invariant: headers() expects to have requestAsyncStorage, none available.");
+    }
+    return requestStore.headers;
+}
+function headers_cookies() {
+    if (static_generation_bailout_staticGenerationBailout("cookies", {
+        link: "https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic#dynamic-rendering"
+    })) {
+        return request_cookies/* RequestCookiesAdapter */.Qb.seal(new cookies/* RequestCookies */.q(new Headers({})));
+    }
+    const requestStore = request_async_storage_external/* requestAsyncStorage */.F.getStore();
+    if (!requestStore) {
+        throw new Error("Invariant: cookies() expects to have requestAsyncStorage, none available.");
+    }
+    const asyncActionStore = actionAsyncStorage.getStore();
+    if (asyncActionStore && (asyncActionStore.isAction || asyncActionStore.isAppRoute)) {
+        // We can't conditionally return different types here based on the context.
+        // To avoid confusion, we always return the readonly type here.
+        return requestStore.mutableCookies;
+    }
+    return requestStore.cookies;
+}
+function draftMode() {
+    const requestStore = requestAsyncStorage.getStore();
+    if (!requestStore) {
+        throw new Error("Invariant: draftMode() expects to have requestAsyncStorage, none available.");
+    }
+    return new DraftMode(requestStore.draftMode);
+} //# sourceMappingURL=headers.js.map
+
+
+/***/ }),
+
+/***/ 1818:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  usePathname: () => (/* binding */ usePathname),
+  useRouter: () => (/* binding */ useRouter),
+  useSelectedLayoutSegments: () => (/* binding */ useSelectedLayoutSegments)
+});
+
+// UNUSED EXPORTS: ReadonlyURLSearchParams, RedirectType, ServerInsertedHTMLContext, notFound, permanentRedirect, redirect, useParams, useSearchParams, useSelectedLayoutSegment, useServerInsertedHTML
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(167);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/app-router-context.shared-runtime.js
+"use client";
+
+var CacheStates;
+(function(CacheStates) {
+    CacheStates["LAZY_INITIALIZED"] = "LAZYINITIALIZED";
+    CacheStates["DATA_FETCH"] = "DATAFETCH";
+    CacheStates["READY"] = "READY";
+})(CacheStates || (CacheStates = {}));
+const AppRouterContext = /*#__PURE__*/ react.createContext(null);
+const LayoutRouterContext = /*#__PURE__*/ react.createContext(null);
+const app_router_context_shared_runtime_GlobalLayoutRouterContext = /*#__PURE__*/ (/* unused pure expression or super */ null && (React.createContext(null)));
+const TemplateContext = /*#__PURE__*/ (/* unused pure expression or super */ null && (React.createContext(null)));
+if (false) {} //# sourceMappingURL=app-router-context.shared-runtime.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/hooks-client-context.shared-runtime.js
+"use client";
+
+const hooks_client_context_shared_runtime_SearchParamsContext = /*#__PURE__*/ (/* unused pure expression or super */ null && (createContext(null)));
+const PathnameContext = /*#__PURE__*/ (0,react.createContext)(null);
+const hooks_client_context_shared_runtime_PathParamsContext = /*#__PURE__*/ (/* unused pure expression or super */ null && (createContext(null)));
+if (false) {} //# sourceMappingURL=hooks-client-context.shared-runtime.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/client-hook-in-server-component-error.js
+
+function client_hook_in_server_component_error_clientHookInServerComponentError(hookName) {
+    if (false) {}
+} //# sourceMappingURL=client-hook-in-server-component-error.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/router-reducer/reducers/get-segment-value.js
+function getSegmentValue(segment) {
+    return Array.isArray(segment) ? segment[1] : segment;
+} //# sourceMappingURL=get-segment-value.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/server-inserted-html.shared-runtime.js
+"use client";
+
+// Use `React.createContext` to avoid errors from the RSC checks because
+// it can't be imported directly in Server Components:
+//
+//   import { createContext } from 'react'
+//
+// More info: https://github.com/vercel/next.js/pull/40686
+const ServerInsertedHTMLContext = /*#__PURE__*/ (/* unused pure expression or super */ null && (React.createContext(null)));
+function useServerInsertedHTML(callback) {
+    const addInsertedServerHTMLCallback = useContext(ServerInsertedHTMLContext);
+    // Should have no effects on client where there's no flush effects provider
+    if (addInsertedServerHTMLCallback) {
+        addInsertedServerHTMLCallback(callback);
+    }
+} //# sourceMappingURL=server-inserted-html.shared-runtime.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/components/request-async-storage.external.js
+var request_async_storage_external = __webpack_require__(1070);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/redirect.js
+
+const REDIRECT_ERROR_CODE = "NEXT_REDIRECT";
+var RedirectType;
+(function(RedirectType) {
+    RedirectType["push"] = "push";
+    RedirectType["replace"] = "replace";
+})(RedirectType || (RedirectType = {}));
+function getRedirectError(url, type, permanent) {
+    if (permanent === void 0) permanent = false;
+    const error = new Error(REDIRECT_ERROR_CODE);
+    error.digest = REDIRECT_ERROR_CODE + ";" + type + ";" + url + ";" + permanent;
+    const requestStore = requestAsyncStorage.getStore();
+    if (requestStore) {
+        error.mutableCookies = requestStore.mutableCookies;
+    }
+    return error;
+}
+/**
+ * When used in a streaming context, this will insert a meta tag to
+ * redirect the user to the target page. When used in a custom app route, it
+ * will serve a 307 to the caller.
+ *
+ * @param url the url to redirect to
+ */ function redirect(url, type) {
+    if (type === void 0) type = "replace";
+    throw getRedirectError(url, type, false);
+}
+/**
+ * When used in a streaming context, this will insert a meta tag to
+ * redirect the user to the target page. When used in a custom app route, it
+ * will serve a 308 to the caller.
+ *
+ * @param url the url to redirect to
+ */ function permanentRedirect(url, type) {
+    if (type === void 0) type = "replace";
+    throw getRedirectError(url, type, true);
+}
+/**
+ * Checks an error to determine if it's an error generated by the
+ * `redirect(url)` helper.
+ *
+ * @param error the error that may reference a redirect error
+ * @returns true if the error is a redirect error
+ */ function isRedirectError(error) {
+    if (typeof (error == null ? void 0 : error.digest) !== "string") return false;
+    const [errorCode, type, destination, permanent] = error.digest.split(";", 4);
+    return errorCode === REDIRECT_ERROR_CODE && (type === "replace" || type === "push") && typeof destination === "string" && (permanent === "true" || permanent === "false");
+}
+function getURLFromRedirectError(error) {
+    if (!isRedirectError(error)) return null;
+    // Slices off the beginning of the digest that contains the code and the
+    // separating ';'.
+    return error.digest.split(";", 3)[2];
+}
+function getRedirectTypeFromError(error) {
+    if (!isRedirectError(error)) {
+        throw new Error("Not a redirect error");
+    }
+    return error.digest.split(";", 3)[1];
+} //# sourceMappingURL=redirect.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/components/navigation.js
+
+
+
+
+
+const INTERNAL_URLSEARCHPARAMS_INSTANCE = Symbol("internal for urlsearchparams readonly");
+function readonlyURLSearchParamsError() {
+    return new Error("ReadonlyURLSearchParams cannot be modified");
+}
+class ReadonlyURLSearchParams {
+    [Symbol.iterator]() {
+        return this[INTERNAL_URLSEARCHPARAMS_INSTANCE][Symbol.iterator]();
+    }
+    append() {
+        throw readonlyURLSearchParamsError();
+    }
+    delete() {
+        throw readonlyURLSearchParamsError();
+    }
+    set() {
+        throw readonlyURLSearchParamsError();
+    }
+    sort() {
+        throw readonlyURLSearchParamsError();
+    }
+    constructor(urlSearchParams){
+        this[INTERNAL_URLSEARCHPARAMS_INSTANCE] = urlSearchParams;
+        this.entries = urlSearchParams.entries.bind(urlSearchParams);
+        this.forEach = urlSearchParams.forEach.bind(urlSearchParams);
+        this.get = urlSearchParams.get.bind(urlSearchParams);
+        this.getAll = urlSearchParams.getAll.bind(urlSearchParams);
+        this.has = urlSearchParams.has.bind(urlSearchParams);
+        this.keys = urlSearchParams.keys.bind(urlSearchParams);
+        this.values = urlSearchParams.values.bind(urlSearchParams);
+        this.toString = urlSearchParams.toString.bind(urlSearchParams);
+        this.size = urlSearchParams.size;
+    }
+}
+/**
+ * Get a read-only URLSearchParams object. For example searchParams.get('foo') would return 'bar' when ?foo=bar
+ * Learn more about URLSearchParams here: https://developer.mozilla.org/docs/Web/API/URLSearchParams
+ */ function useSearchParams() {
+    clientHookInServerComponentError("useSearchParams");
+    const searchParams = useContext(SearchParamsContext);
+    // In the case where this is `null`, the compat types added in
+    // `next-env.d.ts` will add a new overload that changes the return type to
+    // include `null`.
+    const readonlySearchParams = useMemo(()=>{
+        if (!searchParams) {
+            // When the router is not ready in pages, we won't have the search params
+            // available.
+            return null;
+        }
+        return new ReadonlyURLSearchParams(searchParams);
+    }, [
+        searchParams
+    ]);
+    if (true) {
+        // AsyncLocalStorage should not be included in the client bundle.
+        const { bailoutToClientRendering } = __webpack_require__(5101);
+        if (bailoutToClientRendering()) {
+            // TODO-APP: handle dynamic = 'force-static' here and on the client
+            return readonlySearchParams;
+        }
+    }
+    return readonlySearchParams;
+}
+/**
+ * Get the current pathname. For example usePathname() on /dashboard?foo=bar would return "/dashboard"
+ */ function usePathname() {
+    client_hook_in_server_component_error_clientHookInServerComponentError("usePathname");
+    // In the case where this is `null`, the compat types added in `next-env.d.ts`
+    // will add a new overload that changes the return type to include `null`.
+    return (0,react.useContext)(PathnameContext);
+}
+
+/**
+ * Get the router methods. For example router.push('/dashboard')
+ */ function useRouter() {
+    client_hook_in_server_component_error_clientHookInServerComponentError("useRouter");
+    const router = (0,react.useContext)(AppRouterContext);
+    if (router === null) {
+        throw new Error("invariant expected app router to be mounted");
+    }
+    return router;
+}
+// this function performs a depth-first search of the tree to find the selected
+// params
+function getSelectedParams(tree, params) {
+    if (params === void 0) params = {};
+    const parallelRoutes = tree[1];
+    for (const parallelRoute of Object.values(parallelRoutes)){
+        const segment = parallelRoute[0];
+        const isDynamicParameter = Array.isArray(segment);
+        const segmentValue = isDynamicParameter ? segment[1] : segment;
+        if (!segmentValue || segmentValue.startsWith("__PAGE__")) continue;
+        // Ensure catchAll and optional catchall are turned into an array
+        const isCatchAll = isDynamicParameter && (segment[2] === "c" || segment[2] === "oc");
+        if (isCatchAll) {
+            params[segment[0]] = segment[1].split("/");
+        } else if (isDynamicParameter) {
+            params[segment[0]] = segment[1];
+        }
+        params = getSelectedParams(parallelRoute, params);
+    }
+    return params;
+}
+/**
+ * Get the current parameters. For example useParams() on /dashboard/[team]
+ * where pathname is /dashboard/nextjs would return { team: 'nextjs' }
+ */ function useParams() {
+    clientHookInServerComponentError("useParams");
+    const globalLayoutRouter = useContext(GlobalLayoutRouterContext);
+    const pathParams = useContext(PathParamsContext);
+    return useMemo(()=>{
+        // When it's under app router
+        if (globalLayoutRouter == null ? void 0 : globalLayoutRouter.tree) {
+            return getSelectedParams(globalLayoutRouter.tree);
+        }
+        // When it's under client side pages router
+        return pathParams;
+    }, [
+        globalLayoutRouter == null ? void 0 : globalLayoutRouter.tree,
+        pathParams
+    ]);
+}
+// TODO-APP: handle parallel routes
+/**
+ * Get the canonical parameters from the current level to the leaf node.
+ */ function getSelectedLayoutSegmentPath(tree, parallelRouteKey, first, segmentPath) {
+    if (first === void 0) first = true;
+    if (segmentPath === void 0) segmentPath = [];
+    let node;
+    if (first) {
+        // Use the provided parallel route key on the first parallel route
+        node = tree[1][parallelRouteKey];
+    } else {
+        // After first parallel route prefer children, if there's no children pick the first parallel route.
+        const parallelRoutes = tree[1];
+        var _parallelRoutes_children;
+        node = (_parallelRoutes_children = parallelRoutes.children) != null ? _parallelRoutes_children : Object.values(parallelRoutes)[0];
+    }
+    if (!node) return segmentPath;
+    const segment = node[0];
+    const segmentValue = getSegmentValue(segment);
+    if (!segmentValue || segmentValue.startsWith("__PAGE__")) return segmentPath;
+    segmentPath.push(segmentValue);
+    return getSelectedLayoutSegmentPath(node, parallelRouteKey, false, segmentPath);
+}
+// TODO-APP: Expand description when the docs are written for it.
+/**
+ * Get the canonical segment path from the current level to the leaf node.
+ */ function useSelectedLayoutSegments(parallelRouteKey) {
+    if (parallelRouteKey === void 0) parallelRouteKey = "children";
+    client_hook_in_server_component_error_clientHookInServerComponentError("useSelectedLayoutSegments");
+    const { tree } = (0,react.useContext)(LayoutRouterContext);
+    return getSelectedLayoutSegmentPath(tree, parallelRouteKey);
+}
+// TODO-APP: Expand description when the docs are written for it.
+/**
+ * Get the segment below the current level
+ */ function useSelectedLayoutSegment(parallelRouteKey) {
+    if (parallelRouteKey === void 0) parallelRouteKey = "children";
+    clientHookInServerComponentError("useSelectedLayoutSegment");
+    const selectedLayoutSegments = useSelectedLayoutSegments(parallelRouteKey);
+    if (selectedLayoutSegments.length === 0) {
+        return null;
+    }
+    return selectedLayoutSegments[0];
+}
+
+ //# sourceMappingURL=navigation.js.map
+
+
+/***/ }),
+
+/***/ 1070:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   F: () => (/* binding */ requestAsyncStorage)
+/* harmony export */ });
+/* harmony import */ var _async_local_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6778);
+
+const requestAsyncStorage = (0,_async_local_storage__WEBPACK_IMPORTED_MODULE_0__/* .createAsyncLocalStorage */ .P)(); //# sourceMappingURL=request-async-storage.external.js.map
+
+
+/***/ }),
+
+/***/ 5391:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ staticGenerationAsyncStorage)
+/* harmony export */ });
+/* harmony import */ var _async_local_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6778);
+
+const staticGenerationAsyncStorage = (0,_async_local_storage__WEBPACK_IMPORTED_MODULE_0__/* .createAsyncLocalStorage */ .P)(); //# sourceMappingURL=static-generation-async-storage.external.js.map
+
+
+/***/ }),
+
+/***/ 7483:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   K: () => (/* binding */ requestIdleCallback)
+/* harmony export */ });
+/* unused harmony export cancelIdleCallback */
+const requestIdleCallback = typeof self !== "undefined" && self.requestIdleCallback && self.requestIdleCallback.bind(window) || function(cb) {
+    let start = Date.now();
+    return self.setTimeout(function() {
+        cb({
+            didTimeout: false,
+            timeRemaining: function() {
+                return Math.max(0, 50 - (Date.now() - start));
+            }
+        });
+    }, 1);
+};
+const cancelIdleCallback = typeof self !== "undefined" && self.cancelIdleCallback && self.cancelIdleCallback.bind(window) || function(id) {
+    return clearTimeout(id);
+}; //# sourceMappingURL=request-idle-callback.js.map
+
+
+/***/ }),
+
+/***/ 122:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  useRouter: () => (/* binding */ router_useRouter)
+});
+
+// UNUSED EXPORTS: Router, createRouter, default, makePublicRouterInstance, withRouter
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(167);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/remove-trailing-slash.js
+var remove_trailing_slash = __webpack_require__(6894);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/request-idle-callback.js
+var request_idle_callback = __webpack_require__(7483);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/route-loader.js
+
+
+
+
+// 3.8s was arbitrarily chosen as it's what https://web.dev/interactive
+// considers as "Good" time-to-interactive. We must assume something went
+// wrong beyond this point, and then fall-back to a full page transition to
+// show the user something of value.
+const MS_MAX_IDLE_DELAY = 3800;
+function withFuture(key, map, generator) {
+    let entry = map.get(key);
+    if (entry) {
+        if ("future" in entry) {
+            return entry.future;
+        }
+        return Promise.resolve(entry);
+    }
+    let resolver;
+    const prom = new Promise((resolve)=>{
+        resolver = resolve;
+    });
+    map.set(key, entry = {
+        resolve: resolver,
+        future: prom
+    });
+    return generator ? generator() // eslint-disable-next-line no-sequences
+    .then((value)=>(resolver(value), value)).catch((err)=>{
+        map.delete(key);
+        throw err;
+    }) : prom;
+}
+const ASSET_LOAD_ERROR = Symbol("ASSET_LOAD_ERROR");
+// TODO: unexport
+function markAssetError(err) {
+    return Object.defineProperty(err, ASSET_LOAD_ERROR, {});
+}
+function isAssetError(err) {
+    return err && ASSET_LOAD_ERROR in err;
+}
+function hasPrefetch(link) {
+    try {
+        link = document.createElement("link");
+        return(// with relList.support
+        !!window.MSInputMethodContext && !!document.documentMode || link.relList.supports("prefetch"));
+    } catch (e) {
+        return false;
+    }
+}
+const canPrefetch = hasPrefetch();
+const getAssetQueryString = ()=>{
+    return getDeploymentIdQueryOrEmptyString();
+};
+function prefetchViaDom(href, as, link) {
+    return new Promise((resolve, reject)=>{
+        const selector = '\n      link[rel="prefetch"][href^="' + href + '"],\n      link[rel="preload"][href^="' + href + '"],\n      script[src^="' + href + '"]';
+        if (document.querySelector(selector)) {
+            return resolve();
+        }
+        link = document.createElement("link");
+        // The order of property assignment here is intentional:
+        if (as) link.as = as;
+        link.rel = "prefetch";
+        link.crossOrigin = undefined;
+        link.onload = resolve;
+        link.onerror = ()=>reject(markAssetError(new Error("Failed to prefetch: " + href)));
+        // `href` should always be last:
+        link.href = href;
+        document.head.appendChild(link);
+    });
+}
+function appendScript(src, script) {
+    return new Promise((resolve, reject)=>{
+        script = document.createElement("script");
+        // The order of property assignment here is intentional.
+        // 1. Setup success/failure hooks in case the browser synchronously
+        //    executes when `src` is set.
+        script.onload = resolve;
+        script.onerror = ()=>reject(markAssetError(new Error("Failed to load script: " + src)));
+        // 2. Configure the cross-origin attribute before setting `src` in case the
+        //    browser begins to fetch.
+        script.crossOrigin = undefined;
+        // 3. Finally, set the source and inject into the DOM in case the child
+        //    must be appended for fetching to start.
+        script.src = src;
+        document.body.appendChild(script);
+    });
+}
+// We wait for pages to be built in dev before we start the route transition
+// timeout to prevent an un-necessary hard navigation in development.
+let devBuildPromise;
+// Resolve a promise that times out after given amount of milliseconds.
+function resolvePromiseWithTimeout(p, ms, err) {
+    return new Promise((resolve, reject)=>{
+        let cancelled = false;
+        p.then((r)=>{
+            // Resolved, cancel the timeout
+            cancelled = true;
+            resolve(r);
+        }).catch(reject);
+        // We wrap these checks separately for better dead-code elimination in
+        // production bundles.
+        if (false) {}
+        if (true) {
+            (0,request_idle_callback/* requestIdleCallback */.K)(()=>setTimeout(()=>{
+                    if (!cancelled) {
+                        reject(err);
+                    }
+                }, ms));
+        }
+    });
+}
+// TODO: stop exporting or cache the failure
+// It'd be best to stop exporting this. It's an implementation detail. We're
+// only exporting it for backwards compatibility with the `page-loader`.
+// Only cache this response as a last resort if we cannot eliminate all other
+// code branches that use the Build Manifest Callback and push them through
+// the Route Loader interface.
+function getClientBuildManifest() {
+    if (self.__BUILD_MANIFEST) {
+        return Promise.resolve(self.__BUILD_MANIFEST);
+    }
+    const onBuildManifest = new Promise((resolve)=>{
+        // Mandatory because this is not concurrent safe:
+        const cb = self.__BUILD_MANIFEST_CB;
+        self.__BUILD_MANIFEST_CB = ()=>{
+            resolve(self.__BUILD_MANIFEST);
+            cb && cb();
+        };
+    });
+    return resolvePromiseWithTimeout(onBuildManifest, MS_MAX_IDLE_DELAY, markAssetError(new Error("Failed to load client build manifest")));
+}
+function getFilesForRoute(assetPrefix, route) {
+    if (false) {}
+    return getClientBuildManifest().then((manifest)=>{
+        if (!(route in manifest)) {
+            throw markAssetError(new Error("Failed to lookup route: " + route));
+        }
+        const allFiles = manifest[route].map((entry)=>assetPrefix + "/_next/" + encodeURI(entry));
+        return {
+            scripts: allFiles.filter((v)=>v.endsWith(".js")).map((v)=>__unsafeCreateTrustedScriptURL(v) + getAssetQueryString()),
+            css: allFiles.filter((v)=>v.endsWith(".css")).map((v)=>v + getAssetQueryString())
+        };
+    });
+}
+function createRouteLoader(assetPrefix) {
+    const entrypoints = new Map();
+    const loadedScripts = new Map();
+    const styleSheets = new Map();
+    const routes = new Map();
+    function maybeExecuteScript(src) {
+        // With HMR we might need to "reload" scripts when they are
+        // disposed and readded. Executing scripts twice has no functional
+        // differences
+        if (true) {
+            let prom = loadedScripts.get(src.toString());
+            if (prom) {
+                return prom;
+            }
+            // Skip executing script if it's already in the DOM:
+            if (document.querySelector('script[src^="' + src + '"]')) {
+                return Promise.resolve();
+            }
+            loadedScripts.set(src.toString(), prom = appendScript(src));
+            return prom;
+        } else {}
+    }
+    function fetchStyleSheet(href) {
+        let prom = styleSheets.get(href);
+        if (prom) {
+            return prom;
+        }
+        styleSheets.set(href, prom = fetch(href).then((res)=>{
+            if (!res.ok) {
+                throw new Error("Failed to load stylesheet: " + href);
+            }
+            return res.text().then((text)=>({
+                    href: href,
+                    content: text
+                }));
+        }).catch((err)=>{
+            throw markAssetError(err);
+        }));
+        return prom;
+    }
+    return {
+        whenEntrypoint (route) {
+            return withFuture(route, entrypoints);
+        },
+        onEntrypoint (route, execute) {
+            (execute ? Promise.resolve().then(()=>execute()).then((exports)=>({
+                    component: exports && exports.default || exports,
+                    exports: exports
+                }), (err)=>({
+                    error: err
+                })) : Promise.resolve(undefined)).then((input)=>{
+                const old = entrypoints.get(route);
+                if (old && "resolve" in old) {
+                    if (input) {
+                        entrypoints.set(route, input);
+                        old.resolve(input);
+                    }
+                } else {
+                    if (input) {
+                        entrypoints.set(route, input);
+                    } else {
+                        entrypoints.delete(route);
+                    }
+                    // when this entrypoint has been resolved before
+                    // the route is outdated and we want to invalidate
+                    // this cache entry
+                    routes.delete(route);
+                }
+            });
+        },
+        loadRoute (route, prefetch) {
+            return withFuture(route, routes, ()=>{
+                let devBuildPromiseResolve;
+                if (false) {}
+                return resolvePromiseWithTimeout(getFilesForRoute(assetPrefix, route).then((param)=>{
+                    let { scripts, css } = param;
+                    return Promise.all([
+                        entrypoints.has(route) ? [] : Promise.all(scripts.map(maybeExecuteScript)),
+                        Promise.all(css.map(fetchStyleSheet))
+                    ]);
+                }).then((res)=>{
+                    return this.whenEntrypoint(route).then((entrypoint)=>({
+                            entrypoint,
+                            styles: res[1]
+                        }));
+                }), MS_MAX_IDLE_DELAY, markAssetError(new Error("Route did not complete loading: " + route))).then((param)=>{
+                    let { entrypoint, styles } = param;
+                    const res = Object.assign({
+                        styles: styles
+                    }, entrypoint);
+                    return "error" in entrypoint ? entrypoint : res;
+                }).catch((err)=>{
+                    if (prefetch) {
+                        // we don't want to cache errors during prefetch
+                        throw err;
+                    }
+                    return {
+                        error: err
+                    };
+                }).finally(()=>devBuildPromiseResolve == null ? void 0 : devBuildPromiseResolve());
+            });
+        },
+        prefetch (route) {
+            // https://github.com/GoogleChromeLabs/quicklink/blob/453a661fa1fa940e2d2e044452398e38c67a98fb/src/index.mjs#L115-L118
+            // License: Apache 2.0
+            let cn;
+            if (cn = navigator.connection) {
+                // Don't prefetch if using 2G or if Save-Data is enabled.
+                if (cn.saveData || /2g/.test(cn.effectiveType)) return Promise.resolve();
+            }
+            return getFilesForRoute(assetPrefix, route).then((output)=>Promise.all(canPrefetch ? output.scripts.map((script)=>prefetchViaDom(script.toString(), "script")) : [])).then(()=>{
+                requestIdleCallback(()=>this.loadRoute(route, true).catch(()=>{}));
+            }).catch(()=>{});
+        }
+    };
+} //# sourceMappingURL=route-loader.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/script.js + 2 modules
+var client_script = __webpack_require__(8819);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/is-plain-object.js
+function getObjectClassLabel(value) {
+    return Object.prototype.toString.call(value);
+}
+function isPlainObject(value) {
+    if (getObjectClassLabel(value) !== "[object Object]") {
+        return false;
+    }
+    const prototype = Object.getPrototypeOf(value);
+    /**
+   * this used to be previously:
+   *
+   * `return prototype === null || prototype === Object.prototype`
+   *
+   * but Edge Runtime expose Object from vm, being that kind of type-checking wrongly fail.
+   *
+   * It was changed to the current implementation since it's resilient to serialization.
+   */ return prototype === null || prototype.hasOwnProperty("isPrototypeOf");
+} //# sourceMappingURL=is-plain-object.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/lib/is-error.js
+
+function isError(err) {
+    return typeof err === "object" && err !== null && "name" in err && "message" in err;
+}
+function getProperError(err) {
+    if (isError(err)) {
+        return err;
+    }
+    if (false) {}
+    return new Error(isPlainObject(err) ? JSON.stringify(err) : err + "");
+} //# sourceMappingURL=is-error.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/is-dynamic.js
+// Identify /[param]/ in route string
+const TEST_ROUTE = /\/\[[^/]+?\](?=\/|$)/;
+function isDynamicRoute(route) {
+    return TEST_ROUTE.test(route);
+} //# sourceMappingURL=is-dynamic.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/page-path/normalize-path-sep.js
+/**
+ * For a given page path, this function ensures that there is no backslash
+ * escaping slashes in the path. Example:
+ *  - `foo\/bar\/baz` -> `foo/bar/baz`
+ */ function normalizePathSep(path) {
+    return path.replace(/\\/g, "/");
+} //# sourceMappingURL=normalize-path-sep.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/page-path/denormalize-page-path.js
+
+
+/**
+ * Performs the opposite transformation of `normalizePagePath`. Note that
+ * this function is not idempotent either in cases where there are multiple
+ * leading `/index` for the page. Examples:
+ *  - `/index` -> `/`
+ *  - `/index/foo` -> `/foo`
+ *  - `/index/index` -> `/index`
+ */ function denormalizePagePath(page) {
+    let _page = normalizePathSep(page);
+    return _page.startsWith("/index/") && !isDynamicRoute(_page) ? _page.slice(6) : _page !== "/index" ? _page : "/";
+} //# sourceMappingURL=denormalize-page-path.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/i18n/normalize-locale-path.js
+var normalize_locale_path = __webpack_require__(5646);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/mitt.js
+/*
+MIT License
+
+Copyright (c) Jason Miller (https://jasonformat.com/)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/ // This file is based on https://github.com/developit/mitt/blob/v1.1.3/src/index.js
+// It's been edited for the needs of this script
+// See the LICENSE at the top of the file
+function mitt() {
+    const all = Object.create(null);
+    return {
+        on (type, handler) {
+            (all[type] || (all[type] = [])).push(handler);
+        },
+        off (type, handler) {
+            if (all[type]) {
+                all[type].splice(all[type].indexOf(handler) >>> 0, 1);
+            }
+        },
+        emit (type) {
+            for(var _len = arguments.length, evts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++){
+                evts[_key - 1] = arguments[_key];
+            }
+            (all[type] || []).slice().map((handler)=>{
+                handler(...evts);
+            });
+        }
+    };
+} //# sourceMappingURL=mitt.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/utils.js
+/**
+ * Web vitals provided to _app.reportWebVitals by Core Web Vitals plugin developed by Google Chrome team.
+ * https://nextjs.org/blog/next-9-4#integrated-web-vitals-reporting
+ */ const WEB_VITALS = (/* unused pure expression or super */ null && ([
+    "CLS",
+    "FCP",
+    "FID",
+    "INP",
+    "LCP",
+    "TTFB"
+]));
+/**
+ * Utils
+ */ function execOnce(fn) {
+    let used = false;
+    let result;
+    return function() {
+        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+            args[_key] = arguments[_key];
+        }
+        if (!used) {
+            used = true;
+            result = fn(...args);
+        }
+        return result;
+    };
+}
+// Scheme: https://tools.ietf.org/html/rfc3986#section-3.1
+// Absolute URL: https://tools.ietf.org/html/rfc3986#section-4.3
+const ABSOLUTE_URL_REGEX = /^[a-zA-Z][a-zA-Z\d+\-.]*?:/;
+const isAbsoluteUrl = (url)=>ABSOLUTE_URL_REGEX.test(url);
+function getLocationOrigin() {
+    const { protocol, hostname, port } = window.location;
+    return protocol + "//" + hostname + (port ? ":" + port : "");
+}
+function getURL() {
+    const { href } = window.location;
+    const origin = getLocationOrigin();
+    return href.substring(origin.length);
+}
+function getDisplayName(Component) {
+    return typeof Component === "string" ? Component : Component.displayName || Component.name || "Unknown";
+}
+function isResSent(res) {
+    return res.finished || res.headersSent;
+}
+function normalizeRepeatedSlashes(url) {
+    const urlParts = url.split("?");
+    const urlNoQuery = urlParts[0];
+    return urlNoQuery // first we replace any non-encoded backslashes with forward
+    // then normalize repeated forward slashes
+    .replace(/\\/g, "/").replace(/\/\/+/g, "/") + (urlParts[1] ? "?" + urlParts.slice(1).join("?") : "");
+}
+async function loadGetInitialProps(App, ctx) {
+    if (false) { var _App_prototype; }
+    // when called from _app `ctx` is nested in `ctx`
+    const res = ctx.res || ctx.ctx && ctx.ctx.res;
+    if (!App.getInitialProps) {
+        if (ctx.ctx && ctx.Component) {
+            // @ts-ignore pageProps default
+            return {
+                pageProps: await loadGetInitialProps(ctx.Component, ctx.ctx)
+            };
+        }
+        return {};
+    }
+    const props = await App.getInitialProps(ctx);
+    if (res && isResSent(res)) {
+        return props;
+    }
+    if (!props) {
+        const message = '"' + getDisplayName(App) + '.getInitialProps()" should resolve to an object. But found "' + props + '" instead.';
+        throw new Error(message);
+    }
+    if (false) {}
+    return props;
+}
+const SP = typeof performance !== "undefined";
+const ST = SP && [
+    "mark",
+    "measure",
+    "getEntriesByName"
+].every((method)=>typeof performance[method] === "function");
+class DecodeError extends Error {
+}
+class NormalizeError extends (/* unused pure expression or super */ null && (Error)) {
+}
+class PageNotFoundError extends (/* unused pure expression or super */ null && (Error)) {
+    constructor(page){
+        super();
+        this.code = "ENOENT";
+        this.name = "PageNotFoundError";
+        this.message = "Cannot find module for page: " + page;
+    }
+}
+class MissingStaticPage extends (/* unused pure expression or super */ null && (Error)) {
+    constructor(page, message){
+        super();
+        this.message = "Failed to load static file for page: " + page + " " + message;
+    }
+}
+class MiddlewareNotFoundError extends (/* unused pure expression or super */ null && (Error)) {
+    constructor(){
+        super();
+        this.code = "ENOENT";
+        this.message = "Cannot find the middleware module";
+    }
+}
+function stringifyError(error) {
+    return JSON.stringify({
+        message: error.message,
+        stack: error.stack
+    });
+} //# sourceMappingURL=utils.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/querystring.js
+function querystring_searchParamsToUrlQuery(searchParams) {
+    const query = {};
+    searchParams.forEach((value, key)=>{
+        if (typeof query[key] === "undefined") {
+            query[key] = value;
+        } else if (Array.isArray(query[key])) {
+            query[key].push(value);
+        } else {
+            query[key] = [
+                query[key],
+                value
+            ];
+        }
+    });
+    return query;
+}
+function stringifyUrlQueryParam(param) {
+    if (typeof param === "string" || typeof param === "number" && !isNaN(param) || typeof param === "boolean") {
+        return String(param);
+    } else {
+        return "";
+    }
+}
+function urlQueryToSearchParams(urlQuery) {
+    const result = new URLSearchParams();
+    Object.entries(urlQuery).forEach((param)=>{
+        let [key, value] = param;
+        if (Array.isArray(value)) {
+            value.forEach((item)=>result.append(key, stringifyUrlQueryParam(item)));
+        } else {
+            result.set(key, stringifyUrlQueryParam(value));
+        }
+    });
+    return result;
+}
+function querystring_assign(target) {
+    for(var _len = arguments.length, searchParamsList = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++){
+        searchParamsList[_key - 1] = arguments[_key];
+    }
+    searchParamsList.forEach((searchParams)=>{
+        Array.from(searchParams.keys()).forEach((key)=>target.delete(key));
+        searchParams.forEach((value, key)=>target.append(key, value));
+    });
+    return target;
+} //# sourceMappingURL=querystring.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/parse-relative-url.js
+
+
+/**
+ * Parses path-relative urls (e.g. `/hello/world?foo=bar`). If url isn't path-relative
+ * (e.g. `./hello`) then at least base must be.
+ * Absolute urls are rejected with one exception, in the browser, absolute urls that are on
+ * the current origin will be parsed as relative
+ */ function parse_relative_url_parseRelativeUrl(url, base) {
+    const globalBase = new URL( true ? "http://n" : 0);
+    const resolvedBase = base ? new URL(base, globalBase) : url.startsWith(".") ? new URL( true ? "http://n" : 0) : globalBase;
+    const { pathname, searchParams, search, hash, href, origin } = new URL(url, resolvedBase);
+    if (origin !== globalBase.origin) {
+        throw new Error("invariant: invalid relative URL, router received " + url);
+    }
+    return {
+        pathname,
+        query: querystring_searchParamsToUrlQuery(searchParams),
+        search,
+        hash,
+        href: href.slice(globalBase.origin.length)
+    };
+} //# sourceMappingURL=parse-relative-url.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/compiled/path-to-regexp/index.js
+var path_to_regexp = __webpack_require__(7357);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/path-match.js
+
+
+/**
+ * Generates a path matcher function for a given path and options based on
+ * path-to-regexp. By default the match will be case insensitive, non strict
+ * and delimited by `/`.
+ */ function path_match_getPathMatch(path, options) {
+    const keys = [];
+    const regexp = pathToRegexp(path, keys, {
+        delimiter: "/",
+        sensitive: typeof (options == null ? void 0 : options.sensitive) === "boolean" ? options.sensitive : false,
+        strict: options == null ? void 0 : options.strict
+    });
+    const matcher = regexpToFunction((options == null ? void 0 : options.regexModifier) ? new RegExp(options.regexModifier(regexp.source), regexp.flags) : regexp, keys);
+    /**
+   * A matcher function that will check if a given pathname matches the path
+   * given in the builder function. When the path does not match it will return
+   * `false` but if it does it will return an object with the matched params
+   * merged with the params provided in the second argument.
+   */ return (pathname, params)=>{
+        // If no pathname is provided it's not a match.
+        if (typeof pathname !== "string") return false;
+        const match = matcher(pathname);
+        // If the path did not match `false` will be returned.
+        if (!match) return false;
+        /**
+     * If unnamed params are not allowed they must be removed from
+     * the matched parameters. path-to-regexp uses "string" for named and
+     * "number" for unnamed parameters.
+     */ if (options == null ? void 0 : options.removeUnnamedParams) {
+            for (const key of keys){
+                if (typeof key.name === "number") {
+                    delete match.params[key.name];
+                }
+            }
+        }
+        return {
+            ...params,
+            ...match.params
+        };
+    };
+} //# sourceMappingURL=path-match.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/parse-url.js
+
+
+function parse_url_parseUrl(url) {
+    if (url.startsWith("/")) {
+        return parseRelativeUrl(url);
+    }
+    const parsedURL = new URL(url);
+    return {
+        hash: parsedURL.hash,
+        hostname: parsedURL.hostname,
+        href: parsedURL.href,
+        pathname: parsedURL.pathname,
+        port: parsedURL.port,
+        protocol: parsedURL.protocol,
+        query: searchParamsToUrlQuery(parsedURL.searchParams),
+        search: parsedURL.search
+    };
+} //# sourceMappingURL=parse-url.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/components/app-router-headers.js
+var app_router_headers = __webpack_require__(384);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/api-utils/get-cookie-parser.js
+/**
+ * Parse cookies from the `headers` of request
+ * @param req request object
+ */ function get_cookie_parser_getCookieParser(headers) {
+    return function parseCookie() {
+        const { cookie } = headers;
+        if (!cookie) {
+            return {};
+        }
+        const { parse: parseCookieFn } = __webpack_require__(7842);
+        return parseCookieFn(Array.isArray(cookie) ? cookie.join("; ") : cookie);
+    };
+} //# sourceMappingURL=get-cookie-parser.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/prepare-destination.js
+
+
+
+
+
+
+/**
+ * Ensure only a-zA-Z are used for param names for proper interpolating
+ * with path-to-regexp
+ */ function getSafeParamName(paramName) {
+    let newParamName = "";
+    for(let i = 0; i < paramName.length; i++){
+        const charCode = paramName.charCodeAt(i);
+        if (charCode > 64 && charCode < 91 || // A-Z
+        charCode > 96 && charCode < 123 // a-z
+        ) {
+            newParamName += paramName[i];
+        }
+    }
+    return newParamName;
+}
+function escapeSegment(str, segmentName) {
+    return str.replace(new RegExp(":" + escapeStringRegexp(segmentName), "g"), "__ESC_COLON_" + segmentName);
+}
+function unescapeSegments(str) {
+    return str.replace(/__ESC_COLON_/gi, ":");
+}
+function prepare_destination_matchHas(req, query, has, missing) {
+    if (has === void 0) has = [];
+    if (missing === void 0) missing = [];
+    const params = {};
+    const hasMatch = (hasItem)=>{
+        let value;
+        let key = hasItem.key;
+        switch(hasItem.type){
+            case "header":
+                {
+                    key = key.toLowerCase();
+                    value = req.headers[key];
+                    break;
+                }
+            case "cookie":
+                {
+                    if ("cookies" in req) {
+                        value = req.cookies[hasItem.key];
+                    } else {
+                        const cookies = getCookieParser(req.headers)();
+                        value = cookies[hasItem.key];
+                    }
+                    break;
+                }
+            case "query":
+                {
+                    value = query[key];
+                    break;
+                }
+            case "host":
+                {
+                    const { host } = (req == null ? void 0 : req.headers) || {};
+                    // remove port from host if present
+                    const hostname = host == null ? void 0 : host.split(":")[0].toLowerCase();
+                    value = hostname;
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+        if (!hasItem.value && value) {
+            params[getSafeParamName(key)] = value;
+            return true;
+        } else if (value) {
+            const matcher = new RegExp("^" + hasItem.value + "$");
+            const matches = Array.isArray(value) ? value.slice(-1)[0].match(matcher) : value.match(matcher);
+            if (matches) {
+                if (Array.isArray(matches)) {
+                    if (matches.groups) {
+                        Object.keys(matches.groups).forEach((groupKey)=>{
+                            params[groupKey] = matches.groups[groupKey];
+                        });
+                    } else if (hasItem.type === "host" && matches[0]) {
+                        params.host = matches[0];
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    };
+    const allMatch = has.every((item)=>hasMatch(item)) && !missing.some((item)=>hasMatch(item));
+    if (allMatch) {
+        return params;
+    }
+    return false;
+}
+function compileNonPath(value, params) {
+    if (!value.includes(":")) {
+        return value;
+    }
+    for (const key of Object.keys(params)){
+        if (value.includes(":" + key)) {
+            value = value.replace(new RegExp(":" + key + "\\*", "g"), ":" + key + "--ESCAPED_PARAM_ASTERISKS").replace(new RegExp(":" + key + "\\?", "g"), ":" + key + "--ESCAPED_PARAM_QUESTION").replace(new RegExp(":" + key + "\\+", "g"), ":" + key + "--ESCAPED_PARAM_PLUS").replace(new RegExp(":" + key + "(?!\\w)", "g"), "--ESCAPED_PARAM_COLON" + key);
+        }
+    }
+    value = value.replace(/(:|\*|\?|\+|\(|\)|\{|\})/g, "\\$1").replace(/--ESCAPED_PARAM_PLUS/g, "+").replace(/--ESCAPED_PARAM_COLON/g, ":").replace(/--ESCAPED_PARAM_QUESTION/g, "?").replace(/--ESCAPED_PARAM_ASTERISKS/g, "*");
+    // the value needs to start with a forward-slash to be compiled
+    // correctly
+    return compile("/" + value, {
+        validate: false
+    })(params).slice(1);
+}
+function prepare_destination_prepareDestination(args) {
+    const query = Object.assign({}, args.query);
+    delete query.__nextLocale;
+    delete query.__nextDefaultLocale;
+    delete query.__nextDataReq;
+    delete query.__nextInferredLocaleFromDefault;
+    delete query[NEXT_RSC_UNION_QUERY];
+    let escapedDestination = args.destination;
+    for (const param of Object.keys({
+        ...args.params,
+        ...query
+    })){
+        escapedDestination = escapeSegment(escapedDestination, param);
+    }
+    const parsedDestination = parseUrl(escapedDestination);
+    const destQuery = parsedDestination.query;
+    const destPath = unescapeSegments("" + parsedDestination.pathname + (parsedDestination.hash || ""));
+    const destHostname = unescapeSegments(parsedDestination.hostname || "");
+    const destPathParamKeys = [];
+    const destHostnameParamKeys = [];
+    pathToRegexp(destPath, destPathParamKeys);
+    pathToRegexp(destHostname, destHostnameParamKeys);
+    const destParams = [];
+    destPathParamKeys.forEach((key)=>destParams.push(key.name));
+    destHostnameParamKeys.forEach((key)=>destParams.push(key.name));
+    const destPathCompiler = compile(destPath, // have already validated before we got to this point and validating
+    // breaks compiling destinations with named pattern params from the source
+    // e.g. /something:hello(.*) -> /another/:hello is broken with validation
+    // since compile validation is meant for reversing and not for inserting
+    // params from a separate path-regex into another
+    {
+        validate: false
+    });
+    const destHostnameCompiler = compile(destHostname, {
+        validate: false
+    });
+    // update any params in query values
+    for (const [key, strOrArray] of Object.entries(destQuery)){
+        // the value needs to start with a forward-slash to be compiled
+        // correctly
+        if (Array.isArray(strOrArray)) {
+            destQuery[key] = strOrArray.map((value)=>compileNonPath(unescapeSegments(value), args.params));
+        } else if (typeof strOrArray === "string") {
+            destQuery[key] = compileNonPath(unescapeSegments(strOrArray), args.params);
+        }
+    }
+    // add path params to query if it's not a redirect and not
+    // already defined in destination query or path
+    let paramKeys = Object.keys(args.params).filter((name)=>name !== "nextInternalLocale");
+    if (args.appendParamsToQuery && !paramKeys.some((key)=>destParams.includes(key))) {
+        for (const key of paramKeys){
+            if (!(key in destQuery)) {
+                destQuery[key] = args.params[key];
+            }
+        }
+    }
+    let newUrl;
+    // The compiler also that the interception route marker is an unnamed param, hence '0',
+    // so we need to add it to the params object.
+    if (isInterceptionRouteAppPath(destPath)) {
+        for (const segment of destPath.split("/")){
+            const marker = INTERCEPTION_ROUTE_MARKERS.find((m)=>segment.startsWith(m));
+            if (marker) {
+                args.params["0"] = marker;
+                break;
+            }
+        }
+    }
+    try {
+        newUrl = destPathCompiler(args.params);
+        const [pathname, hash] = newUrl.split("#");
+        parsedDestination.hostname = destHostnameCompiler(args.params);
+        parsedDestination.pathname = pathname;
+        parsedDestination.hash = "" + (hash ? "#" : "") + (hash || "");
+        delete parsedDestination.search;
+    } catch (err) {
+        if (err.message.match(/Expected .*? to not repeat, but got an array/)) {
+            throw new Error("To use a multi-match in the destination you must add `*` at the end of the param name to signify it should repeat. https://nextjs.org/docs/messages/invalid-multi-match");
+        }
+        throw err;
+    }
+    // Query merge order lowest priority to highest
+    // 1. initial URL query values
+    // 2. path segment values
+    // 3. destination specified query values
+    parsedDestination.query = {
+        ...query,
+        ...parsedDestination.query
+    };
+    return {
+        newUrl,
+        destQuery,
+        parsedDestination
+    };
+} //# sourceMappingURL=prepare-destination.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/resolve-rewrites.js
+
+
+
+
+
+
+function resolveRewrites(asPath, pages, rewrites, query, resolveHref, locales) {
+    let matchedPage = false;
+    let externalDest = false;
+    let parsedAs = parseRelativeUrl(asPath);
+    let fsPathname = removeTrailingSlash(normalizeLocalePath(removeBasePath(parsedAs.pathname), locales).pathname);
+    let resolvedHref;
+    const handleRewrite = (rewrite)=>{
+        const matcher = getPathMatch(rewrite.source + ( false ? 0 : ""), {
+            removeUnnamedParams: true,
+            strict: true
+        });
+        let params = matcher(parsedAs.pathname);
+        if ((rewrite.has || rewrite.missing) && params) {
+            const hasParams = matchHas({
+                headers: {
+                    host: document.location.hostname,
+                    "user-agent": navigator.userAgent
+                },
+                cookies: document.cookie.split("; ").reduce((acc, item)=>{
+                    const [key, ...value] = item.split("=");
+                    acc[key] = value.join("=");
+                    return acc;
+                }, {})
+            }, parsedAs.query, rewrite.has, rewrite.missing);
+            if (hasParams) {
+                Object.assign(params, hasParams);
+            } else {
+                params = false;
+            }
+        }
+        if (params) {
+            if (!rewrite.destination) {
+                // this is a proxied rewrite which isn't handled on the client
+                externalDest = true;
+                return true;
+            }
+            const destRes = prepareDestination({
+                appendParamsToQuery: true,
+                destination: rewrite.destination,
+                params: params,
+                query: query
+            });
+            parsedAs = destRes.parsedDestination;
+            asPath = destRes.newUrl;
+            Object.assign(query, destRes.parsedDestination.query);
+            fsPathname = removeTrailingSlash(normalizeLocalePath(removeBasePath(asPath), locales).pathname);
+            if (pages.includes(fsPathname)) {
+                // check if we now match a page as this means we are done
+                // resolving the rewrites
+                matchedPage = true;
+                resolvedHref = fsPathname;
+                return true;
+            }
+            // check if we match a dynamic-route, if so we break the rewrites chain
+            resolvedHref = resolveHref(fsPathname);
+            if (resolvedHref !== asPath && pages.includes(resolvedHref)) {
+                matchedPage = true;
+                return true;
+            }
+        }
+    };
+    let finished = false;
+    for(let i = 0; i < rewrites.beforeFiles.length; i++){
+        // we don't end after match in beforeFiles to allow
+        // continuing through all beforeFiles rewrites
+        handleRewrite(rewrites.beforeFiles[i]);
+    }
+    matchedPage = pages.includes(fsPathname);
+    if (!matchedPage) {
+        if (!finished) {
+            for(let i = 0; i < rewrites.afterFiles.length; i++){
+                if (handleRewrite(rewrites.afterFiles[i])) {
+                    finished = true;
+                    break;
+                }
+            }
+        }
+        // check dynamic route before processing fallback rewrites
+        if (!finished) {
+            resolvedHref = resolveHref(fsPathname);
+            matchedPage = pages.includes(resolvedHref);
+            finished = matchedPage;
+        }
+        if (!finished) {
+            for(let i = 0; i < rewrites.fallback.length; i++){
+                if (handleRewrite(rewrites.fallback[i])) {
+                    finished = true;
+                    break;
+                }
+            }
+        }
+    }
+    return {
+        asPath,
+        parsedAs,
+        matchedPage,
+        resolvedHref,
+        externalDest
+    };
+} //# sourceMappingURL=resolve-rewrites.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/route-matcher.js
+
+function getRouteMatcher(param) {
+    let { re, groups } = param;
+    return (pathname)=>{
+        const routeMatch = re.exec(pathname);
+        if (!routeMatch) {
+            return false;
+        }
+        const decode = (param)=>{
+            try {
+                return decodeURIComponent(param);
+            } catch (_) {
+                throw new DecodeError("failed to decode param");
+            }
+        };
+        const params = {};
+        Object.keys(groups).forEach((slugName)=>{
+            const g = groups[slugName];
+            const m = routeMatch[g.pos];
+            if (m !== undefined) {
+                params[slugName] = ~m.indexOf("/") ? m.split("/").map((entry)=>decode(entry)) : g.repeat ? [
+                    decode(m)
+                ] : decode(m);
+            }
+        });
+        return params;
+    };
+} //# sourceMappingURL=route-matcher.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/future/helpers/interception-routes.js
+
+// order matters here, the first match will be used
+const interception_routes_INTERCEPTION_ROUTE_MARKERS = [
+    "(..)(..)",
+    "(.)",
+    "(..)",
+    "(...)"
+];
+function interception_routes_isInterceptionRouteAppPath(path) {
+    // TODO-APP: add more serious validation
+    return path.split("/").find((segment)=>interception_routes_INTERCEPTION_ROUTE_MARKERS.find((m)=>segment.startsWith(m))) !== undefined;
+}
+function extractInterceptionRouteInformation(path) {
+    let interceptingRoute, marker, interceptedRoute;
+    for (const segment of path.split("/")){
+        marker = interception_routes_INTERCEPTION_ROUTE_MARKERS.find((m)=>segment.startsWith(m));
+        if (marker) {
+            [interceptingRoute, interceptedRoute] = path.split(marker, 2);
+            break;
+        }
+    }
+    if (!interceptingRoute || !marker || !interceptedRoute) {
+        throw new Error(`Invalid interception route: ${path}. Must be in the format /<intercepting route>/(..|...|..)(..)/<intercepted route>`);
+    }
+    interceptingRoute = normalizeAppPath(interceptingRoute) // normalize the path, e.g. /(blog)/feed -> /feed
+    ;
+    switch(marker){
+        case "(.)":
+            // (.) indicates that we should match with sibling routes, so we just need to append the intercepted route to the intercepting route
+            if (interceptingRoute === "/") {
+                interceptedRoute = `/${interceptedRoute}`;
+            } else {
+                interceptedRoute = interceptingRoute + "/" + interceptedRoute;
+            }
+            break;
+        case "(..)":
+            // (..) indicates that we should match at one level up, so we need to remove the last segment of the intercepting route
+            if (interceptingRoute === "/") {
+                throw new Error(`Invalid interception route: ${path}. Cannot use (..) marker at the root level, use (.) instead.`);
+            }
+            interceptedRoute = interceptingRoute.split("/").slice(0, -1).concat(interceptedRoute).join("/");
+            break;
+        case "(...)":
+            // (...) will match the route segment in the root directory, so we need to use the root directory to prepend the intercepted route
+            interceptedRoute = "/" + interceptedRoute;
+            break;
+        case "(..)(..)":
+            // (..)(..) indicates that we should match at two levels up, so we need to remove the last two segments of the intercepting route
+            const splitInterceptingRoute = interceptingRoute.split("/");
+            if (splitInterceptingRoute.length <= 2) {
+                throw new Error(`Invalid interception route: ${path}. Cannot use (..)(..) marker at the root level or one level up.`);
+            }
+            interceptedRoute = splitInterceptingRoute.slice(0, -2).concat(interceptedRoute).join("/");
+            break;
+        default:
+            throw new Error("Invariant: unexpected marker");
+    }
+    return {
+        interceptingRoute,
+        interceptedRoute
+    };
+} //# sourceMappingURL=interception-routes.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/escape-regexp.js
+// regexp is based on https://github.com/sindresorhus/escape-string-regexp
+const reHasRegExp = /[|\\{}()[\]^$+*?.-]/;
+const reReplaceRegExp = /[|\\{}()[\]^$+*?.-]/g;
+function escape_regexp_escapeStringRegexp(str) {
+    // see also: https://github.com/lodash/lodash/blob/2da024c3b4f9947a48517639de7560457cd4ec6c/escapeRegExp.js#L23
+    if (reHasRegExp.test(str)) {
+        return str.replace(reReplaceRegExp, "\\$&");
+    }
+    return str;
+} //# sourceMappingURL=escape-regexp.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/route-regex.js
+
+
+
+const NEXT_QUERY_PARAM_PREFIX = "nxtP";
+const NEXT_INTERCEPTION_MARKER_PREFIX = "nxtI";
+/**
+ * Parses a given parameter from a route to a data structure that can be used
+ * to generate the parametrized route. Examples:
+ *   - `[...slug]` -> `{ key: 'slug', repeat: true, optional: true }`
+ *   - `...slug` -> `{ key: 'slug', repeat: true, optional: false }`
+ *   - `[foo]` -> `{ key: 'foo', repeat: false, optional: true }`
+ *   - `bar` -> `{ key: 'bar', repeat: false, optional: false }`
+ */ function parseParameter(param) {
+    const optional = param.startsWith("[") && param.endsWith("]");
+    if (optional) {
+        param = param.slice(1, -1);
+    }
+    const repeat = param.startsWith("...");
+    if (repeat) {
+        param = param.slice(3);
+    }
+    return {
+        key: param,
+        repeat,
+        optional
+    };
+}
+function getParametrizedRoute(route) {
+    const segments = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(route).slice(1).split("/");
+    const groups = {};
+    let groupIndex = 1;
+    return {
+        parameterizedRoute: segments.map((segment)=>{
+            const markerMatch = interception_routes_INTERCEPTION_ROUTE_MARKERS.find((m)=>segment.startsWith(m));
+            const paramMatches = segment.match(/\[((?:\[.*\])|.+)\]/) // Check for parameters
+            ;
+            if (markerMatch && paramMatches) {
+                const { key, optional, repeat } = parseParameter(paramMatches[1]);
+                groups[key] = {
+                    pos: groupIndex++,
+                    repeat,
+                    optional
+                };
+                return "/" + escape_regexp_escapeStringRegexp(markerMatch) + "([^/]+?)";
+            } else if (paramMatches) {
+                const { key, repeat, optional } = parseParameter(paramMatches[1]);
+                groups[key] = {
+                    pos: groupIndex++,
+                    repeat,
+                    optional
+                };
+                return repeat ? optional ? "(?:/(.+?))?" : "/(.+?)" : "/([^/]+?)";
+            } else {
+                return "/" + escape_regexp_escapeStringRegexp(segment);
+            }
+        }).join(""),
+        groups
+    };
+}
+/**
+ * From a normalized route this function generates a regular expression and
+ * a corresponding groups object intended to be used to store matching groups
+ * from the regular expression.
+ */ function getRouteRegex(normalizedRoute) {
+    const { parameterizedRoute, groups } = getParametrizedRoute(normalizedRoute);
+    return {
+        re: new RegExp("^" + parameterizedRoute + "(?:/)?$"),
+        groups: groups
+    };
+}
+/**
+ * Builds a function to generate a minimal routeKey using only a-z and minimal
+ * number of characters.
+ */ function buildGetSafeRouteKey() {
+    let i = 0;
+    return ()=>{
+        let routeKey = "";
+        let j = ++i;
+        while(j > 0){
+            routeKey += String.fromCharCode(97 + (j - 1) % 26);
+            j = Math.floor((j - 1) / 26);
+        }
+        return routeKey;
+    };
+}
+function getSafeKeyFromSegment(param) {
+    let { getSafeRouteKey, segment, routeKeys, keyPrefix } = param;
+    const { key, optional, repeat } = parseParameter(segment);
+    // replace any non-word characters since they can break
+    // the named regex
+    let cleanedKey = key.replace(/\W/g, "");
+    if (keyPrefix) {
+        cleanedKey = "" + keyPrefix + cleanedKey;
+    }
+    let invalidKey = false;
+    // check if the key is still invalid and fallback to using a known
+    // safe key
+    if (cleanedKey.length === 0 || cleanedKey.length > 30) {
+        invalidKey = true;
+    }
+    if (!isNaN(parseInt(cleanedKey.slice(0, 1)))) {
+        invalidKey = true;
+    }
+    if (invalidKey) {
+        cleanedKey = getSafeRouteKey();
+    }
+    if (keyPrefix) {
+        routeKeys[cleanedKey] = "" + keyPrefix + key;
+    } else {
+        routeKeys[cleanedKey] = "" + key;
+    }
+    return repeat ? optional ? "(?:/(?<" + cleanedKey + ">.+?))?" : "/(?<" + cleanedKey + ">.+?)" : "/(?<" + cleanedKey + ">[^/]+?)";
+}
+function getNamedParametrizedRoute(route, prefixRouteKeys) {
+    const segments = removeTrailingSlash(route).slice(1).split("/");
+    const getSafeRouteKey = buildGetSafeRouteKey();
+    const routeKeys = {};
+    return {
+        namedParameterizedRoute: segments.map((segment)=>{
+            const hasInterceptionMarker = INTERCEPTION_ROUTE_MARKERS.some((m)=>segment.startsWith(m));
+            const paramMatches = segment.match(/\[((?:\[.*\])|.+)\]/) // Check for parameters
+            ;
+            if (hasInterceptionMarker && paramMatches) {
+                return getSafeKeyFromSegment({
+                    getSafeRouteKey,
+                    segment: paramMatches[1],
+                    routeKeys,
+                    keyPrefix: prefixRouteKeys ? NEXT_INTERCEPTION_MARKER_PREFIX : undefined
+                });
+            } else if (paramMatches) {
+                return getSafeKeyFromSegment({
+                    getSafeRouteKey,
+                    segment: paramMatches[1],
+                    routeKeys,
+                    keyPrefix: prefixRouteKeys ? NEXT_QUERY_PARAM_PREFIX : undefined
+                });
+            } else {
+                return "/" + escapeStringRegexp(segment);
+            }
+        }).join(""),
+        routeKeys
+    };
+}
+/**
+ * This function extends `getRouteRegex` generating also a named regexp where
+ * each group is named along with a routeKeys object that indexes the assigned
+ * named group with its corresponding key. When the routeKeys need to be
+ * prefixed to uniquely identify internally the "prefixRouteKey" arg should
+ * be "true" currently this is only the case when creating the routes-manifest
+ * during the build
+ */ function getNamedRouteRegex(normalizedRoute, prefixRouteKey) {
+    const result = getNamedParametrizedRoute(normalizedRoute, prefixRouteKey);
+    return {
+        ...getRouteRegex(normalizedRoute),
+        namedRegex: "^" + result.namedParameterizedRoute + "(?:/)?$",
+        routeKeys: result.routeKeys
+    };
+}
+/**
+ * Generates a named regexp.
+ * This is intended to be using for build time only.
+ */ function getNamedMiddlewareRegex(normalizedRoute, options) {
+    const { parameterizedRoute } = getParametrizedRoute(normalizedRoute);
+    const { catchAll = true } = options;
+    if (parameterizedRoute === "/") {
+        let catchAllRegex = catchAll ? ".*" : "";
+        return {
+            namedRegex: "^/" + catchAllRegex + "$"
+        };
+    }
+    const { namedParameterizedRoute } = getNamedParametrizedRoute(normalizedRoute, false);
+    let catchAllGroupedRegex = catchAll ? "(?:(/.*)?)" : "";
+    return {
+        namedRegex: "^" + namedParameterizedRoute + catchAllGroupedRegex + "$"
+    };
+} //# sourceMappingURL=route-regex.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/format-url.js
+// Format function modified from nodejs
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+const slashedProtocols = /https?|ftp|gopher|file/;
+function formatUrl(urlObj) {
+    let { auth, hostname } = urlObj;
+    let protocol = urlObj.protocol || "";
+    let pathname = urlObj.pathname || "";
+    let hash = urlObj.hash || "";
+    let query = urlObj.query || "";
+    let host = false;
+    auth = auth ? encodeURIComponent(auth).replace(/%3A/i, ":") + "@" : "";
+    if (urlObj.host) {
+        host = auth + urlObj.host;
+    } else if (hostname) {
+        host = auth + (~hostname.indexOf(":") ? "[" + hostname + "]" : hostname);
+        if (urlObj.port) {
+            host += ":" + urlObj.port;
+        }
+    }
+    if (query && typeof query === "object") {
+        query = String(urlQueryToSearchParams(query));
+    }
+    let search = urlObj.search || query && "?" + query || "";
+    if (protocol && !protocol.endsWith(":")) protocol += ":";
+    if (urlObj.slashes || (!protocol || slashedProtocols.test(protocol)) && host !== false) {
+        host = "//" + (host || "");
+        if (pathname && pathname[0] !== "/") pathname = "/" + pathname;
+    } else if (!host) {
+        host = "";
+    }
+    if (hash && hash[0] !== "#") hash = "#" + hash;
+    if (search && search[0] !== "?") search = "?" + search;
+    pathname = pathname.replace(/[?#]/g, encodeURIComponent);
+    search = search.replace("#", "%23");
+    return "" + protocol + host + pathname + search + hash;
+}
+const urlObjectKeys = (/* unused pure expression or super */ null && ([
+    "auth",
+    "hash",
+    "host",
+    "hostname",
+    "href",
+    "path",
+    "pathname",
+    "port",
+    "protocol",
+    "query",
+    "search",
+    "slashes"
+]));
+function formatWithValidation(url) {
+    if (false) {}
+    return formatUrl(url);
+} //# sourceMappingURL=format-url.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/parse-path.js
+var parse_path = __webpack_require__(8296);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/add-locale.js
+
+const addLocale = function(path) {
+    for(var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++){
+        args[_key - 1] = arguments[_key];
+    }
+    if (false) {}
+    return path;
+}; //# sourceMappingURL=add-locale.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/remove-locale.js
+
+function removeLocale(path, locale) {
+    if (false) {}
+    return path;
+} //# sourceMappingURL=remove-locale.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/remove-base-path.js
+
+const basePath =  false || "";
+function remove_base_path_removeBasePath(path) {
+    if (false) {}
+    // Can't trim the basePath if it has zero length!
+    if (basePath.length === 0) return path;
+    path = path.slice(basePath.length);
+    if (!path.startsWith("/")) path = "/" + path;
+    return path;
+} //# sourceMappingURL=remove-base-path.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/add-path-prefix.js
+var add_path_prefix = __webpack_require__(2703);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/normalize-trailing-slash.js
+
+
+/**
+ * Normalizes the trailing slash of a path according to the `trailingSlash` option
+ * in `next.config.js`.
+ */ const normalizePathTrailingSlash = (path)=>{
+    if (!path.startsWith("/") || undefined) {
+        return path;
+    }
+    const { pathname, query, hash } = (0,parse_path/* parsePath */.c)(path);
+    if (false) {}
+    return "" + (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathname) + query + hash;
+}; //# sourceMappingURL=normalize-trailing-slash.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/add-base-path.js
+
+
+const add_base_path_basePath =  false || "";
+function addBasePath(path, required) {
+    return normalizePathTrailingSlash( false ? 0 : (0,add_path_prefix/* addPathPrefix */.V)(path, add_base_path_basePath));
+} //# sourceMappingURL=add-base-path.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/path-has-prefix.js
+var path_has_prefix = __webpack_require__(9386);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/has-base-path.js
+
+const has_base_path_basePath =  false || "";
+function hasBasePath(path) {
+    return (0,path_has_prefix/* pathHasPrefix */.Y)(path, has_base_path_basePath);
+} //# sourceMappingURL=has-base-path.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/omit.js
+function omit(object, keys) {
+    const omitted = {};
+    Object.keys(object).forEach((key)=>{
+        if (!keys.includes(key)) {
+            omitted[key] = object[key];
+        }
+    });
+    return omitted;
+} //# sourceMappingURL=omit.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/is-local-url.js
+
+
+/**
+ * Detects whether a given url is routable by the Next.js router (browser only).
+ */ function isLocalURL(url) {
+    // prevent a hydration mismatch on href for url with anchor refs
+    if (!isAbsoluteUrl(url)) return true;
+    try {
+        // absolute urls can be local if they are on the same origin
+        const locationOrigin = getLocationOrigin();
+        const resolved = new URL(url, locationOrigin);
+        return resolved.origin === locationOrigin && hasBasePath(resolved.pathname);
+    } catch (_) {
+        return false;
+    }
+} //# sourceMappingURL=is-local-url.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/interpolate-as.js
+
+
+function interpolateAs(route, asPathname, query) {
+    let interpolatedRoute = "";
+    const dynamicRegex = getRouteRegex(route);
+    const dynamicGroups = dynamicRegex.groups;
+    const dynamicMatches = (asPathname !== route ? getRouteMatcher(dynamicRegex)(asPathname) : "") || // Fall back to reading the values from the href
+    // TODO: should this take priority; also need to change in the router.
+    query;
+    interpolatedRoute = route;
+    const params = Object.keys(dynamicGroups);
+    if (!params.every((param)=>{
+        let value = dynamicMatches[param] || "";
+        const { repeat, optional } = dynamicGroups[param];
+        // support single-level catch-all
+        // TODO: more robust handling for user-error (passing `/`)
+        let replaced = "[" + (repeat ? "..." : "") + param + "]";
+        if (optional) {
+            replaced = (!value ? "/" : "") + "[" + replaced + "]";
+        }
+        if (repeat && !Array.isArray(value)) value = [
+            value
+        ];
+        return (optional || param in dynamicMatches) && // Interpolate group into data URL if present
+        (interpolatedRoute = interpolatedRoute.replace(replaced, repeat ? value.map(// path delimiter escaped since they are being inserted
+        // into the URL and we expect URL encoded segments
+        // when parsing dynamic route params
+        (segment)=>encodeURIComponent(segment)).join("/") : encodeURIComponent(value)) || "/");
+    })) {
+        interpolatedRoute = "" // did not satisfy all requirements
+        ;
+    // n.b. We ignore this error because we handle warning for this case in
+    // development in the `<Link>` component directly.
+    }
+    return {
+        params,
+        result: interpolatedRoute
+    };
+} //# sourceMappingURL=interpolate-as.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/resolve-href.js
+
+
+
+
+
+
+
+
+function resolveHref(router, href, resolveAs) {
+    // we use a dummy base url for relative urls
+    let base;
+    let urlAsString = typeof href === "string" ? href : formatWithValidation(href);
+    // repeated slashes and backslashes in the URL are considered
+    // invalid and will never match a Next.js page/file
+    const urlProtoMatch = urlAsString.match(/^[a-zA-Z]{1,}:\/\//);
+    const urlAsStringNoProto = urlProtoMatch ? urlAsString.slice(urlProtoMatch[0].length) : urlAsString;
+    const urlParts = urlAsStringNoProto.split("?");
+    if ((urlParts[0] || "").match(/(\/\/|\\)/)) {
+        console.error("Invalid href '" + urlAsString + "' passed to next/router in page: '" + router.pathname + "'. Repeated forward-slashes (//) or backslashes \\ are not valid in the href.");
+        const normalizedUrl = normalizeRepeatedSlashes(urlAsStringNoProto);
+        urlAsString = (urlProtoMatch ? urlProtoMatch[0] : "") + normalizedUrl;
+    }
+    // Return because it cannot be routed by the Next.js router
+    if (!isLocalURL(urlAsString)) {
+        return resolveAs ? [
+            urlAsString
+        ] : urlAsString;
+    }
+    try {
+        base = new URL(urlAsString.startsWith("#") ? router.asPath : router.pathname, "http://n");
+    } catch (_) {
+        // fallback to / for invalid asPath values e.g. //
+        base = new URL("/", "http://n");
+    }
+    try {
+        const finalUrl = new URL(urlAsString, base);
+        finalUrl.pathname = normalizePathTrailingSlash(finalUrl.pathname);
+        let interpolatedAs = "";
+        if (isDynamicRoute(finalUrl.pathname) && finalUrl.searchParams && resolveAs) {
+            const query = querystring_searchParamsToUrlQuery(finalUrl.searchParams);
+            const { result, params } = interpolateAs(finalUrl.pathname, finalUrl.pathname, query);
+            if (result) {
+                interpolatedAs = formatWithValidation({
+                    pathname: result,
+                    hash: finalUrl.hash,
+                    query: omit(query, params)
+                });
+            }
+        }
+        // if the origin didn't change, it means we received a relative href
+        const resolvedHref = finalUrl.origin === base.origin ? finalUrl.href.slice(finalUrl.origin.length) : finalUrl.href;
+        return resolveAs ? [
+            resolvedHref,
+            interpolatedAs || resolvedHref
+        ] : resolvedHref;
+    } catch (_) {
+        return resolveAs ? [
+            urlAsString
+        ] : urlAsString;
+    }
+} //# sourceMappingURL=resolve-href.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/lib/is-api-route.js
+function isAPIRoute(value) {
+    return value === "/api" || Boolean(value == null ? void 0 : value.startsWith("/api/"));
+} //# sourceMappingURL=is-api-route.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/get-next-pathname-info.js + 1 modules
+var get_next_pathname_info = __webpack_require__(1798);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/format-next-pathname-info.js + 2 modules
+var format_next_pathname_info = __webpack_require__(788);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/compare-states.js
+function compareRouterStates(a, b) {
+    const stateKeys = Object.keys(a);
+    if (stateKeys.length !== Object.keys(b).length) return false;
+    for(let i = stateKeys.length; i--;){
+        const key = stateKeys[i];
+        if (key === "query") {
+            const queryKeys = Object.keys(a.query);
+            if (queryKeys.length !== Object.keys(b.query).length) {
+                return false;
+            }
+            for(let j = queryKeys.length; j--;){
+                const queryKey = queryKeys[j];
+                if (!b.query.hasOwnProperty(queryKey) || a.query[queryKey] !== b.query[queryKey]) {
+                    return false;
+                }
+            }
+        } else if (!b.hasOwnProperty(key) || a[key] !== b[key]) {
+            return false;
+        }
+    }
+    return true;
+} //# sourceMappingURL=compare-states.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/handle-smooth-scroll.js
+/**
+ * Run function with `scroll-behavior: auto` applied to `<html/>`.
+ * This css change will be reverted after the function finishes.
+ */ function handleSmoothScroll(fn, options) {
+    if (options === void 0) options = {};
+    // if only the hash is changed, we don't need to disable smooth scrolling
+    // we only care to prevent smooth scrolling when navigating to a new page to avoid jarring UX
+    if (options.onlyHashChange) {
+        fn();
+        return;
+    }
+    const htmlElement = document.documentElement;
+    const existing = htmlElement.style.scrollBehavior;
+    htmlElement.style.scrollBehavior = "auto";
+    if (!options.dontForceLayout) {
+        // In Chrome-based browsers we need to force reflow before calling `scrollTo`.
+        // Otherwise it will not pickup the change in scrollBehavior
+        // More info here: https://github.com/vercel/next.js/issues/40719#issuecomment-1336248042
+        htmlElement.getClientRects();
+    }
+    fn();
+    htmlElement.style.scrollBehavior = existing;
+} //# sourceMappingURL=handle-smooth-scroll.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/router.js
+// tslint:disable:no-console
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function buildCancellationError() {
+    return Object.assign(new Error("Route Cancelled"), {
+        cancelled: true
+    });
+}
+async function matchesMiddleware(options) {
+    const matchers = await Promise.resolve(options.router.pageLoader.getMiddleware());
+    if (!matchers) return false;
+    const { pathname: asPathname } = (0,parse_path/* parsePath */.c)(options.asPath);
+    // remove basePath first since path prefix has to be in the order of `/${basePath}/${locale}`
+    const cleanedAs = hasBasePath(asPathname) ? remove_base_path_removeBasePath(asPathname) : asPathname;
+    const asWithBasePathAndLocale = addBasePath(addLocale(cleanedAs, options.locale));
+    // Check only path match on client. Matching "has" should be done on server
+    // where we can access more info such as headers, HttpOnly cookie, etc.
+    return matchers.some((m)=>new RegExp(m.regexp).test(asWithBasePathAndLocale));
+}
+function stripOrigin(url) {
+    const origin = getLocationOrigin();
+    return url.startsWith(origin) ? url.substring(origin.length) : url;
+}
+function prepareUrlAs(router, url, as) {
+    // If url and as provided as an object representation,
+    // we'll format them into the string version here.
+    let [resolvedHref, resolvedAs] = resolveHref(router, url, true);
+    const origin = getLocationOrigin();
+    const hrefWasAbsolute = resolvedHref.startsWith(origin);
+    const asWasAbsolute = resolvedAs && resolvedAs.startsWith(origin);
+    resolvedHref = stripOrigin(resolvedHref);
+    resolvedAs = resolvedAs ? stripOrigin(resolvedAs) : resolvedAs;
+    const preparedUrl = hrefWasAbsolute ? resolvedHref : addBasePath(resolvedHref);
+    const preparedAs = as ? stripOrigin(resolveHref(router, as)) : resolvedAs || resolvedHref;
+    return {
+        url: preparedUrl,
+        as: asWasAbsolute ? preparedAs : addBasePath(preparedAs)
+    };
+}
+function resolveDynamicRoute(pathname, pages) {
+    const cleanPathname = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(denormalizePagePath(pathname));
+    if (cleanPathname === "/404" || cleanPathname === "/_error") {
+        return pathname;
+    }
+    // handle resolving href for dynamic routes
+    if (!pages.includes(cleanPathname)) {
+        // eslint-disable-next-line array-callback-return
+        pages.some((page)=>{
+            if (isDynamicRoute(page) && getRouteRegex(page).re.test(cleanPathname)) {
+                pathname = page;
+                return true;
+            }
+        });
+    }
+    return (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathname);
+}
+function getMiddlewareData(source, response, options) {
+    const nextConfig = {
+        basePath: options.router.basePath,
+        i18n: {
+            locales: options.router.locales
+        },
+        trailingSlash: Boolean(false)
+    };
+    const rewriteHeader = response.headers.get("x-nextjs-rewrite");
+    let rewriteTarget = rewriteHeader || response.headers.get("x-nextjs-matched-path");
+    const matchedPath = response.headers.get("x-matched-path");
+    if (matchedPath && !rewriteTarget && !matchedPath.includes("__next_data_catchall") && !matchedPath.includes("/_error") && !matchedPath.includes("/404")) {
+        // leverage x-matched-path to detect next.config.js rewrites
+        rewriteTarget = matchedPath;
+    }
+    if (rewriteTarget) {
+        if (rewriteTarget.startsWith("/") || undefined) {
+            const parsedRewriteTarget = parse_relative_url_parseRelativeUrl(rewriteTarget);
+            const pathnameInfo = (0,get_next_pathname_info/* getNextPathnameInfo */.a)(parsedRewriteTarget.pathname, {
+                nextConfig,
+                parseData: true
+            });
+            let fsPathname = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathnameInfo.pathname);
+            return Promise.all([
+                options.router.pageLoader.getPageList(),
+                getClientBuildManifest()
+            ]).then((param)=>{
+                let [pages, { __rewrites: rewrites }] = param;
+                let as = addLocale(pathnameInfo.pathname, pathnameInfo.locale);
+                if (isDynamicRoute(as) || !rewriteHeader && pages.includes((0,normalize_locale_path/* normalizeLocalePath */.h)(remove_base_path_removeBasePath(as), options.router.locales).pathname)) {
+                    const parsedSource = (0,get_next_pathname_info/* getNextPathnameInfo */.a)(parse_relative_url_parseRelativeUrl(source).pathname, {
+                        nextConfig:  false ? 0 : nextConfig,
+                        parseData: true
+                    });
+                    as = addBasePath(parsedSource.pathname);
+                    parsedRewriteTarget.pathname = as;
+                }
+                if (false) {} else if (!pages.includes(fsPathname)) {
+                    const resolvedPathname = resolveDynamicRoute(fsPathname, pages);
+                    if (resolvedPathname !== fsPathname) {
+                        fsPathname = resolvedPathname;
+                    }
+                }
+                const resolvedHref = !pages.includes(fsPathname) ? resolveDynamicRoute((0,normalize_locale_path/* normalizeLocalePath */.h)(remove_base_path_removeBasePath(parsedRewriteTarget.pathname), options.router.locales).pathname, pages) : fsPathname;
+                if (isDynamicRoute(resolvedHref)) {
+                    const matches = getRouteMatcher(getRouteRegex(resolvedHref))(as);
+                    Object.assign(parsedRewriteTarget.query, matches || {});
+                }
+                return {
+                    type: "rewrite",
+                    parsedAs: parsedRewriteTarget,
+                    resolvedHref
+                };
+            });
+        }
+        const src = (0,parse_path/* parsePath */.c)(source);
+        const pathname = (0,format_next_pathname_info/* formatNextPathnameInfo */.R)({
+            ...(0,get_next_pathname_info/* getNextPathnameInfo */.a)(src.pathname, {
+                nextConfig,
+                parseData: true
+            }),
+            defaultLocale: options.router.defaultLocale,
+            buildId: ""
+        });
+        return Promise.resolve({
+            type: "redirect-external",
+            destination: "" + pathname + src.query + src.hash
+        });
+    }
+    const redirectTarget = response.headers.get("x-nextjs-redirect");
+    if (redirectTarget) {
+        if (redirectTarget.startsWith("/")) {
+            const src = (0,parse_path/* parsePath */.c)(redirectTarget);
+            const pathname = (0,format_next_pathname_info/* formatNextPathnameInfo */.R)({
+                ...(0,get_next_pathname_info/* getNextPathnameInfo */.a)(src.pathname, {
+                    nextConfig,
+                    parseData: true
+                }),
+                defaultLocale: options.router.defaultLocale,
+                buildId: ""
+            });
+            return Promise.resolve({
+                type: "redirect-internal",
+                newAs: "" + pathname + src.query + src.hash,
+                newUrl: "" + pathname + src.query + src.hash
+            });
+        }
+        return Promise.resolve({
+            type: "redirect-external",
+            destination: redirectTarget
+        });
+    }
+    return Promise.resolve({
+        type: "next"
+    });
+}
+async function withMiddlewareEffects(options) {
+    const matches = await matchesMiddleware(options);
+    if (!matches || !options.fetchData) {
+        return null;
+    }
+    try {
+        const data = await options.fetchData();
+        const effect = await getMiddlewareData(data.dataHref, data.response, options);
+        return {
+            dataHref: data.dataHref,
+            json: data.json,
+            response: data.response,
+            text: data.text,
+            cacheKey: data.cacheKey,
+            effect
+        };
+    } catch (e) {
+        /**
+     * TODO: Revisit this in the future.
+     * For now we will not consider middleware data errors to be fatal.
+     * maybe we should revisit in the future.
+     */ return null;
+    }
+}
+const manualScrollRestoration =  false && 0;
+const SSG_DATA_NOT_FOUND = Symbol("SSG_DATA_NOT_FOUND");
+function fetchRetry(url, attempts, options) {
+    return fetch(url, {
+        // Cookies are required to be present for Next.js' SSG "Preview Mode".
+        // Cookies may also be required for `getServerSideProps`.
+        //
+        // > `fetch` won’t send cookies, unless you set the credentials init
+        // > option.
+        // https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch
+        //
+        // > For maximum browser compatibility when it comes to sending &
+        // > receiving cookies, always supply the `credentials: 'same-origin'`
+        // > option instead of relying on the default.
+        // https://github.com/github/fetch#caveats
+        credentials: "same-origin",
+        method: options.method || "GET",
+        headers: Object.assign({}, options.headers, {
+            "x-nextjs-data": "1"
+        })
+    }).then((response)=>{
+        return !response.ok && attempts > 1 && response.status >= 500 ? fetchRetry(url, attempts - 1, options) : response;
+    });
+}
+function tryToParseAsJSON(text) {
+    try {
+        return JSON.parse(text);
+    } catch (error) {
+        return null;
+    }
+}
+function fetchNextData(param) {
+    let { dataHref, inflightCache, isPrefetch, hasMiddleware, isServerRender, parseJSON, persistCache, isBackground, unstable_skipClientCache } = param;
+    const { href: cacheKey } = new URL(dataHref, window.location.href);
+    var _params_method;
+    const getData = (params)=>fetchRetry(dataHref, isServerRender ? 3 : 1, {
+            headers: Object.assign({}, isPrefetch ? {
+                purpose: "prefetch"
+            } : {}, isPrefetch && hasMiddleware ? {
+                "x-middleware-prefetch": "1"
+            } : {}),
+            method: (_params_method = params == null ? void 0 : params.method) != null ? _params_method : "GET"
+        }).then((response)=>{
+            if (response.ok && (params == null ? void 0 : params.method) === "HEAD") {
+                return {
+                    dataHref,
+                    response,
+                    text: "",
+                    json: {},
+                    cacheKey
+                };
+            }
+            return response.text().then((text)=>{
+                if (!response.ok) {
+                    /**
+             * When the data response is a redirect because of a middleware
+             * we do not consider it an error. The headers must bring the
+             * mapped location.
+             * TODO: Change the status code in the handler.
+             */ if (hasMiddleware && [
+                        301,
+                        302,
+                        307,
+                        308
+                    ].includes(response.status)) {
+                        return {
+                            dataHref,
+                            response,
+                            text,
+                            json: {},
+                            cacheKey
+                        };
+                    }
+                    if (response.status === 404) {
+                        var _tryToParseAsJSON;
+                        if ((_tryToParseAsJSON = tryToParseAsJSON(text)) == null ? void 0 : _tryToParseAsJSON.notFound) {
+                            return {
+                                dataHref,
+                                json: {
+                                    notFound: SSG_DATA_NOT_FOUND
+                                },
+                                response,
+                                text,
+                                cacheKey
+                            };
+                        }
+                    }
+                    const error = new Error("Failed to load static props");
+                    /**
+             * We should only trigger a server-side transition if this was
+             * caused on a client-side transition. Otherwise, we'd get into
+             * an infinite loop.
+             */ if (!isServerRender) {
+                        markAssetError(error);
+                    }
+                    throw error;
+                }
+                return {
+                    dataHref,
+                    json: parseJSON ? tryToParseAsJSON(text) : null,
+                    response,
+                    text,
+                    cacheKey
+                };
+            });
+        }).then((data)=>{
+            if (!persistCache || "production" !== "production" || data.response.headers.get("x-middleware-cache") === "no-cache") {
+                delete inflightCache[cacheKey];
+            }
+            return data;
+        }).catch((err)=>{
+            if (!unstable_skipClientCache) {
+                delete inflightCache[cacheKey];
+            }
+            if (err.message === "Failed to fetch" || // firefox
+            err.message === "NetworkError when attempting to fetch resource." || // safari
+            err.message === "Load failed") {
+                markAssetError(err);
+            }
+            throw err;
+        });
+    // when skipping client cache we wait to update
+    // inflight cache until successful data response
+    // this allows racing click event with fetching newer data
+    // without blocking navigation when stale data is available
+    if (unstable_skipClientCache && persistCache) {
+        return getData({}).then((data)=>{
+            inflightCache[cacheKey] = Promise.resolve(data);
+            return data;
+        });
+    }
+    if (inflightCache[cacheKey] !== undefined) {
+        return inflightCache[cacheKey];
+    }
+    return inflightCache[cacheKey] = getData(isBackground ? {
+        method: "HEAD"
+    } : {});
+}
+function createKey() {
+    return Math.random().toString(36).slice(2, 10);
+}
+function handleHardNavigation(param) {
+    let { url, router } = param;
+    // ensure we don't trigger a hard navigation to the same
+    // URL as this can end up with an infinite refresh
+    if (url === addBasePath(addLocale(router.asPath, router.locale))) {
+        throw new Error("Invariant: attempted to hard navigate to the same URL " + url + " " + location.href);
+    }
+    window.location.href = url;
+}
+const getCancelledHandler = (param)=>{
+    let { route, router } = param;
+    let cancelled = false;
+    const cancel = router.clc = ()=>{
+        cancelled = true;
+    };
+    const handleCancelled = ()=>{
+        if (cancelled) {
+            const error = new Error('Abort fetching component for route: "' + route + '"');
+            error.cancelled = true;
+            throw error;
+        }
+        if (cancel === router.clc) {
+            router.clc = null;
+        }
+    };
+    return handleCancelled;
+};
+class router_Router {
+    reload() {
+        window.location.reload();
+    }
+    /**
+   * Go back in history
+   */ back() {
+        window.history.back();
+    }
+    /**
+   * Go forward in history
+   */ forward() {
+        window.history.forward();
+    }
+    /**
+   * Performs a `pushState` with arguments
+   * @param url of the route
+   * @param as masks `url` for the browser
+   * @param options object you can define `shallow` and other options
+   */ push(url, as, options) {
+        if (options === void 0) options = {};
+        if (false) {}
+        ({ url, as } = prepareUrlAs(this, url, as));
+        return this.change("pushState", url, as, options);
+    }
+    /**
+   * Performs a `replaceState` with arguments
+   * @param url of the route
+   * @param as masks `url` for the browser
+   * @param options object you can define `shallow` and other options
+   */ replace(url, as, options) {
+        if (options === void 0) options = {};
+        ({ url, as } = prepareUrlAs(this, url, as));
+        return this.change("replaceState", url, as, options);
+    }
+    async _bfl(as, resolvedAs, locale, skipNavigate) {
+        if (true) {
+            let matchesBflStatic = false;
+            let matchesBflDynamic = false;
+            for (const curAs of [
+                as,
+                resolvedAs
+            ]){
+                if (curAs) {
+                    const asNoSlash = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(new URL(curAs, "http://n").pathname);
+                    const asNoSlashLocale = addBasePath(addLocale(asNoSlash, locale || this.locale));
+                    if (asNoSlash !== (0,remove_trailing_slash/* removeTrailingSlash */.Q)(new URL(this.asPath, "http://n").pathname)) {
+                        var _this__bfl_s, _this__bfl_s1;
+                        matchesBflStatic = matchesBflStatic || !!((_this__bfl_s = this._bfl_s) == null ? void 0 : _this__bfl_s.contains(asNoSlash)) || !!((_this__bfl_s1 = this._bfl_s) == null ? void 0 : _this__bfl_s1.contains(asNoSlashLocale));
+                        for (const normalizedAS of [
+                            asNoSlash,
+                            asNoSlashLocale
+                        ]){
+                            // if any sub-path of as matches a dynamic filter path
+                            // it should be hard navigated
+                            const curAsParts = normalizedAS.split("/");
+                            for(let i = 0; !matchesBflDynamic && i < curAsParts.length + 1; i++){
+                                var _this__bfl_d;
+                                const currentPart = curAsParts.slice(0, i).join("/");
+                                if (currentPart && ((_this__bfl_d = this._bfl_d) == null ? void 0 : _this__bfl_d.contains(currentPart))) {
+                                    matchesBflDynamic = true;
+                                    break;
+                                }
+                            }
+                        }
+                        // if the client router filter is matched then we trigger
+                        // a hard navigation
+                        if (matchesBflStatic || matchesBflDynamic) {
+                            if (skipNavigate) {
+                                return true;
+                            }
+                            handleHardNavigation({
+                                url: addBasePath(addLocale(as, locale || this.locale, this.defaultLocale)),
+                                router: this
+                            });
+                            return new Promise(()=>{});
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    async change(method, url, as, options, forcedScroll) {
+        var _this_components_pathname;
+        if (!isLocalURL(url)) {
+            handleHardNavigation({
+                url,
+                router: this
+            });
+            return false;
+        }
+        // WARNING: `_h` is an internal option for handing Next.js client-side
+        // hydration. Your app should _never_ use this property. It may change at
+        // any time without notice.
+        const isQueryUpdating = options._h === 1;
+        if (!isQueryUpdating && !options.shallow) {
+            await this._bfl(as, undefined, options.locale);
+        }
+        let shouldResolveHref = isQueryUpdating || options._shouldResolveHref || (0,parse_path/* parsePath */.c)(url).pathname === (0,parse_path/* parsePath */.c)(as).pathname;
+        const nextState = {
+            ...this.state
+        };
+        // for static pages with query params in the URL we delay
+        // marking the router ready until after the query is updated
+        // or a navigation has occurred
+        const readyStateChange = this.isReady !== true;
+        this.isReady = true;
+        const isSsr = this.isSsr;
+        if (!isQueryUpdating) {
+            this.isSsr = false;
+        }
+        // if a route transition is already in progress before
+        // the query updating is triggered ignore query updating
+        if (isQueryUpdating && this.clc) {
+            return false;
+        }
+        const prevLocale = nextState.locale;
+        if (false) { var _this_locales; }
+        // marking route changes as a navigation start entry
+        if (ST) {
+            performance.mark("routeChange");
+        }
+        const { shallow = false, scroll = true } = options;
+        const routeProps = {
+            shallow
+        };
+        if (this._inFlightRoute && this.clc) {
+            if (!isSsr) {
+                router_Router.events.emit("routeChangeError", buildCancellationError(), this._inFlightRoute, routeProps);
+            }
+            this.clc();
+            this.clc = null;
+        }
+        as = addBasePath(addLocale(hasBasePath(as) ? remove_base_path_removeBasePath(as) : as, options.locale, this.defaultLocale));
+        const cleanedAs = removeLocale(hasBasePath(as) ? remove_base_path_removeBasePath(as) : as, nextState.locale);
+        this._inFlightRoute = as;
+        const localeChange = prevLocale !== nextState.locale;
+        // If the url change is only related to a hash change
+        // We should not proceed. We should only change the state.
+        if (!isQueryUpdating && this.onlyAHashChange(cleanedAs) && !localeChange) {
+            nextState.asPath = cleanedAs;
+            router_Router.events.emit("hashChangeStart", as, routeProps);
+            // TODO: do we need the resolved href when only a hash change?
+            this.changeState(method, url, as, {
+                ...options,
+                scroll: false
+            });
+            if (scroll) {
+                this.scrollToHash(cleanedAs);
+            }
+            try {
+                await this.set(nextState, this.components[nextState.route], null);
+            } catch (err) {
+                if (isError(err) && err.cancelled) {
+                    router_Router.events.emit("routeChangeError", err, cleanedAs, routeProps);
+                }
+                throw err;
+            }
+            router_Router.events.emit("hashChangeComplete", as, routeProps);
+            return true;
+        }
+        let parsed = parse_relative_url_parseRelativeUrl(url);
+        let { pathname, query } = parsed;
+        // if we detected the path as app route during prefetching
+        // trigger hard navigation
+        if ((_this_components_pathname = this.components[pathname]) == null ? void 0 : _this_components_pathname.__appRouter) {
+            handleHardNavigation({
+                url: as,
+                router: this
+            });
+            return new Promise(()=>{});
+        }
+        // The build manifest needs to be loaded before auto-static dynamic pages
+        // get their query parameters to allow ensuring they can be parsed properly
+        // when rewritten to
+        let pages, rewrites;
+        try {
+            [pages, { __rewrites: rewrites }] = await Promise.all([
+                this.pageLoader.getPageList(),
+                getClientBuildManifest(),
+                this.pageLoader.getMiddleware()
+            ]);
+        } catch (err) {
+            // If we fail to resolve the page list or client-build manifest, we must
+            // do a server-side transition:
+            handleHardNavigation({
+                url: as,
+                router: this
+            });
+            return false;
+        }
+        // If asked to change the current URL we should reload the current page
+        // (not location.reload() but reload getInitialProps and other Next.js stuffs)
+        // We also need to set the method = replaceState always
+        // as this should not go into the history (That's how browsers work)
+        // We should compare the new asPath to the current asPath, not the url
+        if (!this.urlIsNew(cleanedAs) && !localeChange) {
+            method = "replaceState";
+        }
+        // we need to resolve the as value using rewrites for dynamic SSG
+        // pages to allow building the data URL correctly
+        let resolvedAs = as;
+        // url and as should always be prefixed with basePath by this
+        // point by either next/link or router.push/replace so strip the
+        // basePath from the pathname to match the pages dir 1-to-1
+        pathname = pathname ? (0,remove_trailing_slash/* removeTrailingSlash */.Q)(remove_base_path_removeBasePath(pathname)) : pathname;
+        let route = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathname);
+        const parsedAsPathname = as.startsWith("/") && parse_relative_url_parseRelativeUrl(as).pathname;
+        const isMiddlewareRewrite = !!(parsedAsPathname && route !== parsedAsPathname && (!isDynamicRoute(route) || !getRouteMatcher(getRouteRegex(route))(parsedAsPathname)));
+        // we don't attempt resolve asPath when we need to execute
+        // middleware as the resolving will occur server-side
+        const isMiddlewareMatch = !options.shallow && await matchesMiddleware({
+            asPath: as,
+            locale: nextState.locale,
+            router: this
+        });
+        if (isQueryUpdating && isMiddlewareMatch) {
+            shouldResolveHref = false;
+        }
+        if (shouldResolveHref && pathname !== "/_error") {
+            options._shouldResolveHref = true;
+            if (false) {} else {
+                parsed.pathname = resolveDynamicRoute(pathname, pages);
+                if (parsed.pathname !== pathname) {
+                    pathname = parsed.pathname;
+                    parsed.pathname = addBasePath(pathname);
+                    if (!isMiddlewareMatch) {
+                        url = formatWithValidation(parsed);
+                    }
+                }
+            }
+        }
+        if (!isLocalURL(as)) {
+            if (false) {}
+            handleHardNavigation({
+                url: as,
+                router: this
+            });
+            return false;
+        }
+        resolvedAs = removeLocale(remove_base_path_removeBasePath(resolvedAs), nextState.locale);
+        route = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathname);
+        let routeMatch = false;
+        if (isDynamicRoute(route)) {
+            const parsedAs = parse_relative_url_parseRelativeUrl(resolvedAs);
+            const asPathname = parsedAs.pathname;
+            const routeRegex = getRouteRegex(route);
+            routeMatch = getRouteMatcher(routeRegex)(asPathname);
+            const shouldInterpolate = route === asPathname;
+            const interpolatedAs = shouldInterpolate ? interpolateAs(route, asPathname, query) : {};
+            if (!routeMatch || shouldInterpolate && !interpolatedAs.result) {
+                const missingParams = Object.keys(routeRegex.groups).filter((param)=>!query[param] && !routeRegex.groups[param].optional);
+                if (missingParams.length > 0 && !isMiddlewareMatch) {
+                    if (false) {}
+                    throw new Error((shouldInterpolate ? "The provided `href` (" + url + ") value is missing query values (" + missingParams.join(", ") + ") to be interpolated properly. " : "The provided `as` value (" + asPathname + ") is incompatible with the `href` value (" + route + "). ") + ("Read more: https://nextjs.org/docs/messages/" + (shouldInterpolate ? "href-interpolation-failed" : "incompatible-href-as")));
+                }
+            } else if (shouldInterpolate) {
+                as = formatWithValidation(Object.assign({}, parsedAs, {
+                    pathname: interpolatedAs.result,
+                    query: omit(query, interpolatedAs.params)
+                }));
+            } else {
+                // Merge params into `query`, overwriting any specified in search
+                Object.assign(query, routeMatch);
+            }
+        }
+        if (!isQueryUpdating) {
+            router_Router.events.emit("routeChangeStart", as, routeProps);
+        }
+        const isErrorRoute = this.pathname === "/404" || this.pathname === "/_error";
+        try {
+            var _self___NEXT_DATA___props_pageProps, _self___NEXT_DATA___props, _routeInfo_props;
+            let routeInfo = await this.getRouteInfo({
+                route,
+                pathname,
+                query,
+                as,
+                resolvedAs,
+                routeProps,
+                locale: nextState.locale,
+                isPreview: nextState.isPreview,
+                hasMiddleware: isMiddlewareMatch,
+                unstable_skipClientCache: options.unstable_skipClientCache,
+                isQueryUpdating: isQueryUpdating && !this.isFallback,
+                isMiddlewareRewrite
+            });
+            if (!isQueryUpdating && !options.shallow) {
+                await this._bfl(as, "resolvedAs" in routeInfo ? routeInfo.resolvedAs : undefined, nextState.locale);
+            }
+            if ("route" in routeInfo && isMiddlewareMatch) {
+                pathname = routeInfo.route || route;
+                route = pathname;
+                if (!routeProps.shallow) {
+                    query = Object.assign({}, routeInfo.query || {}, query);
+                }
+                const cleanedParsedPathname = hasBasePath(parsed.pathname) ? remove_base_path_removeBasePath(parsed.pathname) : parsed.pathname;
+                if (routeMatch && pathname !== cleanedParsedPathname) {
+                    Object.keys(routeMatch).forEach((key)=>{
+                        if (routeMatch && query[key] === routeMatch[key]) {
+                            delete query[key];
+                        }
+                    });
+                }
+                if (isDynamicRoute(pathname)) {
+                    const prefixedAs = !routeProps.shallow && routeInfo.resolvedAs ? routeInfo.resolvedAs : addBasePath(addLocale(new URL(as, location.href).pathname, nextState.locale), true);
+                    let rewriteAs = prefixedAs;
+                    if (hasBasePath(rewriteAs)) {
+                        rewriteAs = remove_base_path_removeBasePath(rewriteAs);
+                    }
+                    if (false) {}
+                    const routeRegex = getRouteRegex(pathname);
+                    const curRouteMatch = getRouteMatcher(routeRegex)(new URL(rewriteAs, location.href).pathname);
+                    if (curRouteMatch) {
+                        Object.assign(query, curRouteMatch);
+                    }
+                }
+            }
+            // If the routeInfo brings a redirect we simply apply it.
+            if ("type" in routeInfo) {
+                if (routeInfo.type === "redirect-internal") {
+                    return this.change(method, routeInfo.newUrl, routeInfo.newAs, options);
+                } else {
+                    handleHardNavigation({
+                        url: routeInfo.destination,
+                        router: this
+                    });
+                    return new Promise(()=>{});
+                }
+            }
+            const component = routeInfo.Component;
+            if (component && component.unstable_scriptLoader) {
+                const scripts = [].concat(component.unstable_scriptLoader());
+                scripts.forEach((script)=>{
+                    (0,client_script/* handleClientScriptLoad */.V)(script.props);
+                });
+            }
+            // handle redirect on client-transition
+            if ((routeInfo.__N_SSG || routeInfo.__N_SSP) && routeInfo.props) {
+                if (routeInfo.props.pageProps && routeInfo.props.pageProps.__N_REDIRECT) {
+                    // Use the destination from redirect without adding locale
+                    options.locale = false;
+                    const destination = routeInfo.props.pageProps.__N_REDIRECT;
+                    // check if destination is internal (resolves to a page) and attempt
+                    // client-navigation if it is falling back to hard navigation if
+                    // it's not
+                    if (destination.startsWith("/") && routeInfo.props.pageProps.__N_REDIRECT_BASE_PATH !== false) {
+                        const parsedHref = parse_relative_url_parseRelativeUrl(destination);
+                        parsedHref.pathname = resolveDynamicRoute(parsedHref.pathname, pages);
+                        const { url: newUrl, as: newAs } = prepareUrlAs(this, destination, destination);
+                        return this.change(method, newUrl, newAs, options);
+                    }
+                    handleHardNavigation({
+                        url: destination,
+                        router: this
+                    });
+                    return new Promise(()=>{});
+                }
+                nextState.isPreview = !!routeInfo.props.__N_PREVIEW;
+                // handle SSG data 404
+                if (routeInfo.props.notFound === SSG_DATA_NOT_FOUND) {
+                    let notFoundRoute;
+                    try {
+                        await this.fetchComponent("/404");
+                        notFoundRoute = "/404";
+                    } catch (_) {
+                        notFoundRoute = "/_error";
+                    }
+                    routeInfo = await this.getRouteInfo({
+                        route: notFoundRoute,
+                        pathname: notFoundRoute,
+                        query,
+                        as,
+                        resolvedAs,
+                        routeProps: {
+                            shallow: false
+                        },
+                        locale: nextState.locale,
+                        isPreview: nextState.isPreview,
+                        isNotFound: true
+                    });
+                    if ("type" in routeInfo) {
+                        throw new Error("Unexpected middleware effect on /404");
+                    }
+                }
+            }
+            if (isQueryUpdating && this.pathname === "/_error" && ((_self___NEXT_DATA___props = self.__NEXT_DATA__.props) == null ? void 0 : (_self___NEXT_DATA___props_pageProps = _self___NEXT_DATA___props.pageProps) == null ? void 0 : _self___NEXT_DATA___props_pageProps.statusCode) === 500 && ((_routeInfo_props = routeInfo.props) == null ? void 0 : _routeInfo_props.pageProps)) {
+                // ensure statusCode is still correct for static 500 page
+                // when updating query information
+                routeInfo.props.pageProps.statusCode = 500;
+            }
+            var _routeInfo_route;
+            // shallow routing is only allowed for same page URL changes.
+            const isValidShallowRoute = options.shallow && nextState.route === ((_routeInfo_route = routeInfo.route) != null ? _routeInfo_route : route);
+            var _options_scroll;
+            const shouldScroll = (_options_scroll = options.scroll) != null ? _options_scroll : !isQueryUpdating && !isValidShallowRoute;
+            const resetScroll = shouldScroll ? {
+                x: 0,
+                y: 0
+            } : null;
+            const upcomingScrollState = forcedScroll != null ? forcedScroll : resetScroll;
+            // the new state that the router gonna set
+            const upcomingRouterState = {
+                ...nextState,
+                route,
+                pathname,
+                query,
+                asPath: cleanedAs,
+                isFallback: false
+            };
+            // When the page being rendered is the 404 page, we should only update the
+            // query parameters. Route changes here might add the basePath when it
+            // wasn't originally present. This is also why this block is before the
+            // below `changeState` call which updates the browser's history (changing
+            // the URL).
+            if (isQueryUpdating && isErrorRoute) {
+                var _self___NEXT_DATA___props_pageProps1, _self___NEXT_DATA___props1, _routeInfo_props1;
+                routeInfo = await this.getRouteInfo({
+                    route: this.pathname,
+                    pathname: this.pathname,
+                    query,
+                    as,
+                    resolvedAs,
+                    routeProps: {
+                        shallow: false
+                    },
+                    locale: nextState.locale,
+                    isPreview: nextState.isPreview,
+                    isQueryUpdating: isQueryUpdating && !this.isFallback
+                });
+                if ("type" in routeInfo) {
+                    throw new Error("Unexpected middleware effect on " + this.pathname);
+                }
+                if (this.pathname === "/_error" && ((_self___NEXT_DATA___props1 = self.__NEXT_DATA__.props) == null ? void 0 : (_self___NEXT_DATA___props_pageProps1 = _self___NEXT_DATA___props1.pageProps) == null ? void 0 : _self___NEXT_DATA___props_pageProps1.statusCode) === 500 && ((_routeInfo_props1 = routeInfo.props) == null ? void 0 : _routeInfo_props1.pageProps)) {
+                    // ensure statusCode is still correct for static 500 page
+                    // when updating query information
+                    routeInfo.props.pageProps.statusCode = 500;
+                }
+                try {
+                    await this.set(upcomingRouterState, routeInfo, upcomingScrollState);
+                } catch (err) {
+                    if (isError(err) && err.cancelled) {
+                        router_Router.events.emit("routeChangeError", err, cleanedAs, routeProps);
+                    }
+                    throw err;
+                }
+                return true;
+            }
+            router_Router.events.emit("beforeHistoryChange", as, routeProps);
+            this.changeState(method, url, as, options);
+            // for query updates we can skip it if the state is unchanged and we don't
+            // need to scroll
+            // https://github.com/vercel/next.js/issues/37139
+            const canSkipUpdating = isQueryUpdating && !upcomingScrollState && !readyStateChange && !localeChange && compareRouterStates(upcomingRouterState, this.state);
+            if (!canSkipUpdating) {
+                try {
+                    await this.set(upcomingRouterState, routeInfo, upcomingScrollState);
+                } catch (e) {
+                    if (e.cancelled) routeInfo.error = routeInfo.error || e;
+                    else throw e;
+                }
+                if (routeInfo.error) {
+                    if (!isQueryUpdating) {
+                        router_Router.events.emit("routeChangeError", routeInfo.error, cleanedAs, routeProps);
+                    }
+                    throw routeInfo.error;
+                }
+                if (false) {}
+                if (!isQueryUpdating) {
+                    router_Router.events.emit("routeChangeComplete", as, routeProps);
+                }
+                // A hash mark # is the optional last part of a URL
+                const hashRegex = /#.+$/;
+                if (shouldScroll && hashRegex.test(as)) {
+                    this.scrollToHash(as);
+                }
+            }
+            return true;
+        } catch (err) {
+            if (isError(err) && err.cancelled) {
+                return false;
+            }
+            throw err;
+        }
+    }
+    changeState(method, url, as, options) {
+        if (options === void 0) options = {};
+        if (false) {}
+        if (method !== "pushState" || getURL() !== as) {
+            this._shallow = options.shallow;
+            window.history[method]({
+                url,
+                as,
+                options,
+                __N: true,
+                key: this._key = method !== "pushState" ? this._key : createKey()
+            }, // Passing the empty string here should be safe against future changes to the method.
+            // https://developer.mozilla.org/docs/Web/API/History/replaceState
+            "", as);
+        }
+    }
+    async handleRouteInfoError(err, pathname, query, as, routeProps, loadErrorFail) {
+        console.error(err);
+        if (err.cancelled) {
+            // bubble up cancellation errors
+            throw err;
+        }
+        if (isAssetError(err) || loadErrorFail) {
+            router_Router.events.emit("routeChangeError", err, as, routeProps);
+            // If we can't load the page it could be one of following reasons
+            //  1. Page doesn't exists
+            //  2. Page does exist in a different zone
+            //  3. Internal error while loading the page
+            // So, doing a hard reload is the proper way to deal with this.
+            handleHardNavigation({
+                url: as,
+                router: this
+            });
+            // Changing the URL doesn't block executing the current code path.
+            // So let's throw a cancellation error stop the routing logic.
+            throw buildCancellationError();
+        }
+        try {
+            let props;
+            const { page: Component, styleSheets } = await this.fetchComponent("/_error");
+            const routeInfo = {
+                props,
+                Component,
+                styleSheets,
+                err,
+                error: err
+            };
+            if (!routeInfo.props) {
+                try {
+                    routeInfo.props = await this.getInitialProps(Component, {
+                        err,
+                        pathname,
+                        query
+                    });
+                } catch (gipErr) {
+                    console.error("Error in error page `getInitialProps`: ", gipErr);
+                    routeInfo.props = {};
+                }
+            }
+            return routeInfo;
+        } catch (routeInfoErr) {
+            return this.handleRouteInfoError(isError(routeInfoErr) ? routeInfoErr : new Error(routeInfoErr + ""), pathname, query, as, routeProps, true);
+        }
+    }
+    async getRouteInfo(param) {
+        let { route: requestedRoute, pathname, query, as, resolvedAs, routeProps, locale, hasMiddleware, isPreview, unstable_skipClientCache, isQueryUpdating, isMiddlewareRewrite, isNotFound } = param;
+        /**
+     * This `route` binding can change if there's a rewrite
+     * so we keep a reference to the original requested route
+     * so we can store the cache for it and avoid re-requesting every time
+     * for shallow routing purposes.
+     */ let route = requestedRoute;
+        try {
+            var _data_effect, _data_effect1, _data_effect2, _data_response;
+            const handleCancelled = getCancelledHandler({
+                route,
+                router: this
+            });
+            let existingInfo = this.components[route];
+            if (routeProps.shallow && existingInfo && this.route === route) {
+                return existingInfo;
+            }
+            if (hasMiddleware) {
+                existingInfo = undefined;
+            }
+            let cachedRouteInfo = existingInfo && !("initial" in existingInfo) && "production" !== "development" ? existingInfo : undefined;
+            const isBackground = isQueryUpdating;
+            const fetchNextDataParams = {
+                dataHref: this.pageLoader.getDataHref({
+                    href: formatWithValidation({
+                        pathname,
+                        query
+                    }),
+                    skipInterpolation: true,
+                    asPath: isNotFound ? "/404" : resolvedAs,
+                    locale
+                }),
+                hasMiddleware: true,
+                isServerRender: this.isSsr,
+                parseJSON: true,
+                inflightCache: isBackground ? this.sbc : this.sdc,
+                persistCache: !isPreview,
+                isPrefetch: false,
+                unstable_skipClientCache,
+                isBackground
+            };
+            let data = isQueryUpdating && !isMiddlewareRewrite ? null : await withMiddlewareEffects({
+                fetchData: ()=>fetchNextData(fetchNextDataParams),
+                asPath: isNotFound ? "/404" : resolvedAs,
+                locale: locale,
+                router: this
+            }).catch((err)=>{
+                // we don't hard error during query updating
+                // as it's un-necessary and doesn't need to be fatal
+                // unless it is a fallback route and the props can't
+                // be loaded
+                if (isQueryUpdating) {
+                    return null;
+                }
+                throw err;
+            });
+            // when rendering error routes we don't apply middleware
+            // effects
+            if (data && (pathname === "/_error" || pathname === "/404")) {
+                data.effect = undefined;
+            }
+            if (isQueryUpdating) {
+                if (!data) {
+                    data = {
+                        json: self.__NEXT_DATA__.props
+                    };
+                } else {
+                    data.json = self.__NEXT_DATA__.props;
+                }
+            }
+            handleCancelled();
+            if ((data == null ? void 0 : (_data_effect = data.effect) == null ? void 0 : _data_effect.type) === "redirect-internal" || (data == null ? void 0 : (_data_effect1 = data.effect) == null ? void 0 : _data_effect1.type) === "redirect-external") {
+                return data.effect;
+            }
+            if ((data == null ? void 0 : (_data_effect2 = data.effect) == null ? void 0 : _data_effect2.type) === "rewrite") {
+                const resolvedRoute = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(data.effect.resolvedHref);
+                const pages = await this.pageLoader.getPageList();
+                // during query updating the page must match although during
+                // client-transition a redirect that doesn't match a page
+                // can be returned and this should trigger a hard navigation
+                // which is valid for incremental migration
+                if (!isQueryUpdating || pages.includes(resolvedRoute)) {
+                    route = resolvedRoute;
+                    pathname = data.effect.resolvedHref;
+                    query = {
+                        ...query,
+                        ...data.effect.parsedAs.query
+                    };
+                    resolvedAs = remove_base_path_removeBasePath((0,normalize_locale_path/* normalizeLocalePath */.h)(data.effect.parsedAs.pathname, this.locales).pathname);
+                    // Check again the cache with the new destination.
+                    existingInfo = this.components[route];
+                    if (routeProps.shallow && existingInfo && this.route === route && !hasMiddleware) {
+                        // If we have a match with the current route due to rewrite,
+                        // we can copy the existing information to the rewritten one.
+                        // Then, we return the information along with the matched route.
+                        return {
+                            ...existingInfo,
+                            route
+                        };
+                    }
+                }
+            }
+            if (isAPIRoute(route)) {
+                handleHardNavigation({
+                    url: as,
+                    router: this
+                });
+                return new Promise(()=>{});
+            }
+            const routeInfo = cachedRouteInfo || await this.fetchComponent(route).then((res)=>({
+                    Component: res.page,
+                    styleSheets: res.styleSheets,
+                    __N_SSG: res.mod.__N_SSG,
+                    __N_SSP: res.mod.__N_SSP
+                }));
+            if (false) {}
+            const wasBailedPrefetch = data == null ? void 0 : (_data_response = data.response) == null ? void 0 : _data_response.headers.get("x-middleware-skip");
+            const shouldFetchData = routeInfo.__N_SSG || routeInfo.__N_SSP;
+            // For non-SSG prefetches that bailed before sending data
+            // we clear the cache to fetch full response
+            if (wasBailedPrefetch && (data == null ? void 0 : data.dataHref)) {
+                delete this.sdc[data.dataHref];
+            }
+            const { props, cacheKey } = await this._getData(async ()=>{
+                if (shouldFetchData) {
+                    if ((data == null ? void 0 : data.json) && !wasBailedPrefetch) {
+                        return {
+                            cacheKey: data.cacheKey,
+                            props: data.json
+                        };
+                    }
+                    const dataHref = (data == null ? void 0 : data.dataHref) ? data.dataHref : this.pageLoader.getDataHref({
+                        href: formatWithValidation({
+                            pathname,
+                            query
+                        }),
+                        asPath: resolvedAs,
+                        locale
+                    });
+                    const fetched = await fetchNextData({
+                        dataHref,
+                        isServerRender: this.isSsr,
+                        parseJSON: true,
+                        inflightCache: wasBailedPrefetch ? {} : this.sdc,
+                        persistCache: !isPreview,
+                        isPrefetch: false,
+                        unstable_skipClientCache
+                    });
+                    return {
+                        cacheKey: fetched.cacheKey,
+                        props: fetched.json || {}
+                    };
+                }
+                return {
+                    headers: {},
+                    props: await this.getInitialProps(routeInfo.Component, {
+                        pathname,
+                        query,
+                        asPath: as,
+                        locale,
+                        locales: this.locales,
+                        defaultLocale: this.defaultLocale
+                    })
+                };
+            });
+            // Only bust the data cache for SSP routes although
+            // middleware can skip cache per request with
+            // x-middleware-cache: no-cache as well
+            if (routeInfo.__N_SSP && fetchNextDataParams.dataHref && cacheKey) {
+                delete this.sdc[cacheKey];
+            }
+            // we kick off a HEAD request in the background
+            // when a non-prefetch request is made to signal revalidation
+            if (!this.isPreview && routeInfo.__N_SSG && "production" !== "development" && !isQueryUpdating) {
+                fetchNextData(Object.assign({}, fetchNextDataParams, {
+                    isBackground: true,
+                    persistCache: false,
+                    inflightCache: this.sbc
+                })).catch(()=>{});
+            }
+            props.pageProps = Object.assign({}, props.pageProps);
+            routeInfo.props = props;
+            routeInfo.route = route;
+            routeInfo.query = query;
+            routeInfo.resolvedAs = resolvedAs;
+            this.components[route] = routeInfo;
+            return routeInfo;
+        } catch (err) {
+            return this.handleRouteInfoError(getProperError(err), pathname, query, as, routeProps);
+        }
+    }
+    set(state, data, resetScroll) {
+        this.state = state;
+        return this.sub(data, this.components["/_app"].Component, resetScroll);
+    }
+    /**
+   * Callback to execute before replacing router state
+   * @param cb callback to be executed
+   */ beforePopState(cb) {
+        this._bps = cb;
+    }
+    onlyAHashChange(as) {
+        if (!this.asPath) return false;
+        const [oldUrlNoHash, oldHash] = this.asPath.split("#");
+        const [newUrlNoHash, newHash] = as.split("#");
+        // Makes sure we scroll to the provided hash if the url/hash are the same
+        if (newHash && oldUrlNoHash === newUrlNoHash && oldHash === newHash) {
+            return true;
+        }
+        // If the urls are change, there's more than a hash change
+        if (oldUrlNoHash !== newUrlNoHash) {
+            return false;
+        }
+        // If the hash has changed, then it's a hash only change.
+        // This check is necessary to handle both the enter and
+        // leave hash === '' cases. The identity case falls through
+        // and is treated as a next reload.
+        return oldHash !== newHash;
+    }
+    scrollToHash(as) {
+        const [, hash = ""] = as.split("#");
+        handleSmoothScroll(()=>{
+            // Scroll to top if the hash is just `#` with no value or `#top`
+            // To mirror browsers
+            if (hash === "" || hash === "top") {
+                window.scrollTo(0, 0);
+                return;
+            }
+            // Decode hash to make non-latin anchor works.
+            const rawHash = decodeURIComponent(hash);
+            // First we check if the element by id is found
+            const idEl = document.getElementById(rawHash);
+            if (idEl) {
+                idEl.scrollIntoView();
+                return;
+            }
+            // If there's no element with the id, we check the `name` property
+            // To mirror browsers
+            const nameEl = document.getElementsByName(rawHash)[0];
+            if (nameEl) {
+                nameEl.scrollIntoView();
+            }
+        }, {
+            onlyHashChange: this.onlyAHashChange(as)
+        });
+    }
+    urlIsNew(asPath) {
+        return this.asPath !== asPath;
+    }
+    /**
+   * Prefetch page code, you may wait for the data during page rendering.
+   * This feature only works in production!
+   * @param url the href of prefetched page
+   * @param asPath the as path of the prefetched page
+   */ async prefetch(url, asPath, options) {
+        if (asPath === void 0) asPath = url;
+        if (options === void 0) options = {};
+        // Prefetch is not supported in development mode because it would trigger on-demand-entries
+        if (false) {}
+        if (false) {}
+        let parsed = parse_relative_url_parseRelativeUrl(url);
+        const urlPathname = parsed.pathname;
+        let { pathname, query } = parsed;
+        const originalPathname = pathname;
+        if (false) {}
+        const pages = await this.pageLoader.getPageList();
+        let resolvedAs = asPath;
+        const locale = typeof options.locale !== "undefined" ? options.locale || undefined : this.locale;
+        const isMiddlewareMatch = await matchesMiddleware({
+            asPath: asPath,
+            locale: locale,
+            router: this
+        });
+        if (false) {}
+        parsed.pathname = resolveDynamicRoute(parsed.pathname, pages);
+        if (isDynamicRoute(parsed.pathname)) {
+            pathname = parsed.pathname;
+            parsed.pathname = pathname;
+            Object.assign(query, getRouteMatcher(getRouteRegex(parsed.pathname))((0,parse_path/* parsePath */.c)(asPath).pathname) || {});
+            if (!isMiddlewareMatch) {
+                url = formatWithValidation(parsed);
+            }
+        }
+        const data =  false ? 0 : await withMiddlewareEffects({
+            fetchData: ()=>fetchNextData({
+                    dataHref: this.pageLoader.getDataHref({
+                        href: formatWithValidation({
+                            pathname: originalPathname,
+                            query
+                        }),
+                        skipInterpolation: true,
+                        asPath: resolvedAs,
+                        locale
+                    }),
+                    hasMiddleware: true,
+                    isServerRender: this.isSsr,
+                    parseJSON: true,
+                    inflightCache: this.sdc,
+                    persistCache: !this.isPreview,
+                    isPrefetch: true
+                }),
+            asPath: asPath,
+            locale: locale,
+            router: this
+        });
+        /**
+     * If there was a rewrite we apply the effects of the rewrite on the
+     * current parameters for the prefetch.
+     */ if ((data == null ? void 0 : data.effect.type) === "rewrite") {
+            parsed.pathname = data.effect.resolvedHref;
+            pathname = data.effect.resolvedHref;
+            query = {
+                ...query,
+                ...data.effect.parsedAs.query
+            };
+            resolvedAs = data.effect.parsedAs.pathname;
+            url = formatWithValidation(parsed);
+        }
+        /**
+     * If there is a redirect to an external destination then we don't have
+     * to prefetch content as it will be unused.
+     */ if ((data == null ? void 0 : data.effect.type) === "redirect-external") {
+            return;
+        }
+        const route = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathname);
+        if (await this._bfl(asPath, resolvedAs, options.locale, true)) {
+            this.components[urlPathname] = {
+                __appRouter: true
+            };
+        }
+        await Promise.all([
+            this.pageLoader._isSsg(route).then((isSsg)=>{
+                return isSsg ? fetchNextData({
+                    dataHref: (data == null ? void 0 : data.json) ? data == null ? void 0 : data.dataHref : this.pageLoader.getDataHref({
+                        href: url,
+                        asPath: resolvedAs,
+                        locale: locale
+                    }),
+                    isServerRender: false,
+                    parseJSON: true,
+                    inflightCache: this.sdc,
+                    persistCache: !this.isPreview,
+                    isPrefetch: true,
+                    unstable_skipClientCache: options.unstable_skipClientCache || options.priority && !!true
+                }).then(()=>false).catch(()=>false) : false;
+            }),
+            this.pageLoader[options.priority ? "loadPage" : "prefetch"](route)
+        ]);
+    }
+    async fetchComponent(route) {
+        const handleCancelled = getCancelledHandler({
+            route,
+            router: this
+        });
+        try {
+            const componentResult = await this.pageLoader.loadPage(route);
+            handleCancelled();
+            return componentResult;
+        } catch (err) {
+            handleCancelled();
+            throw err;
+        }
+    }
+    _getData(fn) {
+        let cancelled = false;
+        const cancel = ()=>{
+            cancelled = true;
+        };
+        this.clc = cancel;
+        return fn().then((data)=>{
+            if (cancel === this.clc) {
+                this.clc = null;
+            }
+            if (cancelled) {
+                const err = new Error("Loading initial props cancelled");
+                err.cancelled = true;
+                throw err;
+            }
+            return data;
+        });
+    }
+    _getFlightData(dataHref) {
+        // Do not cache RSC flight response since it's not a static resource
+        return fetchNextData({
+            dataHref,
+            isServerRender: true,
+            parseJSON: false,
+            inflightCache: this.sdc,
+            persistCache: false,
+            isPrefetch: false
+        }).then((param)=>{
+            let { text } = param;
+            return {
+                data: text
+            };
+        });
+    }
+    getInitialProps(Component, ctx) {
+        const { Component: App } = this.components["/_app"];
+        const AppTree = this._wrapApp(App);
+        ctx.AppTree = AppTree;
+        return loadGetInitialProps(App, {
+            AppTree,
+            Component,
+            router: this,
+            ctx
+        });
+    }
+    get route() {
+        return this.state.route;
+    }
+    get pathname() {
+        return this.state.pathname;
+    }
+    get query() {
+        return this.state.query;
+    }
+    get asPath() {
+        return this.state.asPath;
+    }
+    get locale() {
+        return this.state.locale;
+    }
+    get isFallback() {
+        return this.state.isFallback;
+    }
+    get isPreview() {
+        return this.state.isPreview;
+    }
+    constructor(pathname, query, as, { initialProps, pageLoader, App, wrapApp, Component, err, subscription, isFallback, locale, locales, defaultLocale, domainLocales, isPreview }){
+        // Server Data Cache (full data requests)
+        this.sdc = {};
+        // Server Background Cache (HEAD requests)
+        this.sbc = {};
+        this.isFirstPopStateEvent = true;
+        this._key = createKey();
+        this.onPopState = (e)=>{
+            const { isFirstPopStateEvent } = this;
+            this.isFirstPopStateEvent = false;
+            const state = e.state;
+            if (!state) {
+                // We get state as undefined for two reasons.
+                //  1. With older safari (< 8) and older chrome (< 34)
+                //  2. When the URL changed with #
+                //
+                // In the both cases, we don't need to proceed and change the route.
+                // (as it's already changed)
+                // But we can simply replace the state with the new changes.
+                // Actually, for (1) we don't need to nothing. But it's hard to detect that event.
+                // So, doing the following for (1) does no harm.
+                const { pathname, query } = this;
+                this.changeState("replaceState", formatWithValidation({
+                    pathname: addBasePath(pathname),
+                    query
+                }), getURL());
+                return;
+            }
+            // __NA is used to identify if the history entry can be handled by the app-router.
+            if (state.__NA) {
+                window.location.reload();
+                return;
+            }
+            if (!state.__N) {
+                return;
+            }
+            // Safari fires popstateevent when reopening the browser.
+            if (isFirstPopStateEvent && this.locale === state.options.locale && state.as === this.asPath) {
+                return;
+            }
+            let forcedScroll;
+            const { url, as, options, key } = state;
+            if (false) {}
+            this._key = key;
+            const { pathname } = parse_relative_url_parseRelativeUrl(url);
+            // Make sure we don't re-render on initial load,
+            // can be caused by navigating back from an external site
+            if (this.isSsr && as === addBasePath(this.asPath) && pathname === addBasePath(this.pathname)) {
+                return;
+            }
+            // If the downstream application returns falsy, return.
+            // They will then be responsible for handling the event.
+            if (this._bps && !this._bps(state)) {
+                return;
+            }
+            this.change("replaceState", url, as, Object.assign({}, options, {
+                shallow: options.shallow && this._shallow,
+                locale: options.locale || this.defaultLocale,
+                // @ts-ignore internal value not exposed on types
+                _h: 0
+            }), forcedScroll);
+        };
+        // represents the current component key
+        const route = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathname);
+        // set up the component cache (by route keys)
+        this.components = {};
+        // We should not keep the cache, if there's an error
+        // Otherwise, this cause issues when when going back and
+        // come again to the errored page.
+        if (pathname !== "/_error") {
+            this.components[route] = {
+                Component,
+                initial: true,
+                props: initialProps,
+                err,
+                __N_SSG: initialProps && initialProps.__N_SSG,
+                __N_SSP: initialProps && initialProps.__N_SSP
+            };
+        }
+        this.components["/_app"] = {
+            Component: App,
+            styleSheets: []
+        };
+        if (true) {
+            const { BloomFilter } = __webpack_require__(9444);
+            const staticFilterData = {"numItems":2,"errorRate":0.01,"numBits":20,"numHashes":7,"bitArray":[1,0,1,0,1,0,0,0,0,1,0,1,0,1,1,1,1,1,1,1]};
+            const dynamicFilterData = {"numItems":0,"errorRate":0.01,"numBits":0,"numHashes":null,"bitArray":[]};
+            if (staticFilterData == null ? void 0 : staticFilterData.numHashes) {
+                this._bfl_s = new BloomFilter(staticFilterData.numItems, staticFilterData.errorRate);
+                this._bfl_s.import(staticFilterData);
+            }
+            if (dynamicFilterData == null ? void 0 : dynamicFilterData.numHashes) {
+                this._bfl_d = new BloomFilter(dynamicFilterData.numItems, dynamicFilterData.errorRate);
+                this._bfl_d.import(dynamicFilterData);
+            }
+        }
+        // Backwards compat for Router.router.events
+        // TODO: Should be remove the following major version as it was never documented
+        this.events = router_Router.events;
+        this.pageLoader = pageLoader;
+        // if auto prerendered and dynamic route wait to update asPath
+        // until after mount to prevent hydration mismatch
+        const autoExportDynamic = isDynamicRoute(pathname) && self.__NEXT_DATA__.autoExport;
+        this.basePath =  false || "";
+        this.sub = subscription;
+        this.clc = null;
+        this._wrapApp = wrapApp;
+        // make sure to ignore extra popState in safari on navigating
+        // back from external site
+        this.isSsr = true;
+        this.isLocaleDomain = false;
+        this.isReady = !!(self.__NEXT_DATA__.gssp || self.__NEXT_DATA__.gip || self.__NEXT_DATA__.isExperimentalCompile || self.__NEXT_DATA__.appGip && !self.__NEXT_DATA__.gsp || !autoExportDynamic && !self.location.search && !false);
+        if (false) {}
+        this.state = {
+            route,
+            pathname,
+            query,
+            asPath: autoExportDynamic ? pathname : as,
+            isPreview: !!isPreview,
+            locale:  false ? 0 : undefined,
+            isFallback
+        };
+        this._initialMatchesMiddlewarePromise = Promise.resolve(false);
+        if (false) {}
+    }
+}
+router_Router.events = mitt();
+ //# sourceMappingURL=router.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router-context.shared-runtime.js
+
+const RouterContext = /*#__PURE__*/ react.createContext(null);
+if (false) {} //# sourceMappingURL=router-context.shared-runtime.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/with-router.js
+
+
+function withRouter(ComposedComponent) {
+    function WithRouterWrapper(props) {
+        return /*#__PURE__*/ React.createElement(ComposedComponent, {
+            router: useRouter(),
+            ...props
+        });
+    }
+    WithRouterWrapper.getInitialProps = ComposedComponent.getInitialProps;
+    WithRouterWrapper.origGetInitialProps = ComposedComponent.origGetInitialProps;
+    if (false) {}
+    return WithRouterWrapper;
+} //# sourceMappingURL=with-router.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/router.js
+/* global window */ 
+
+
+
+
+const singletonRouter = {
+    router: null,
+    readyCallbacks: [],
+    ready (callback) {
+        if (this.router) return callback();
+        if (false) {}
+    }
+};
+// Create public properties and methods of the router in the singletonRouter
+const urlPropertyFields = [
+    "pathname",
+    "route",
+    "query",
+    "asPath",
+    "components",
+    "isFallback",
+    "basePath",
+    "locale",
+    "locales",
+    "defaultLocale",
+    "isReady",
+    "isPreview",
+    "isLocaleDomain",
+    "domainLocales"
+];
+const routerEvents = [
+    "routeChangeStart",
+    "beforeHistoryChange",
+    "routeChangeComplete",
+    "routeChangeError",
+    "hashChangeStart",
+    "hashChangeComplete"
+];
+const coreMethodFields = [
+    "push",
+    "replace",
+    "reload",
+    "back",
+    "prefetch",
+    "beforePopState"
+];
+// Events is a static property on the router, the router doesn't have to be initialized to use it
+Object.defineProperty(singletonRouter, "events", {
+    get () {
+        return router_Router.events;
+    }
+});
+function getRouter() {
+    if (!singletonRouter.router) {
+        const message = "No router instance found.\n" + 'You should only use "next/router" on the client side of your app.\n';
+        throw new Error(message);
+    }
+    return singletonRouter.router;
+}
+urlPropertyFields.forEach((field)=>{
+    // Here we need to use Object.defineProperty because we need to return
+    // the property assigned to the actual router
+    // The value might get changed as we change routes and this is the
+    // proper way to access it
+    Object.defineProperty(singletonRouter, field, {
+        get () {
+            const router = getRouter();
+            return router[field];
+        }
+    });
+});
+coreMethodFields.forEach((field)=>{
+    singletonRouter[field] = function() {
+        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+            args[_key] = arguments[_key];
+        }
+        const router = getRouter();
+        return router[field](...args);
+    };
+});
+routerEvents.forEach((event)=>{
+    singletonRouter.ready(()=>{
+        router_Router.events.on(event, function() {
+            for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+                args[_key] = arguments[_key];
+            }
+            const eventField = "on" + event.charAt(0).toUpperCase() + event.substring(1);
+            const _singletonRouter = singletonRouter;
+            if (_singletonRouter[eventField]) {
+                try {
+                    _singletonRouter[eventField](...args);
+                } catch (err) {
+                    console.error("Error when running the Router event: " + eventField);
+                    console.error(isError(err) ? err.message + "\n" + err.stack : err + "");
+                }
+            }
+        });
+    });
+});
+// Export the singletonRouter and this is the public API.
+/* harmony default export */ const router = ((/* unused pure expression or super */ null && (singletonRouter)));
+// Reexport the withRouter HOC
+
+function router_useRouter() {
+    const router = react.useContext(RouterContext);
+    if (!router) {
+        throw new Error("NextRouter was not mounted. https://nextjs.org/docs/messages/next-router-not-mounted");
+    }
+    return router;
+}
+// INTERNAL APIS
+// -------------
+// (do not use following exports inside the app)
+/**
+ * Create a router and assign it as the singleton instance.
+ * This is used in client side when we are initializing the app.
+ * This should **not** be used inside the server.
+ * @internal
+ */ function createRouter() {
+    for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+        args[_key] = arguments[_key];
+    }
+    singletonRouter.router = new Router(...args);
+    singletonRouter.readyCallbacks.forEach((cb)=>cb());
+    singletonRouter.readyCallbacks = [];
+    return singletonRouter.router;
+}
+/**
+ * This function is used to create the `withRouter` router instance
+ * @internal
+ */ function makePublicRouterInstance(router) {
+    const scopedRouter = router;
+    const instance = {};
+    for (const property of urlPropertyFields){
+        if (typeof scopedRouter[property] === "object") {
+            instance[property] = Object.assign(Array.isArray(scopedRouter[property]) ? [] : {}, scopedRouter[property]) // makes sure query is not stateful
+            ;
+            continue;
+        }
+        instance[property] = scopedRouter[property];
+    }
+    // Events is a static property on the router, the router doesn't have to be initialized to use it
+    instance.events = Router.events;
+    coreMethodFields.forEach((field)=>{
+        instance[field] = function() {
+            for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+                args[_key] = arguments[_key];
+            }
+            return scopedRouter[field](...args);
+        };
+    });
+    return instance;
+} //# sourceMappingURL=router.js.map
+
+
+/***/ }),
+
+/***/ 8819:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ script),
+  V: () => (/* binding */ handleClientScriptLoad)
+});
+
+// UNUSED EXPORTS: initScriptLoader
+
+// EXTERNAL MODULE: ./node_modules/react-dom/index.js
+var react_dom = __webpack_require__(4337);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(167);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/head-manager-context.shared-runtime.js
+
+const HeadManagerContext = /*#__PURE__*/ react.createContext({});
+if (false) {} //# sourceMappingURL=head-manager-context.shared-runtime.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/head-manager.js
+const DOMAttributeNames = {
+    acceptCharset: "accept-charset",
+    className: "class",
+    htmlFor: "for",
+    httpEquiv: "http-equiv",
+    noModule: "noModule"
+};
+function reactElementToDOM(param) {
+    let { type, props } = param;
+    const el = document.createElement(type);
+    for(const p in props){
+        if (!props.hasOwnProperty(p)) continue;
+        if (p === "children" || p === "dangerouslySetInnerHTML") continue;
+        // we don't render undefined props to the DOM
+        if (props[p] === undefined) continue;
+        const attr = DOMAttributeNames[p] || p.toLowerCase();
+        if (type === "script" && (attr === "async" || attr === "defer" || attr === "noModule")) {
+            el[attr] = !!props[p];
+        } else {
+            el.setAttribute(attr, props[p]);
+        }
+    }
+    const { children, dangerouslySetInnerHTML } = props;
+    if (dangerouslySetInnerHTML) {
+        el.innerHTML = dangerouslySetInnerHTML.__html || "";
+    } else if (children) {
+        el.textContent = typeof children === "string" ? children : Array.isArray(children) ? children.join("") : "";
+    }
+    return el;
+}
+/**
+ * When a `nonce` is present on an element, browsers such as Chrome and Firefox strip it out of the
+ * actual HTML attributes for security reasons *when the element is added to the document*. Thus,
+ * given two equivalent elements that have nonces, `Element,isEqualNode()` will return false if one
+ * of those elements gets added to the document. Although the `element.nonce` property will be the
+ * same for both elements, the one that was added to the document will return an empty string for
+ * its nonce HTML attribute value.
+ *
+ * This custom `isEqualNode()` function therefore removes the nonce value from the `newTag` before
+ * comparing it to `oldTag`, restoring it afterwards.
+ *
+ * For more information, see:
+ * https://bugs.chromium.org/p/chromium/issues/detail?id=1211471#c12
+ */ function isEqualNode(oldTag, newTag) {
+    if (oldTag instanceof HTMLElement && newTag instanceof HTMLElement) {
+        const nonce = newTag.getAttribute("nonce");
+        // Only strip the nonce if `oldTag` has had it stripped. An element's nonce attribute will not
+        // be stripped if there is no content security policy response header that includes a nonce.
+        if (nonce && !oldTag.getAttribute("nonce")) {
+            const cloneTag = newTag.cloneNode(true);
+            cloneTag.setAttribute("nonce", "");
+            cloneTag.nonce = nonce;
+            return nonce === oldTag.nonce && oldTag.isEqualNode(cloneTag);
+        }
+    }
+    return oldTag.isEqualNode(newTag);
+}
+let updateElements;
+if (false) {} else {
+    updateElements = (type, components)=>{
+        const headEl = document.getElementsByTagName("head")[0];
+        const headCountEl = headEl.querySelector("meta[name=next-head-count]");
+        if (false) {}
+        const headCount = Number(headCountEl.content);
+        const oldTags = [];
+        for(let i = 0, j = headCountEl.previousElementSibling; i < headCount; i++, j = (j == null ? void 0 : j.previousElementSibling) || null){
+            var _j_tagName;
+            if ((j == null ? void 0 : (_j_tagName = j.tagName) == null ? void 0 : _j_tagName.toLowerCase()) === type) {
+                oldTags.push(j);
+            }
+        }
+        const newTags = components.map(reactElementToDOM).filter((newTag)=>{
+            for(let k = 0, len = oldTags.length; k < len; k++){
+                const oldTag = oldTags[k];
+                if (isEqualNode(oldTag, newTag)) {
+                    oldTags.splice(k, 1);
+                    return false;
+                }
+            }
+            return true;
+        });
+        oldTags.forEach((t)=>{
+            var _t_parentNode;
+            return (_t_parentNode = t.parentNode) == null ? void 0 : _t_parentNode.removeChild(t);
+        });
+        newTags.forEach((t)=>headEl.insertBefore(t, headCountEl));
+        headCountEl.content = (headCount - oldTags.length + newTags.length).toString();
+    };
+}
+function initHeadManager() {
+    return {
+        mountedInstances: new Set(),
+        updateHead: (head)=>{
+            const tags = {};
+            head.forEach((h)=>{
+                if (// it won't be inlined. In this case revert to the original behavior
+                h.type === "link" && h.props["data-optimized-fonts"]) {
+                    if (document.querySelector('style[data-href="' + h.props["data-href"] + '"]')) {
+                        return;
+                    } else {
+                        h.props.href = h.props["data-href"];
+                        h.props["data-href"] = undefined;
+                    }
+                }
+                const components = tags[h.type] || [];
+                components.push(h);
+                tags[h.type] = components;
+            });
+            const titleComponent = tags.title ? tags.title[0] : null;
+            let title = "";
+            if (titleComponent) {
+                const { children } = titleComponent.props;
+                title = typeof children === "string" ? children : Array.isArray(children) ? children.join("") : "";
+            }
+            if (title !== document.title) document.title = title;
+            [
+                "meta",
+                "base",
+                "link",
+                "style",
+                "script"
+            ].forEach((type)=>{
+                updateElements(type, tags[type] || []);
+            });
+        }
+    };
+} //# sourceMappingURL=head-manager.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/client/request-idle-callback.js
+var request_idle_callback = __webpack_require__(7483);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/client/script.js
+"use client";
+
+
+
+
+
+const ScriptCache = new Map();
+const LoadCache = new Set();
+const ignoreProps = [
+    "onLoad",
+    "onReady",
+    "dangerouslySetInnerHTML",
+    "children",
+    "onError",
+    "strategy",
+    "stylesheets"
+];
+const insertStylesheets = (stylesheets)=>{
+    // Case 1: Styles for afterInteractive/lazyOnload with appDir injected via handleClientScriptLoad
+    //
+    // Using ReactDOM.preinit to feature detect appDir and inject styles
+    // Stylesheets might have already been loaded if initialized with Script component
+    // Re-inject styles here to handle scripts loaded via handleClientScriptLoad
+    // ReactDOM.preinit handles dedup and ensures the styles are loaded only once
+    if (react_dom.preinit) {
+        stylesheets.forEach((stylesheet)=>{
+            react_dom.preinit(stylesheet, {
+                as: "style"
+            });
+        });
+        return;
+    }
+    // Case 2: Styles for afterInteractive/lazyOnload with pages injected via handleClientScriptLoad
+    //
+    // We use this function to load styles when appdir is not detected
+    // TODO: Use React float APIs to load styles once available for pages dir
+    if (false) {}
+};
+const loadScript = (props)=>{
+    const { src, id, onLoad = ()=>{}, onReady = null, dangerouslySetInnerHTML, children = "", strategy = "afterInteractive", onError, stylesheets } = props;
+    const cacheKey = id || src;
+    // Script has already loaded
+    if (cacheKey && LoadCache.has(cacheKey)) {
+        return;
+    }
+    // Contents of this script are already loading/loaded
+    if (ScriptCache.has(src)) {
+        LoadCache.add(cacheKey);
+        // It is possible that multiple `next/script` components all have same "src", but has different "onLoad"
+        // This is to make sure the same remote script will only load once, but "onLoad" are executed in order
+        ScriptCache.get(src).then(onLoad, onError);
+        return;
+    }
+    /** Execute after the script first loaded */ const afterLoad = ()=>{
+        // Run onReady for the first time after load event
+        if (onReady) {
+            onReady();
+        }
+        // add cacheKey to LoadCache when load successfully
+        LoadCache.add(cacheKey);
+    };
+    const el = document.createElement("script");
+    const loadPromise = new Promise((resolve, reject)=>{
+        el.addEventListener("load", function(e) {
+            resolve();
+            if (onLoad) {
+                onLoad.call(this, e);
+            }
+            afterLoad();
+        });
+        el.addEventListener("error", function(e) {
+            reject(e);
+        });
+    }).catch(function(e) {
+        if (onError) {
+            onError(e);
+        }
+    });
+    if (dangerouslySetInnerHTML) {
+        // Casting since lib.dom.d.ts doesn't have TrustedHTML yet.
+        el.innerHTML = dangerouslySetInnerHTML.__html || "";
+        afterLoad();
+    } else if (children) {
+        el.textContent = typeof children === "string" ? children : Array.isArray(children) ? children.join("") : "";
+        afterLoad();
+    } else if (src) {
+        el.src = src;
+        // do not add cacheKey into LoadCache for remote script here
+        // cacheKey will be added to LoadCache when it is actually loaded (see loadPromise above)
+        ScriptCache.set(src, loadPromise);
+    }
+    for (const [k, value] of Object.entries(props)){
+        if (value === undefined || ignoreProps.includes(k)) {
+            continue;
+        }
+        const attr = DOMAttributeNames[k] || k.toLowerCase();
+        el.setAttribute(attr, value);
+    }
+    if (strategy === "worker") {
+        el.setAttribute("type", "text/partytown");
+    }
+    el.setAttribute("data-nscript", strategy);
+    // Load styles associated with this script
+    if (stylesheets) {
+        insertStylesheets(stylesheets);
+    }
+    document.body.appendChild(el);
+};
+function handleClientScriptLoad(props) {
+    const { strategy = "afterInteractive" } = props;
+    if (strategy === "lazyOnload") {
+        window.addEventListener("load", ()=>{
+            (0,request_idle_callback/* requestIdleCallback */.K)(()=>loadScript(props));
+        });
+    } else {
+        loadScript(props);
+    }
+}
+function loadLazyScript(props) {
+    if (document.readyState === "complete") {
+        (0,request_idle_callback/* requestIdleCallback */.K)(()=>loadScript(props));
+    } else {
+        window.addEventListener("load", ()=>{
+            (0,request_idle_callback/* requestIdleCallback */.K)(()=>loadScript(props));
+        });
+    }
+}
+function addBeforeInteractiveToCache() {
+    const scripts = [
+        ...document.querySelectorAll('[data-nscript="beforeInteractive"]'),
+        ...document.querySelectorAll('[data-nscript="beforePageRender"]')
+    ];
+    scripts.forEach((script)=>{
+        const cacheKey = script.id || script.getAttribute("src");
+        LoadCache.add(cacheKey);
+    });
+}
+function initScriptLoader(scriptLoaderItems) {
+    scriptLoaderItems.forEach(handleClientScriptLoad);
+    addBeforeInteractiveToCache();
+}
+function Script(props) {
+    const { id, src = "", onLoad = ()=>{}, onReady = null, strategy = "afterInteractive", onError, stylesheets, ...restProps } = props;
+    // Context is available only during SSR
+    const { updateScripts, scripts, getIsSsr, appDir, nonce } = (0,react.useContext)(HeadManagerContext);
+    /**
+   * - First mount:
+   *   1. The useEffect for onReady executes
+   *   2. hasOnReadyEffectCalled.current is false, but the script hasn't loaded yet (not in LoadCache)
+   *      onReady is skipped, set hasOnReadyEffectCalled.current to true
+   *   3. The useEffect for loadScript executes
+   *   4. hasLoadScriptEffectCalled.current is false, loadScript executes
+   *      Once the script is loaded, the onLoad and onReady will be called by then
+   *   [If strict mode is enabled / is wrapped in <OffScreen /> component]
+   *   5. The useEffect for onReady executes again
+   *   6. hasOnReadyEffectCalled.current is true, so entire effect is skipped
+   *   7. The useEffect for loadScript executes again
+   *   8. hasLoadScriptEffectCalled.current is true, so entire effect is skipped
+   *
+   * - Second mount:
+   *   1. The useEffect for onReady executes
+   *   2. hasOnReadyEffectCalled.current is false, but the script has already loaded (found in LoadCache)
+   *      onReady is called, set hasOnReadyEffectCalled.current to true
+   *   3. The useEffect for loadScript executes
+   *   4. The script is already loaded, loadScript bails out
+   *   [If strict mode is enabled / is wrapped in <OffScreen /> component]
+   *   5. The useEffect for onReady executes again
+   *   6. hasOnReadyEffectCalled.current is true, so entire effect is skipped
+   *   7. The useEffect for loadScript executes again
+   *   8. hasLoadScriptEffectCalled.current is true, so entire effect is skipped
+   */ const hasOnReadyEffectCalled = (0,react.useRef)(false);
+    (0,react.useEffect)(()=>{
+        const cacheKey = id || src;
+        if (!hasOnReadyEffectCalled.current) {
+            // Run onReady if script has loaded before but component is re-mounted
+            if (onReady && cacheKey && LoadCache.has(cacheKey)) {
+                onReady();
+            }
+            hasOnReadyEffectCalled.current = true;
+        }
+    }, [
+        onReady,
+        id,
+        src
+    ]);
+    const hasLoadScriptEffectCalled = (0,react.useRef)(false);
+    (0,react.useEffect)(()=>{
+        if (!hasLoadScriptEffectCalled.current) {
+            if (strategy === "afterInteractive") {
+                loadScript(props);
+            } else if (strategy === "lazyOnload") {
+                loadLazyScript(props);
+            }
+            hasLoadScriptEffectCalled.current = true;
+        }
+    }, [
+        props,
+        strategy
+    ]);
+    if (strategy === "beforeInteractive" || strategy === "worker") {
+        if (updateScripts) {
+            scripts[strategy] = (scripts[strategy] || []).concat([
+                {
+                    id,
+                    src,
+                    onLoad,
+                    onReady,
+                    onError,
+                    ...restProps
+                }
+            ]);
+            updateScripts(scripts);
+        } else if (getIsSsr && getIsSsr()) {
+            // Script has already loaded during SSR
+            LoadCache.add(id || src);
+        } else if (getIsSsr && !getIsSsr()) {
+            loadScript(props);
+        }
+    }
+    // For the app directory, we need React Float to preload these scripts.
+    if (appDir) {
+        // Injecting stylesheets here handles beforeInteractive and worker scripts correctly
+        // For other strategies injecting here ensures correct stylesheet order
+        // ReactDOM.preinit handles loading the styles in the correct order,
+        // also ensures the stylesheet is loaded only once and in a consistent manner
+        //
+        // Case 1: Styles for beforeInteractive/worker with appDir - handled here
+        // Case 2: Styles for beforeInteractive/worker with pages dir - Not handled yet
+        // Case 3: Styles for afterInteractive/lazyOnload with appDir - handled here
+        // Case 4: Styles for afterInteractive/lazyOnload with pages dir - handled in insertStylesheets function
+        if (stylesheets) {
+            stylesheets.forEach((styleSrc)=>{
+                react_dom.preinit(styleSrc, {
+                    as: "style"
+                });
+            });
+        }
+        // Before interactive scripts need to be loaded by Next.js' runtime instead
+        // of native <script> tags, because they no longer have `defer`.
+        if (strategy === "beforeInteractive") {
+            if (!src) {
+                // For inlined scripts, we put the content in `children`.
+                if (restProps.dangerouslySetInnerHTML) {
+                    // Casting since lib.dom.d.ts doesn't have TrustedHTML yet.
+                    restProps.children = restProps.dangerouslySetInnerHTML.__html;
+                    delete restProps.dangerouslySetInnerHTML;
+                }
+                return /*#__PURE__*/ react.createElement("script", {
+                    nonce: nonce,
+                    dangerouslySetInnerHTML: {
+                        __html: "(self.__next_s=self.__next_s||[]).push(" + JSON.stringify([
+                            0,
+                            {
+                                ...restProps
+                            }
+                        ]) + ")"
+                    }
+                });
+            } else {
+                // @ts-ignore
+                react_dom.preload(src, restProps.integrity ? {
+                    as: "script",
+                    integrity: restProps.integrity
+                } : {
+                    as: "script"
+                });
+                return /*#__PURE__*/ react.createElement("script", {
+                    nonce: nonce,
+                    dangerouslySetInnerHTML: {
+                        __html: "(self.__next_s=self.__next_s||[]).push(" + JSON.stringify([
+                            src
+                        ]) + ")"
+                    }
+                });
+            }
+        } else if (strategy === "afterInteractive") {
+            if (src) {
+                // @ts-ignore
+                react_dom.preload(src, restProps.integrity ? {
+                    as: "script",
+                    integrity: restProps.integrity
+                } : {
+                    as: "script"
+                });
+            }
+        }
+    }
+    return null;
+}
+Object.defineProperty(Script, "__nextScript", {
+    value: true
+});
+/* harmony default export */ const script = (Script); //# sourceMappingURL=script.js.map
+
+
+/***/ }),
+
+/***/ 6537:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   h: () => (/* binding */ HeadersAdapter)
+/* harmony export */ });
+/* unused harmony export ReadonlyHeadersError */
+/* harmony import */ var _reflect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6768);
+
+/**
+ * @internal
+ */ class ReadonlyHeadersError extends Error {
+    constructor(){
+        super("Headers cannot be modified. Read more: https://nextjs.org/docs/app/api-reference/functions/headers");
+    }
+    static callable() {
+        throw new ReadonlyHeadersError();
+    }
+}
+class HeadersAdapter extends Headers {
+    constructor(headers){
+        // We've already overridden the methods that would be called, so we're just
+        // calling the super constructor to ensure that the instanceof check works.
+        super();
+        this.headers = new Proxy(headers, {
+            get (target, prop, receiver) {
+                // Because this is just an object, we expect that all "get" operations
+                // are for properties. If it's a "get" for a symbol, we'll just return
+                // the symbol.
+                if (typeof prop === "symbol") {
+                    return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.get(target, prop, receiver);
+                }
+                const lowercased = prop.toLowerCase();
+                // Let's find the original casing of the key. This assumes that there is
+                // no mixed case keys (e.g. "Content-Type" and "content-type") in the
+                // headers object.
+                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
+                // If the original casing doesn't exist, return undefined.
+                if (typeof original === "undefined") return;
+                // If the original casing exists, return the value.
+                return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.get(target, original, receiver);
+            },
+            set (target, prop, value, receiver) {
+                if (typeof prop === "symbol") {
+                    return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.set(target, prop, value, receiver);
+                }
+                const lowercased = prop.toLowerCase();
+                // Let's find the original casing of the key. This assumes that there is
+                // no mixed case keys (e.g. "Content-Type" and "content-type") in the
+                // headers object.
+                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
+                // If the original casing doesn't exist, use the prop as the key.
+                return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.set(target, original ?? prop, value, receiver);
+            },
+            has (target, prop) {
+                if (typeof prop === "symbol") return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.has(target, prop);
+                const lowercased = prop.toLowerCase();
+                // Let's find the original casing of the key. This assumes that there is
+                // no mixed case keys (e.g. "Content-Type" and "content-type") in the
+                // headers object.
+                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
+                // If the original casing doesn't exist, return false.
+                if (typeof original === "undefined") return false;
+                // If the original casing exists, return true.
+                return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.has(target, original);
+            },
+            deleteProperty (target, prop) {
+                if (typeof prop === "symbol") return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.deleteProperty(target, prop);
+                const lowercased = prop.toLowerCase();
+                // Let's find the original casing of the key. This assumes that there is
+                // no mixed case keys (e.g. "Content-Type" and "content-type") in the
+                // headers object.
+                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
+                // If the original casing doesn't exist, return true.
+                if (typeof original === "undefined") return true;
+                // If the original casing exists, delete the property.
+                return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.deleteProperty(target, original);
+            }
+        });
+    }
+    /**
+   * Seals a Headers instance to prevent modification by throwing an error when
+   * any mutating method is called.
+   */ static seal(headers) {
+        return new Proxy(headers, {
+            get (target, prop, receiver) {
+                switch(prop){
+                    case "append":
+                    case "delete":
+                    case "set":
+                        return ReadonlyHeadersError.callable;
+                    default:
+                        return _reflect__WEBPACK_IMPORTED_MODULE_0__/* .ReflectAdapter */ .g.get(target, prop, receiver);
+                }
+            }
+        });
+    }
+    /**
+   * Merges a header value into a string. This stores multiple values as an
+   * array, so we need to merge them into a string.
+   *
+   * @param value a header value
+   * @returns a merged header value (a string)
+   */ merge(value) {
+        if (Array.isArray(value)) return value.join(", ");
+        return value;
+    }
+    /**
+   * Creates a Headers instance from a plain object or a Headers instance.
+   *
+   * @param headers a plain object or a Headers instance
+   * @returns a headers instance
+   */ static from(headers) {
+        if (headers instanceof Headers) return headers;
+        return new HeadersAdapter(headers);
+    }
+    append(name, value) {
+        const existing = this.headers[name];
+        if (typeof existing === "string") {
+            this.headers[name] = [
+                existing,
+                value
+            ];
+        } else if (Array.isArray(existing)) {
+            existing.push(value);
+        } else {
+            this.headers[name] = value;
+        }
+    }
+    delete(name) {
+        delete this.headers[name];
+    }
+    get(name) {
+        const value = this.headers[name];
+        if (typeof value !== "undefined") return this.merge(value);
+        return null;
+    }
+    has(name) {
+        return typeof this.headers[name] !== "undefined";
+    }
+    set(name, value) {
+        this.headers[name] = value;
+    }
+    forEach(callbackfn, thisArg) {
+        for (const [name, value] of this.entries()){
+            callbackfn.call(thisArg, value, name, this);
+        }
+    }
+    *entries() {
+        for (const key of Object.keys(this.headers)){
+            const name = key.toLowerCase();
+            // We assert here that this is a string because we got it from the
+            // Object.keys() call above.
+            const value = this.get(name);
+            yield [
+                name,
+                value
+            ];
+        }
+    }
+    *keys() {
+        for (const key of Object.keys(this.headers)){
+            const name = key.toLowerCase();
+            yield name;
+        }
+    }
+    *values() {
+        for (const key of Object.keys(this.headers)){
+            // We assert here that this is a string because we got it from the
+            // Object.keys() call above.
+            const value = this.get(key);
+            yield value;
+        }
+    }
+    [Symbol.iterator]() {
+        return this.entries();
+    }
+} //# sourceMappingURL=headers.js.map
+
+
+/***/ }),
+
+/***/ 6768:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   g: () => (/* binding */ ReflectAdapter)
+/* harmony export */ });
+class ReflectAdapter {
+    static get(target, prop, receiver) {
+        const value = Reflect.get(target, prop, receiver);
+        if (typeof value === "function") {
+            return value.bind(target);
+        }
+        return value;
+    }
+    static set(target, prop, value, receiver) {
+        return Reflect.set(target, prop, value, receiver);
+    }
+    static has(target, prop) {
+        return Reflect.has(target, prop);
+    }
+    static deleteProperty(target, prop) {
+        return Reflect.deleteProperty(target, prop);
+    }
+} //# sourceMappingURL=reflect.js.map
+
+
+/***/ }),
+
+/***/ 480:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Qb: () => (/* binding */ RequestCookiesAdapter),
+/* harmony export */   vr: () => (/* binding */ MutableRequestCookiesAdapter)
+/* harmony export */ });
+/* unused harmony exports ReadonlyRequestCookiesError, getModifiedCookieValues, appendMutableCookies */
+/* harmony import */ var _cookies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3072);
+/* harmony import */ var _reflect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6768);
+
+
+/**
+ * @internal
+ */ class ReadonlyRequestCookiesError extends Error {
+    constructor(){
+        super("Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#cookiessetname-value-options");
+    }
+    static callable() {
+        throw new ReadonlyRequestCookiesError();
+    }
+}
+class RequestCookiesAdapter {
+    static seal(cookies) {
+        return new Proxy(cookies, {
+            get (target, prop, receiver) {
+                switch(prop){
+                    case "clear":
+                    case "delete":
+                    case "set":
+                        return ReadonlyRequestCookiesError.callable;
+                    default:
+                        return _reflect__WEBPACK_IMPORTED_MODULE_1__/* .ReflectAdapter */ .g.get(target, prop, receiver);
+                }
+            }
+        });
+    }
+}
+const SYMBOL_MODIFY_COOKIE_VALUES = Symbol.for("next.mutated.cookies");
+function getModifiedCookieValues(cookies) {
+    const modified = cookies[SYMBOL_MODIFY_COOKIE_VALUES];
+    if (!modified || !Array.isArray(modified) || modified.length === 0) {
+        return [];
+    }
+    return modified;
+}
+function appendMutableCookies(headers, mutableCookies) {
+    const modifiedCookieValues = getModifiedCookieValues(mutableCookies);
+    if (modifiedCookieValues.length === 0) {
+        return false;
+    }
+    // Return a new response that extends the response with
+    // the modified cookies as fallbacks. `res` cookies
+    // will still take precedence.
+    const resCookies = new ResponseCookies(headers);
+    const returnedCookies = resCookies.getAll();
+    // Set the modified cookies as fallbacks.
+    for (const cookie of modifiedCookieValues){
+        resCookies.set(cookie);
+    }
+    // Set the original cookies as the final values.
+    for (const cookie of returnedCookies){
+        resCookies.set(cookie);
+    }
+    return true;
+}
+class MutableRequestCookiesAdapter {
+    static wrap(cookies, onUpdateCookies) {
+        const responseCookes = new _cookies__WEBPACK_IMPORTED_MODULE_0__/* .ResponseCookies */ .n(new Headers());
+        for (const cookie of cookies.getAll()){
+            responseCookes.set(cookie);
+        }
+        let modifiedValues = [];
+        const modifiedCookies = new Set();
+        const updateResponseCookies = ()=>{
+            var _fetch___nextGetStaticStore;
+            // TODO-APP: change method of getting staticGenerationAsyncStore
+            const staticGenerationAsyncStore = fetch.__nextGetStaticStore == null ? void 0 : (_fetch___nextGetStaticStore = fetch.__nextGetStaticStore.call(fetch)) == null ? void 0 : _fetch___nextGetStaticStore.getStore();
+            if (staticGenerationAsyncStore) {
+                staticGenerationAsyncStore.pathWasRevalidated = true;
+            }
+            const allCookies = responseCookes.getAll();
+            modifiedValues = allCookies.filter((c)=>modifiedCookies.has(c.name));
+            if (onUpdateCookies) {
+                const serializedCookies = [];
+                for (const cookie of modifiedValues){
+                    const tempCookies = new _cookies__WEBPACK_IMPORTED_MODULE_0__/* .ResponseCookies */ .n(new Headers());
+                    tempCookies.set(cookie);
+                    serializedCookies.push(tempCookies.toString());
+                }
+                onUpdateCookies(serializedCookies);
+            }
+        };
+        return new Proxy(responseCookes, {
+            get (target, prop, receiver) {
+                switch(prop){
+                    // A special symbol to get the modified cookie values
+                    case SYMBOL_MODIFY_COOKIE_VALUES:
+                        return modifiedValues;
+                    // TODO: Throw error if trying to set a cookie after the response
+                    // headers have been set.
+                    case "delete":
+                        return function(...args) {
+                            modifiedCookies.add(typeof args[0] === "string" ? args[0] : args[0].name);
+                            try {
+                                target.delete(...args);
+                            } finally{
+                                updateResponseCookies();
+                            }
+                        };
+                    case "set":
+                        return function(...args) {
+                            modifiedCookies.add(typeof args[0] === "string" ? args[0] : args[0].name);
+                            try {
+                                return target.set(...args);
+                            } finally{
+                                updateResponseCookies();
+                            }
+                        };
+                    default:
+                        return _reflect__WEBPACK_IMPORTED_MODULE_1__/* .ReflectAdapter */ .g.get(target, prop, receiver);
+                }
+            }
+        });
+    }
+} //# sourceMappingURL=request-cookies.js.map
+
+
+/***/ }),
+
+/***/ 3072:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   n: () => (/* reexport safe */ next_dist_compiled_edge_runtime_cookies__WEBPACK_IMPORTED_MODULE_0__.ResponseCookies),
+/* harmony export */   q: () => (/* reexport safe */ next_dist_compiled_edge_runtime_cookies__WEBPACK_IMPORTED_MODULE_0__.RequestCookies)
+/* harmony export */ });
+/* harmony import */ var next_dist_compiled_edge_runtime_cookies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7492);
+/* harmony import */ var next_dist_compiled_edge_runtime_cookies__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_dist_compiled_edge_runtime_cookies__WEBPACK_IMPORTED_MODULE_0__);
+ //# sourceMappingURL=cookies.js.map
+
+
+/***/ }),
+
+/***/ 9444:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BloomFilter: () => (/* binding */ BloomFilter)
+/* harmony export */ });
+// minimal implementation MurmurHash2 hash function
+function murmurhash2(str) {
+    let h = 0;
+    for(let i = 0; i < str.length; i++){
+        const c = str.charCodeAt(i);
+        h = Math.imul(h ^ c, 0x5bd1e995);
+        h ^= h >>> 13;
+        h = Math.imul(h, 0x5bd1e995);
+    }
+    return h >>> 0;
+}
+class BloomFilter {
+    static from(items, errorRate) {
+        if (errorRate === void 0) errorRate = 0.01;
+        const filter = new BloomFilter(items.length, errorRate);
+        for (const item of items){
+            filter.add(item);
+        }
+        return filter;
+    }
+    export() {
+        const data = {
+            numItems: this.numItems,
+            errorRate: this.errorRate,
+            numBits: this.numBits,
+            numHashes: this.numHashes,
+            bitArray: this.bitArray
+        };
+        if (false) {}
+        return data;
+    }
+    import(data) {
+        this.numItems = data.numItems;
+        this.errorRate = data.errorRate;
+        this.numBits = data.numBits;
+        this.numHashes = data.numHashes;
+        this.bitArray = data.bitArray;
+    }
+    add(item) {
+        const hashValues = this.getHashValues(item);
+        hashValues.forEach((hash)=>{
+            this.bitArray[hash] = 1;
+        });
+    }
+    contains(item) {
+        const hashValues = this.getHashValues(item);
+        return hashValues.every((hash)=>this.bitArray[hash]);
+    }
+    getHashValues(item) {
+        const hashValues = [];
+        for(let i = 1; i <= this.numHashes; i++){
+            const hash = murmurhash2("" + item + i) % this.numBits;
+            hashValues.push(hash);
+        }
+        return hashValues;
+    }
+    constructor(numItems, errorRate){
+        this.numItems = numItems;
+        this.errorRate = errorRate;
+        this.numBits = Math.ceil(-(numItems * Math.log(errorRate)) / (Math.log(2) * Math.log(2)));
+        this.numHashes = Math.ceil(this.numBits / numItems * Math.log(2));
+        this.bitArray = new Array(this.numBits).fill(0);
+    }
+} //# sourceMappingURL=bloom-filter.js.map
+
+
+/***/ }),
+
+/***/ 1811:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ dynamic)
+});
+
+// UNUSED EXPORTS: noSSR
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(167);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/loadable-context.shared-runtime.js
+"use client";
+
+const LoadableContext = /*#__PURE__*/ react.createContext(null);
+if (false) {} //# sourceMappingURL=loadable-context.shared-runtime.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/loadable.shared-runtime.js
+// TODO: Remove use of `any` type.
+/**
+@copyright (c) 2017-present James Kyle <me@thejameskyle.com>
+ MIT License
+ Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+ The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+*/ // https://github.com/jamiebuilds/react-loadable/blob/v5.5.0/src/index.js
+// Modified to be compatible with webpack 4 / Next.js
+
+
+function resolve(obj) {
+    return obj && obj.default ? obj.default : obj;
+}
+const ALL_INITIALIZERS = [];
+const READY_INITIALIZERS = [];
+let initialized = false;
+function load(loader) {
+    let promise = loader();
+    let state = {
+        loading: true,
+        loaded: null,
+        error: null
+    };
+    state.promise = promise.then((loaded)=>{
+        state.loading = false;
+        state.loaded = loaded;
+        return loaded;
+    }).catch((err)=>{
+        state.loading = false;
+        state.error = err;
+        throw err;
+    });
+    return state;
+}
+function createLoadableComponent(loadFn, options) {
+    let opts = Object.assign({
+        loader: null,
+        loading: null,
+        delay: 200,
+        timeout: null,
+        webpack: null,
+        modules: null
+    }, options);
+    /** @type LoadableSubscription */ let subscription = null;
+    function init() {
+        if (!subscription) {
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            const sub = new LoadableSubscription(loadFn, opts);
+            subscription = {
+                getCurrentValue: sub.getCurrentValue.bind(sub),
+                subscribe: sub.subscribe.bind(sub),
+                retry: sub.retry.bind(sub),
+                promise: sub.promise.bind(sub)
+            };
+        }
+        return subscription.promise();
+    }
+    // Server only
+    if (true) {
+        ALL_INITIALIZERS.push(init);
+    }
+    // Client only
+    if (!initialized && "undefined" !== "undefined") {}
+    function useLoadableModule() {
+        init();
+        const context = react.useContext(LoadableContext);
+        if (context && Array.isArray(opts.modules)) {
+            opts.modules.forEach((moduleName)=>{
+                context(moduleName);
+            });
+        }
+    }
+    function LoadableComponent(props, ref) {
+        useLoadableModule();
+        const state = react.useSyncExternalStore(subscription.subscribe, subscription.getCurrentValue, subscription.getCurrentValue);
+        react.useImperativeHandle(ref, ()=>({
+                retry: subscription.retry
+            }), []);
+        return react.useMemo(()=>{
+            if (state.loading || state.error) {
+                return /*#__PURE__*/ react.createElement(opts.loading, {
+                    isLoading: state.loading,
+                    pastDelay: state.pastDelay,
+                    timedOut: state.timedOut,
+                    error: state.error,
+                    retry: subscription.retry
+                });
+            } else if (state.loaded) {
+                return /*#__PURE__*/ react.createElement(resolve(state.loaded), props);
+            } else {
+                return null;
+            }
+        }, [
+            props,
+            state
+        ]);
+    }
+    LoadableComponent.preload = ()=>init();
+    LoadableComponent.displayName = "LoadableComponent";
+    return /*#__PURE__*/ react.forwardRef(LoadableComponent);
+}
+class LoadableSubscription {
+    promise() {
+        return this._res.promise;
+    }
+    retry() {
+        this._clearTimeouts();
+        this._res = this._loadFn(this._opts.loader);
+        this._state = {
+            pastDelay: false,
+            timedOut: false
+        };
+        const { _res: res, _opts: opts } = this;
+        if (res.loading) {
+            if (typeof opts.delay === "number") {
+                if (opts.delay === 0) {
+                    this._state.pastDelay = true;
+                } else {
+                    this._delay = setTimeout(()=>{
+                        this._update({
+                            pastDelay: true
+                        });
+                    }, opts.delay);
+                }
+            }
+            if (typeof opts.timeout === "number") {
+                this._timeout = setTimeout(()=>{
+                    this._update({
+                        timedOut: true
+                    });
+                }, opts.timeout);
+            }
+        }
+        this._res.promise.then(()=>{
+            this._update({});
+            this._clearTimeouts();
+        }).catch((_err)=>{
+            this._update({});
+            this._clearTimeouts();
+        });
+        this._update({});
+    }
+    _update(partial) {
+        this._state = {
+            ...this._state,
+            error: this._res.error,
+            loaded: this._res.loaded,
+            loading: this._res.loading,
+            ...partial
+        };
+        this._callbacks.forEach((callback)=>callback());
+    }
+    _clearTimeouts() {
+        clearTimeout(this._delay);
+        clearTimeout(this._timeout);
+    }
+    getCurrentValue() {
+        return this._state;
+    }
+    subscribe(callback) {
+        this._callbacks.add(callback);
+        return ()=>{
+            this._callbacks.delete(callback);
+        };
+    }
+    constructor(loadFn, opts){
+        this._loadFn = loadFn;
+        this._opts = opts;
+        this._callbacks = new Set();
+        this._delay = null;
+        this._timeout = null;
+        this.retry();
+    }
+}
+function Loadable(opts) {
+    return createLoadableComponent(load, opts);
+}
+function flushInitializers(initializers, ids) {
+    let promises = [];
+    while(initializers.length){
+        let init = initializers.pop();
+        promises.push(init(ids));
+    }
+    return Promise.all(promises).then(()=>{
+        if (initializers.length) {
+            return flushInitializers(initializers, ids);
+        }
+    });
+}
+Loadable.preloadAll = ()=>{
+    return new Promise((resolveInitializers, reject)=>{
+        flushInitializers(ALL_INITIALIZERS).then(resolveInitializers, reject);
+    });
+};
+Loadable.preloadReady = (ids)=>{
+    if (ids === void 0) ids = [];
+    return new Promise((resolvePreload)=>{
+        const res = ()=>{
+            initialized = true;
+            return resolvePreload();
+        };
+        // We always will resolve, errors should be handled within loading UIs.
+        flushInitializers(READY_INITIALIZERS, ids).then(res, res);
+    });
+};
+if (false) {}
+/* harmony default export */ const loadable_shared_runtime = (Loadable); //# sourceMappingURL=loadable.shared-runtime.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/dynamic.js
+
+
+const isServerSide = "undefined" === "undefined";
+// Normalize loader to return the module as form { default: Component } for `React.lazy`.
+// Also for backward compatible since next/dynamic allows to resolve a component directly with loader
+// Client component reference proxy need to be converted to a module.
+function convertModule(mod) {
+    return {
+        default: (mod == null ? void 0 : mod.default) || mod
+    };
+}
+function noSSR(LoadableInitializer, loadableOptions) {
+    // Removing webpack and modules means react-loadable won't try preloading
+    delete loadableOptions.webpack;
+    delete loadableOptions.modules;
+    // This check is necessary to prevent react-loadable from initializing on the server
+    if (!isServerSide) {
+        return LoadableInitializer(loadableOptions);
+    }
+    const Loading = loadableOptions.loading;
+    // This will only be rendered on the server side
+    return ()=>/*#__PURE__*/ react.createElement(Loading, {
+            error: null,
+            isLoading: true,
+            pastDelay: false,
+            timedOut: false
+        });
+}
+function dynamic(dynamicOptions, options) {
+    let loadableFn = loadable_shared_runtime;
+    let loadableOptions = {
+        // A loading component is not required, so we default it
+        loading: (param)=>{
+            let { error, isLoading, pastDelay } = param;
+            if (!pastDelay) return null;
+            if (false) {}
+            return null;
+        }
+    };
+    // Support for direct import(), eg: dynamic(import('../hello-world'))
+    // Note that this is only kept for the edge case where someone is passing in a promise as first argument
+    // The react-loadable babel plugin will turn dynamic(import('../hello-world')) into dynamic(() => import('../hello-world'))
+    // To make sure we don't execute the import without rendering first
+    if (dynamicOptions instanceof Promise) {
+        loadableOptions.loader = ()=>dynamicOptions;
+    // Support for having import as a function, eg: dynamic(() => import('../hello-world'))
+    } else if (typeof dynamicOptions === "function") {
+        loadableOptions.loader = dynamicOptions;
+    // Support for having first argument being options, eg: dynamic({loader: import('../hello-world')})
+    } else if (typeof dynamicOptions === "object") {
+        loadableOptions = {
+            ...loadableOptions,
+            ...dynamicOptions
+        };
+    }
+    // Support for passing options, eg: dynamic(import('../hello-world'), {loading: () => <p>Loading something</p>})
+    loadableOptions = {
+        ...loadableOptions,
+        ...options
+    };
+    const loaderFn = loadableOptions.loader;
+    const loader = ()=>loaderFn != null ? loaderFn().then(convertModule) : Promise.resolve(convertModule(()=>null));
+    // coming from build/babel/plugins/react-loadable-plugin.js
+    if (loadableOptions.loadableGenerated) {
+        loadableOptions = {
+            ...loadableOptions,
+            ...loadableOptions.loadableGenerated
+        };
+        delete loadableOptions.loadableGenerated;
+    }
+    // support for disabling server side rendering, eg: dynamic(() => import('../hello-world'), {ssr: false}).
+    if (typeof loadableOptions.ssr === "boolean" && !loadableOptions.ssr) {
+        delete loadableOptions.webpack;
+        delete loadableOptions.modules;
+        return noSSR(loadableFn, loadableOptions);
+    }
+    return loadableFn({
+        ...loadableOptions,
+        loader: loader
+    });
+} //# sourceMappingURL=dynamic.js.map
+
+
+/***/ }),
+
+/***/ 5646:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   h: () => (/* binding */ normalizeLocalePath)
+/* harmony export */ });
+/**
+ * For a pathname that may include a locale from a list of locales, it
+ * removes the locale from the pathname returning it alongside with the
+ * detected locale.
+ *
+ * @param pathname A pathname that may include a locale.
+ * @param locales A list of locales.
+ * @returns The detected locale and pathname without locale
+ */ function normalizeLocalePath(pathname, locales) {
+    let detectedLocale;
+    // first item will be empty string from splitting at first char
+    const pathnameParts = pathname.split("/");
+    (locales || []).some((locale)=>{
+        if (pathnameParts[1] && pathnameParts[1].toLowerCase() === locale.toLowerCase()) {
+            detectedLocale = locale;
+            pathnameParts.splice(1, 1);
+            pathname = pathnameParts.join("/") || "/";
+            return true;
+        }
+        return false;
+    });
+    return {
+        pathname,
+        detectedLocale
+    };
+} //# sourceMappingURL=normalize-locale-path.js.map
+
+
+/***/ }),
+
+/***/ 2703:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   V: () => (/* binding */ addPathPrefix)
+/* harmony export */ });
+/* harmony import */ var _parse_path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8296);
+
+/**
+ * Adds the provided prefix to the given path. It first ensures that the path
+ * is indeed starting with a slash.
+ */ function addPathPrefix(path, prefix) {
+    if (!path.startsWith("/") || !prefix) {
+        return path;
+    }
+    const { pathname, query, hash } = (0,_parse_path__WEBPACK_IMPORTED_MODULE_0__/* .parsePath */ .c)(path);
+    return "" + prefix + pathname + query + hash;
+} //# sourceMappingURL=add-path-prefix.js.map
+
+
+/***/ }),
+
+/***/ 788:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  R: () => (/* binding */ formatNextPathnameInfo)
+});
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/remove-trailing-slash.js
+var remove_trailing_slash = __webpack_require__(6894);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/add-path-prefix.js
+var add_path_prefix = __webpack_require__(2703);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/parse-path.js
+var parse_path = __webpack_require__(8296);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/add-path-suffix.js
+
+/**
+ * Similarly to `addPathPrefix`, this function adds a suffix at the end on the
+ * provided path. It also works only for paths ensuring the argument starts
+ * with a slash.
+ */ function addPathSuffix(path, suffix) {
+    if (!path.startsWith("/") || !suffix) {
+        return path;
+    }
+    const { pathname, query, hash } = (0,parse_path/* parsePath */.c)(path);
+    return "" + pathname + suffix + query + hash;
+} //# sourceMappingURL=add-path-suffix.js.map
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/path-has-prefix.js
+var path_has_prefix = __webpack_require__(9386);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/add-locale.js
+
+
+/**
+ * For a given path and a locale, if the locale is given, it will prefix the
+ * locale. The path shouldn't be an API path. If a default locale is given the
+ * prefix will be omitted if the locale is already the default locale.
+ */ function addLocale(path, locale, defaultLocale, ignorePrefix) {
+    // If no locale was given or the locale is the default locale, we don't need
+    // to prefix the path.
+    if (!locale || locale === defaultLocale) return path;
+    const lower = path.toLowerCase();
+    // If the path is an API path or the path already has the locale prefix, we
+    // don't need to prefix the path.
+    if (!ignorePrefix) {
+        if ((0,path_has_prefix/* pathHasPrefix */.Y)(lower, "/api")) return path;
+        if ((0,path_has_prefix/* pathHasPrefix */.Y)(lower, "/" + locale.toLowerCase())) return path;
+    }
+    // Add the locale prefix to the path.
+    return (0,add_path_prefix/* addPathPrefix */.V)(path, "/" + locale);
+} //# sourceMappingURL=add-locale.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/format-next-pathname-info.js
+
+
+
+
+function formatNextPathnameInfo(info) {
+    let pathname = addLocale(info.pathname, info.locale, info.buildId ? undefined : info.defaultLocale, info.ignorePrefix);
+    if (info.buildId || !info.trailingSlash) {
+        pathname = (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathname);
+    }
+    if (info.buildId) {
+        pathname = addPathSuffix((0,add_path_prefix/* addPathPrefix */.V)(pathname, "/_next/data/" + info.buildId), info.pathname === "/" ? "index.json" : ".json");
+    }
+    pathname = (0,add_path_prefix/* addPathPrefix */.V)(pathname, info.basePath);
+    return !info.buildId && info.trailingSlash ? !pathname.endsWith("/") ? addPathSuffix(pathname, "/") : pathname : (0,remove_trailing_slash/* removeTrailingSlash */.Q)(pathname);
+} //# sourceMappingURL=format-next-pathname-info.js.map
+
+
+/***/ }),
+
+/***/ 1798:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  a: () => (/* binding */ getNextPathnameInfo)
+});
+
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/i18n/normalize-locale-path.js
+var normalize_locale_path = __webpack_require__(5646);
+// EXTERNAL MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/path-has-prefix.js
+var path_has_prefix = __webpack_require__(9386);
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/remove-path-prefix.js
+
+/**
+ * Given a path and a prefix it will remove the prefix when it exists in the
+ * given path. It ensures it matches exactly without containing extra chars
+ * and if the prefix is not there it will be noop.
+ *
+ * @param path The path to remove the prefix from.
+ * @param prefix The prefix to be removed.
+ */ function removePathPrefix(path, prefix) {
+    // If the path doesn't start with the prefix we can return it as is. This
+    // protects us from situations where the prefix is a substring of the path
+    // prefix such as:
+    //
+    // For prefix: /blog
+    //
+    //   /blog -> true
+    //   /blog/ -> true
+    //   /blog/1 -> true
+    //   /blogging -> false
+    //   /blogging/ -> false
+    //   /blogging/1 -> false
+    if (!(0,path_has_prefix/* pathHasPrefix */.Y)(path, prefix)) {
+        return path;
+    }
+    // Remove the prefix from the path via slicing.
+    const withoutPrefix = path.slice(prefix.length);
+    // If the path without the prefix starts with a `/` we can return it as is.
+    if (withoutPrefix.startsWith("/")) {
+        return withoutPrefix;
+    }
+    // If the path without the prefix doesn't start with a `/` we need to add it
+    // back to the path to make sure it's a valid path.
+    return "/" + withoutPrefix;
+} //# sourceMappingURL=remove-path-prefix.js.map
+
+;// CONCATENATED MODULE: ./node_modules/next/dist/esm/shared/lib/router/utils/get-next-pathname-info.js
+
+
+
+function getNextPathnameInfo(pathname, options) {
+    var _options_nextConfig;
+    const { basePath, i18n, trailingSlash } = (_options_nextConfig = options.nextConfig) != null ? _options_nextConfig : {};
+    const info = {
+        pathname,
+        trailingSlash: pathname !== "/" ? pathname.endsWith("/") : trailingSlash
+    };
+    if (basePath && (0,path_has_prefix/* pathHasPrefix */.Y)(info.pathname, basePath)) {
+        info.pathname = removePathPrefix(info.pathname, basePath);
+        info.basePath = basePath;
+    }
+    let pathnameNoDataPrefix = info.pathname;
+    if (info.pathname.startsWith("/_next/data/") && info.pathname.endsWith(".json")) {
+        const paths = info.pathname.replace(/^\/_next\/data\//, "").replace(/\.json$/, "").split("/");
+        const buildId = paths[0];
+        info.buildId = buildId;
+        pathnameNoDataPrefix = paths[1] !== "index" ? "/" + paths.slice(1).join("/") : "/";
+        // update pathname with normalized if enabled although
+        // we use normalized to populate locale info still
+        if (options.parseData === true) {
+            info.pathname = pathnameNoDataPrefix;
+        }
+    }
+    // If provided, use the locale route normalizer to detect the locale instead
+    // of the function below.
+    if (i18n) {
+        let result = options.i18nProvider ? options.i18nProvider.analyze(info.pathname) : (0,normalize_locale_path/* normalizeLocalePath */.h)(info.pathname, i18n.locales);
+        info.locale = result.detectedLocale;
+        var _result_pathname;
+        info.pathname = (_result_pathname = result.pathname) != null ? _result_pathname : info.pathname;
+        if (!result.detectedLocale && info.buildId) {
+            result = options.i18nProvider ? options.i18nProvider.analyze(pathnameNoDataPrefix) : (0,normalize_locale_path/* normalizeLocalePath */.h)(pathnameNoDataPrefix, i18n.locales);
+            if (result.detectedLocale) {
+                info.locale = result.detectedLocale;
+            }
+        }
+    }
+    return info;
+} //# sourceMappingURL=get-next-pathname-info.js.map
+
+
+/***/ }),
+
+/***/ 8296:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   c: () => (/* binding */ parsePath)
+/* harmony export */ });
+/**
+ * Given a path this function will find the pathname, query and hash and return
+ * them. This is useful to parse full paths on the client side.
+ * @param path A path to parse e.g. /foo/bar?id=1#hash
+ */ function parsePath(path) {
+    const hashIndex = path.indexOf("#");
+    const queryIndex = path.indexOf("?");
+    const hasQuery = queryIndex > -1 && (hashIndex < 0 || queryIndex < hashIndex);
+    if (hasQuery || hashIndex > -1) {
+        return {
+            pathname: path.substring(0, hasQuery ? queryIndex : hashIndex),
+            query: hasQuery ? path.substring(queryIndex, hashIndex > -1 ? hashIndex : undefined) : "",
+            hash: hashIndex > -1 ? path.slice(hashIndex) : ""
+        };
+    }
+    return {
+        pathname: path,
+        query: "",
+        hash: ""
+    };
+} //# sourceMappingURL=parse-path.js.map
+
+
+/***/ }),
+
+/***/ 9386:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Y: () => (/* binding */ pathHasPrefix)
+/* harmony export */ });
+/* harmony import */ var _parse_path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8296);
+
+/**
+ * Checks if a given path starts with a given prefix. It ensures it matches
+ * exactly without containing extra chars. e.g. prefix /docs should replace
+ * for /docs, /docs/, /docs/a but not /docsss
+ * @param path The path to check.
+ * @param prefix The prefix to check against.
+ */ function pathHasPrefix(path, prefix) {
+    if (typeof path !== "string") {
+        return false;
+    }
+    const { pathname } = (0,_parse_path__WEBPACK_IMPORTED_MODULE_0__/* .parsePath */ .c)(path);
+    return pathname === prefix || pathname.startsWith(prefix + "/");
+} //# sourceMappingURL=path-has-prefix.js.map
+
+
+/***/ }),
+
+/***/ 6894:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Q: () => (/* binding */ removeTrailingSlash)
+/* harmony export */ });
+/**
+ * Removes the trailing slash for a given route or page path. Preserves the
+ * root page. Examples:
+ *   - `/foo/bar/` -> `/foo/bar`
+ *   - `/foo/bar` -> `/foo/bar`
+ *   - `/` -> `/`
+ */ function removeTrailingSlash(route) {
+    return route.replace(/\/$/, "") || "/";
+} //# sourceMappingURL=remove-trailing-slash.js.map
+
+
+/***/ }),
+
+/***/ 7228:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+Object.defineProperty(exports, "RouterContext", ({
+    enumerable: true,
+    get: function() {
+        return RouterContext;
+    }
+}));
+const _interop_require_default = __webpack_require__(4317);
+const _react = /*#__PURE__*/ _interop_require_default._(__webpack_require__(167));
+const RouterContext = _react.default.createContext(null);
+if (false) {} //# sourceMappingURL=router-context.shared-runtime.js.map
+
+
+/***/ }),
+
+/***/ 5507:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+module.exports = __webpack_require__(1811);
+
+
+/***/ }),
+
+/***/ 2479:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+module.exports = __webpack_require__(7791);
+
+
+/***/ }),
+
+/***/ 6304:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+module.exports = __webpack_require__(1818);
+
+
+/***/ }),
+
+/***/ 3561:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+module.exports = __webpack_require__(122);
+
+
+/***/ }),
+
+/***/ 9034:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+module.exports = __webpack_require__(8819);
+
+
+/***/ }),
+
+/***/ 3521:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * @license React
+ * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ /*
+ Modernizr 3.0.0pre (Custom Build) | MIT
+*/ 
+var aa = __webpack_require__(167), ca = __webpack_require__(6904);
+function p(a) {
+    for(var b = "https://reactjs.org/docs/error-decoder.html?invariant=" + a, c = 1; c < arguments.length; c++)b += "&args[]=" + encodeURIComponent(arguments[c]);
+    return "Minified React error #" + a + "; visit " + b + " for the full message or use the non-minified dev environment for full errors and additional helpful warnings.";
+}
+var da = new Set, ea = {};
+function fa(a, b) {
+    ha(a, b);
+    ha(a + "Capture", b);
+}
+function ha(a, b) {
+    ea[a] = b;
+    for(a = 0; a < b.length; a++)da.add(b[a]);
+}
+var ia = !( true || 0), ja = Object.prototype.hasOwnProperty, ka = /^[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\-.0-9\u00B7\u0300-\u036F\u203F-\u2040]*$/, la = {}, ma = {};
+function oa(a) {
+    if (ja.call(ma, a)) return !0;
+    if (ja.call(la, a)) return !1;
+    if (ka.test(a)) return ma[a] = !0;
+    la[a] = !0;
+    return !1;
+}
+function pa(a, b, c, d) {
+    if (null !== c && 0 === c.type) return !1;
+    switch(typeof b){
+        case "function":
+        case "symbol":
+            return !0;
+        case "boolean":
+            if (d) return !1;
+            if (null !== c) return !c.acceptsBooleans;
+            a = a.toLowerCase().slice(0, 5);
+            return "data-" !== a && "aria-" !== a;
+        default:
+            return !1;
+    }
+}
+function qa(a, b, c, d) {
+    if (null === b || "undefined" === typeof b || pa(a, b, c, d)) return !0;
+    if (d) return !1;
+    if (null !== c) switch(c.type){
+        case 3:
+            return !b;
+        case 4:
+            return !1 === b;
+        case 5:
+            return isNaN(b);
+        case 6:
+            return isNaN(b) || 1 > b;
+    }
+    return !1;
+}
+function v(a, b, c, d, e, f, g) {
+    this.acceptsBooleans = 2 === b || 3 === b || 4 === b;
+    this.attributeName = d;
+    this.attributeNamespace = e;
+    this.mustUseProperty = c;
+    this.propertyName = a;
+    this.type = b;
+    this.sanitizeURL = f;
+    this.removeEmptyString = g;
+}
+var z = {};
+"children dangerouslySetInnerHTML defaultValue defaultChecked innerHTML suppressContentEditableWarning suppressHydrationWarning style".split(" ").forEach(function(a) {
+    z[a] = new v(a, 0, !1, a, null, !1, !1);
+});
+[
+    [
+        "acceptCharset",
+        "accept-charset"
+    ],
+    [
+        "className",
+        "class"
+    ],
+    [
+        "htmlFor",
+        "for"
+    ],
+    [
+        "httpEquiv",
+        "http-equiv"
+    ]
+].forEach(function(a) {
+    var b = a[0];
+    z[b] = new v(b, 1, !1, a[1], null, !1, !1);
+});
+[
+    "contentEditable",
+    "draggable",
+    "spellCheck",
+    "value"
+].forEach(function(a) {
+    z[a] = new v(a, 2, !1, a.toLowerCase(), null, !1, !1);
+});
+[
+    "autoReverse",
+    "externalResourcesRequired",
+    "focusable",
+    "preserveAlpha"
+].forEach(function(a) {
+    z[a] = new v(a, 2, !1, a, null, !1, !1);
+});
+"allowFullScreen async autoFocus autoPlay controls default defer disabled disablePictureInPicture disableRemotePlayback formNoValidate hidden loop noModule noValidate open playsInline readOnly required reversed scoped seamless itemScope".split(" ").forEach(function(a) {
+    z[a] = new v(a, 3, !1, a.toLowerCase(), null, !1, !1);
+});
+[
+    "checked",
+    "multiple",
+    "muted",
+    "selected"
+].forEach(function(a) {
+    z[a] = new v(a, 3, !0, a, null, !1, !1);
+});
+[
+    "capture",
+    "download"
+].forEach(function(a) {
+    z[a] = new v(a, 4, !1, a, null, !1, !1);
+});
+[
+    "cols",
+    "rows",
+    "size",
+    "span"
+].forEach(function(a) {
+    z[a] = new v(a, 6, !1, a, null, !1, !1);
+});
+[
+    "rowSpan",
+    "start"
+].forEach(function(a) {
+    z[a] = new v(a, 5, !1, a.toLowerCase(), null, !1, !1);
+});
+var ra = /[\-:]([a-z])/g;
+function sa(a) {
+    return a[1].toUpperCase();
+}
+"accent-height alignment-baseline arabic-form baseline-shift cap-height clip-path clip-rule color-interpolation color-interpolation-filters color-profile color-rendering dominant-baseline enable-background fill-opacity fill-rule flood-color flood-opacity font-family font-size font-size-adjust font-stretch font-style font-variant font-weight glyph-name glyph-orientation-horizontal glyph-orientation-vertical horiz-adv-x horiz-origin-x image-rendering letter-spacing lighting-color marker-end marker-mid marker-start overline-position overline-thickness paint-order panose-1 pointer-events rendering-intent shape-rendering stop-color stop-opacity strikethrough-position strikethrough-thickness stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit stroke-opacity stroke-width text-anchor text-decoration text-rendering underline-position underline-thickness unicode-bidi unicode-range units-per-em v-alphabetic v-hanging v-ideographic v-mathematical vector-effect vert-adv-y vert-origin-x vert-origin-y word-spacing writing-mode xmlns:xlink x-height".split(" ").forEach(function(a) {
+    var b = a.replace(ra, sa);
+    z[b] = new v(b, 1, !1, a, null, !1, !1);
+});
+"xlink:actuate xlink:arcrole xlink:role xlink:show xlink:title xlink:type".split(" ").forEach(function(a) {
+    var b = a.replace(ra, sa);
+    z[b] = new v(b, 1, !1, a, "http://www.w3.org/1999/xlink", !1, !1);
+});
+[
+    "xml:base",
+    "xml:lang",
+    "xml:space"
+].forEach(function(a) {
+    var b = a.replace(ra, sa);
+    z[b] = new v(b, 1, !1, a, "http://www.w3.org/XML/1998/namespace", !1, !1);
+});
+[
+    "tabIndex",
+    "crossOrigin"
+].forEach(function(a) {
+    z[a] = new v(a, 1, !1, a.toLowerCase(), null, !1, !1);
+});
+z.xlinkHref = new v("xlinkHref", 1, !1, "xlink:href", "http://www.w3.org/1999/xlink", !0, !1);
+[
+    "src",
+    "href",
+    "action",
+    "formAction"
+].forEach(function(a) {
+    z[a] = new v(a, 1, !1, a.toLowerCase(), null, !0, !0);
+});
+function ta(a, b, c, d) {
+    var e = z.hasOwnProperty(b) ? z[b] : null;
+    if (null !== e ? 0 !== e.type : d || !(2 < b.length) || "o" !== b[0] && "O" !== b[0] || "n" !== b[1] && "N" !== b[1]) qa(b, c, e, d) && (c = null), d || null === e ? oa(b) && (null === c ? a.removeAttribute(b) : a.setAttribute(b, "" + c)) : e.mustUseProperty ? a[e.propertyName] = null === c ? 3 === e.type ? !1 : "" : c : (b = e.attributeName, d = e.attributeNamespace, null === c ? a.removeAttribute(b) : (e = e.type, c = 3 === e || 4 === e && !0 === c ? "" : "" + c, d ? a.setAttributeNS(d, b, c) : a.setAttribute(b, c)));
+}
+var ua = aa.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, va = Symbol.for("react.element"), wa = Symbol.for("react.portal"), ya = Symbol.for("react.fragment"), za = Symbol.for("react.strict_mode"), Aa = Symbol.for("react.profiler"), Ba = Symbol.for("react.provider"), Ca = Symbol.for("react.context"), Da = Symbol.for("react.forward_ref"), Ea = Symbol.for("react.suspense"), Fa = Symbol.for("react.suspense_list"), Ga = Symbol.for("react.memo"), Ha = Symbol.for("react.lazy");
+Symbol.for("react.scope");
+Symbol.for("react.debug_trace_mode");
+var Ia = Symbol.for("react.offscreen");
+Symbol.for("react.legacy_hidden");
+Symbol.for("react.cache");
+Symbol.for("react.tracing_marker");
+var Ja = Symbol.iterator;
+function Ka(a) {
+    if (null === a || "object" !== typeof a) return null;
+    a = Ja && a[Ja] || a["@@iterator"];
+    return "function" === typeof a ? a : null;
+}
+var A = Object.assign, La;
+function Ma(a) {
+    if (void 0 === La) try {
+        throw Error();
+    } catch (c) {
+        var b = c.stack.trim().match(/\n( *(at )?)/);
+        La = b && b[1] || "";
+    }
+    return "\n" + La + a;
+}
+var Na = !1;
+function Oa(a, b) {
+    if (!a || Na) return "";
+    Na = !0;
+    var c = Error.prepareStackTrace;
+    Error.prepareStackTrace = void 0;
+    try {
+        if (b) if (b = function() {
+            throw Error();
+        }, Object.defineProperty(b.prototype, "props", {
+            set: function() {
+                throw Error();
+            }
+        }), "object" === typeof Reflect && Reflect.construct) {
+            try {
+                Reflect.construct(b, []);
+            } catch (l) {
+                var d = l;
+            }
+            Reflect.construct(a, [], b);
+        } else {
+            try {
+                b.call();
+            } catch (l) {
+                d = l;
+            }
+            a.call(b.prototype);
+        }
+        else {
+            try {
+                throw Error();
+            } catch (l) {
+                d = l;
+            }
+            a();
+        }
+    } catch (l) {
+        if (l && d && "string" === typeof l.stack) {
+            for(var e = l.stack.split("\n"), f = d.stack.split("\n"), g = e.length - 1, h = f.length - 1; 1 <= g && 0 <= h && e[g] !== f[h];)h--;
+            for(; 1 <= g && 0 <= h; g--, h--)if (e[g] !== f[h]) {
+                if (1 !== g || 1 !== h) {
+                    do if (g--, h--, 0 > h || e[g] !== f[h]) {
+                        var k = "\n" + e[g].replace(" at new ", " at ");
+                        a.displayName && k.includes("<anonymous>") && (k = k.replace("<anonymous>", a.displayName));
+                        return k;
+                    }
+                    while (1 <= g && 0 <= h);
+                }
+                break;
+            }
+        }
+    } finally{
+        Na = !1, Error.prepareStackTrace = c;
+    }
+    return (a = a ? a.displayName || a.name : "") ? Ma(a) : "";
+}
+function Pa(a) {
+    switch(a.tag){
+        case 5:
+            return Ma(a.type);
+        case 16:
+            return Ma("Lazy");
+        case 13:
+            return Ma("Suspense");
+        case 19:
+            return Ma("SuspenseList");
+        case 0:
+        case 2:
+        case 15:
+            return a = Oa(a.type, !1), a;
+        case 11:
+            return a = Oa(a.type.render, !1), a;
+        case 1:
+            return a = Oa(a.type, !0), a;
+        default:
+            return "";
+    }
+}
+function Qa(a) {
+    if (null == a) return null;
+    if ("function" === typeof a) return a.displayName || a.name || null;
+    if ("string" === typeof a) return a;
+    switch(a){
+        case ya:
+            return "Fragment";
+        case wa:
+            return "Portal";
+        case Aa:
+            return "Profiler";
+        case za:
+            return "StrictMode";
+        case Ea:
+            return "Suspense";
+        case Fa:
+            return "SuspenseList";
+    }
+    if ("object" === typeof a) switch(a.$$typeof){
+        case Ca:
+            return (a.displayName || "Context") + ".Consumer";
+        case Ba:
+            return (a._context.displayName || "Context") + ".Provider";
+        case Da:
+            var b = a.render;
+            a = a.displayName;
+            a || (a = b.displayName || b.name || "", a = "" !== a ? "ForwardRef(" + a + ")" : "ForwardRef");
+            return a;
+        case Ga:
+            return b = a.displayName || null, null !== b ? b : Qa(a.type) || "Memo";
+        case Ha:
+            b = a._payload;
+            a = a._init;
+            try {
+                return Qa(a(b));
+            } catch (c) {}
+    }
+    return null;
+}
+function Ra(a) {
+    var b = a.type;
+    switch(a.tag){
+        case 24:
+            return "Cache";
+        case 9:
+            return (b.displayName || "Context") + ".Consumer";
+        case 10:
+            return (b._context.displayName || "Context") + ".Provider";
+        case 18:
+            return "DehydratedFragment";
+        case 11:
+            return a = b.render, a = a.displayName || a.name || "", b.displayName || ("" !== a ? "ForwardRef(" + a + ")" : "ForwardRef");
+        case 7:
+            return "Fragment";
+        case 5:
+            return b;
+        case 4:
+            return "Portal";
+        case 3:
+            return "Root";
+        case 6:
+            return "Text";
+        case 16:
+            return Qa(b);
+        case 8:
+            return b === za ? "StrictMode" : "Mode";
+        case 22:
+            return "Offscreen";
+        case 12:
+            return "Profiler";
+        case 21:
+            return "Scope";
+        case 13:
+            return "Suspense";
+        case 19:
+            return "SuspenseList";
+        case 25:
+            return "TracingMarker";
+        case 1:
+        case 0:
+        case 17:
+        case 2:
+        case 14:
+        case 15:
+            if ("function" === typeof b) return b.displayName || b.name || null;
+            if ("string" === typeof b) return b;
+    }
+    return null;
+}
+function Sa(a) {
+    switch(typeof a){
+        case "boolean":
+        case "number":
+        case "string":
+        case "undefined":
+            return a;
+        case "object":
+            return a;
+        default:
+            return "";
+    }
+}
+function Ta(a) {
+    var b = a.type;
+    return (a = a.nodeName) && "input" === a.toLowerCase() && ("checkbox" === b || "radio" === b);
+}
+function Ua(a) {
+    var b = Ta(a) ? "checked" : "value", c = Object.getOwnPropertyDescriptor(a.constructor.prototype, b), d = "" + a[b];
+    if (!a.hasOwnProperty(b) && "undefined" !== typeof c && "function" === typeof c.get && "function" === typeof c.set) {
+        var e = c.get, f = c.set;
+        Object.defineProperty(a, b, {
+            configurable: !0,
+            get: function() {
+                return e.call(this);
+            },
+            set: function(a) {
+                d = "" + a;
+                f.call(this, a);
+            }
+        });
+        Object.defineProperty(a, b, {
+            enumerable: c.enumerable
+        });
+        return {
+            getValue: function() {
+                return d;
+            },
+            setValue: function(a) {
+                d = "" + a;
+            },
+            stopTracking: function() {
+                a._valueTracker = null;
+                delete a[b];
+            }
+        };
+    }
+}
+function Va(a) {
+    a._valueTracker || (a._valueTracker = Ua(a));
+}
+function Wa(a) {
+    if (!a) return !1;
+    var b = a._valueTracker;
+    if (!b) return !0;
+    var c = b.getValue();
+    var d = "";
+    a && (d = Ta(a) ? a.checked ? "true" : "false" : a.value);
+    a = d;
+    return a !== c ? (b.setValue(a), !0) : !1;
+}
+function Xa(a) {
+    a = a || ("undefined" !== typeof document ? document : void 0);
+    if ("undefined" === typeof a) return null;
+    try {
+        return a.activeElement || a.body;
+    } catch (b) {
+        return a.body;
+    }
+}
+function Ya(a, b) {
+    var c = b.checked;
+    return A({}, b, {
+        defaultChecked: void 0,
+        defaultValue: void 0,
+        value: void 0,
+        checked: null != c ? c : a._wrapperState.initialChecked
+    });
+}
+function Za(a, b) {
+    var c = null == b.defaultValue ? "" : b.defaultValue, d = null != b.checked ? b.checked : b.defaultChecked;
+    c = Sa(null != b.value ? b.value : c);
+    a._wrapperState = {
+        initialChecked: d,
+        initialValue: c,
+        controlled: "checkbox" === b.type || "radio" === b.type ? null != b.checked : null != b.value
+    };
+}
+function ab(a, b) {
+    b = b.checked;
+    null != b && ta(a, "checked", b, !1);
+}
+function bb(a, b) {
+    ab(a, b);
+    var c = Sa(b.value), d = b.type;
+    if (null != c) if ("number" === d) {
+        if (0 === c && "" === a.value || a.value != c) a.value = "" + c;
+    } else a.value !== "" + c && (a.value = "" + c);
+    else if ("submit" === d || "reset" === d) {
+        a.removeAttribute("value");
+        return;
+    }
+    b.hasOwnProperty("value") ? cb(a, b.type, c) : b.hasOwnProperty("defaultValue") && cb(a, b.type, Sa(b.defaultValue));
+    null == b.checked && null != b.defaultChecked && (a.defaultChecked = !!b.defaultChecked);
+}
+function db(a, b, c) {
+    if (b.hasOwnProperty("value") || b.hasOwnProperty("defaultValue")) {
+        var d = b.type;
+        if (!("submit" !== d && "reset" !== d || void 0 !== b.value && null !== b.value)) return;
+        b = "" + a._wrapperState.initialValue;
+        c || b === a.value || (a.value = b);
+        a.defaultValue = b;
+    }
+    c = a.name;
+    "" !== c && (a.name = "");
+    a.defaultChecked = !!a._wrapperState.initialChecked;
+    "" !== c && (a.name = c);
+}
+function cb(a, b, c) {
+    if ("number" !== b || Xa(a.ownerDocument) !== a) null == c ? a.defaultValue = "" + a._wrapperState.initialValue : a.defaultValue !== "" + c && (a.defaultValue = "" + c);
+}
+var eb = Array.isArray;
+function fb(a, b, c, d) {
+    a = a.options;
+    if (b) {
+        b = {};
+        for(var e = 0; e < c.length; e++)b["$" + c[e]] = !0;
+        for(c = 0; c < a.length; c++)e = b.hasOwnProperty("$" + a[c].value), a[c].selected !== e && (a[c].selected = e), e && d && (a[c].defaultSelected = !0);
+    } else {
+        c = "" + Sa(c);
+        b = null;
+        for(e = 0; e < a.length; e++){
+            if (a[e].value === c) {
+                a[e].selected = !0;
+                d && (a[e].defaultSelected = !0);
+                return;
+            }
+            null !== b || a[e].disabled || (b = a[e]);
+        }
+        null !== b && (b.selected = !0);
+    }
+}
+function gb(a, b) {
+    if (null != b.dangerouslySetInnerHTML) throw Error(p(91));
+    return A({}, b, {
+        value: void 0,
+        defaultValue: void 0,
+        children: "" + a._wrapperState.initialValue
+    });
+}
+function hb(a, b) {
+    var c = b.value;
+    if (null == c) {
+        c = b.children;
+        b = b.defaultValue;
+        if (null != c) {
+            if (null != b) throw Error(p(92));
+            if (eb(c)) {
+                if (1 < c.length) throw Error(p(93));
+                c = c[0];
+            }
+            b = c;
+        }
+        null == b && (b = "");
+        c = b;
+    }
+    a._wrapperState = {
+        initialValue: Sa(c)
+    };
+}
+function ib(a, b) {
+    var c = Sa(b.value), d = Sa(b.defaultValue);
+    null != c && (c = "" + c, c !== a.value && (a.value = c), null == b.defaultValue && a.defaultValue !== c && (a.defaultValue = c));
+    null != d && (a.defaultValue = "" + d);
+}
+function jb(a) {
+    var b = a.textContent;
+    b === a._wrapperState.initialValue && "" !== b && null !== b && (a.value = b);
+}
+function kb(a) {
+    switch(a){
+        case "svg":
+            return "http://www.w3.org/2000/svg";
+        case "math":
+            return "http://www.w3.org/1998/Math/MathML";
+        default:
+            return "http://www.w3.org/1999/xhtml";
+    }
+}
+function lb(a, b) {
+    return null == a || "http://www.w3.org/1999/xhtml" === a ? kb(b) : "http://www.w3.org/2000/svg" === a && "foreignObject" === b ? "http://www.w3.org/1999/xhtml" : a;
+}
+var mb, nb = function(a) {
+    return "undefined" !== typeof MSApp && MSApp.execUnsafeLocalFunction ? function(b, c, d, e) {
+        MSApp.execUnsafeLocalFunction(function() {
+            return a(b, c, d, e);
+        });
+    } : a;
+}(function(a, b) {
+    if ("http://www.w3.org/2000/svg" !== a.namespaceURI || "innerHTML" in a) a.innerHTML = b;
+    else {
+        mb = mb || document.createElement("div");
+        mb.innerHTML = "<svg>" + b.valueOf().toString() + "</svg>";
+        for(b = mb.firstChild; a.firstChild;)a.removeChild(a.firstChild);
+        for(; b.firstChild;)a.appendChild(b.firstChild);
+    }
+});
+function ob(a, b) {
+    if (b) {
+        var c = a.firstChild;
+        if (c && c === a.lastChild && 3 === c.nodeType) {
+            c.nodeValue = b;
+            return;
+        }
+    }
+    a.textContent = b;
+}
+var pb = {
+    animationIterationCount: !0,
+    aspectRatio: !0,
+    borderImageOutset: !0,
+    borderImageSlice: !0,
+    borderImageWidth: !0,
+    boxFlex: !0,
+    boxFlexGroup: !0,
+    boxOrdinalGroup: !0,
+    columnCount: !0,
+    columns: !0,
+    flex: !0,
+    flexGrow: !0,
+    flexPositive: !0,
+    flexShrink: !0,
+    flexNegative: !0,
+    flexOrder: !0,
+    gridArea: !0,
+    gridRow: !0,
+    gridRowEnd: !0,
+    gridRowSpan: !0,
+    gridRowStart: !0,
+    gridColumn: !0,
+    gridColumnEnd: !0,
+    gridColumnSpan: !0,
+    gridColumnStart: !0,
+    fontWeight: !0,
+    lineClamp: !0,
+    lineHeight: !0,
+    opacity: !0,
+    order: !0,
+    orphans: !0,
+    tabSize: !0,
+    widows: !0,
+    zIndex: !0,
+    zoom: !0,
+    fillOpacity: !0,
+    floodOpacity: !0,
+    stopOpacity: !0,
+    strokeDasharray: !0,
+    strokeDashoffset: !0,
+    strokeMiterlimit: !0,
+    strokeOpacity: !0,
+    strokeWidth: !0
+}, qb = [
+    "Webkit",
+    "ms",
+    "Moz",
+    "O"
+];
+Object.keys(pb).forEach(function(a) {
+    qb.forEach(function(b) {
+        b = b + a.charAt(0).toUpperCase() + a.substring(1);
+        pb[b] = pb[a];
+    });
+});
+function rb(a, b, c) {
+    return null == b || "boolean" === typeof b || "" === b ? "" : c || "number" !== typeof b || 0 === b || pb.hasOwnProperty(a) && pb[a] ? ("" + b).trim() : b + "px";
+}
+function sb(a, b) {
+    a = a.style;
+    for(var c in b)if (b.hasOwnProperty(c)) {
+        var d = 0 === c.indexOf("--"), e = rb(c, b[c], d);
+        "float" === c && (c = "cssFloat");
+        d ? a.setProperty(c, e) : a[c] = e;
+    }
+}
+var tb = A({
+    menuitem: !0
+}, {
+    area: !0,
+    base: !0,
+    br: !0,
+    col: !0,
+    embed: !0,
+    hr: !0,
+    img: !0,
+    input: !0,
+    keygen: !0,
+    link: !0,
+    meta: !0,
+    param: !0,
+    source: !0,
+    track: !0,
+    wbr: !0
+});
+function ub(a, b) {
+    if (b) {
+        if (tb[a] && (null != b.children || null != b.dangerouslySetInnerHTML)) throw Error(p(137, a));
+        if (null != b.dangerouslySetInnerHTML) {
+            if (null != b.children) throw Error(p(60));
+            if ("object" !== typeof b.dangerouslySetInnerHTML || !("__html" in b.dangerouslySetInnerHTML)) throw Error(p(61));
+        }
+        if (null != b.style && "object" !== typeof b.style) throw Error(p(62));
+    }
+}
+function vb(a, b) {
+    if (-1 === a.indexOf("-")) return "string" === typeof b.is;
+    switch(a){
+        case "annotation-xml":
+        case "color-profile":
+        case "font-face":
+        case "font-face-src":
+        case "font-face-uri":
+        case "font-face-format":
+        case "font-face-name":
+        case "missing-glyph":
+            return !1;
+        default:
+            return !0;
+    }
+}
+var wb = null;
+function xb(a) {
+    a = a.target || a.srcElement || window;
+    a.correspondingUseElement && (a = a.correspondingUseElement);
+    return 3 === a.nodeType ? a.parentNode : a;
+}
+var yb = null, zb = null, Ab = null;
+function Bb(a) {
+    if (a = Cb(a)) {
+        if ("function" !== typeof yb) throw Error(p(280));
+        var b = a.stateNode;
+        b && (b = Db(b), yb(a.stateNode, a.type, b));
+    }
+}
+function Eb(a) {
+    zb ? Ab ? Ab.push(a) : Ab = [
+        a
+    ] : zb = a;
+}
+function Fb() {
+    if (zb) {
+        var a = zb, b = Ab;
+        Ab = zb = null;
+        Bb(a);
+        if (b) for(a = 0; a < b.length; a++)Bb(b[a]);
+    }
+}
+function Gb(a, b) {
+    return a(b);
+}
+function Hb() {}
+var Ib = !1;
+function Jb(a, b, c) {
+    if (Ib) return a(b, c);
+    Ib = !0;
+    try {
+        return Gb(a, b, c);
+    } finally{
+        if (Ib = !1, null !== zb || null !== Ab) Hb(), Fb();
+    }
+}
+function Kb(a, b) {
+    var c = a.stateNode;
+    if (null === c) return null;
+    var d = Db(c);
+    if (null === d) return null;
+    c = d[b];
+    a: switch(b){
+        case "onClick":
+        case "onClickCapture":
+        case "onDoubleClick":
+        case "onDoubleClickCapture":
+        case "onMouseDown":
+        case "onMouseDownCapture":
+        case "onMouseMove":
+        case "onMouseMoveCapture":
+        case "onMouseUp":
+        case "onMouseUpCapture":
+        case "onMouseEnter":
+            (d = !d.disabled) || (a = a.type, d = !("button" === a || "input" === a || "select" === a || "textarea" === a));
+            a = !d;
+            break a;
+        default:
+            a = !1;
+    }
+    if (a) return null;
+    if (c && "function" !== typeof c) throw Error(p(231, b, typeof c));
+    return c;
+}
+var Lb = !1;
+if (ia) try {
+    var Mb = {};
+    Object.defineProperty(Mb, "passive", {
+        get: function() {
+            Lb = !0;
+        }
+    });
+    window.addEventListener("test", Mb, Mb);
+    window.removeEventListener("test", Mb, Mb);
+} catch (a) {
+    Lb = !1;
+}
+function Nb(a, b, c, d, e, f, g, h, k) {
+    var l = Array.prototype.slice.call(arguments, 3);
+    try {
+        b.apply(c, l);
+    } catch (m) {
+        this.onError(m);
+    }
+}
+var Ob = !1, Pb = null, Qb = !1, Rb = null, Sb = {
+    onError: function(a) {
+        Ob = !0;
+        Pb = a;
+    }
+};
+function Tb(a, b, c, d, e, f, g, h, k) {
+    Ob = !1;
+    Pb = null;
+    Nb.apply(Sb, arguments);
+}
+function Ub(a, b, c, d, e, f, g, h, k) {
+    Tb.apply(this, arguments);
+    if (Ob) {
+        if (Ob) {
+            var l = Pb;
+            Ob = !1;
+            Pb = null;
+        } else throw Error(p(198));
+        Qb || (Qb = !0, Rb = l);
+    }
+}
+function Vb(a) {
+    var b = a, c = a;
+    if (a.alternate) for(; b.return;)b = b.return;
+    else {
+        a = b;
+        do b = a, 0 !== (b.flags & 4098) && (c = b.return), a = b.return;
+        while (a);
+    }
+    return 3 === b.tag ? c : null;
+}
+function Wb(a) {
+    if (13 === a.tag) {
+        var b = a.memoizedState;
+        null === b && (a = a.alternate, null !== a && (b = a.memoizedState));
+        if (null !== b) return b.dehydrated;
+    }
+    return null;
+}
+function Xb(a) {
+    if (Vb(a) !== a) throw Error(p(188));
+}
+function Yb(a) {
+    var b = a.alternate;
+    if (!b) {
+        b = Vb(a);
+        if (null === b) throw Error(p(188));
+        return b !== a ? null : a;
+    }
+    for(var c = a, d = b;;){
+        var e = c.return;
+        if (null === e) break;
+        var f = e.alternate;
+        if (null === f) {
+            d = e.return;
+            if (null !== d) {
+                c = d;
+                continue;
+            }
+            break;
+        }
+        if (e.child === f.child) {
+            for(f = e.child; f;){
+                if (f === c) return Xb(e), a;
+                if (f === d) return Xb(e), b;
+                f = f.sibling;
+            }
+            throw Error(p(188));
+        }
+        if (c.return !== d.return) c = e, d = f;
+        else {
+            for(var g = !1, h = e.child; h;){
+                if (h === c) {
+                    g = !0;
+                    c = e;
+                    d = f;
+                    break;
+                }
+                if (h === d) {
+                    g = !0;
+                    d = e;
+                    c = f;
+                    break;
+                }
+                h = h.sibling;
+            }
+            if (!g) {
+                for(h = f.child; h;){
+                    if (h === c) {
+                        g = !0;
+                        c = f;
+                        d = e;
+                        break;
+                    }
+                    if (h === d) {
+                        g = !0;
+                        d = f;
+                        c = e;
+                        break;
+                    }
+                    h = h.sibling;
+                }
+                if (!g) throw Error(p(189));
+            }
+        }
+        if (c.alternate !== d) throw Error(p(190));
+    }
+    if (3 !== c.tag) throw Error(p(188));
+    return c.stateNode.current === c ? a : b;
+}
+function Zb(a) {
+    a = Yb(a);
+    return null !== a ? $b(a) : null;
+}
+function $b(a) {
+    if (5 === a.tag || 6 === a.tag) return a;
+    for(a = a.child; null !== a;){
+        var b = $b(a);
+        if (null !== b) return b;
+        a = a.sibling;
+    }
+    return null;
+}
+var ac = ca.unstable_scheduleCallback, bc = ca.unstable_cancelCallback, cc = ca.unstable_shouldYield, dc = ca.unstable_requestPaint, B = ca.unstable_now, ec = ca.unstable_getCurrentPriorityLevel, fc = ca.unstable_ImmediatePriority, gc = ca.unstable_UserBlockingPriority, hc = ca.unstable_NormalPriority, ic = ca.unstable_LowPriority, jc = ca.unstable_IdlePriority, kc = null, lc = null;
+function mc(a) {
+    if (lc && "function" === typeof lc.onCommitFiberRoot) try {
+        lc.onCommitFiberRoot(kc, a, void 0, 128 === (a.current.flags & 128));
+    } catch (b) {}
+}
+var oc = Math.clz32 ? Math.clz32 : nc, pc = Math.log, qc = Math.LN2;
+function nc(a) {
+    a >>>= 0;
+    return 0 === a ? 32 : 31 - (pc(a) / qc | 0) | 0;
+}
+var rc = 64, sc = 4194304;
+function tc(a) {
+    switch(a & -a){
+        case 1:
+            return 1;
+        case 2:
+            return 2;
+        case 4:
+            return 4;
+        case 8:
+            return 8;
+        case 16:
+            return 16;
+        case 32:
+            return 32;
+        case 64:
+        case 128:
+        case 256:
+        case 512:
+        case 1024:
+        case 2048:
+        case 4096:
+        case 8192:
+        case 16384:
+        case 32768:
+        case 65536:
+        case 131072:
+        case 262144:
+        case 524288:
+        case 1048576:
+        case 2097152:
+            return a & 4194240;
+        case 4194304:
+        case 8388608:
+        case 16777216:
+        case 33554432:
+        case 67108864:
+            return a & 130023424;
+        case 134217728:
+            return 134217728;
+        case 268435456:
+            return 268435456;
+        case 536870912:
+            return 536870912;
+        case 1073741824:
+            return 1073741824;
+        default:
+            return a;
+    }
+}
+function uc(a, b) {
+    var c = a.pendingLanes;
+    if (0 === c) return 0;
+    var d = 0, e = a.suspendedLanes, f = a.pingedLanes, g = c & 268435455;
+    if (0 !== g) {
+        var h = g & ~e;
+        0 !== h ? d = tc(h) : (f &= g, 0 !== f && (d = tc(f)));
+    } else g = c & ~e, 0 !== g ? d = tc(g) : 0 !== f && (d = tc(f));
+    if (0 === d) return 0;
+    if (0 !== b && b !== d && 0 === (b & e) && (e = d & -d, f = b & -b, e >= f || 16 === e && 0 !== (f & 4194240))) return b;
+    0 !== (d & 4) && (d |= c & 16);
+    b = a.entangledLanes;
+    if (0 !== b) for(a = a.entanglements, b &= d; 0 < b;)c = 31 - oc(b), e = 1 << c, d |= a[c], b &= ~e;
+    return d;
+}
+function vc(a, b) {
+    switch(a){
+        case 1:
+        case 2:
+        case 4:
+            return b + 250;
+        case 8:
+        case 16:
+        case 32:
+        case 64:
+        case 128:
+        case 256:
+        case 512:
+        case 1024:
+        case 2048:
+        case 4096:
+        case 8192:
+        case 16384:
+        case 32768:
+        case 65536:
+        case 131072:
+        case 262144:
+        case 524288:
+        case 1048576:
+        case 2097152:
+            return b + 5E3;
+        case 4194304:
+        case 8388608:
+        case 16777216:
+        case 33554432:
+        case 67108864:
+            return -1;
+        case 134217728:
+        case 268435456:
+        case 536870912:
+        case 1073741824:
+            return -1;
+        default:
+            return -1;
+    }
+}
+function wc(a, b) {
+    for(var c = a.suspendedLanes, d = a.pingedLanes, e = a.expirationTimes, f = a.pendingLanes; 0 < f;){
+        var g = 31 - oc(f), h = 1 << g, k = e[g];
+        if (-1 === k) {
+            if (0 === (h & c) || 0 !== (h & d)) e[g] = vc(h, b);
+        } else k <= b && (a.expiredLanes |= h);
+        f &= ~h;
+    }
+}
+function xc(a) {
+    a = a.pendingLanes & -1073741825;
+    return 0 !== a ? a : a & 1073741824 ? 1073741824 : 0;
+}
+function yc() {
+    var a = rc;
+    rc <<= 1;
+    0 === (rc & 4194240) && (rc = 64);
+    return a;
+}
+function zc(a) {
+    for(var b = [], c = 0; 31 > c; c++)b.push(a);
+    return b;
+}
+function Ac(a, b, c) {
+    a.pendingLanes |= b;
+    536870912 !== b && (a.suspendedLanes = 0, a.pingedLanes = 0);
+    a = a.eventTimes;
+    b = 31 - oc(b);
+    a[b] = c;
+}
+function Bc(a, b) {
+    var c = a.pendingLanes & ~b;
+    a.pendingLanes = b;
+    a.suspendedLanes = 0;
+    a.pingedLanes = 0;
+    a.expiredLanes &= b;
+    a.mutableReadLanes &= b;
+    a.entangledLanes &= b;
+    b = a.entanglements;
+    var d = a.eventTimes;
+    for(a = a.expirationTimes; 0 < c;){
+        var e = 31 - oc(c), f = 1 << e;
+        b[e] = 0;
+        d[e] = -1;
+        a[e] = -1;
+        c &= ~f;
+    }
+}
+function Cc(a, b) {
+    var c = a.entangledLanes |= b;
+    for(a = a.entanglements; c;){
+        var d = 31 - oc(c), e = 1 << d;
+        e & b | a[d] & b && (a[d] |= b);
+        c &= ~e;
+    }
+}
+var C = 0;
+function Dc(a) {
+    a &= -a;
+    return 1 < a ? 4 < a ? 0 !== (a & 268435455) ? 16 : 536870912 : 4 : 1;
+}
+var Ec, Fc, Gc, Hc, Ic, Jc = !1, Kc = [], Lc = null, Mc = null, Nc = null, Oc = new Map, Pc = new Map, Qc = [], Rc = "mousedown mouseup touchcancel touchend touchstart auxclick dblclick pointercancel pointerdown pointerup dragend dragstart drop compositionend compositionstart keydown keypress keyup input textInput copy cut paste click change contextmenu reset submit".split(" ");
+function Sc(a, b) {
+    switch(a){
+        case "focusin":
+        case "focusout":
+            Lc = null;
+            break;
+        case "dragenter":
+        case "dragleave":
+            Mc = null;
+            break;
+        case "mouseover":
+        case "mouseout":
+            Nc = null;
+            break;
+        case "pointerover":
+        case "pointerout":
+            Oc.delete(b.pointerId);
+            break;
+        case "gotpointercapture":
+        case "lostpointercapture":
+            Pc.delete(b.pointerId);
+    }
+}
+function Tc(a, b, c, d, e, f) {
+    if (null === a || a.nativeEvent !== f) return a = {
+        blockedOn: b,
+        domEventName: c,
+        eventSystemFlags: d,
+        nativeEvent: f,
+        targetContainers: [
+            e
+        ]
+    }, null !== b && (b = Cb(b), null !== b && Fc(b)), a;
+    a.eventSystemFlags |= d;
+    b = a.targetContainers;
+    null !== e && -1 === b.indexOf(e) && b.push(e);
+    return a;
+}
+function Uc(a, b, c, d, e) {
+    switch(b){
+        case "focusin":
+            return Lc = Tc(Lc, a, b, c, d, e), !0;
+        case "dragenter":
+            return Mc = Tc(Mc, a, b, c, d, e), !0;
+        case "mouseover":
+            return Nc = Tc(Nc, a, b, c, d, e), !0;
+        case "pointerover":
+            var f = e.pointerId;
+            Oc.set(f, Tc(Oc.get(f) || null, a, b, c, d, e));
+            return !0;
+        case "gotpointercapture":
+            return f = e.pointerId, Pc.set(f, Tc(Pc.get(f) || null, a, b, c, d, e)), !0;
+    }
+    return !1;
+}
+function Vc(a) {
+    var b = Wc(a.target);
+    if (null !== b) {
+        var c = Vb(b);
+        if (null !== c) {
+            if (b = c.tag, 13 === b) {
+                if (b = Wb(c), null !== b) {
+                    a.blockedOn = b;
+                    Ic(a.priority, function() {
+                        Gc(c);
+                    });
+                    return;
+                }
+            } else if (3 === b && c.stateNode.current.memoizedState.isDehydrated) {
+                a.blockedOn = 3 === c.tag ? c.stateNode.containerInfo : null;
+                return;
+            }
+        }
+    }
+    a.blockedOn = null;
+}
+function Xc(a) {
+    if (null !== a.blockedOn) return !1;
+    for(var b = a.targetContainers; 0 < b.length;){
+        var c = Yc(a.domEventName, a.eventSystemFlags, b[0], a.nativeEvent);
+        if (null === c) {
+            c = a.nativeEvent;
+            var d = new c.constructor(c.type, c);
+            wb = d;
+            c.target.dispatchEvent(d);
+            wb = null;
+        } else return b = Cb(c), null !== b && Fc(b), a.blockedOn = c, !1;
+        b.shift();
+    }
+    return !0;
+}
+function Zc(a, b, c) {
+    Xc(a) && c.delete(b);
+}
+function $c() {
+    Jc = !1;
+    null !== Lc && Xc(Lc) && (Lc = null);
+    null !== Mc && Xc(Mc) && (Mc = null);
+    null !== Nc && Xc(Nc) && (Nc = null);
+    Oc.forEach(Zc);
+    Pc.forEach(Zc);
+}
+function ad(a, b) {
+    a.blockedOn === b && (a.blockedOn = null, Jc || (Jc = !0, ca.unstable_scheduleCallback(ca.unstable_NormalPriority, $c)));
+}
+function bd(a) {
+    function b(b) {
+        return ad(b, a);
+    }
+    if (0 < Kc.length) {
+        ad(Kc[0], a);
+        for(var c = 1; c < Kc.length; c++){
+            var d = Kc[c];
+            d.blockedOn === a && (d.blockedOn = null);
+        }
+    }
+    null !== Lc && ad(Lc, a);
+    null !== Mc && ad(Mc, a);
+    null !== Nc && ad(Nc, a);
+    Oc.forEach(b);
+    Pc.forEach(b);
+    for(c = 0; c < Qc.length; c++)d = Qc[c], d.blockedOn === a && (d.blockedOn = null);
+    for(; 0 < Qc.length && (c = Qc[0], null === c.blockedOn);)Vc(c), null === c.blockedOn && Qc.shift();
+}
+var cd = ua.ReactCurrentBatchConfig, dd = !0;
+function ed(a, b, c, d) {
+    var e = C, f = cd.transition;
+    cd.transition = null;
+    try {
+        C = 1, fd(a, b, c, d);
+    } finally{
+        C = e, cd.transition = f;
+    }
+}
+function gd(a, b, c, d) {
+    var e = C, f = cd.transition;
+    cd.transition = null;
+    try {
+        C = 4, fd(a, b, c, d);
+    } finally{
+        C = e, cd.transition = f;
+    }
+}
+function fd(a, b, c, d) {
+    if (dd) {
+        var e = Yc(a, b, c, d);
+        if (null === e) hd(a, b, d, id, c), Sc(a, d);
+        else if (Uc(e, a, b, c, d)) d.stopPropagation();
+        else if (Sc(a, d), b & 4 && -1 < Rc.indexOf(a)) {
+            for(; null !== e;){
+                var f = Cb(e);
+                null !== f && Ec(f);
+                f = Yc(a, b, c, d);
+                null === f && hd(a, b, d, id, c);
+                if (f === e) break;
+                e = f;
+            }
+            null !== e && d.stopPropagation();
+        } else hd(a, b, d, null, c);
+    }
+}
+var id = null;
+function Yc(a, b, c, d) {
+    id = null;
+    a = xb(d);
+    a = Wc(a);
+    if (null !== a) if (b = Vb(a), null === b) a = null;
+    else if (c = b.tag, 13 === c) {
+        a = Wb(b);
+        if (null !== a) return a;
+        a = null;
+    } else if (3 === c) {
+        if (b.stateNode.current.memoizedState.isDehydrated) return 3 === b.tag ? b.stateNode.containerInfo : null;
+        a = null;
+    } else b !== a && (a = null);
+    id = a;
+    return null;
+}
+function jd(a) {
+    switch(a){
+        case "cancel":
+        case "click":
+        case "close":
+        case "contextmenu":
+        case "copy":
+        case "cut":
+        case "auxclick":
+        case "dblclick":
+        case "dragend":
+        case "dragstart":
+        case "drop":
+        case "focusin":
+        case "focusout":
+        case "input":
+        case "invalid":
+        case "keydown":
+        case "keypress":
+        case "keyup":
+        case "mousedown":
+        case "mouseup":
+        case "paste":
+        case "pause":
+        case "play":
+        case "pointercancel":
+        case "pointerdown":
+        case "pointerup":
+        case "ratechange":
+        case "reset":
+        case "resize":
+        case "seeked":
+        case "submit":
+        case "touchcancel":
+        case "touchend":
+        case "touchstart":
+        case "volumechange":
+        case "change":
+        case "selectionchange":
+        case "textInput":
+        case "compositionstart":
+        case "compositionend":
+        case "compositionupdate":
+        case "beforeblur":
+        case "afterblur":
+        case "beforeinput":
+        case "blur":
+        case "fullscreenchange":
+        case "focus":
+        case "hashchange":
+        case "popstate":
+        case "select":
+        case "selectstart":
+            return 1;
+        case "drag":
+        case "dragenter":
+        case "dragexit":
+        case "dragleave":
+        case "dragover":
+        case "mousemove":
+        case "mouseout":
+        case "mouseover":
+        case "pointermove":
+        case "pointerout":
+        case "pointerover":
+        case "scroll":
+        case "toggle":
+        case "touchmove":
+        case "wheel":
+        case "mouseenter":
+        case "mouseleave":
+        case "pointerenter":
+        case "pointerleave":
+            return 4;
+        case "message":
+            switch(ec()){
+                case fc:
+                    return 1;
+                case gc:
+                    return 4;
+                case hc:
+                case ic:
+                    return 16;
+                case jc:
+                    return 536870912;
+                default:
+                    return 16;
+            }
+        default:
+            return 16;
+    }
+}
+var kd = null, ld = null, md = null;
+function nd() {
+    if (md) return md;
+    var a, b = ld, c = b.length, d, e = "value" in kd ? kd.value : kd.textContent, f = e.length;
+    for(a = 0; a < c && b[a] === e[a]; a++);
+    var g = c - a;
+    for(d = 1; d <= g && b[c - d] === e[f - d]; d++);
+    return md = e.slice(a, 1 < d ? 1 - d : void 0);
+}
+function od(a) {
+    var b = a.keyCode;
+    "charCode" in a ? (a = a.charCode, 0 === a && 13 === b && (a = 13)) : a = b;
+    10 === a && (a = 13);
+    return 32 <= a || 13 === a ? a : 0;
+}
+function pd() {
+    return !0;
+}
+function qd() {
+    return !1;
+}
+function rd(a) {
+    function b(b, d, e, f, g) {
+        this._reactName = b;
+        this._targetInst = e;
+        this.type = d;
+        this.nativeEvent = f;
+        this.target = g;
+        this.currentTarget = null;
+        for(var c in a)a.hasOwnProperty(c) && (b = a[c], this[c] = b ? b(f) : f[c]);
+        this.isDefaultPrevented = (null != f.defaultPrevented ? f.defaultPrevented : !1 === f.returnValue) ? pd : qd;
+        this.isPropagationStopped = qd;
+        return this;
+    }
+    A(b.prototype, {
+        preventDefault: function() {
+            this.defaultPrevented = !0;
+            var a = this.nativeEvent;
+            a && (a.preventDefault ? a.preventDefault() : "unknown" !== typeof a.returnValue && (a.returnValue = !1), this.isDefaultPrevented = pd);
+        },
+        stopPropagation: function() {
+            var a = this.nativeEvent;
+            a && (a.stopPropagation ? a.stopPropagation() : "unknown" !== typeof a.cancelBubble && (a.cancelBubble = !0), this.isPropagationStopped = pd);
+        },
+        persist: function() {},
+        isPersistent: pd
+    });
+    return b;
+}
+var sd = {
+    eventPhase: 0,
+    bubbles: 0,
+    cancelable: 0,
+    timeStamp: function(a) {
+        return a.timeStamp || Date.now();
+    },
+    defaultPrevented: 0,
+    isTrusted: 0
+}, td = rd(sd), ud = A({}, sd, {
+    view: 0,
+    detail: 0
+}), vd = rd(ud), wd, xd, yd, Ad = A({}, ud, {
+    screenX: 0,
+    screenY: 0,
+    clientX: 0,
+    clientY: 0,
+    pageX: 0,
+    pageY: 0,
+    ctrlKey: 0,
+    shiftKey: 0,
+    altKey: 0,
+    metaKey: 0,
+    getModifierState: zd,
+    button: 0,
+    buttons: 0,
+    relatedTarget: function(a) {
+        return void 0 === a.relatedTarget ? a.fromElement === a.srcElement ? a.toElement : a.fromElement : a.relatedTarget;
+    },
+    movementX: function(a) {
+        if ("movementX" in a) return a.movementX;
+        a !== yd && (yd && "mousemove" === a.type ? (wd = a.screenX - yd.screenX, xd = a.screenY - yd.screenY) : xd = wd = 0, yd = a);
+        return wd;
+    },
+    movementY: function(a) {
+        return "movementY" in a ? a.movementY : xd;
+    }
+}), Bd = rd(Ad), Cd = A({}, Ad, {
+    dataTransfer: 0
+}), Dd = rd(Cd), Ed = A({}, ud, {
+    relatedTarget: 0
+}), Fd = rd(Ed), Gd = A({}, sd, {
+    animationName: 0,
+    elapsedTime: 0,
+    pseudoElement: 0
+}), Hd = rd(Gd), Id = A({}, sd, {
+    clipboardData: function(a) {
+        return "clipboardData" in a ? a.clipboardData : window.clipboardData;
+    }
+}), Jd = rd(Id), Kd = A({}, sd, {
+    data: 0
+}), Ld = rd(Kd), Md = {
+    Esc: "Escape",
+    Spacebar: " ",
+    Left: "ArrowLeft",
+    Up: "ArrowUp",
+    Right: "ArrowRight",
+    Down: "ArrowDown",
+    Del: "Delete",
+    Win: "OS",
+    Menu: "ContextMenu",
+    Apps: "ContextMenu",
+    Scroll: "ScrollLock",
+    MozPrintableKey: "Unidentified"
+}, Nd = {
+    8: "Backspace",
+    9: "Tab",
+    12: "Clear",
+    13: "Enter",
+    16: "Shift",
+    17: "Control",
+    18: "Alt",
+    19: "Pause",
+    20: "CapsLock",
+    27: "Escape",
+    32: " ",
+    33: "PageUp",
+    34: "PageDown",
+    35: "End",
+    36: "Home",
+    37: "ArrowLeft",
+    38: "ArrowUp",
+    39: "ArrowRight",
+    40: "ArrowDown",
+    45: "Insert",
+    46: "Delete",
+    112: "F1",
+    113: "F2",
+    114: "F3",
+    115: "F4",
+    116: "F5",
+    117: "F6",
+    118: "F7",
+    119: "F8",
+    120: "F9",
+    121: "F10",
+    122: "F11",
+    123: "F12",
+    144: "NumLock",
+    145: "ScrollLock",
+    224: "Meta"
+}, Od = {
+    Alt: "altKey",
+    Control: "ctrlKey",
+    Meta: "metaKey",
+    Shift: "shiftKey"
+};
+function Pd(a) {
+    var b = this.nativeEvent;
+    return b.getModifierState ? b.getModifierState(a) : (a = Od[a]) ? !!b[a] : !1;
+}
+function zd() {
+    return Pd;
+}
+var Qd = A({}, ud, {
+    key: function(a) {
+        if (a.key) {
+            var b = Md[a.key] || a.key;
+            if ("Unidentified" !== b) return b;
+        }
+        return "keypress" === a.type ? (a = od(a), 13 === a ? "Enter" : String.fromCharCode(a)) : "keydown" === a.type || "keyup" === a.type ? Nd[a.keyCode] || "Unidentified" : "";
+    },
+    code: 0,
+    location: 0,
+    ctrlKey: 0,
+    shiftKey: 0,
+    altKey: 0,
+    metaKey: 0,
+    repeat: 0,
+    locale: 0,
+    getModifierState: zd,
+    charCode: function(a) {
+        return "keypress" === a.type ? od(a) : 0;
+    },
+    keyCode: function(a) {
+        return "keydown" === a.type || "keyup" === a.type ? a.keyCode : 0;
+    },
+    which: function(a) {
+        return "keypress" === a.type ? od(a) : "keydown" === a.type || "keyup" === a.type ? a.keyCode : 0;
+    }
+}), Rd = rd(Qd), Sd = A({}, Ad, {
+    pointerId: 0,
+    width: 0,
+    height: 0,
+    pressure: 0,
+    tangentialPressure: 0,
+    tiltX: 0,
+    tiltY: 0,
+    twist: 0,
+    pointerType: 0,
+    isPrimary: 0
+}), Td = rd(Sd), Ud = A({}, ud, {
+    touches: 0,
+    targetTouches: 0,
+    changedTouches: 0,
+    altKey: 0,
+    metaKey: 0,
+    ctrlKey: 0,
+    shiftKey: 0,
+    getModifierState: zd
+}), Vd = rd(Ud), Wd = A({}, sd, {
+    propertyName: 0,
+    elapsedTime: 0,
+    pseudoElement: 0
+}), Xd = rd(Wd), Yd = A({}, Ad, {
+    deltaX: function(a) {
+        return "deltaX" in a ? a.deltaX : "wheelDeltaX" in a ? -a.wheelDeltaX : 0;
+    },
+    deltaY: function(a) {
+        return "deltaY" in a ? a.deltaY : "wheelDeltaY" in a ? -a.wheelDeltaY : "wheelDelta" in a ? -a.wheelDelta : 0;
+    },
+    deltaZ: 0,
+    deltaMode: 0
+}), Zd = rd(Yd), $d = [
+    9,
+    13,
+    27,
+    32
+], ae = ia && "CompositionEvent" in window, be = null;
+ia && "documentMode" in document && (be = document.documentMode);
+var ce = ia && "TextEvent" in window && !be, de = ia && (!ae || be && 8 < be && 11 >= be), ee = String.fromCharCode(32), fe = !1;
+function ge(a, b) {
+    switch(a){
+        case "keyup":
+            return -1 !== $d.indexOf(b.keyCode);
+        case "keydown":
+            return 229 !== b.keyCode;
+        case "keypress":
+        case "mousedown":
+        case "focusout":
+            return !0;
+        default:
+            return !1;
+    }
+}
+function he(a) {
+    a = a.detail;
+    return "object" === typeof a && "data" in a ? a.data : null;
+}
+var ie = !1;
+function je(a, b) {
+    switch(a){
+        case "compositionend":
+            return he(b);
+        case "keypress":
+            if (32 !== b.which) return null;
+            fe = !0;
+            return ee;
+        case "textInput":
+            return a = b.data, a === ee && fe ? null : a;
+        default:
+            return null;
+    }
+}
+function ke(a, b) {
+    if (ie) return "compositionend" === a || !ae && ge(a, b) ? (a = nd(), md = ld = kd = null, ie = !1, a) : null;
+    switch(a){
+        case "paste":
+            return null;
+        case "keypress":
+            if (!(b.ctrlKey || b.altKey || b.metaKey) || b.ctrlKey && b.altKey) {
+                if (b.char && 1 < b.char.length) return b.char;
+                if (b.which) return String.fromCharCode(b.which);
+            }
+            return null;
+        case "compositionend":
+            return de && "ko" !== b.locale ? null : b.data;
+        default:
+            return null;
+    }
+}
+var le = {
+    color: !0,
+    date: !0,
+    datetime: !0,
+    "datetime-local": !0,
+    email: !0,
+    month: !0,
+    number: !0,
+    password: !0,
+    range: !0,
+    search: !0,
+    tel: !0,
+    text: !0,
+    time: !0,
+    url: !0,
+    week: !0
+};
+function me(a) {
+    var b = a && a.nodeName && a.nodeName.toLowerCase();
+    return "input" === b ? !!le[a.type] : "textarea" === b ? !0 : !1;
+}
+function ne(a, b, c, d) {
+    Eb(d);
+    b = oe(b, "onChange");
+    0 < b.length && (c = new td("onChange", "change", null, c, d), a.push({
+        event: c,
+        listeners: b
+    }));
+}
+var pe = null, qe = null;
+function re(a) {
+    se(a, 0);
+}
+function te(a) {
+    var b = ue(a);
+    if (Wa(b)) return a;
+}
+function ve(a, b) {
+    if ("change" === a) return b;
+}
+var we = !1;
+if (ia) {
+    var xe;
+    if (ia) {
+        var ye = "oninput" in document;
+        if (!ye) {
+            var ze = document.createElement("div");
+            ze.setAttribute("oninput", "return;");
+            ye = "function" === typeof ze.oninput;
+        }
+        xe = ye;
+    } else xe = !1;
+    we = xe && (!document.documentMode || 9 < document.documentMode);
+}
+function Ae() {
+    pe && (pe.detachEvent("onpropertychange", Be), qe = pe = null);
+}
+function Be(a) {
+    if ("value" === a.propertyName && te(qe)) {
+        var b = [];
+        ne(b, qe, a, xb(a));
+        Jb(re, b);
+    }
+}
+function Ce(a, b, c) {
+    "focusin" === a ? (Ae(), pe = b, qe = c, pe.attachEvent("onpropertychange", Be)) : "focusout" === a && Ae();
+}
+function De(a) {
+    if ("selectionchange" === a || "keyup" === a || "keydown" === a) return te(qe);
+}
+function Ee(a, b) {
+    if ("click" === a) return te(b);
+}
+function Fe(a, b) {
+    if ("input" === a || "change" === a) return te(b);
+}
+function Ge(a, b) {
+    return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
+}
+var He = "function" === typeof Object.is ? Object.is : Ge;
+function Ie(a, b) {
+    if (He(a, b)) return !0;
+    if ("object" !== typeof a || null === a || "object" !== typeof b || null === b) return !1;
+    var c = Object.keys(a), d = Object.keys(b);
+    if (c.length !== d.length) return !1;
+    for(d = 0; d < c.length; d++){
+        var e = c[d];
+        if (!ja.call(b, e) || !He(a[e], b[e])) return !1;
+    }
+    return !0;
+}
+function Je(a) {
+    for(; a && a.firstChild;)a = a.firstChild;
+    return a;
+}
+function Ke(a, b) {
+    var c = Je(a);
+    a = 0;
+    for(var d; c;){
+        if (3 === c.nodeType) {
+            d = a + c.textContent.length;
+            if (a <= b && d >= b) return {
+                node: c,
+                offset: b - a
+            };
+            a = d;
+        }
+        a: {
+            for(; c;){
+                if (c.nextSibling) {
+                    c = c.nextSibling;
+                    break a;
+                }
+                c = c.parentNode;
+            }
+            c = void 0;
+        }
+        c = Je(c);
+    }
+}
+function Le(a, b) {
+    return a && b ? a === b ? !0 : a && 3 === a.nodeType ? !1 : b && 3 === b.nodeType ? Le(a, b.parentNode) : "contains" in a ? a.contains(b) : a.compareDocumentPosition ? !!(a.compareDocumentPosition(b) & 16) : !1 : !1;
+}
+function Me() {
+    for(var a = window, b = Xa(); b instanceof a.HTMLIFrameElement;){
+        try {
+            var c = "string" === typeof b.contentWindow.location.href;
+        } catch (d) {
+            c = !1;
+        }
+        if (c) a = b.contentWindow;
+        else break;
+        b = Xa(a.document);
+    }
+    return b;
+}
+function Ne(a) {
+    var b = a && a.nodeName && a.nodeName.toLowerCase();
+    return b && ("input" === b && ("text" === a.type || "search" === a.type || "tel" === a.type || "url" === a.type || "password" === a.type) || "textarea" === b || "true" === a.contentEditable);
+}
+function Oe(a) {
+    var b = Me(), c = a.focusedElem, d = a.selectionRange;
+    if (b !== c && c && c.ownerDocument && Le(c.ownerDocument.documentElement, c)) {
+        if (null !== d && Ne(c)) {
+            if (b = d.start, a = d.end, void 0 === a && (a = b), "selectionStart" in c) c.selectionStart = b, c.selectionEnd = Math.min(a, c.value.length);
+            else if (a = (b = c.ownerDocument || document) && b.defaultView || window, a.getSelection) {
+                a = a.getSelection();
+                var e = c.textContent.length, f = Math.min(d.start, e);
+                d = void 0 === d.end ? f : Math.min(d.end, e);
+                !a.extend && f > d && (e = d, d = f, f = e);
+                e = Ke(c, f);
+                var g = Ke(c, d);
+                e && g && (1 !== a.rangeCount || a.anchorNode !== e.node || a.anchorOffset !== e.offset || a.focusNode !== g.node || a.focusOffset !== g.offset) && (b = b.createRange(), b.setStart(e.node, e.offset), a.removeAllRanges(), f > d ? (a.addRange(b), a.extend(g.node, g.offset)) : (b.setEnd(g.node, g.offset), a.addRange(b)));
+            }
+        }
+        b = [];
+        for(a = c; a = a.parentNode;)1 === a.nodeType && b.push({
+            element: a,
+            left: a.scrollLeft,
+            top: a.scrollTop
+        });
+        "function" === typeof c.focus && c.focus();
+        for(c = 0; c < b.length; c++)a = b[c], a.element.scrollLeft = a.left, a.element.scrollTop = a.top;
+    }
+}
+var Pe = ia && "documentMode" in document && 11 >= document.documentMode, Qe = null, Re = null, Se = null, Te = !1;
+function Ue(a, b, c) {
+    var d = c.window === c ? c.document : 9 === c.nodeType ? c : c.ownerDocument;
+    Te || null == Qe || Qe !== Xa(d) || (d = Qe, "selectionStart" in d && Ne(d) ? d = {
+        start: d.selectionStart,
+        end: d.selectionEnd
+    } : (d = (d.ownerDocument && d.ownerDocument.defaultView || window).getSelection(), d = {
+        anchorNode: d.anchorNode,
+        anchorOffset: d.anchorOffset,
+        focusNode: d.focusNode,
+        focusOffset: d.focusOffset
+    }), Se && Ie(Se, d) || (Se = d, d = oe(Re, "onSelect"), 0 < d.length && (b = new td("onSelect", "select", null, b, c), a.push({
+        event: b,
+        listeners: d
+    }), b.target = Qe)));
+}
+function Ve(a, b) {
+    var c = {};
+    c[a.toLowerCase()] = b.toLowerCase();
+    c["Webkit" + a] = "webkit" + b;
+    c["Moz" + a] = "moz" + b;
+    return c;
+}
+var We = {
+    animationend: Ve("Animation", "AnimationEnd"),
+    animationiteration: Ve("Animation", "AnimationIteration"),
+    animationstart: Ve("Animation", "AnimationStart"),
+    transitionend: Ve("Transition", "TransitionEnd")
+}, Xe = {}, Ye = {};
+ia && (Ye = document.createElement("div").style, "AnimationEvent" in window || (delete We.animationend.animation, delete We.animationiteration.animation, delete We.animationstart.animation), "TransitionEvent" in window || delete We.transitionend.transition);
+function Ze(a) {
+    if (Xe[a]) return Xe[a];
+    if (!We[a]) return a;
+    var b = We[a], c;
+    for(c in b)if (b.hasOwnProperty(c) && c in Ye) return Xe[a] = b[c];
+    return a;
+}
+var $e = Ze("animationend"), af = Ze("animationiteration"), bf = Ze("animationstart"), cf = Ze("transitionend"), df = new Map, ef = "abort auxClick cancel canPlay canPlayThrough click close contextMenu copy cut drag dragEnd dragEnter dragExit dragLeave dragOver dragStart drop durationChange emptied encrypted ended error gotPointerCapture input invalid keyDown keyPress keyUp load loadedData loadedMetadata loadStart lostPointerCapture mouseDown mouseMove mouseOut mouseOver mouseUp paste pause play playing pointerCancel pointerDown pointerMove pointerOut pointerOver pointerUp progress rateChange reset resize seeked seeking stalled submit suspend timeUpdate touchCancel touchEnd touchStart volumeChange scroll toggle touchMove waiting wheel".split(" ");
+function ff(a, b) {
+    df.set(a, b);
+    fa(b, [
+        a
+    ]);
+}
+for(var gf = 0; gf < ef.length; gf++){
+    var hf = ef[gf], jf = hf.toLowerCase(), kf = hf[0].toUpperCase() + hf.slice(1);
+    ff(jf, "on" + kf);
+}
+ff($e, "onAnimationEnd");
+ff(af, "onAnimationIteration");
+ff(bf, "onAnimationStart");
+ff("dblclick", "onDoubleClick");
+ff("focusin", "onFocus");
+ff("focusout", "onBlur");
+ff(cf, "onTransitionEnd");
+ha("onMouseEnter", [
+    "mouseout",
+    "mouseover"
+]);
+ha("onMouseLeave", [
+    "mouseout",
+    "mouseover"
+]);
+ha("onPointerEnter", [
+    "pointerout",
+    "pointerover"
+]);
+ha("onPointerLeave", [
+    "pointerout",
+    "pointerover"
+]);
+fa("onChange", "change click focusin focusout input keydown keyup selectionchange".split(" "));
+fa("onSelect", "focusout contextmenu dragend focusin keydown keyup mousedown mouseup selectionchange".split(" "));
+fa("onBeforeInput", [
+    "compositionend",
+    "keypress",
+    "textInput",
+    "paste"
+]);
+fa("onCompositionEnd", "compositionend focusout keydown keypress keyup mousedown".split(" "));
+fa("onCompositionStart", "compositionstart focusout keydown keypress keyup mousedown".split(" "));
+fa("onCompositionUpdate", "compositionupdate focusout keydown keypress keyup mousedown".split(" "));
+var lf = "abort canplay canplaythrough durationchange emptied encrypted ended error loadeddata loadedmetadata loadstart pause play playing progress ratechange resize seeked seeking stalled suspend timeupdate volumechange waiting".split(" "), mf = new Set("cancel close invalid load scroll toggle".split(" ").concat(lf));
+function nf(a, b, c) {
+    var d = a.type || "unknown-event";
+    a.currentTarget = c;
+    Ub(d, b, void 0, a);
+    a.currentTarget = null;
+}
+function se(a, b) {
+    b = 0 !== (b & 4);
+    for(var c = 0; c < a.length; c++){
+        var d = a[c], e = d.event;
+        d = d.listeners;
+        a: {
+            var f = void 0;
+            if (b) for(var g = d.length - 1; 0 <= g; g--){
+                var h = d[g], k = h.instance, l = h.currentTarget;
+                h = h.listener;
+                if (k !== f && e.isPropagationStopped()) break a;
+                nf(e, h, l);
+                f = k;
+            }
+            else for(g = 0; g < d.length; g++){
+                h = d[g];
+                k = h.instance;
+                l = h.currentTarget;
+                h = h.listener;
+                if (k !== f && e.isPropagationStopped()) break a;
+                nf(e, h, l);
+                f = k;
+            }
+        }
+    }
+    if (Qb) throw a = Rb, Qb = !1, Rb = null, a;
+}
+function D(a, b) {
+    var c = b[of];
+    void 0 === c && (c = b[of] = new Set);
+    var d = a + "__bubble";
+    c.has(d) || (pf(b, a, 2, !1), c.add(d));
+}
+function qf(a, b, c) {
+    var d = 0;
+    b && (d |= 4);
+    pf(c, a, d, b);
+}
+var rf = "_reactListening" + Math.random().toString(36).slice(2);
+function sf(a) {
+    if (!a[rf]) {
+        a[rf] = !0;
+        da.forEach(function(b) {
+            "selectionchange" !== b && (mf.has(b) || qf(b, !1, a), qf(b, !0, a));
+        });
+        var b = 9 === a.nodeType ? a : a.ownerDocument;
+        null === b || b[rf] || (b[rf] = !0, qf("selectionchange", !1, b));
+    }
+}
+function pf(a, b, c, d) {
+    switch(jd(b)){
+        case 1:
+            var e = ed;
+            break;
+        case 4:
+            e = gd;
+            break;
+        default:
+            e = fd;
+    }
+    c = e.bind(null, b, c, a);
+    e = void 0;
+    !Lb || "touchstart" !== b && "touchmove" !== b && "wheel" !== b || (e = !0);
+    d ? void 0 !== e ? a.addEventListener(b, c, {
+        capture: !0,
+        passive: e
+    }) : a.addEventListener(b, c, !0) : void 0 !== e ? a.addEventListener(b, c, {
+        passive: e
+    }) : a.addEventListener(b, c, !1);
+}
+function hd(a, b, c, d, e) {
+    var f = d;
+    if (0 === (b & 1) && 0 === (b & 2) && null !== d) a: for(;;){
+        if (null === d) return;
+        var g = d.tag;
+        if (3 === g || 4 === g) {
+            var h = d.stateNode.containerInfo;
+            if (h === e || 8 === h.nodeType && h.parentNode === e) break;
+            if (4 === g) for(g = d.return; null !== g;){
+                var k = g.tag;
+                if (3 === k || 4 === k) {
+                    if (k = g.stateNode.containerInfo, k === e || 8 === k.nodeType && k.parentNode === e) return;
+                }
+                g = g.return;
+            }
+            for(; null !== h;){
+                g = Wc(h);
+                if (null === g) return;
+                k = g.tag;
+                if (5 === k || 6 === k) {
+                    d = f = g;
+                    continue a;
+                }
+                h = h.parentNode;
+            }
+        }
+        d = d.return;
+    }
+    Jb(function() {
+        var d = f, e = xb(c), g = [];
+        a: {
+            var h = df.get(a);
+            if (void 0 !== h) {
+                var k = td, n = a;
+                switch(a){
+                    case "keypress":
+                        if (0 === od(c)) break a;
+                    case "keydown":
+                    case "keyup":
+                        k = Rd;
+                        break;
+                    case "focusin":
+                        n = "focus";
+                        k = Fd;
+                        break;
+                    case "focusout":
+                        n = "blur";
+                        k = Fd;
+                        break;
+                    case "beforeblur":
+                    case "afterblur":
+                        k = Fd;
+                        break;
+                    case "click":
+                        if (2 === c.button) break a;
+                    case "auxclick":
+                    case "dblclick":
+                    case "mousedown":
+                    case "mousemove":
+                    case "mouseup":
+                    case "mouseout":
+                    case "mouseover":
+                    case "contextmenu":
+                        k = Bd;
+                        break;
+                    case "drag":
+                    case "dragend":
+                    case "dragenter":
+                    case "dragexit":
+                    case "dragleave":
+                    case "dragover":
+                    case "dragstart":
+                    case "drop":
+                        k = Dd;
+                        break;
+                    case "touchcancel":
+                    case "touchend":
+                    case "touchmove":
+                    case "touchstart":
+                        k = Vd;
+                        break;
+                    case $e:
+                    case af:
+                    case bf:
+                        k = Hd;
+                        break;
+                    case cf:
+                        k = Xd;
+                        break;
+                    case "scroll":
+                        k = vd;
+                        break;
+                    case "wheel":
+                        k = Zd;
+                        break;
+                    case "copy":
+                    case "cut":
+                    case "paste":
+                        k = Jd;
+                        break;
+                    case "gotpointercapture":
+                    case "lostpointercapture":
+                    case "pointercancel":
+                    case "pointerdown":
+                    case "pointermove":
+                    case "pointerout":
+                    case "pointerover":
+                    case "pointerup":
+                        k = Td;
+                }
+                var t = 0 !== (b & 4), J = !t && "scroll" === a, x = t ? null !== h ? h + "Capture" : null : h;
+                t = [];
+                for(var w = d, u; null !== w;){
+                    u = w;
+                    var F = u.stateNode;
+                    5 === u.tag && null !== F && (u = F, null !== x && (F = Kb(w, x), null != F && t.push(tf(w, F, u))));
+                    if (J) break;
+                    w = w.return;
+                }
+                0 < t.length && (h = new k(h, n, null, c, e), g.push({
+                    event: h,
+                    listeners: t
+                }));
+            }
+        }
+        if (0 === (b & 7)) {
+            a: {
+                h = "mouseover" === a || "pointerover" === a;
+                k = "mouseout" === a || "pointerout" === a;
+                if (h && c !== wb && (n = c.relatedTarget || c.fromElement) && (Wc(n) || n[uf])) break a;
+                if (k || h) {
+                    h = e.window === e ? e : (h = e.ownerDocument) ? h.defaultView || h.parentWindow : window;
+                    if (k) {
+                        if (n = c.relatedTarget || c.toElement, k = d, n = n ? Wc(n) : null, null !== n && (J = Vb(n), n !== J || 5 !== n.tag && 6 !== n.tag)) n = null;
+                    } else k = null, n = d;
+                    if (k !== n) {
+                        t = Bd;
+                        F = "onMouseLeave";
+                        x = "onMouseEnter";
+                        w = "mouse";
+                        if ("pointerout" === a || "pointerover" === a) t = Td, F = "onPointerLeave", x = "onPointerEnter", w = "pointer";
+                        J = null == k ? h : ue(k);
+                        u = null == n ? h : ue(n);
+                        h = new t(F, w + "leave", k, c, e);
+                        h.target = J;
+                        h.relatedTarget = u;
+                        F = null;
+                        Wc(e) === d && (t = new t(x, w + "enter", n, c, e), t.target = u, t.relatedTarget = J, F = t);
+                        J = F;
+                        if (k && n) b: {
+                            t = k;
+                            x = n;
+                            w = 0;
+                            for(u = t; u; u = vf(u))w++;
+                            u = 0;
+                            for(F = x; F; F = vf(F))u++;
+                            for(; 0 < w - u;)t = vf(t), w--;
+                            for(; 0 < u - w;)x = vf(x), u--;
+                            for(; w--;){
+                                if (t === x || null !== x && t === x.alternate) break b;
+                                t = vf(t);
+                                x = vf(x);
+                            }
+                            t = null;
+                        }
+                        else t = null;
+                        null !== k && wf(g, h, k, t, !1);
+                        null !== n && null !== J && wf(g, J, n, t, !0);
+                    }
+                }
+            }
+            a: {
+                h = d ? ue(d) : window;
+                k = h.nodeName && h.nodeName.toLowerCase();
+                if ("select" === k || "input" === k && "file" === h.type) var na = ve;
+                else if (me(h)) if (we) na = Fe;
+                else {
+                    na = De;
+                    var xa = Ce;
+                }
+                else (k = h.nodeName) && "input" === k.toLowerCase() && ("checkbox" === h.type || "radio" === h.type) && (na = Ee);
+                if (na && (na = na(a, d))) {
+                    ne(g, na, c, e);
+                    break a;
+                }
+                xa && xa(a, h, d);
+                "focusout" === a && (xa = h._wrapperState) && xa.controlled && "number" === h.type && cb(h, "number", h.value);
+            }
+            xa = d ? ue(d) : window;
+            switch(a){
+                case "focusin":
+                    if (me(xa) || "true" === xa.contentEditable) Qe = xa, Re = d, Se = null;
+                    break;
+                case "focusout":
+                    Se = Re = Qe = null;
+                    break;
+                case "mousedown":
+                    Te = !0;
+                    break;
+                case "contextmenu":
+                case "mouseup":
+                case "dragend":
+                    Te = !1;
+                    Ue(g, c, e);
+                    break;
+                case "selectionchange":
+                    if (Pe) break;
+                case "keydown":
+                case "keyup":
+                    Ue(g, c, e);
+            }
+            var $a;
+            if (ae) b: {
+                switch(a){
+                    case "compositionstart":
+                        var ba = "onCompositionStart";
+                        break b;
+                    case "compositionend":
+                        ba = "onCompositionEnd";
+                        break b;
+                    case "compositionupdate":
+                        ba = "onCompositionUpdate";
+                        break b;
+                }
+                ba = void 0;
+            }
+            else ie ? ge(a, c) && (ba = "onCompositionEnd") : "keydown" === a && 229 === c.keyCode && (ba = "onCompositionStart");
+            ba && (de && "ko" !== c.locale && (ie || "onCompositionStart" !== ba ? "onCompositionEnd" === ba && ie && ($a = nd()) : (kd = e, ld = "value" in kd ? kd.value : kd.textContent, ie = !0)), xa = oe(d, ba), 0 < xa.length && (ba = new Ld(ba, a, null, c, e), g.push({
+                event: ba,
+                listeners: xa
+            }), $a ? ba.data = $a : ($a = he(c), null !== $a && (ba.data = $a))));
+            if ($a = ce ? je(a, c) : ke(a, c)) d = oe(d, "onBeforeInput"), 0 < d.length && (e = new Ld("onBeforeInput", "beforeinput", null, c, e), g.push({
+                event: e,
+                listeners: d
+            }), e.data = $a);
+        }
+        se(g, b);
+    });
+}
+function tf(a, b, c) {
+    return {
+        instance: a,
+        listener: b,
+        currentTarget: c
+    };
+}
+function oe(a, b) {
+    for(var c = b + "Capture", d = []; null !== a;){
+        var e = a, f = e.stateNode;
+        5 === e.tag && null !== f && (e = f, f = Kb(a, c), null != f && d.unshift(tf(a, f, e)), f = Kb(a, b), null != f && d.push(tf(a, f, e)));
+        a = a.return;
+    }
+    return d;
+}
+function vf(a) {
+    if (null === a) return null;
+    do a = a.return;
+    while (a && 5 !== a.tag);
+    return a ? a : null;
+}
+function wf(a, b, c, d, e) {
+    for(var f = b._reactName, g = []; null !== c && c !== d;){
+        var h = c, k = h.alternate, l = h.stateNode;
+        if (null !== k && k === d) break;
+        5 === h.tag && null !== l && (h = l, e ? (k = Kb(c, f), null != k && g.unshift(tf(c, k, h))) : e || (k = Kb(c, f), null != k && g.push(tf(c, k, h))));
+        c = c.return;
+    }
+    0 !== g.length && a.push({
+        event: b,
+        listeners: g
+    });
+}
+var xf = /\r\n?/g, yf = /\u0000|\uFFFD/g;
+function zf(a) {
+    return ("string" === typeof a ? a : "" + a).replace(xf, "\n").replace(yf, "");
+}
+function Af(a, b, c) {
+    b = zf(b);
+    if (zf(a) !== b && c) throw Error(p(425));
+}
+function Bf() {}
+var Cf = null, Df = null;
+function Ef(a, b) {
+    return "textarea" === a || "noscript" === a || "string" === typeof b.children || "number" === typeof b.children || "object" === typeof b.dangerouslySetInnerHTML && null !== b.dangerouslySetInnerHTML && null != b.dangerouslySetInnerHTML.__html;
+}
+var Ff = "function" === typeof setTimeout ? setTimeout : void 0, Gf = "function" === typeof clearTimeout ? clearTimeout : void 0, Hf = "function" === typeof Promise ? Promise : void 0, Jf = "function" === typeof queueMicrotask ? queueMicrotask : "undefined" !== typeof Hf ? function(a) {
+    return Hf.resolve(null).then(a).catch(If);
+} : Ff;
+function If(a) {
+    setTimeout(function() {
+        throw a;
+    });
+}
+function Kf(a, b) {
+    var c = b, d = 0;
+    do {
+        var e = c.nextSibling;
+        a.removeChild(c);
+        if (e && 8 === e.nodeType) if (c = e.data, "/$" === c) {
+            if (0 === d) {
+                a.removeChild(e);
+                bd(b);
+                return;
+            }
+            d--;
+        } else "$" !== c && "$?" !== c && "$!" !== c || d++;
+        c = e;
+    }while (c);
+    bd(b);
+}
+function Lf(a) {
+    for(; null != a; a = a.nextSibling){
+        var b = a.nodeType;
+        if (1 === b || 3 === b) break;
+        if (8 === b) {
+            b = a.data;
+            if ("$" === b || "$!" === b || "$?" === b) break;
+            if ("/$" === b) return null;
+        }
+    }
+    return a;
+}
+function Mf(a) {
+    a = a.previousSibling;
+    for(var b = 0; a;){
+        if (8 === a.nodeType) {
+            var c = a.data;
+            if ("$" === c || "$!" === c || "$?" === c) {
+                if (0 === b) return a;
+                b--;
+            } else "/$" === c && b++;
+        }
+        a = a.previousSibling;
+    }
+    return null;
+}
+var Nf = Math.random().toString(36).slice(2), Of = "__reactFiber$" + Nf, Pf = "__reactProps$" + Nf, uf = "__reactContainer$" + Nf, of = "__reactEvents$" + Nf, Qf = "__reactListeners$" + Nf, Rf = "__reactHandles$" + Nf;
+function Wc(a) {
+    var b = a[Of];
+    if (b) return b;
+    for(var c = a.parentNode; c;){
+        if (b = c[uf] || c[Of]) {
+            c = b.alternate;
+            if (null !== b.child || null !== c && null !== c.child) for(a = Mf(a); null !== a;){
+                if (c = a[Of]) return c;
+                a = Mf(a);
+            }
+            return b;
+        }
+        a = c;
+        c = a.parentNode;
+    }
+    return null;
+}
+function Cb(a) {
+    a = a[Of] || a[uf];
+    return !a || 5 !== a.tag && 6 !== a.tag && 13 !== a.tag && 3 !== a.tag ? null : a;
+}
+function ue(a) {
+    if (5 === a.tag || 6 === a.tag) return a.stateNode;
+    throw Error(p(33));
+}
+function Db(a) {
+    return a[Pf] || null;
+}
+var Sf = [], Tf = -1;
+function Uf(a) {
+    return {
+        current: a
+    };
+}
+function E(a) {
+    0 > Tf || (a.current = Sf[Tf], Sf[Tf] = null, Tf--);
+}
+function G(a, b) {
+    Tf++;
+    Sf[Tf] = a.current;
+    a.current = b;
+}
+var Vf = {}, H = Uf(Vf), Wf = Uf(!1), Xf = Vf;
+function Yf(a, b) {
+    var c = a.type.contextTypes;
+    if (!c) return Vf;
+    var d = a.stateNode;
+    if (d && d.__reactInternalMemoizedUnmaskedChildContext === b) return d.__reactInternalMemoizedMaskedChildContext;
+    var e = {}, f;
+    for(f in c)e[f] = b[f];
+    d && (a = a.stateNode, a.__reactInternalMemoizedUnmaskedChildContext = b, a.__reactInternalMemoizedMaskedChildContext = e);
+    return e;
+}
+function Zf(a) {
+    a = a.childContextTypes;
+    return null !== a && void 0 !== a;
+}
+function $f() {
+    E(Wf);
+    E(H);
+}
+function ag(a, b, c) {
+    if (H.current !== Vf) throw Error(p(168));
+    G(H, b);
+    G(Wf, c);
+}
+function bg(a, b, c) {
+    var d = a.stateNode;
+    b = b.childContextTypes;
+    if ("function" !== typeof d.getChildContext) return c;
+    d = d.getChildContext();
+    for(var e in d)if (!(e in b)) throw Error(p(108, Ra(a) || "Unknown", e));
+    return A({}, c, d);
+}
+function cg(a) {
+    a = (a = a.stateNode) && a.__reactInternalMemoizedMergedChildContext || Vf;
+    Xf = H.current;
+    G(H, a);
+    G(Wf, Wf.current);
+    return !0;
+}
+function dg(a, b, c) {
+    var d = a.stateNode;
+    if (!d) throw Error(p(169));
+    c ? (a = bg(a, b, Xf), d.__reactInternalMemoizedMergedChildContext = a, E(Wf), E(H), G(H, a)) : E(Wf);
+    G(Wf, c);
+}
+var eg = null, fg = !1, gg = !1;
+function hg(a) {
+    null === eg ? eg = [
+        a
+    ] : eg.push(a);
+}
+function ig(a) {
+    fg = !0;
+    hg(a);
+}
+function jg() {
+    if (!gg && null !== eg) {
+        gg = !0;
+        var a = 0, b = C;
+        try {
+            var c = eg;
+            for(C = 1; a < c.length; a++){
+                var d = c[a];
+                do d = d(!0);
+                while (null !== d);
+            }
+            eg = null;
+            fg = !1;
+        } catch (e) {
+            throw null !== eg && (eg = eg.slice(a + 1)), ac(fc, jg), e;
+        } finally{
+            C = b, gg = !1;
+        }
+    }
+    return null;
+}
+var kg = [], lg = 0, mg = null, ng = 0, og = [], pg = 0, qg = null, rg = 1, sg = "";
+function tg(a, b) {
+    kg[lg++] = ng;
+    kg[lg++] = mg;
+    mg = a;
+    ng = b;
+}
+function ug(a, b, c) {
+    og[pg++] = rg;
+    og[pg++] = sg;
+    og[pg++] = qg;
+    qg = a;
+    var d = rg;
+    a = sg;
+    var e = 32 - oc(d) - 1;
+    d &= ~(1 << e);
+    c += 1;
+    var f = 32 - oc(b) + e;
+    if (30 < f) {
+        var g = e - e % 5;
+        f = (d & (1 << g) - 1).toString(32);
+        d >>= g;
+        e -= g;
+        rg = 1 << 32 - oc(b) + e | c << e | d;
+        sg = f + a;
+    } else rg = 1 << f | c << e | d, sg = a;
+}
+function vg(a) {
+    null !== a.return && (tg(a, 1), ug(a, 1, 0));
+}
+function wg(a) {
+    for(; a === mg;)mg = kg[--lg], kg[lg] = null, ng = kg[--lg], kg[lg] = null;
+    for(; a === qg;)qg = og[--pg], og[pg] = null, sg = og[--pg], og[pg] = null, rg = og[--pg], og[pg] = null;
+}
+var xg = null, yg = null, I = !1, zg = null;
+function Ag(a, b) {
+    var c = Bg(5, null, null, 0);
+    c.elementType = "DELETED";
+    c.stateNode = b;
+    c.return = a;
+    b = a.deletions;
+    null === b ? (a.deletions = [
+        c
+    ], a.flags |= 16) : b.push(c);
+}
+function Cg(a, b) {
+    switch(a.tag){
+        case 5:
+            var c = a.type;
+            b = 1 !== b.nodeType || c.toLowerCase() !== b.nodeName.toLowerCase() ? null : b;
+            return null !== b ? (a.stateNode = b, xg = a, yg = Lf(b.firstChild), !0) : !1;
+        case 6:
+            return b = "" === a.pendingProps || 3 !== b.nodeType ? null : b, null !== b ? (a.stateNode = b, xg = a, yg = null, !0) : !1;
+        case 13:
+            return b = 8 !== b.nodeType ? null : b, null !== b ? (c = null !== qg ? {
+                id: rg,
+                overflow: sg
+            } : null, a.memoizedState = {
+                dehydrated: b,
+                treeContext: c,
+                retryLane: 1073741824
+            }, c = Bg(18, null, null, 0), c.stateNode = b, c.return = a, a.child = c, xg = a, yg = null, !0) : !1;
+        default:
+            return !1;
+    }
+}
+function Dg(a) {
+    return 0 !== (a.mode & 1) && 0 === (a.flags & 128);
+}
+function Eg(a) {
+    if (I) {
+        var b = yg;
+        if (b) {
+            var c = b;
+            if (!Cg(a, b)) {
+                if (Dg(a)) throw Error(p(418));
+                b = Lf(c.nextSibling);
+                var d = xg;
+                b && Cg(a, b) ? Ag(d, c) : (a.flags = a.flags & -4097 | 2, I = !1, xg = a);
+            }
+        } else {
+            if (Dg(a)) throw Error(p(418));
+            a.flags = a.flags & -4097 | 2;
+            I = !1;
+            xg = a;
+        }
+    }
+}
+function Fg(a) {
+    for(a = a.return; null !== a && 5 !== a.tag && 3 !== a.tag && 13 !== a.tag;)a = a.return;
+    xg = a;
+}
+function Gg(a) {
+    if (a !== xg) return !1;
+    if (!I) return Fg(a), I = !0, !1;
+    var b;
+    (b = 3 !== a.tag) && !(b = 5 !== a.tag) && (b = a.type, b = "head" !== b && "body" !== b && !Ef(a.type, a.memoizedProps));
+    if (b && (b = yg)) {
+        if (Dg(a)) throw Hg(), Error(p(418));
+        for(; b;)Ag(a, b), b = Lf(b.nextSibling);
+    }
+    Fg(a);
+    if (13 === a.tag) {
+        a = a.memoizedState;
+        a = null !== a ? a.dehydrated : null;
+        if (!a) throw Error(p(317));
+        a: {
+            a = a.nextSibling;
+            for(b = 0; a;){
+                if (8 === a.nodeType) {
+                    var c = a.data;
+                    if ("/$" === c) {
+                        if (0 === b) {
+                            yg = Lf(a.nextSibling);
+                            break a;
+                        }
+                        b--;
+                    } else "$" !== c && "$!" !== c && "$?" !== c || b++;
+                }
+                a = a.nextSibling;
+            }
+            yg = null;
+        }
+    } else yg = xg ? Lf(a.stateNode.nextSibling) : null;
+    return !0;
+}
+function Hg() {
+    for(var a = yg; a;)a = Lf(a.nextSibling);
+}
+function Ig() {
+    yg = xg = null;
+    I = !1;
+}
+function Jg(a) {
+    null === zg ? zg = [
+        a
+    ] : zg.push(a);
+}
+var Kg = ua.ReactCurrentBatchConfig;
+function Lg(a, b, c) {
+    a = c.ref;
+    if (null !== a && "function" !== typeof a && "object" !== typeof a) {
+        if (c._owner) {
+            c = c._owner;
+            if (c) {
+                if (1 !== c.tag) throw Error(p(309));
+                var d = c.stateNode;
+            }
+            if (!d) throw Error(p(147, a));
+            var e = d, f = "" + a;
+            if (null !== b && null !== b.ref && "function" === typeof b.ref && b.ref._stringRef === f) return b.ref;
+            b = function(a) {
+                var b = e.refs;
+                null === a ? delete b[f] : b[f] = a;
+            };
+            b._stringRef = f;
+            return b;
+        }
+        if ("string" !== typeof a) throw Error(p(284));
+        if (!c._owner) throw Error(p(290, a));
+    }
+    return a;
+}
+function Mg(a, b) {
+    a = Object.prototype.toString.call(b);
+    throw Error(p(31, "[object Object]" === a ? "object with keys {" + Object.keys(b).join(", ") + "}" : a));
+}
+function Ng(a) {
+    var b = a._init;
+    return b(a._payload);
+}
+function Og(a) {
+    function b(b, c) {
+        if (a) {
+            var d = b.deletions;
+            null === d ? (b.deletions = [
+                c
+            ], b.flags |= 16) : d.push(c);
+        }
+    }
+    function c(c, d) {
+        if (!a) return null;
+        for(; null !== d;)b(c, d), d = d.sibling;
+        return null;
+    }
+    function d(a, b) {
+        for(a = new Map; null !== b;)null !== b.key ? a.set(b.key, b) : a.set(b.index, b), b = b.sibling;
+        return a;
+    }
+    function e(a, b) {
+        a = Pg(a, b);
+        a.index = 0;
+        a.sibling = null;
+        return a;
+    }
+    function f(b, c, d) {
+        b.index = d;
+        if (!a) return b.flags |= 1048576, c;
+        d = b.alternate;
+        if (null !== d) return d = d.index, d < c ? (b.flags |= 2, c) : d;
+        b.flags |= 2;
+        return c;
+    }
+    function g(b) {
+        a && null === b.alternate && (b.flags |= 2);
+        return b;
+    }
+    function h(a, b, c, d) {
+        if (null === b || 6 !== b.tag) return b = Qg(c, a.mode, d), b.return = a, b;
+        b = e(b, c);
+        b.return = a;
+        return b;
+    }
+    function k(a, b, c, d) {
+        var f = c.type;
+        if (f === ya) return m(a, b, c.props.children, d, c.key);
+        if (null !== b && (b.elementType === f || "object" === typeof f && null !== f && f.$$typeof === Ha && Ng(f) === b.type)) return d = e(b, c.props), d.ref = Lg(a, b, c), d.return = a, d;
+        d = Rg(c.type, c.key, c.props, null, a.mode, d);
+        d.ref = Lg(a, b, c);
+        d.return = a;
+        return d;
+    }
+    function l(a, b, c, d) {
+        if (null === b || 4 !== b.tag || b.stateNode.containerInfo !== c.containerInfo || b.stateNode.implementation !== c.implementation) return b = Sg(c, a.mode, d), b.return = a, b;
+        b = e(b, c.children || []);
+        b.return = a;
+        return b;
+    }
+    function m(a, b, c, d, f) {
+        if (null === b || 7 !== b.tag) return b = Tg(c, a.mode, d, f), b.return = a, b;
+        b = e(b, c);
+        b.return = a;
+        return b;
+    }
+    function q(a, b, c) {
+        if ("string" === typeof b && "" !== b || "number" === typeof b) return b = Qg("" + b, a.mode, c), b.return = a, b;
+        if ("object" === typeof b && null !== b) {
+            switch(b.$$typeof){
+                case va:
+                    return c = Rg(b.type, b.key, b.props, null, a.mode, c), c.ref = Lg(a, null, b), c.return = a, c;
+                case wa:
+                    return b = Sg(b, a.mode, c), b.return = a, b;
+                case Ha:
+                    var d = b._init;
+                    return q(a, d(b._payload), c);
+            }
+            if (eb(b) || Ka(b)) return b = Tg(b, a.mode, c, null), b.return = a, b;
+            Mg(a, b);
+        }
+        return null;
+    }
+    function r(a, b, c, d) {
+        var e = null !== b ? b.key : null;
+        if ("string" === typeof c && "" !== c || "number" === typeof c) return null !== e ? null : h(a, b, "" + c, d);
+        if ("object" === typeof c && null !== c) {
+            switch(c.$$typeof){
+                case va:
+                    return c.key === e ? k(a, b, c, d) : null;
+                case wa:
+                    return c.key === e ? l(a, b, c, d) : null;
+                case Ha:
+                    return e = c._init, r(a, b, e(c._payload), d);
+            }
+            if (eb(c) || Ka(c)) return null !== e ? null : m(a, b, c, d, null);
+            Mg(a, c);
+        }
+        return null;
+    }
+    function y(a, b, c, d, e) {
+        if ("string" === typeof d && "" !== d || "number" === typeof d) return a = a.get(c) || null, h(b, a, "" + d, e);
+        if ("object" === typeof d && null !== d) {
+            switch(d.$$typeof){
+                case va:
+                    return a = a.get(null === d.key ? c : d.key) || null, k(b, a, d, e);
+                case wa:
+                    return a = a.get(null === d.key ? c : d.key) || null, l(b, a, d, e);
+                case Ha:
+                    var f = d._init;
+                    return y(a, b, c, f(d._payload), e);
+            }
+            if (eb(d) || Ka(d)) return a = a.get(c) || null, m(b, a, d, e, null);
+            Mg(b, d);
+        }
+        return null;
+    }
+    function n(e, g, h, k) {
+        for(var l = null, m = null, u = g, w = g = 0, x = null; null !== u && w < h.length; w++){
+            u.index > w ? (x = u, u = null) : x = u.sibling;
+            var n = r(e, u, h[w], k);
+            if (null === n) {
+                null === u && (u = x);
+                break;
+            }
+            a && u && null === n.alternate && b(e, u);
+            g = f(n, g, w);
+            null === m ? l = n : m.sibling = n;
+            m = n;
+            u = x;
+        }
+        if (w === h.length) return c(e, u), I && tg(e, w), l;
+        if (null === u) {
+            for(; w < h.length; w++)u = q(e, h[w], k), null !== u && (g = f(u, g, w), null === m ? l = u : m.sibling = u, m = u);
+            I && tg(e, w);
+            return l;
+        }
+        for(u = d(e, u); w < h.length; w++)x = y(u, e, w, h[w], k), null !== x && (a && null !== x.alternate && u.delete(null === x.key ? w : x.key), g = f(x, g, w), null === m ? l = x : m.sibling = x, m = x);
+        a && u.forEach(function(a) {
+            return b(e, a);
+        });
+        I && tg(e, w);
+        return l;
+    }
+    function t(e, g, h, k) {
+        var l = Ka(h);
+        if ("function" !== typeof l) throw Error(p(150));
+        h = l.call(h);
+        if (null == h) throw Error(p(151));
+        for(var u = l = null, m = g, w = g = 0, x = null, n = h.next(); null !== m && !n.done; w++, n = h.next()){
+            m.index > w ? (x = m, m = null) : x = m.sibling;
+            var t = r(e, m, n.value, k);
+            if (null === t) {
+                null === m && (m = x);
+                break;
+            }
+            a && m && null === t.alternate && b(e, m);
+            g = f(t, g, w);
+            null === u ? l = t : u.sibling = t;
+            u = t;
+            m = x;
+        }
+        if (n.done) return c(e, m), I && tg(e, w), l;
+        if (null === m) {
+            for(; !n.done; w++, n = h.next())n = q(e, n.value, k), null !== n && (g = f(n, g, w), null === u ? l = n : u.sibling = n, u = n);
+            I && tg(e, w);
+            return l;
+        }
+        for(m = d(e, m); !n.done; w++, n = h.next())n = y(m, e, w, n.value, k), null !== n && (a && null !== n.alternate && m.delete(null === n.key ? w : n.key), g = f(n, g, w), null === u ? l = n : u.sibling = n, u = n);
+        a && m.forEach(function(a) {
+            return b(e, a);
+        });
+        I && tg(e, w);
+        return l;
+    }
+    function J(a, d, f, h) {
+        "object" === typeof f && null !== f && f.type === ya && null === f.key && (f = f.props.children);
+        if ("object" === typeof f && null !== f) {
+            switch(f.$$typeof){
+                case va:
+                    a: {
+                        for(var k = f.key, l = d; null !== l;){
+                            if (l.key === k) {
+                                k = f.type;
+                                if (k === ya) {
+                                    if (7 === l.tag) {
+                                        c(a, l.sibling);
+                                        d = e(l, f.props.children);
+                                        d.return = a;
+                                        a = d;
+                                        break a;
+                                    }
+                                } else if (l.elementType === k || "object" === typeof k && null !== k && k.$$typeof === Ha && Ng(k) === l.type) {
+                                    c(a, l.sibling);
+                                    d = e(l, f.props);
+                                    d.ref = Lg(a, l, f);
+                                    d.return = a;
+                                    a = d;
+                                    break a;
+                                }
+                                c(a, l);
+                                break;
+                            } else b(a, l);
+                            l = l.sibling;
+                        }
+                        f.type === ya ? (d = Tg(f.props.children, a.mode, h, f.key), d.return = a, a = d) : (h = Rg(f.type, f.key, f.props, null, a.mode, h), h.ref = Lg(a, d, f), h.return = a, a = h);
+                    }
+                    return g(a);
+                case wa:
+                    a: {
+                        for(l = f.key; null !== d;){
+                            if (d.key === l) if (4 === d.tag && d.stateNode.containerInfo === f.containerInfo && d.stateNode.implementation === f.implementation) {
+                                c(a, d.sibling);
+                                d = e(d, f.children || []);
+                                d.return = a;
+                                a = d;
+                                break a;
+                            } else {
+                                c(a, d);
+                                break;
+                            }
+                            else b(a, d);
+                            d = d.sibling;
+                        }
+                        d = Sg(f, a.mode, h);
+                        d.return = a;
+                        a = d;
+                    }
+                    return g(a);
+                case Ha:
+                    return l = f._init, J(a, d, l(f._payload), h);
+            }
+            if (eb(f)) return n(a, d, f, h);
+            if (Ka(f)) return t(a, d, f, h);
+            Mg(a, f);
+        }
+        return "string" === typeof f && "" !== f || "number" === typeof f ? (f = "" + f, null !== d && 6 === d.tag ? (c(a, d.sibling), d = e(d, f), d.return = a, a = d) : (c(a, d), d = Qg(f, a.mode, h), d.return = a, a = d), g(a)) : c(a, d);
+    }
+    return J;
+}
+var Ug = Og(!0), Vg = Og(!1), Wg = Uf(null), Xg = null, Yg = null, Zg = null;
+function $g() {
+    Zg = Yg = Xg = null;
+}
+function ah(a) {
+    var b = Wg.current;
+    E(Wg);
+    a._currentValue = b;
+}
+function bh(a, b, c) {
+    for(; null !== a;){
+        var d = a.alternate;
+        (a.childLanes & b) !== b ? (a.childLanes |= b, null !== d && (d.childLanes |= b)) : null !== d && (d.childLanes & b) !== b && (d.childLanes |= b);
+        if (a === c) break;
+        a = a.return;
+    }
+}
+function ch(a, b) {
+    Xg = a;
+    Zg = Yg = null;
+    a = a.dependencies;
+    null !== a && null !== a.firstContext && (0 !== (a.lanes & b) && (dh = !0), a.firstContext = null);
+}
+function eh(a) {
+    var b = a._currentValue;
+    if (Zg !== a) if (a = {
+        context: a,
+        memoizedValue: b,
+        next: null
+    }, null === Yg) {
+        if (null === Xg) throw Error(p(308));
+        Yg = a;
+        Xg.dependencies = {
+            lanes: 0,
+            firstContext: a
+        };
+    } else Yg = Yg.next = a;
+    return b;
+}
+var fh = null;
+function gh(a) {
+    null === fh ? fh = [
+        a
+    ] : fh.push(a);
+}
+function hh(a, b, c, d) {
+    var e = b.interleaved;
+    null === e ? (c.next = c, gh(b)) : (c.next = e.next, e.next = c);
+    b.interleaved = c;
+    return ih(a, d);
+}
+function ih(a, b) {
+    a.lanes |= b;
+    var c = a.alternate;
+    null !== c && (c.lanes |= b);
+    c = a;
+    for(a = a.return; null !== a;)a.childLanes |= b, c = a.alternate, null !== c && (c.childLanes |= b), c = a, a = a.return;
+    return 3 === c.tag ? c.stateNode : null;
+}
+var jh = !1;
+function kh(a) {
+    a.updateQueue = {
+        baseState: a.memoizedState,
+        firstBaseUpdate: null,
+        lastBaseUpdate: null,
+        shared: {
+            pending: null,
+            interleaved: null,
+            lanes: 0
+        },
+        effects: null
+    };
+}
+function lh(a, b) {
+    a = a.updateQueue;
+    b.updateQueue === a && (b.updateQueue = {
+        baseState: a.baseState,
+        firstBaseUpdate: a.firstBaseUpdate,
+        lastBaseUpdate: a.lastBaseUpdate,
+        shared: a.shared,
+        effects: a.effects
+    });
+}
+function mh(a, b) {
+    return {
+        eventTime: a,
+        lane: b,
+        tag: 0,
+        payload: null,
+        callback: null,
+        next: null
+    };
+}
+function nh(a, b, c) {
+    var d = a.updateQueue;
+    if (null === d) return null;
+    d = d.shared;
+    if (0 !== (K & 2)) {
+        var e = d.pending;
+        null === e ? b.next = b : (b.next = e.next, e.next = b);
+        d.pending = b;
+        return ih(a, c);
+    }
+    e = d.interleaved;
+    null === e ? (b.next = b, gh(d)) : (b.next = e.next, e.next = b);
+    d.interleaved = b;
+    return ih(a, c);
+}
+function oh(a, b, c) {
+    b = b.updateQueue;
+    if (null !== b && (b = b.shared, 0 !== (c & 4194240))) {
+        var d = b.lanes;
+        d &= a.pendingLanes;
+        c |= d;
+        b.lanes = c;
+        Cc(a, c);
+    }
+}
+function ph(a, b) {
+    var c = a.updateQueue, d = a.alternate;
+    if (null !== d && (d = d.updateQueue, c === d)) {
+        var e = null, f = null;
+        c = c.firstBaseUpdate;
+        if (null !== c) {
+            do {
+                var g = {
+                    eventTime: c.eventTime,
+                    lane: c.lane,
+                    tag: c.tag,
+                    payload: c.payload,
+                    callback: c.callback,
+                    next: null
+                };
+                null === f ? e = f = g : f = f.next = g;
+                c = c.next;
+            }while (null !== c);
+            null === f ? e = f = b : f = f.next = b;
+        } else e = f = b;
+        c = {
+            baseState: d.baseState,
+            firstBaseUpdate: e,
+            lastBaseUpdate: f,
+            shared: d.shared,
+            effects: d.effects
+        };
+        a.updateQueue = c;
+        return;
+    }
+    a = c.lastBaseUpdate;
+    null === a ? c.firstBaseUpdate = b : a.next = b;
+    c.lastBaseUpdate = b;
+}
+function qh(a, b, c, d) {
+    var e = a.updateQueue;
+    jh = !1;
+    var f = e.firstBaseUpdate, g = e.lastBaseUpdate, h = e.shared.pending;
+    if (null !== h) {
+        e.shared.pending = null;
+        var k = h, l = k.next;
+        k.next = null;
+        null === g ? f = l : g.next = l;
+        g = k;
+        var m = a.alternate;
+        null !== m && (m = m.updateQueue, h = m.lastBaseUpdate, h !== g && (null === h ? m.firstBaseUpdate = l : h.next = l, m.lastBaseUpdate = k));
+    }
+    if (null !== f) {
+        var q = e.baseState;
+        g = 0;
+        m = l = k = null;
+        h = f;
+        do {
+            var r = h.lane, y = h.eventTime;
+            if ((d & r) === r) {
+                null !== m && (m = m.next = {
+                    eventTime: y,
+                    lane: 0,
+                    tag: h.tag,
+                    payload: h.payload,
+                    callback: h.callback,
+                    next: null
+                });
+                a: {
+                    var n = a, t = h;
+                    r = b;
+                    y = c;
+                    switch(t.tag){
+                        case 1:
+                            n = t.payload;
+                            if ("function" === typeof n) {
+                                q = n.call(y, q, r);
+                                break a;
+                            }
+                            q = n;
+                            break a;
+                        case 3:
+                            n.flags = n.flags & -65537 | 128;
+                        case 0:
+                            n = t.payload;
+                            r = "function" === typeof n ? n.call(y, q, r) : n;
+                            if (null === r || void 0 === r) break a;
+                            q = A({}, q, r);
+                            break a;
+                        case 2:
+                            jh = !0;
+                    }
+                }
+                null !== h.callback && 0 !== h.lane && (a.flags |= 64, r = e.effects, null === r ? e.effects = [
+                    h
+                ] : r.push(h));
+            } else y = {
+                eventTime: y,
+                lane: r,
+                tag: h.tag,
+                payload: h.payload,
+                callback: h.callback,
+                next: null
+            }, null === m ? (l = m = y, k = q) : m = m.next = y, g |= r;
+            h = h.next;
+            if (null === h) if (h = e.shared.pending, null === h) break;
+            else r = h, h = r.next, r.next = null, e.lastBaseUpdate = r, e.shared.pending = null;
+        }while (1);
+        null === m && (k = q);
+        e.baseState = k;
+        e.firstBaseUpdate = l;
+        e.lastBaseUpdate = m;
+        b = e.shared.interleaved;
+        if (null !== b) {
+            e = b;
+            do g |= e.lane, e = e.next;
+            while (e !== b);
+        } else null === f && (e.shared.lanes = 0);
+        rh |= g;
+        a.lanes = g;
+        a.memoizedState = q;
+    }
+}
+function sh(a, b, c) {
+    a = b.effects;
+    b.effects = null;
+    if (null !== a) for(b = 0; b < a.length; b++){
+        var d = a[b], e = d.callback;
+        if (null !== e) {
+            d.callback = null;
+            d = c;
+            if ("function" !== typeof e) throw Error(p(191, e));
+            e.call(d);
+        }
+    }
+}
+var th = {}, uh = Uf(th), vh = Uf(th), wh = Uf(th);
+function xh(a) {
+    if (a === th) throw Error(p(174));
+    return a;
+}
+function yh(a, b) {
+    G(wh, b);
+    G(vh, a);
+    G(uh, th);
+    a = b.nodeType;
+    switch(a){
+        case 9:
+        case 11:
+            b = (b = b.documentElement) ? b.namespaceURI : lb(null, "");
+            break;
+        default:
+            a = 8 === a ? b.parentNode : b, b = a.namespaceURI || null, a = a.tagName, b = lb(b, a);
+    }
+    E(uh);
+    G(uh, b);
+}
+function zh() {
+    E(uh);
+    E(vh);
+    E(wh);
+}
+function Ah(a) {
+    xh(wh.current);
+    var b = xh(uh.current);
+    var c = lb(b, a.type);
+    b !== c && (G(vh, a), G(uh, c));
+}
+function Bh(a) {
+    vh.current === a && (E(uh), E(vh));
+}
+var L = Uf(0);
+function Ch(a) {
+    for(var b = a; null !== b;){
+        if (13 === b.tag) {
+            var c = b.memoizedState;
+            if (null !== c && (c = c.dehydrated, null === c || "$?" === c.data || "$!" === c.data)) return b;
+        } else if (19 === b.tag && void 0 !== b.memoizedProps.revealOrder) {
+            if (0 !== (b.flags & 128)) return b;
+        } else if (null !== b.child) {
+            b.child.return = b;
+            b = b.child;
+            continue;
+        }
+        if (b === a) break;
+        for(; null === b.sibling;){
+            if (null === b.return || b.return === a) return null;
+            b = b.return;
+        }
+        b.sibling.return = b.return;
+        b = b.sibling;
+    }
+    return null;
+}
+var Dh = [];
+function Eh() {
+    for(var a = 0; a < Dh.length; a++)Dh[a]._workInProgressVersionPrimary = null;
+    Dh.length = 0;
+}
+var Fh = ua.ReactCurrentDispatcher, Gh = ua.ReactCurrentBatchConfig, Hh = 0, M = null, N = null, O = null, Ih = !1, Jh = !1, Kh = 0, Lh = 0;
+function P() {
+    throw Error(p(321));
+}
+function Mh(a, b) {
+    if (null === b) return !1;
+    for(var c = 0; c < b.length && c < a.length; c++)if (!He(a[c], b[c])) return !1;
+    return !0;
+}
+function Nh(a, b, c, d, e, f) {
+    Hh = f;
+    M = b;
+    b.memoizedState = null;
+    b.updateQueue = null;
+    b.lanes = 0;
+    Fh.current = null === a || null === a.memoizedState ? Oh : Ph;
+    a = c(d, e);
+    if (Jh) {
+        f = 0;
+        do {
+            Jh = !1;
+            Kh = 0;
+            if (25 <= f) throw Error(p(301));
+            f += 1;
+            O = N = null;
+            b.updateQueue = null;
+            Fh.current = Qh;
+            a = c(d, e);
+        }while (Jh);
+    }
+    Fh.current = Rh;
+    b = null !== N && null !== N.next;
+    Hh = 0;
+    O = N = M = null;
+    Ih = !1;
+    if (b) throw Error(p(300));
+    return a;
+}
+function Sh() {
+    var a = 0 !== Kh;
+    Kh = 0;
+    return a;
+}
+function Th() {
+    var a = {
+        memoizedState: null,
+        baseState: null,
+        baseQueue: null,
+        queue: null,
+        next: null
+    };
+    null === O ? M.memoizedState = O = a : O = O.next = a;
+    return O;
+}
+function Uh() {
+    if (null === N) {
+        var a = M.alternate;
+        a = null !== a ? a.memoizedState : null;
+    } else a = N.next;
+    var b = null === O ? M.memoizedState : O.next;
+    if (null !== b) O = b, N = a;
+    else {
+        if (null === a) throw Error(p(310));
+        N = a;
+        a = {
+            memoizedState: N.memoizedState,
+            baseState: N.baseState,
+            baseQueue: N.baseQueue,
+            queue: N.queue,
+            next: null
+        };
+        null === O ? M.memoizedState = O = a : O = O.next = a;
+    }
+    return O;
+}
+function Vh(a, b) {
+    return "function" === typeof b ? b(a) : b;
+}
+function Wh(a) {
+    var b = Uh(), c = b.queue;
+    if (null === c) throw Error(p(311));
+    c.lastRenderedReducer = a;
+    var d = N, e = d.baseQueue, f = c.pending;
+    if (null !== f) {
+        if (null !== e) {
+            var g = e.next;
+            e.next = f.next;
+            f.next = g;
+        }
+        d.baseQueue = e = f;
+        c.pending = null;
+    }
+    if (null !== e) {
+        f = e.next;
+        d = d.baseState;
+        var h = g = null, k = null, l = f;
+        do {
+            var m = l.lane;
+            if ((Hh & m) === m) null !== k && (k = k.next = {
+                lane: 0,
+                action: l.action,
+                hasEagerState: l.hasEagerState,
+                eagerState: l.eagerState,
+                next: null
+            }), d = l.hasEagerState ? l.eagerState : a(d, l.action);
+            else {
+                var q = {
+                    lane: m,
+                    action: l.action,
+                    hasEagerState: l.hasEagerState,
+                    eagerState: l.eagerState,
+                    next: null
+                };
+                null === k ? (h = k = q, g = d) : k = k.next = q;
+                M.lanes |= m;
+                rh |= m;
+            }
+            l = l.next;
+        }while (null !== l && l !== f);
+        null === k ? g = d : k.next = h;
+        He(d, b.memoizedState) || (dh = !0);
+        b.memoizedState = d;
+        b.baseState = g;
+        b.baseQueue = k;
+        c.lastRenderedState = d;
+    }
+    a = c.interleaved;
+    if (null !== a) {
+        e = a;
+        do f = e.lane, M.lanes |= f, rh |= f, e = e.next;
+        while (e !== a);
+    } else null === e && (c.lanes = 0);
+    return [
+        b.memoizedState,
+        c.dispatch
+    ];
+}
+function Xh(a) {
+    var b = Uh(), c = b.queue;
+    if (null === c) throw Error(p(311));
+    c.lastRenderedReducer = a;
+    var d = c.dispatch, e = c.pending, f = b.memoizedState;
+    if (null !== e) {
+        c.pending = null;
+        var g = e = e.next;
+        do f = a(f, g.action), g = g.next;
+        while (g !== e);
+        He(f, b.memoizedState) || (dh = !0);
+        b.memoizedState = f;
+        null === b.baseQueue && (b.baseState = f);
+        c.lastRenderedState = f;
+    }
+    return [
+        f,
+        d
+    ];
+}
+function Yh() {}
+function Zh(a, b) {
+    var c = M, d = Uh(), e = b(), f = !He(d.memoizedState, e);
+    f && (d.memoizedState = e, dh = !0);
+    d = d.queue;
+    $h(ai.bind(null, c, d, a), [
+        a
+    ]);
+    if (d.getSnapshot !== b || f || null !== O && O.memoizedState.tag & 1) {
+        c.flags |= 2048;
+        bi(9, ci.bind(null, c, d, e, b), void 0, null);
+        if (null === Q) throw Error(p(349));
+        0 !== (Hh & 30) || di(c, b, e);
+    }
+    return e;
+}
+function di(a, b, c) {
+    a.flags |= 16384;
+    a = {
+        getSnapshot: b,
+        value: c
+    };
+    b = M.updateQueue;
+    null === b ? (b = {
+        lastEffect: null,
+        stores: null
+    }, M.updateQueue = b, b.stores = [
+        a
+    ]) : (c = b.stores, null === c ? b.stores = [
+        a
+    ] : c.push(a));
+}
+function ci(a, b, c, d) {
+    b.value = c;
+    b.getSnapshot = d;
+    ei(b) && fi(a);
+}
+function ai(a, b, c) {
+    return c(function() {
+        ei(b) && fi(a);
+    });
+}
+function ei(a) {
+    var b = a.getSnapshot;
+    a = a.value;
+    try {
+        var c = b();
+        return !He(a, c);
+    } catch (d) {
+        return !0;
+    }
+}
+function fi(a) {
+    var b = ih(a, 1);
+    null !== b && gi(b, a, 1, -1);
+}
+function hi(a) {
+    var b = Th();
+    "function" === typeof a && (a = a());
+    b.memoizedState = b.baseState = a;
+    a = {
+        pending: null,
+        interleaved: null,
+        lanes: 0,
+        dispatch: null,
+        lastRenderedReducer: Vh,
+        lastRenderedState: a
+    };
+    b.queue = a;
+    a = a.dispatch = ii.bind(null, M, a);
+    return [
+        b.memoizedState,
+        a
+    ];
+}
+function bi(a, b, c, d) {
+    a = {
+        tag: a,
+        create: b,
+        destroy: c,
+        deps: d,
+        next: null
+    };
+    b = M.updateQueue;
+    null === b ? (b = {
+        lastEffect: null,
+        stores: null
+    }, M.updateQueue = b, b.lastEffect = a.next = a) : (c = b.lastEffect, null === c ? b.lastEffect = a.next = a : (d = c.next, c.next = a, a.next = d, b.lastEffect = a));
+    return a;
+}
+function ji() {
+    return Uh().memoizedState;
+}
+function ki(a, b, c, d) {
+    var e = Th();
+    M.flags |= a;
+    e.memoizedState = bi(1 | b, c, void 0, void 0 === d ? null : d);
+}
+function li(a, b, c, d) {
+    var e = Uh();
+    d = void 0 === d ? null : d;
+    var f = void 0;
+    if (null !== N) {
+        var g = N.memoizedState;
+        f = g.destroy;
+        if (null !== d && Mh(d, g.deps)) {
+            e.memoizedState = bi(b, c, f, d);
+            return;
+        }
+    }
+    M.flags |= a;
+    e.memoizedState = bi(1 | b, c, f, d);
+}
+function mi(a, b) {
+    return ki(8390656, 8, a, b);
+}
+function $h(a, b) {
+    return li(2048, 8, a, b);
+}
+function ni(a, b) {
+    return li(4, 2, a, b);
+}
+function oi(a, b) {
+    return li(4, 4, a, b);
+}
+function pi(a, b) {
+    if ("function" === typeof b) return a = a(), b(a), function() {
+        b(null);
+    };
+    if (null !== b && void 0 !== b) return a = a(), b.current = a, function() {
+        b.current = null;
+    };
+}
+function qi(a, b, c) {
+    c = null !== c && void 0 !== c ? c.concat([
+        a
+    ]) : null;
+    return li(4, 4, pi.bind(null, b, a), c);
+}
+function ri() {}
+function si(a, b) {
+    var c = Uh();
+    b = void 0 === b ? null : b;
+    var d = c.memoizedState;
+    if (null !== d && null !== b && Mh(b, d[1])) return d[0];
+    c.memoizedState = [
+        a,
+        b
+    ];
+    return a;
+}
+function ti(a, b) {
+    var c = Uh();
+    b = void 0 === b ? null : b;
+    var d = c.memoizedState;
+    if (null !== d && null !== b && Mh(b, d[1])) return d[0];
+    a = a();
+    c.memoizedState = [
+        a,
+        b
+    ];
+    return a;
+}
+function ui(a, b, c) {
+    if (0 === (Hh & 21)) return a.baseState && (a.baseState = !1, dh = !0), a.memoizedState = c;
+    He(c, b) || (c = yc(), M.lanes |= c, rh |= c, a.baseState = !0);
+    return b;
+}
+function vi(a, b) {
+    var c = C;
+    C = 0 !== c && 4 > c ? c : 4;
+    a(!0);
+    var d = Gh.transition;
+    Gh.transition = {};
+    try {
+        a(!1), b();
+    } finally{
+        C = c, Gh.transition = d;
+    }
+}
+function wi() {
+    return Uh().memoizedState;
+}
+function xi(a, b, c) {
+    var d = yi(a);
+    c = {
+        lane: d,
+        action: c,
+        hasEagerState: !1,
+        eagerState: null,
+        next: null
+    };
+    if (zi(a)) Ai(b, c);
+    else if (c = hh(a, b, c, d), null !== c) {
+        var e = R();
+        gi(c, a, d, e);
+        Bi(c, b, d);
+    }
+}
+function ii(a, b, c) {
+    var d = yi(a), e = {
+        lane: d,
+        action: c,
+        hasEagerState: !1,
+        eagerState: null,
+        next: null
+    };
+    if (zi(a)) Ai(b, e);
+    else {
+        var f = a.alternate;
+        if (0 === a.lanes && (null === f || 0 === f.lanes) && (f = b.lastRenderedReducer, null !== f)) try {
+            var g = b.lastRenderedState, h = f(g, c);
+            e.hasEagerState = !0;
+            e.eagerState = h;
+            if (He(h, g)) {
+                var k = b.interleaved;
+                null === k ? (e.next = e, gh(b)) : (e.next = k.next, k.next = e);
+                b.interleaved = e;
+                return;
+            }
+        } catch (l) {} finally{}
+        c = hh(a, b, e, d);
+        null !== c && (e = R(), gi(c, a, d, e), Bi(c, b, d));
+    }
+}
+function zi(a) {
+    var b = a.alternate;
+    return a === M || null !== b && b === M;
+}
+function Ai(a, b) {
+    Jh = Ih = !0;
+    var c = a.pending;
+    null === c ? b.next = b : (b.next = c.next, c.next = b);
+    a.pending = b;
+}
+function Bi(a, b, c) {
+    if (0 !== (c & 4194240)) {
+        var d = b.lanes;
+        d &= a.pendingLanes;
+        c |= d;
+        b.lanes = c;
+        Cc(a, c);
+    }
+}
+var Rh = {
+    readContext: eh,
+    useCallback: P,
+    useContext: P,
+    useEffect: P,
+    useImperativeHandle: P,
+    useInsertionEffect: P,
+    useLayoutEffect: P,
+    useMemo: P,
+    useReducer: P,
+    useRef: P,
+    useState: P,
+    useDebugValue: P,
+    useDeferredValue: P,
+    useTransition: P,
+    useMutableSource: P,
+    useSyncExternalStore: P,
+    useId: P,
+    unstable_isNewReconciler: !1
+}, Oh = {
+    readContext: eh,
+    useCallback: function(a, b) {
+        Th().memoizedState = [
+            a,
+            void 0 === b ? null : b
+        ];
+        return a;
+    },
+    useContext: eh,
+    useEffect: mi,
+    useImperativeHandle: function(a, b, c) {
+        c = null !== c && void 0 !== c ? c.concat([
+            a
+        ]) : null;
+        return ki(4194308, 4, pi.bind(null, b, a), c);
+    },
+    useLayoutEffect: function(a, b) {
+        return ki(4194308, 4, a, b);
+    },
+    useInsertionEffect: function(a, b) {
+        return ki(4, 2, a, b);
+    },
+    useMemo: function(a, b) {
+        var c = Th();
+        b = void 0 === b ? null : b;
+        a = a();
+        c.memoizedState = [
+            a,
+            b
+        ];
+        return a;
+    },
+    useReducer: function(a, b, c) {
+        var d = Th();
+        b = void 0 !== c ? c(b) : b;
+        d.memoizedState = d.baseState = b;
+        a = {
+            pending: null,
+            interleaved: null,
+            lanes: 0,
+            dispatch: null,
+            lastRenderedReducer: a,
+            lastRenderedState: b
+        };
+        d.queue = a;
+        a = a.dispatch = xi.bind(null, M, a);
+        return [
+            d.memoizedState,
+            a
+        ];
+    },
+    useRef: function(a) {
+        var b = Th();
+        a = {
+            current: a
+        };
+        return b.memoizedState = a;
+    },
+    useState: hi,
+    useDebugValue: ri,
+    useDeferredValue: function(a) {
+        return Th().memoizedState = a;
+    },
+    useTransition: function() {
+        var a = hi(!1), b = a[0];
+        a = vi.bind(null, a[1]);
+        Th().memoizedState = a;
+        return [
+            b,
+            a
+        ];
+    },
+    useMutableSource: function() {},
+    useSyncExternalStore: function(a, b, c) {
+        var d = M, e = Th();
+        if (I) {
+            if (void 0 === c) throw Error(p(407));
+            c = c();
+        } else {
+            c = b();
+            if (null === Q) throw Error(p(349));
+            0 !== (Hh & 30) || di(d, b, c);
+        }
+        e.memoizedState = c;
+        var f = {
+            value: c,
+            getSnapshot: b
+        };
+        e.queue = f;
+        mi(ai.bind(null, d, f, a), [
+            a
+        ]);
+        d.flags |= 2048;
+        bi(9, ci.bind(null, d, f, c, b), void 0, null);
+        return c;
+    },
+    useId: function() {
+        var a = Th(), b = Q.identifierPrefix;
+        if (I) {
+            var c = sg;
+            var d = rg;
+            c = (d & ~(1 << 32 - oc(d) - 1)).toString(32) + c;
+            b = ":" + b + "R" + c;
+            c = Kh++;
+            0 < c && (b += "H" + c.toString(32));
+            b += ":";
+        } else c = Lh++, b = ":" + b + "r" + c.toString(32) + ":";
+        return a.memoizedState = b;
+    },
+    unstable_isNewReconciler: !1
+}, Ph = {
+    readContext: eh,
+    useCallback: si,
+    useContext: eh,
+    useEffect: $h,
+    useImperativeHandle: qi,
+    useInsertionEffect: ni,
+    useLayoutEffect: oi,
+    useMemo: ti,
+    useReducer: Wh,
+    useRef: ji,
+    useState: function() {
+        return Wh(Vh);
+    },
+    useDebugValue: ri,
+    useDeferredValue: function(a) {
+        var b = Uh();
+        return ui(b, N.memoizedState, a);
+    },
+    useTransition: function() {
+        var a = Wh(Vh)[0], b = Uh().memoizedState;
+        return [
+            a,
+            b
+        ];
+    },
+    useMutableSource: Yh,
+    useSyncExternalStore: Zh,
+    useId: wi,
+    unstable_isNewReconciler: !1
+}, Qh = {
+    readContext: eh,
+    useCallback: si,
+    useContext: eh,
+    useEffect: $h,
+    useImperativeHandle: qi,
+    useInsertionEffect: ni,
+    useLayoutEffect: oi,
+    useMemo: ti,
+    useReducer: Xh,
+    useRef: ji,
+    useState: function() {
+        return Xh(Vh);
+    },
+    useDebugValue: ri,
+    useDeferredValue: function(a) {
+        var b = Uh();
+        return null === N ? b.memoizedState = a : ui(b, N.memoizedState, a);
+    },
+    useTransition: function() {
+        var a = Xh(Vh)[0], b = Uh().memoizedState;
+        return [
+            a,
+            b
+        ];
+    },
+    useMutableSource: Yh,
+    useSyncExternalStore: Zh,
+    useId: wi,
+    unstable_isNewReconciler: !1
+};
+function Ci(a, b) {
+    if (a && a.defaultProps) {
+        b = A({}, b);
+        a = a.defaultProps;
+        for(var c in a)void 0 === b[c] && (b[c] = a[c]);
+        return b;
+    }
+    return b;
+}
+function Di(a, b, c, d) {
+    b = a.memoizedState;
+    c = c(d, b);
+    c = null === c || void 0 === c ? b : A({}, b, c);
+    a.memoizedState = c;
+    0 === a.lanes && (a.updateQueue.baseState = c);
+}
+var Ei = {
+    isMounted: function(a) {
+        return (a = a._reactInternals) ? Vb(a) === a : !1;
+    },
+    enqueueSetState: function(a, b, c) {
+        a = a._reactInternals;
+        var d = R(), e = yi(a), f = mh(d, e);
+        f.payload = b;
+        void 0 !== c && null !== c && (f.callback = c);
+        b = nh(a, f, e);
+        null !== b && (gi(b, a, e, d), oh(b, a, e));
+    },
+    enqueueReplaceState: function(a, b, c) {
+        a = a._reactInternals;
+        var d = R(), e = yi(a), f = mh(d, e);
+        f.tag = 1;
+        f.payload = b;
+        void 0 !== c && null !== c && (f.callback = c);
+        b = nh(a, f, e);
+        null !== b && (gi(b, a, e, d), oh(b, a, e));
+    },
+    enqueueForceUpdate: function(a, b) {
+        a = a._reactInternals;
+        var c = R(), d = yi(a), e = mh(c, d);
+        e.tag = 2;
+        void 0 !== b && null !== b && (e.callback = b);
+        b = nh(a, e, d);
+        null !== b && (gi(b, a, d, c), oh(b, a, d));
+    }
+};
+function Fi(a, b, c, d, e, f, g) {
+    a = a.stateNode;
+    return "function" === typeof a.shouldComponentUpdate ? a.shouldComponentUpdate(d, f, g) : b.prototype && b.prototype.isPureReactComponent ? !Ie(c, d) || !Ie(e, f) : !0;
+}
+function Gi(a, b, c) {
+    var d = !1, e = Vf;
+    var f = b.contextType;
+    "object" === typeof f && null !== f ? f = eh(f) : (e = Zf(b) ? Xf : H.current, d = b.contextTypes, f = (d = null !== d && void 0 !== d) ? Yf(a, e) : Vf);
+    b = new b(c, f);
+    a.memoizedState = null !== b.state && void 0 !== b.state ? b.state : null;
+    b.updater = Ei;
+    a.stateNode = b;
+    b._reactInternals = a;
+    d && (a = a.stateNode, a.__reactInternalMemoizedUnmaskedChildContext = e, a.__reactInternalMemoizedMaskedChildContext = f);
+    return b;
+}
+function Hi(a, b, c, d) {
+    a = b.state;
+    "function" === typeof b.componentWillReceiveProps && b.componentWillReceiveProps(c, d);
+    "function" === typeof b.UNSAFE_componentWillReceiveProps && b.UNSAFE_componentWillReceiveProps(c, d);
+    b.state !== a && Ei.enqueueReplaceState(b, b.state, null);
+}
+function Ii(a, b, c, d) {
+    var e = a.stateNode;
+    e.props = c;
+    e.state = a.memoizedState;
+    e.refs = {};
+    kh(a);
+    var f = b.contextType;
+    "object" === typeof f && null !== f ? e.context = eh(f) : (f = Zf(b) ? Xf : H.current, e.context = Yf(a, f));
+    e.state = a.memoizedState;
+    f = b.getDerivedStateFromProps;
+    "function" === typeof f && (Di(a, b, f, c), e.state = a.memoizedState);
+    "function" === typeof b.getDerivedStateFromProps || "function" === typeof e.getSnapshotBeforeUpdate || "function" !== typeof e.UNSAFE_componentWillMount && "function" !== typeof e.componentWillMount || (b = e.state, "function" === typeof e.componentWillMount && e.componentWillMount(), "function" === typeof e.UNSAFE_componentWillMount && e.UNSAFE_componentWillMount(), b !== e.state && Ei.enqueueReplaceState(e, e.state, null), qh(a, c, e, d), e.state = a.memoizedState);
+    "function" === typeof e.componentDidMount && (a.flags |= 4194308);
+}
+function Ji(a, b) {
+    try {
+        var c = "", d = b;
+        do c += Pa(d), d = d.return;
+        while (d);
+        var e = c;
+    } catch (f) {
+        e = "\nError generating stack: " + f.message + "\n" + f.stack;
+    }
+    return {
+        value: a,
+        source: b,
+        stack: e,
+        digest: null
+    };
+}
+function Ki(a, b, c) {
+    return {
+        value: a,
+        source: null,
+        stack: null != c ? c : null,
+        digest: null != b ? b : null
+    };
+}
+function Li(a, b) {
+    try {
+        console.error(b.value);
+    } catch (c) {
+        setTimeout(function() {
+            throw c;
+        });
+    }
+}
+var Mi = "function" === typeof WeakMap ? WeakMap : Map;
+function Ni(a, b, c) {
+    c = mh(-1, c);
+    c.tag = 3;
+    c.payload = {
+        element: null
+    };
+    var d = b.value;
+    c.callback = function() {
+        Oi || (Oi = !0, Pi = d);
+        Li(a, b);
+    };
+    return c;
+}
+function Qi(a, b, c) {
+    c = mh(-1, c);
+    c.tag = 3;
+    var d = a.type.getDerivedStateFromError;
+    if ("function" === typeof d) {
+        var e = b.value;
+        c.payload = function() {
+            return d(e);
+        };
+        c.callback = function() {
+            Li(a, b);
+        };
+    }
+    var f = a.stateNode;
+    null !== f && "function" === typeof f.componentDidCatch && (c.callback = function() {
+        Li(a, b);
+        "function" !== typeof d && (null === Ri ? Ri = new Set([
+            this
+        ]) : Ri.add(this));
+        var c = b.stack;
+        this.componentDidCatch(b.value, {
+            componentStack: null !== c ? c : ""
+        });
+    });
+    return c;
+}
+function Si(a, b, c) {
+    var d = a.pingCache;
+    if (null === d) {
+        d = a.pingCache = new Mi;
+        var e = new Set;
+        d.set(b, e);
+    } else e = d.get(b), void 0 === e && (e = new Set, d.set(b, e));
+    e.has(c) || (e.add(c), a = Ti.bind(null, a, b, c), b.then(a, a));
+}
+function Ui(a) {
+    do {
+        var b;
+        if (b = 13 === a.tag) b = a.memoizedState, b = null !== b ? null !== b.dehydrated ? !0 : !1 : !0;
+        if (b) return a;
+        a = a.return;
+    }while (null !== a);
+    return null;
+}
+function Vi(a, b, c, d, e) {
+    if (0 === (a.mode & 1)) return a === b ? a.flags |= 65536 : (a.flags |= 128, c.flags |= 131072, c.flags &= -52805, 1 === c.tag && (null === c.alternate ? c.tag = 17 : (b = mh(-1, 1), b.tag = 2, nh(c, b, 1))), c.lanes |= 1), a;
+    a.flags |= 65536;
+    a.lanes = e;
+    return a;
+}
+var Wi = ua.ReactCurrentOwner, dh = !1;
+function Xi(a, b, c, d) {
+    b.child = null === a ? Vg(b, null, c, d) : Ug(b, a.child, c, d);
+}
+function Yi(a, b, c, d, e) {
+    c = c.render;
+    var f = b.ref;
+    ch(b, e);
+    d = Nh(a, b, c, d, f, e);
+    c = Sh();
+    if (null !== a && !dh) return b.updateQueue = a.updateQueue, b.flags &= -2053, a.lanes &= ~e, Zi(a, b, e);
+    I && c && vg(b);
+    b.flags |= 1;
+    Xi(a, b, d, e);
+    return b.child;
+}
+function $i(a, b, c, d, e) {
+    if (null === a) {
+        var f = c.type;
+        if ("function" === typeof f && !aj(f) && void 0 === f.defaultProps && null === c.compare && void 0 === c.defaultProps) return b.tag = 15, b.type = f, bj(a, b, f, d, e);
+        a = Rg(c.type, null, d, b, b.mode, e);
+        a.ref = b.ref;
+        a.return = b;
+        return b.child = a;
+    }
+    f = a.child;
+    if (0 === (a.lanes & e)) {
+        var g = f.memoizedProps;
+        c = c.compare;
+        c = null !== c ? c : Ie;
+        if (c(g, d) && a.ref === b.ref) return Zi(a, b, e);
+    }
+    b.flags |= 1;
+    a = Pg(f, d);
+    a.ref = b.ref;
+    a.return = b;
+    return b.child = a;
+}
+function bj(a, b, c, d, e) {
+    if (null !== a) {
+        var f = a.memoizedProps;
+        if (Ie(f, d) && a.ref === b.ref) if (dh = !1, b.pendingProps = d = f, 0 !== (a.lanes & e)) 0 !== (a.flags & 131072) && (dh = !0);
+        else return b.lanes = a.lanes, Zi(a, b, e);
+    }
+    return cj(a, b, c, d, e);
+}
+function dj(a, b, c) {
+    var d = b.pendingProps, e = d.children, f = null !== a ? a.memoizedState : null;
+    if ("hidden" === d.mode) if (0 === (b.mode & 1)) b.memoizedState = {
+        baseLanes: 0,
+        cachePool: null,
+        transitions: null
+    }, G(ej, fj), fj |= c;
+    else {
+        if (0 === (c & 1073741824)) return a = null !== f ? f.baseLanes | c : c, b.lanes = b.childLanes = 1073741824, b.memoizedState = {
+            baseLanes: a,
+            cachePool: null,
+            transitions: null
+        }, b.updateQueue = null, G(ej, fj), fj |= a, null;
+        b.memoizedState = {
+            baseLanes: 0,
+            cachePool: null,
+            transitions: null
+        };
+        d = null !== f ? f.baseLanes : c;
+        G(ej, fj);
+        fj |= d;
+    }
+    else null !== f ? (d = f.baseLanes | c, b.memoizedState = null) : d = c, G(ej, fj), fj |= d;
+    Xi(a, b, e, c);
+    return b.child;
+}
+function gj(a, b) {
+    var c = b.ref;
+    if (null === a && null !== c || null !== a && a.ref !== c) b.flags |= 512, b.flags |= 2097152;
+}
+function cj(a, b, c, d, e) {
+    var f = Zf(c) ? Xf : H.current;
+    f = Yf(b, f);
+    ch(b, e);
+    c = Nh(a, b, c, d, f, e);
+    d = Sh();
+    if (null !== a && !dh) return b.updateQueue = a.updateQueue, b.flags &= -2053, a.lanes &= ~e, Zi(a, b, e);
+    I && d && vg(b);
+    b.flags |= 1;
+    Xi(a, b, c, e);
+    return b.child;
+}
+function hj(a, b, c, d, e) {
+    if (Zf(c)) {
+        var f = !0;
+        cg(b);
+    } else f = !1;
+    ch(b, e);
+    if (null === b.stateNode) ij(a, b), Gi(b, c, d), Ii(b, c, d, e), d = !0;
+    else if (null === a) {
+        var g = b.stateNode, h = b.memoizedProps;
+        g.props = h;
+        var k = g.context, l = c.contextType;
+        "object" === typeof l && null !== l ? l = eh(l) : (l = Zf(c) ? Xf : H.current, l = Yf(b, l));
+        var m = c.getDerivedStateFromProps, q = "function" === typeof m || "function" === typeof g.getSnapshotBeforeUpdate;
+        q || "function" !== typeof g.UNSAFE_componentWillReceiveProps && "function" !== typeof g.componentWillReceiveProps || (h !== d || k !== l) && Hi(b, g, d, l);
+        jh = !1;
+        var r = b.memoizedState;
+        g.state = r;
+        qh(b, d, g, e);
+        k = b.memoizedState;
+        h !== d || r !== k || Wf.current || jh ? ("function" === typeof m && (Di(b, c, m, d), k = b.memoizedState), (h = jh || Fi(b, c, h, d, r, k, l)) ? (q || "function" !== typeof g.UNSAFE_componentWillMount && "function" !== typeof g.componentWillMount || ("function" === typeof g.componentWillMount && g.componentWillMount(), "function" === typeof g.UNSAFE_componentWillMount && g.UNSAFE_componentWillMount()), "function" === typeof g.componentDidMount && (b.flags |= 4194308)) : ("function" === typeof g.componentDidMount && (b.flags |= 4194308), b.memoizedProps = d, b.memoizedState = k), g.props = d, g.state = k, g.context = l, d = h) : ("function" === typeof g.componentDidMount && (b.flags |= 4194308), d = !1);
+    } else {
+        g = b.stateNode;
+        lh(a, b);
+        h = b.memoizedProps;
+        l = b.type === b.elementType ? h : Ci(b.type, h);
+        g.props = l;
+        q = b.pendingProps;
+        r = g.context;
+        k = c.contextType;
+        "object" === typeof k && null !== k ? k = eh(k) : (k = Zf(c) ? Xf : H.current, k = Yf(b, k));
+        var y = c.getDerivedStateFromProps;
+        (m = "function" === typeof y || "function" === typeof g.getSnapshotBeforeUpdate) || "function" !== typeof g.UNSAFE_componentWillReceiveProps && "function" !== typeof g.componentWillReceiveProps || (h !== q || r !== k) && Hi(b, g, d, k);
+        jh = !1;
+        r = b.memoizedState;
+        g.state = r;
+        qh(b, d, g, e);
+        var n = b.memoizedState;
+        h !== q || r !== n || Wf.current || jh ? ("function" === typeof y && (Di(b, c, y, d), n = b.memoizedState), (l = jh || Fi(b, c, l, d, r, n, k) || !1) ? (m || "function" !== typeof g.UNSAFE_componentWillUpdate && "function" !== typeof g.componentWillUpdate || ("function" === typeof g.componentWillUpdate && g.componentWillUpdate(d, n, k), "function" === typeof g.UNSAFE_componentWillUpdate && g.UNSAFE_componentWillUpdate(d, n, k)), "function" === typeof g.componentDidUpdate && (b.flags |= 4), "function" === typeof g.getSnapshotBeforeUpdate && (b.flags |= 1024)) : ("function" !== typeof g.componentDidUpdate || h === a.memoizedProps && r === a.memoizedState || (b.flags |= 4), "function" !== typeof g.getSnapshotBeforeUpdate || h === a.memoizedProps && r === a.memoizedState || (b.flags |= 1024), b.memoizedProps = d, b.memoizedState = n), g.props = d, g.state = n, g.context = k, d = l) : ("function" !== typeof g.componentDidUpdate || h === a.memoizedProps && r === a.memoizedState || (b.flags |= 4), "function" !== typeof g.getSnapshotBeforeUpdate || h === a.memoizedProps && r === a.memoizedState || (b.flags |= 1024), d = !1);
+    }
+    return jj(a, b, c, d, f, e);
+}
+function jj(a, b, c, d, e, f) {
+    gj(a, b);
+    var g = 0 !== (b.flags & 128);
+    if (!d && !g) return e && dg(b, c, !1), Zi(a, b, f);
+    d = b.stateNode;
+    Wi.current = b;
+    var h = g && "function" !== typeof c.getDerivedStateFromError ? null : d.render();
+    b.flags |= 1;
+    null !== a && g ? (b.child = Ug(b, a.child, null, f), b.child = Ug(b, null, h, f)) : Xi(a, b, h, f);
+    b.memoizedState = d.state;
+    e && dg(b, c, !0);
+    return b.child;
+}
+function kj(a) {
+    var b = a.stateNode;
+    b.pendingContext ? ag(a, b.pendingContext, b.pendingContext !== b.context) : b.context && ag(a, b.context, !1);
+    yh(a, b.containerInfo);
+}
+function lj(a, b, c, d, e) {
+    Ig();
+    Jg(e);
+    b.flags |= 256;
+    Xi(a, b, c, d);
+    return b.child;
+}
+var mj = {
+    dehydrated: null,
+    treeContext: null,
+    retryLane: 0
+};
+function nj(a) {
+    return {
+        baseLanes: a,
+        cachePool: null,
+        transitions: null
+    };
+}
+function oj(a, b, c) {
+    var d = b.pendingProps, e = L.current, f = !1, g = 0 !== (b.flags & 128), h;
+    (h = g) || (h = null !== a && null === a.memoizedState ? !1 : 0 !== (e & 2));
+    if (h) f = !0, b.flags &= -129;
+    else if (null === a || null !== a.memoizedState) e |= 1;
+    G(L, e & 1);
+    if (null === a) {
+        Eg(b);
+        a = b.memoizedState;
+        if (null !== a && (a = a.dehydrated, null !== a)) return 0 === (b.mode & 1) ? b.lanes = 1 : "$!" === a.data ? b.lanes = 8 : b.lanes = 1073741824, null;
+        g = d.children;
+        a = d.fallback;
+        return f ? (d = b.mode, f = b.child, g = {
+            mode: "hidden",
+            children: g
+        }, 0 === (d & 1) && null !== f ? (f.childLanes = 0, f.pendingProps = g) : f = pj(g, d, 0, null), a = Tg(a, d, c, null), f.return = b, a.return = b, f.sibling = a, b.child = f, b.child.memoizedState = nj(c), b.memoizedState = mj, a) : qj(b, g);
+    }
+    e = a.memoizedState;
+    if (null !== e && (h = e.dehydrated, null !== h)) return rj(a, b, g, d, h, e, c);
+    if (f) {
+        f = d.fallback;
+        g = b.mode;
+        e = a.child;
+        h = e.sibling;
+        var k = {
+            mode: "hidden",
+            children: d.children
+        };
+        0 === (g & 1) && b.child !== e ? (d = b.child, d.childLanes = 0, d.pendingProps = k, b.deletions = null) : (d = Pg(e, k), d.subtreeFlags = e.subtreeFlags & 14680064);
+        null !== h ? f = Pg(h, f) : (f = Tg(f, g, c, null), f.flags |= 2);
+        f.return = b;
+        d.return = b;
+        d.sibling = f;
+        b.child = d;
+        d = f;
+        f = b.child;
+        g = a.child.memoizedState;
+        g = null === g ? nj(c) : {
+            baseLanes: g.baseLanes | c,
+            cachePool: null,
+            transitions: g.transitions
+        };
+        f.memoizedState = g;
+        f.childLanes = a.childLanes & ~c;
+        b.memoizedState = mj;
+        return d;
+    }
+    f = a.child;
+    a = f.sibling;
+    d = Pg(f, {
+        mode: "visible",
+        children: d.children
+    });
+    0 === (b.mode & 1) && (d.lanes = c);
+    d.return = b;
+    d.sibling = null;
+    null !== a && (c = b.deletions, null === c ? (b.deletions = [
+        a
+    ], b.flags |= 16) : c.push(a));
+    b.child = d;
+    b.memoizedState = null;
+    return d;
+}
+function qj(a, b) {
+    b = pj({
+        mode: "visible",
+        children: b
+    }, a.mode, 0, null);
+    b.return = a;
+    return a.child = b;
+}
+function sj(a, b, c, d) {
+    null !== d && Jg(d);
+    Ug(b, a.child, null, c);
+    a = qj(b, b.pendingProps.children);
+    a.flags |= 2;
+    b.memoizedState = null;
+    return a;
+}
+function rj(a, b, c, d, e, f, g) {
+    if (c) {
+        if (b.flags & 256) return b.flags &= -257, d = Ki(Error(p(422))), sj(a, b, g, d);
+        if (null !== b.memoizedState) return b.child = a.child, b.flags |= 128, null;
+        f = d.fallback;
+        e = b.mode;
+        d = pj({
+            mode: "visible",
+            children: d.children
+        }, e, 0, null);
+        f = Tg(f, e, g, null);
+        f.flags |= 2;
+        d.return = b;
+        f.return = b;
+        d.sibling = f;
+        b.child = d;
+        0 !== (b.mode & 1) && Ug(b, a.child, null, g);
+        b.child.memoizedState = nj(g);
+        b.memoizedState = mj;
+        return f;
+    }
+    if (0 === (b.mode & 1)) return sj(a, b, g, null);
+    if ("$!" === e.data) {
+        d = e.nextSibling && e.nextSibling.dataset;
+        if (d) var h = d.dgst;
+        d = h;
+        f = Error(p(419));
+        d = Ki(f, d, void 0);
+        return sj(a, b, g, d);
+    }
+    h = 0 !== (g & a.childLanes);
+    if (dh || h) {
+        d = Q;
+        if (null !== d) {
+            switch(g & -g){
+                case 4:
+                    e = 2;
+                    break;
+                case 16:
+                    e = 8;
+                    break;
+                case 64:
+                case 128:
+                case 256:
+                case 512:
+                case 1024:
+                case 2048:
+                case 4096:
+                case 8192:
+                case 16384:
+                case 32768:
+                case 65536:
+                case 131072:
+                case 262144:
+                case 524288:
+                case 1048576:
+                case 2097152:
+                case 4194304:
+                case 8388608:
+                case 16777216:
+                case 33554432:
+                case 67108864:
+                    e = 32;
+                    break;
+                case 536870912:
+                    e = 268435456;
+                    break;
+                default:
+                    e = 0;
+            }
+            e = 0 !== (e & (d.suspendedLanes | g)) ? 0 : e;
+            0 !== e && e !== f.retryLane && (f.retryLane = e, ih(a, e), gi(d, a, e, -1));
+        }
+        tj();
+        d = Ki(Error(p(421)));
+        return sj(a, b, g, d);
+    }
+    if ("$?" === e.data) return b.flags |= 128, b.child = a.child, b = uj.bind(null, a), e._reactRetry = b, null;
+    a = f.treeContext;
+    yg = Lf(e.nextSibling);
+    xg = b;
+    I = !0;
+    zg = null;
+    null !== a && (og[pg++] = rg, og[pg++] = sg, og[pg++] = qg, rg = a.id, sg = a.overflow, qg = b);
+    b = qj(b, d.children);
+    b.flags |= 4096;
+    return b;
+}
+function vj(a, b, c) {
+    a.lanes |= b;
+    var d = a.alternate;
+    null !== d && (d.lanes |= b);
+    bh(a.return, b, c);
+}
+function wj(a, b, c, d, e) {
+    var f = a.memoizedState;
+    null === f ? a.memoizedState = {
+        isBackwards: b,
+        rendering: null,
+        renderingStartTime: 0,
+        last: d,
+        tail: c,
+        tailMode: e
+    } : (f.isBackwards = b, f.rendering = null, f.renderingStartTime = 0, f.last = d, f.tail = c, f.tailMode = e);
+}
+function xj(a, b, c) {
+    var d = b.pendingProps, e = d.revealOrder, f = d.tail;
+    Xi(a, b, d.children, c);
+    d = L.current;
+    if (0 !== (d & 2)) d = d & 1 | 2, b.flags |= 128;
+    else {
+        if (null !== a && 0 !== (a.flags & 128)) a: for(a = b.child; null !== a;){
+            if (13 === a.tag) null !== a.memoizedState && vj(a, c, b);
+            else if (19 === a.tag) vj(a, c, b);
+            else if (null !== a.child) {
+                a.child.return = a;
+                a = a.child;
+                continue;
+            }
+            if (a === b) break a;
+            for(; null === a.sibling;){
+                if (null === a.return || a.return === b) break a;
+                a = a.return;
+            }
+            a.sibling.return = a.return;
+            a = a.sibling;
+        }
+        d &= 1;
+    }
+    G(L, d);
+    if (0 === (b.mode & 1)) b.memoizedState = null;
+    else switch(e){
+        case "forwards":
+            c = b.child;
+            for(e = null; null !== c;)a = c.alternate, null !== a && null === Ch(a) && (e = c), c = c.sibling;
+            c = e;
+            null === c ? (e = b.child, b.child = null) : (e = c.sibling, c.sibling = null);
+            wj(b, !1, e, c, f);
+            break;
+        case "backwards":
+            c = null;
+            e = b.child;
+            for(b.child = null; null !== e;){
+                a = e.alternate;
+                if (null !== a && null === Ch(a)) {
+                    b.child = e;
+                    break;
+                }
+                a = e.sibling;
+                e.sibling = c;
+                c = e;
+                e = a;
+            }
+            wj(b, !0, c, null, f);
+            break;
+        case "together":
+            wj(b, !1, null, null, void 0);
+            break;
+        default:
+            b.memoizedState = null;
+    }
+    return b.child;
+}
+function ij(a, b) {
+    0 === (b.mode & 1) && null !== a && (a.alternate = null, b.alternate = null, b.flags |= 2);
+}
+function Zi(a, b, c) {
+    null !== a && (b.dependencies = a.dependencies);
+    rh |= b.lanes;
+    if (0 === (c & b.childLanes)) return null;
+    if (null !== a && b.child !== a.child) throw Error(p(153));
+    if (null !== b.child) {
+        a = b.child;
+        c = Pg(a, a.pendingProps);
+        b.child = c;
+        for(c.return = b; null !== a.sibling;)a = a.sibling, c = c.sibling = Pg(a, a.pendingProps), c.return = b;
+        c.sibling = null;
+    }
+    return b.child;
+}
+function yj(a, b, c) {
+    switch(b.tag){
+        case 3:
+            kj(b);
+            Ig();
+            break;
+        case 5:
+            Ah(b);
+            break;
+        case 1:
+            Zf(b.type) && cg(b);
+            break;
+        case 4:
+            yh(b, b.stateNode.containerInfo);
+            break;
+        case 10:
+            var d = b.type._context, e = b.memoizedProps.value;
+            G(Wg, d._currentValue);
+            d._currentValue = e;
+            break;
+        case 13:
+            d = b.memoizedState;
+            if (null !== d) {
+                if (null !== d.dehydrated) return G(L, L.current & 1), b.flags |= 128, null;
+                if (0 !== (c & b.child.childLanes)) return oj(a, b, c);
+                G(L, L.current & 1);
+                a = Zi(a, b, c);
+                return null !== a ? a.sibling : null;
+            }
+            G(L, L.current & 1);
+            break;
+        case 19:
+            d = 0 !== (c & b.childLanes);
+            if (0 !== (a.flags & 128)) {
+                if (d) return xj(a, b, c);
+                b.flags |= 128;
+            }
+            e = b.memoizedState;
+            null !== e && (e.rendering = null, e.tail = null, e.lastEffect = null);
+            G(L, L.current);
+            if (d) break;
+            else return null;
+        case 22:
+        case 23:
+            return b.lanes = 0, dj(a, b, c);
+    }
+    return Zi(a, b, c);
+}
+var zj, Aj, Bj, Cj;
+zj = function(a, b) {
+    for(var c = b.child; null !== c;){
+        if (5 === c.tag || 6 === c.tag) a.appendChild(c.stateNode);
+        else if (4 !== c.tag && null !== c.child) {
+            c.child.return = c;
+            c = c.child;
+            continue;
+        }
+        if (c === b) break;
+        for(; null === c.sibling;){
+            if (null === c.return || c.return === b) return;
+            c = c.return;
+        }
+        c.sibling.return = c.return;
+        c = c.sibling;
+    }
+};
+Aj = function() {};
+Bj = function(a, b, c, d) {
+    var e = a.memoizedProps;
+    if (e !== d) {
+        a = b.stateNode;
+        xh(uh.current);
+        var f = null;
+        switch(c){
+            case "input":
+                e = Ya(a, e);
+                d = Ya(a, d);
+                f = [];
+                break;
+            case "select":
+                e = A({}, e, {
+                    value: void 0
+                });
+                d = A({}, d, {
+                    value: void 0
+                });
+                f = [];
+                break;
+            case "textarea":
+                e = gb(a, e);
+                d = gb(a, d);
+                f = [];
+                break;
+            default:
+                "function" !== typeof e.onClick && "function" === typeof d.onClick && (a.onclick = Bf);
+        }
+        ub(c, d);
+        var g;
+        c = null;
+        for(l in e)if (!d.hasOwnProperty(l) && e.hasOwnProperty(l) && null != e[l]) if ("style" === l) {
+            var h = e[l];
+            for(g in h)h.hasOwnProperty(g) && (c || (c = {}), c[g] = "");
+        } else "dangerouslySetInnerHTML" !== l && "children" !== l && "suppressContentEditableWarning" !== l && "suppressHydrationWarning" !== l && "autoFocus" !== l && (ea.hasOwnProperty(l) ? f || (f = []) : (f = f || []).push(l, null));
+        for(l in d){
+            var k = d[l];
+            h = null != e ? e[l] : void 0;
+            if (d.hasOwnProperty(l) && k !== h && (null != k || null != h)) if ("style" === l) if (h) {
+                for(g in h)!h.hasOwnProperty(g) || k && k.hasOwnProperty(g) || (c || (c = {}), c[g] = "");
+                for(g in k)k.hasOwnProperty(g) && h[g] !== k[g] && (c || (c = {}), c[g] = k[g]);
+            } else c || (f || (f = []), f.push(l, c)), c = k;
+            else "dangerouslySetInnerHTML" === l ? (k = k ? k.__html : void 0, h = h ? h.__html : void 0, null != k && h !== k && (f = f || []).push(l, k)) : "children" === l ? "string" !== typeof k && "number" !== typeof k || (f = f || []).push(l, "" + k) : "suppressContentEditableWarning" !== l && "suppressHydrationWarning" !== l && (ea.hasOwnProperty(l) ? (null != k && "onScroll" === l && D("scroll", a), f || h === k || (f = [])) : (f = f || []).push(l, k));
+        }
+        c && (f = f || []).push("style", c);
+        var l = f;
+        if (b.updateQueue = l) b.flags |= 4;
+    }
+};
+Cj = function(a, b, c, d) {
+    c !== d && (b.flags |= 4);
+};
+function Dj(a, b) {
+    if (!I) switch(a.tailMode){
+        case "hidden":
+            b = a.tail;
+            for(var c = null; null !== b;)null !== b.alternate && (c = b), b = b.sibling;
+            null === c ? a.tail = null : c.sibling = null;
+            break;
+        case "collapsed":
+            c = a.tail;
+            for(var d = null; null !== c;)null !== c.alternate && (d = c), c = c.sibling;
+            null === d ? b || null === a.tail ? a.tail = null : a.tail.sibling = null : d.sibling = null;
+    }
+}
+function S(a) {
+    var b = null !== a.alternate && a.alternate.child === a.child, c = 0, d = 0;
+    if (b) for(var e = a.child; null !== e;)c |= e.lanes | e.childLanes, d |= e.subtreeFlags & 14680064, d |= e.flags & 14680064, e.return = a, e = e.sibling;
+    else for(e = a.child; null !== e;)c |= e.lanes | e.childLanes, d |= e.subtreeFlags, d |= e.flags, e.return = a, e = e.sibling;
+    a.subtreeFlags |= d;
+    a.childLanes = c;
+    return b;
+}
+function Ej(a, b, c) {
+    var d = b.pendingProps;
+    wg(b);
+    switch(b.tag){
+        case 2:
+        case 16:
+        case 15:
+        case 0:
+        case 11:
+        case 7:
+        case 8:
+        case 12:
+        case 9:
+        case 14:
+            return S(b), null;
+        case 1:
+            return Zf(b.type) && $f(), S(b), null;
+        case 3:
+            d = b.stateNode;
+            zh();
+            E(Wf);
+            E(H);
+            Eh();
+            d.pendingContext && (d.context = d.pendingContext, d.pendingContext = null);
+            if (null === a || null === a.child) Gg(b) ? b.flags |= 4 : null === a || a.memoizedState.isDehydrated && 0 === (b.flags & 256) || (b.flags |= 1024, null !== zg && (Fj(zg), zg = null));
+            Aj(a, b);
+            S(b);
+            return null;
+        case 5:
+            Bh(b);
+            var e = xh(wh.current);
+            c = b.type;
+            if (null !== a && null != b.stateNode) Bj(a, b, c, d, e), a.ref !== b.ref && (b.flags |= 512, b.flags |= 2097152);
+            else {
+                if (!d) {
+                    if (null === b.stateNode) throw Error(p(166));
+                    S(b);
+                    return null;
+                }
+                a = xh(uh.current);
+                if (Gg(b)) {
+                    d = b.stateNode;
+                    c = b.type;
+                    var f = b.memoizedProps;
+                    d[Of] = b;
+                    d[Pf] = f;
+                    a = 0 !== (b.mode & 1);
+                    switch(c){
+                        case "dialog":
+                            D("cancel", d);
+                            D("close", d);
+                            break;
+                        case "iframe":
+                        case "object":
+                        case "embed":
+                            D("load", d);
+                            break;
+                        case "video":
+                        case "audio":
+                            for(e = 0; e < lf.length; e++)D(lf[e], d);
+                            break;
+                        case "source":
+                            D("error", d);
+                            break;
+                        case "img":
+                        case "image":
+                        case "link":
+                            D("error", d);
+                            D("load", d);
+                            break;
+                        case "details":
+                            D("toggle", d);
+                            break;
+                        case "input":
+                            Za(d, f);
+                            D("invalid", d);
+                            break;
+                        case "select":
+                            d._wrapperState = {
+                                wasMultiple: !!f.multiple
+                            };
+                            D("invalid", d);
+                            break;
+                        case "textarea":
+                            hb(d, f), D("invalid", d);
+                    }
+                    ub(c, f);
+                    e = null;
+                    for(var g in f)if (f.hasOwnProperty(g)) {
+                        var h = f[g];
+                        "children" === g ? "string" === typeof h ? d.textContent !== h && (!0 !== f.suppressHydrationWarning && Af(d.textContent, h, a), e = [
+                            "children",
+                            h
+                        ]) : "number" === typeof h && d.textContent !== "" + h && (!0 !== f.suppressHydrationWarning && Af(d.textContent, h, a), e = [
+                            "children",
+                            "" + h
+                        ]) : ea.hasOwnProperty(g) && null != h && "onScroll" === g && D("scroll", d);
+                    }
+                    switch(c){
+                        case "input":
+                            Va(d);
+                            db(d, f, !0);
+                            break;
+                        case "textarea":
+                            Va(d);
+                            jb(d);
+                            break;
+                        case "select":
+                        case "option":
+                            break;
+                        default:
+                            "function" === typeof f.onClick && (d.onclick = Bf);
+                    }
+                    d = e;
+                    b.updateQueue = d;
+                    null !== d && (b.flags |= 4);
+                } else {
+                    g = 9 === e.nodeType ? e : e.ownerDocument;
+                    "http://www.w3.org/1999/xhtml" === a && (a = kb(c));
+                    "http://www.w3.org/1999/xhtml" === a ? "script" === c ? (a = g.createElement("div"), a.innerHTML = "<script></script>", a = a.removeChild(a.firstChild)) : "string" === typeof d.is ? a = g.createElement(c, {
+                        is: d.is
+                    }) : (a = g.createElement(c), "select" === c && (g = a, d.multiple ? g.multiple = !0 : d.size && (g.size = d.size))) : a = g.createElementNS(a, c);
+                    a[Of] = b;
+                    a[Pf] = d;
+                    zj(a, b, !1, !1);
+                    b.stateNode = a;
+                    a: {
+                        g = vb(c, d);
+                        switch(c){
+                            case "dialog":
+                                D("cancel", a);
+                                D("close", a);
+                                e = d;
+                                break;
+                            case "iframe":
+                            case "object":
+                            case "embed":
+                                D("load", a);
+                                e = d;
+                                break;
+                            case "video":
+                            case "audio":
+                                for(e = 0; e < lf.length; e++)D(lf[e], a);
+                                e = d;
+                                break;
+                            case "source":
+                                D("error", a);
+                                e = d;
+                                break;
+                            case "img":
+                            case "image":
+                            case "link":
+                                D("error", a);
+                                D("load", a);
+                                e = d;
+                                break;
+                            case "details":
+                                D("toggle", a);
+                                e = d;
+                                break;
+                            case "input":
+                                Za(a, d);
+                                e = Ya(a, d);
+                                D("invalid", a);
+                                break;
+                            case "option":
+                                e = d;
+                                break;
+                            case "select":
+                                a._wrapperState = {
+                                    wasMultiple: !!d.multiple
+                                };
+                                e = A({}, d, {
+                                    value: void 0
+                                });
+                                D("invalid", a);
+                                break;
+                            case "textarea":
+                                hb(a, d);
+                                e = gb(a, d);
+                                D("invalid", a);
+                                break;
+                            default:
+                                e = d;
+                        }
+                        ub(c, e);
+                        h = e;
+                        for(f in h)if (h.hasOwnProperty(f)) {
+                            var k = h[f];
+                            "style" === f ? sb(a, k) : "dangerouslySetInnerHTML" === f ? (k = k ? k.__html : void 0, null != k && nb(a, k)) : "children" === f ? "string" === typeof k ? ("textarea" !== c || "" !== k) && ob(a, k) : "number" === typeof k && ob(a, "" + k) : "suppressContentEditableWarning" !== f && "suppressHydrationWarning" !== f && "autoFocus" !== f && (ea.hasOwnProperty(f) ? null != k && "onScroll" === f && D("scroll", a) : null != k && ta(a, f, k, g));
+                        }
+                        switch(c){
+                            case "input":
+                                Va(a);
+                                db(a, d, !1);
+                                break;
+                            case "textarea":
+                                Va(a);
+                                jb(a);
+                                break;
+                            case "option":
+                                null != d.value && a.setAttribute("value", "" + Sa(d.value));
+                                break;
+                            case "select":
+                                a.multiple = !!d.multiple;
+                                f = d.value;
+                                null != f ? fb(a, !!d.multiple, f, !1) : null != d.defaultValue && fb(a, !!d.multiple, d.defaultValue, !0);
+                                break;
+                            default:
+                                "function" === typeof e.onClick && (a.onclick = Bf);
+                        }
+                        switch(c){
+                            case "button":
+                            case "input":
+                            case "select":
+                            case "textarea":
+                                d = !!d.autoFocus;
+                                break a;
+                            case "img":
+                                d = !0;
+                                break a;
+                            default:
+                                d = !1;
+                        }
+                    }
+                    d && (b.flags |= 4);
+                }
+                null !== b.ref && (b.flags |= 512, b.flags |= 2097152);
+            }
+            S(b);
+            return null;
+        case 6:
+            if (a && null != b.stateNode) Cj(a, b, a.memoizedProps, d);
+            else {
+                if ("string" !== typeof d && null === b.stateNode) throw Error(p(166));
+                c = xh(wh.current);
+                xh(uh.current);
+                if (Gg(b)) {
+                    d = b.stateNode;
+                    c = b.memoizedProps;
+                    d[Of] = b;
+                    if (f = d.nodeValue !== c) {
+                        if (a = xg, null !== a) switch(a.tag){
+                            case 3:
+                                Af(d.nodeValue, c, 0 !== (a.mode & 1));
+                                break;
+                            case 5:
+                                !0 !== a.memoizedProps.suppressHydrationWarning && Af(d.nodeValue, c, 0 !== (a.mode & 1));
+                        }
+                    }
+                    f && (b.flags |= 4);
+                } else d = (9 === c.nodeType ? c : c.ownerDocument).createTextNode(d), d[Of] = b, b.stateNode = d;
+            }
+            S(b);
+            return null;
+        case 13:
+            E(L);
+            d = b.memoizedState;
+            if (null === a || null !== a.memoizedState && null !== a.memoizedState.dehydrated) {
+                if (I && null !== yg && 0 !== (b.mode & 1) && 0 === (b.flags & 128)) Hg(), Ig(), b.flags |= 98560, f = !1;
+                else if (f = Gg(b), null !== d && null !== d.dehydrated) {
+                    if (null === a) {
+                        if (!f) throw Error(p(318));
+                        f = b.memoizedState;
+                        f = null !== f ? f.dehydrated : null;
+                        if (!f) throw Error(p(317));
+                        f[Of] = b;
+                    } else Ig(), 0 === (b.flags & 128) && (b.memoizedState = null), b.flags |= 4;
+                    S(b);
+                    f = !1;
+                } else null !== zg && (Fj(zg), zg = null), f = !0;
+                if (!f) return b.flags & 65536 ? b : null;
+            }
+            if (0 !== (b.flags & 128)) return b.lanes = c, b;
+            d = null !== d;
+            d !== (null !== a && null !== a.memoizedState) && d && (b.child.flags |= 8192, 0 !== (b.mode & 1) && (null === a || 0 !== (L.current & 1) ? 0 === T && (T = 3) : tj()));
+            null !== b.updateQueue && (b.flags |= 4);
+            S(b);
+            return null;
+        case 4:
+            return zh(), Aj(a, b), null === a && sf(b.stateNode.containerInfo), S(b), null;
+        case 10:
+            return ah(b.type._context), S(b), null;
+        case 17:
+            return Zf(b.type) && $f(), S(b), null;
+        case 19:
+            E(L);
+            f = b.memoizedState;
+            if (null === f) return S(b), null;
+            d = 0 !== (b.flags & 128);
+            g = f.rendering;
+            if (null === g) if (d) Dj(f, !1);
+            else {
+                if (0 !== T || null !== a && 0 !== (a.flags & 128)) for(a = b.child; null !== a;){
+                    g = Ch(a);
+                    if (null !== g) {
+                        b.flags |= 128;
+                        Dj(f, !1);
+                        d = g.updateQueue;
+                        null !== d && (b.updateQueue = d, b.flags |= 4);
+                        b.subtreeFlags = 0;
+                        d = c;
+                        for(c = b.child; null !== c;)f = c, a = d, f.flags &= 14680066, g = f.alternate, null === g ? (f.childLanes = 0, f.lanes = a, f.child = null, f.subtreeFlags = 0, f.memoizedProps = null, f.memoizedState = null, f.updateQueue = null, f.dependencies = null, f.stateNode = null) : (f.childLanes = g.childLanes, f.lanes = g.lanes, f.child = g.child, f.subtreeFlags = 0, f.deletions = null, f.memoizedProps = g.memoizedProps, f.memoizedState = g.memoizedState, f.updateQueue = g.updateQueue, f.type = g.type, a = g.dependencies, f.dependencies = null === a ? null : {
+                            lanes: a.lanes,
+                            firstContext: a.firstContext
+                        }), c = c.sibling;
+                        G(L, L.current & 1 | 2);
+                        return b.child;
+                    }
+                    a = a.sibling;
+                }
+                null !== f.tail && B() > Gj && (b.flags |= 128, d = !0, Dj(f, !1), b.lanes = 4194304);
+            }
+            else {
+                if (!d) if (a = Ch(g), null !== a) {
+                    if (b.flags |= 128, d = !0, c = a.updateQueue, null !== c && (b.updateQueue = c, b.flags |= 4), Dj(f, !0), null === f.tail && "hidden" === f.tailMode && !g.alternate && !I) return S(b), null;
+                } else 2 * B() - f.renderingStartTime > Gj && 1073741824 !== c && (b.flags |= 128, d = !0, Dj(f, !1), b.lanes = 4194304);
+                f.isBackwards ? (g.sibling = b.child, b.child = g) : (c = f.last, null !== c ? c.sibling = g : b.child = g, f.last = g);
+            }
+            if (null !== f.tail) return b = f.tail, f.rendering = b, f.tail = b.sibling, f.renderingStartTime = B(), b.sibling = null, c = L.current, G(L, d ? c & 1 | 2 : c & 1), b;
+            S(b);
+            return null;
+        case 22:
+        case 23:
+            return Hj(), d = null !== b.memoizedState, null !== a && null !== a.memoizedState !== d && (b.flags |= 8192), d && 0 !== (b.mode & 1) ? 0 !== (fj & 1073741824) && (S(b), b.subtreeFlags & 6 && (b.flags |= 8192)) : S(b), null;
+        case 24:
+            return null;
+        case 25:
+            return null;
+    }
+    throw Error(p(156, b.tag));
+}
+function Ij(a, b) {
+    wg(b);
+    switch(b.tag){
+        case 1:
+            return Zf(b.type) && $f(), a = b.flags, a & 65536 ? (b.flags = a & -65537 | 128, b) : null;
+        case 3:
+            return zh(), E(Wf), E(H), Eh(), a = b.flags, 0 !== (a & 65536) && 0 === (a & 128) ? (b.flags = a & -65537 | 128, b) : null;
+        case 5:
+            return Bh(b), null;
+        case 13:
+            E(L);
+            a = b.memoizedState;
+            if (null !== a && null !== a.dehydrated) {
+                if (null === b.alternate) throw Error(p(340));
+                Ig();
+            }
+            a = b.flags;
+            return a & 65536 ? (b.flags = a & -65537 | 128, b) : null;
+        case 19:
+            return E(L), null;
+        case 4:
+            return zh(), null;
+        case 10:
+            return ah(b.type._context), null;
+        case 22:
+        case 23:
+            return Hj(), null;
+        case 24:
+            return null;
+        default:
+            return null;
+    }
+}
+var Jj = !1, U = !1, Kj = "function" === typeof WeakSet ? WeakSet : Set, V = null;
+function Lj(a, b) {
+    var c = a.ref;
+    if (null !== c) if ("function" === typeof c) try {
+        c(null);
+    } catch (d) {
+        W(a, b, d);
+    }
+    else c.current = null;
+}
+function Mj(a, b, c) {
+    try {
+        c();
+    } catch (d) {
+        W(a, b, d);
+    }
+}
+var Nj = !1;
+function Oj(a, b) {
+    Cf = dd;
+    a = Me();
+    if (Ne(a)) {
+        if ("selectionStart" in a) var c = {
+            start: a.selectionStart,
+            end: a.selectionEnd
+        };
+        else a: {
+            c = (c = a.ownerDocument) && c.defaultView || window;
+            var d = c.getSelection && c.getSelection();
+            if (d && 0 !== d.rangeCount) {
+                c = d.anchorNode;
+                var e = d.anchorOffset, f = d.focusNode;
+                d = d.focusOffset;
+                try {
+                    c.nodeType, f.nodeType;
+                } catch (F) {
+                    c = null;
+                    break a;
+                }
+                var g = 0, h = -1, k = -1, l = 0, m = 0, q = a, r = null;
+                b: for(;;){
+                    for(var y;;){
+                        q !== c || 0 !== e && 3 !== q.nodeType || (h = g + e);
+                        q !== f || 0 !== d && 3 !== q.nodeType || (k = g + d);
+                        3 === q.nodeType && (g += q.nodeValue.length);
+                        if (null === (y = q.firstChild)) break;
+                        r = q;
+                        q = y;
+                    }
+                    for(;;){
+                        if (q === a) break b;
+                        r === c && ++l === e && (h = g);
+                        r === f && ++m === d && (k = g);
+                        if (null !== (y = q.nextSibling)) break;
+                        q = r;
+                        r = q.parentNode;
+                    }
+                    q = y;
+                }
+                c = -1 === h || -1 === k ? null : {
+                    start: h,
+                    end: k
+                };
+            } else c = null;
+        }
+        c = c || {
+            start: 0,
+            end: 0
+        };
+    } else c = null;
+    Df = {
+        focusedElem: a,
+        selectionRange: c
+    };
+    dd = !1;
+    for(V = b; null !== V;)if (b = V, a = b.child, 0 !== (b.subtreeFlags & 1028) && null !== a) a.return = b, V = a;
+    else for(; null !== V;){
+        b = V;
+        try {
+            var n = b.alternate;
+            if (0 !== (b.flags & 1024)) switch(b.tag){
+                case 0:
+                case 11:
+                case 15:
+                    break;
+                case 1:
+                    if (null !== n) {
+                        var t = n.memoizedProps, J = n.memoizedState, x = b.stateNode, w = x.getSnapshotBeforeUpdate(b.elementType === b.type ? t : Ci(b.type, t), J);
+                        x.__reactInternalSnapshotBeforeUpdate = w;
+                    }
+                    break;
+                case 3:
+                    var u = b.stateNode.containerInfo;
+                    1 === u.nodeType ? u.textContent = "" : 9 === u.nodeType && u.documentElement && u.removeChild(u.documentElement);
+                    break;
+                case 5:
+                case 6:
+                case 4:
+                case 17:
+                    break;
+                default:
+                    throw Error(p(163));
+            }
+        } catch (F) {
+            W(b, b.return, F);
+        }
+        a = b.sibling;
+        if (null !== a) {
+            a.return = b.return;
+            V = a;
+            break;
+        }
+        V = b.return;
+    }
+    n = Nj;
+    Nj = !1;
+    return n;
+}
+function Pj(a, b, c) {
+    var d = b.updateQueue;
+    d = null !== d ? d.lastEffect : null;
+    if (null !== d) {
+        var e = d = d.next;
+        do {
+            if ((e.tag & a) === a) {
+                var f = e.destroy;
+                e.destroy = void 0;
+                void 0 !== f && Mj(b, c, f);
+            }
+            e = e.next;
+        }while (e !== d);
+    }
+}
+function Qj(a, b) {
+    b = b.updateQueue;
+    b = null !== b ? b.lastEffect : null;
+    if (null !== b) {
+        var c = b = b.next;
+        do {
+            if ((c.tag & a) === a) {
+                var d = c.create;
+                c.destroy = d();
+            }
+            c = c.next;
+        }while (c !== b);
+    }
+}
+function Rj(a) {
+    var b = a.ref;
+    if (null !== b) {
+        var c = a.stateNode;
+        switch(a.tag){
+            case 5:
+                a = c;
+                break;
+            default:
+                a = c;
+        }
+        "function" === typeof b ? b(a) : b.current = a;
+    }
+}
+function Sj(a) {
+    var b = a.alternate;
+    null !== b && (a.alternate = null, Sj(b));
+    a.child = null;
+    a.deletions = null;
+    a.sibling = null;
+    5 === a.tag && (b = a.stateNode, null !== b && (delete b[Of], delete b[Pf], delete b[of], delete b[Qf], delete b[Rf]));
+    a.stateNode = null;
+    a.return = null;
+    a.dependencies = null;
+    a.memoizedProps = null;
+    a.memoizedState = null;
+    a.pendingProps = null;
+    a.stateNode = null;
+    a.updateQueue = null;
+}
+function Tj(a) {
+    return 5 === a.tag || 3 === a.tag || 4 === a.tag;
+}
+function Uj(a) {
+    a: for(;;){
+        for(; null === a.sibling;){
+            if (null === a.return || Tj(a.return)) return null;
+            a = a.return;
+        }
+        a.sibling.return = a.return;
+        for(a = a.sibling; 5 !== a.tag && 6 !== a.tag && 18 !== a.tag;){
+            if (a.flags & 2) continue a;
+            if (null === a.child || 4 === a.tag) continue a;
+            else a.child.return = a, a = a.child;
+        }
+        if (!(a.flags & 2)) return a.stateNode;
+    }
+}
+function Vj(a, b, c) {
+    var d = a.tag;
+    if (5 === d || 6 === d) a = a.stateNode, b ? 8 === c.nodeType ? c.parentNode.insertBefore(a, b) : c.insertBefore(a, b) : (8 === c.nodeType ? (b = c.parentNode, b.insertBefore(a, c)) : (b = c, b.appendChild(a)), c = c._reactRootContainer, null !== c && void 0 !== c || null !== b.onclick || (b.onclick = Bf));
+    else if (4 !== d && (a = a.child, null !== a)) for(Vj(a, b, c), a = a.sibling; null !== a;)Vj(a, b, c), a = a.sibling;
+}
+function Wj(a, b, c) {
+    var d = a.tag;
+    if (5 === d || 6 === d) a = a.stateNode, b ? c.insertBefore(a, b) : c.appendChild(a);
+    else if (4 !== d && (a = a.child, null !== a)) for(Wj(a, b, c), a = a.sibling; null !== a;)Wj(a, b, c), a = a.sibling;
+}
+var X = null, Xj = !1;
+function Yj(a, b, c) {
+    for(c = c.child; null !== c;)Zj(a, b, c), c = c.sibling;
+}
+function Zj(a, b, c) {
+    if (lc && "function" === typeof lc.onCommitFiberUnmount) try {
+        lc.onCommitFiberUnmount(kc, c);
+    } catch (h) {}
+    switch(c.tag){
+        case 5:
+            U || Lj(c, b);
+        case 6:
+            var d = X, e = Xj;
+            X = null;
+            Yj(a, b, c);
+            X = d;
+            Xj = e;
+            null !== X && (Xj ? (a = X, c = c.stateNode, 8 === a.nodeType ? a.parentNode.removeChild(c) : a.removeChild(c)) : X.removeChild(c.stateNode));
+            break;
+        case 18:
+            null !== X && (Xj ? (a = X, c = c.stateNode, 8 === a.nodeType ? Kf(a.parentNode, c) : 1 === a.nodeType && Kf(a, c), bd(a)) : Kf(X, c.stateNode));
+            break;
+        case 4:
+            d = X;
+            e = Xj;
+            X = c.stateNode.containerInfo;
+            Xj = !0;
+            Yj(a, b, c);
+            X = d;
+            Xj = e;
+            break;
+        case 0:
+        case 11:
+        case 14:
+        case 15:
+            if (!U && (d = c.updateQueue, null !== d && (d = d.lastEffect, null !== d))) {
+                e = d = d.next;
+                do {
+                    var f = e, g = f.destroy;
+                    f = f.tag;
+                    void 0 !== g && (0 !== (f & 2) ? Mj(c, b, g) : 0 !== (f & 4) && Mj(c, b, g));
+                    e = e.next;
+                }while (e !== d);
+            }
+            Yj(a, b, c);
+            break;
+        case 1:
+            if (!U && (Lj(c, b), d = c.stateNode, "function" === typeof d.componentWillUnmount)) try {
+                d.props = c.memoizedProps, d.state = c.memoizedState, d.componentWillUnmount();
+            } catch (h) {
+                W(c, b, h);
+            }
+            Yj(a, b, c);
+            break;
+        case 21:
+            Yj(a, b, c);
+            break;
+        case 22:
+            c.mode & 1 ? (U = (d = U) || null !== c.memoizedState, Yj(a, b, c), U = d) : Yj(a, b, c);
+            break;
+        default:
+            Yj(a, b, c);
+    }
+}
+function ak(a) {
+    var b = a.updateQueue;
+    if (null !== b) {
+        a.updateQueue = null;
+        var c = a.stateNode;
+        null === c && (c = a.stateNode = new Kj);
+        b.forEach(function(b) {
+            var d = bk.bind(null, a, b);
+            c.has(b) || (c.add(b), b.then(d, d));
+        });
+    }
+}
+function ck(a, b) {
+    var c = b.deletions;
+    if (null !== c) for(var d = 0; d < c.length; d++){
+        var e = c[d];
+        try {
+            var f = a, g = b, h = g;
+            a: for(; null !== h;){
+                switch(h.tag){
+                    case 5:
+                        X = h.stateNode;
+                        Xj = !1;
+                        break a;
+                    case 3:
+                        X = h.stateNode.containerInfo;
+                        Xj = !0;
+                        break a;
+                    case 4:
+                        X = h.stateNode.containerInfo;
+                        Xj = !0;
+                        break a;
+                }
+                h = h.return;
+            }
+            if (null === X) throw Error(p(160));
+            Zj(f, g, e);
+            X = null;
+            Xj = !1;
+            var k = e.alternate;
+            null !== k && (k.return = null);
+            e.return = null;
+        } catch (l) {
+            W(e, b, l);
+        }
+    }
+    if (b.subtreeFlags & 12854) for(b = b.child; null !== b;)dk(b, a), b = b.sibling;
+}
+function dk(a, b) {
+    var c = a.alternate, d = a.flags;
+    switch(a.tag){
+        case 0:
+        case 11:
+        case 14:
+        case 15:
+            ck(b, a);
+            ek(a);
+            if (d & 4) {
+                try {
+                    Pj(3, a, a.return), Qj(3, a);
+                } catch (t) {
+                    W(a, a.return, t);
+                }
+                try {
+                    Pj(5, a, a.return);
+                } catch (t) {
+                    W(a, a.return, t);
+                }
+            }
+            break;
+        case 1:
+            ck(b, a);
+            ek(a);
+            d & 512 && null !== c && Lj(c, c.return);
+            break;
+        case 5:
+            ck(b, a);
+            ek(a);
+            d & 512 && null !== c && Lj(c, c.return);
+            if (a.flags & 32) {
+                var e = a.stateNode;
+                try {
+                    ob(e, "");
+                } catch (t) {
+                    W(a, a.return, t);
+                }
+            }
+            if (d & 4 && (e = a.stateNode, null != e)) {
+                var f = a.memoizedProps, g = null !== c ? c.memoizedProps : f, h = a.type, k = a.updateQueue;
+                a.updateQueue = null;
+                if (null !== k) try {
+                    "input" === h && "radio" === f.type && null != f.name && ab(e, f);
+                    vb(h, g);
+                    var l = vb(h, f);
+                    for(g = 0; g < k.length; g += 2){
+                        var m = k[g], q = k[g + 1];
+                        "style" === m ? sb(e, q) : "dangerouslySetInnerHTML" === m ? nb(e, q) : "children" === m ? ob(e, q) : ta(e, m, q, l);
+                    }
+                    switch(h){
+                        case "input":
+                            bb(e, f);
+                            break;
+                        case "textarea":
+                            ib(e, f);
+                            break;
+                        case "select":
+                            var r = e._wrapperState.wasMultiple;
+                            e._wrapperState.wasMultiple = !!f.multiple;
+                            var y = f.value;
+                            null != y ? fb(e, !!f.multiple, y, !1) : r !== !!f.multiple && (null != f.defaultValue ? fb(e, !!f.multiple, f.defaultValue, !0) : fb(e, !!f.multiple, f.multiple ? [] : "", !1));
+                    }
+                    e[Pf] = f;
+                } catch (t) {
+                    W(a, a.return, t);
+                }
+            }
+            break;
+        case 6:
+            ck(b, a);
+            ek(a);
+            if (d & 4) {
+                if (null === a.stateNode) throw Error(p(162));
+                e = a.stateNode;
+                f = a.memoizedProps;
+                try {
+                    e.nodeValue = f;
+                } catch (t) {
+                    W(a, a.return, t);
+                }
+            }
+            break;
+        case 3:
+            ck(b, a);
+            ek(a);
+            if (d & 4 && null !== c && c.memoizedState.isDehydrated) try {
+                bd(b.containerInfo);
+            } catch (t) {
+                W(a, a.return, t);
+            }
+            break;
+        case 4:
+            ck(b, a);
+            ek(a);
+            break;
+        case 13:
+            ck(b, a);
+            ek(a);
+            e = a.child;
+            e.flags & 8192 && (f = null !== e.memoizedState, e.stateNode.isHidden = f, !f || null !== e.alternate && null !== e.alternate.memoizedState || (fk = B()));
+            d & 4 && ak(a);
+            break;
+        case 22:
+            m = null !== c && null !== c.memoizedState;
+            a.mode & 1 ? (U = (l = U) || m, ck(b, a), U = l) : ck(b, a);
+            ek(a);
+            if (d & 8192) {
+                l = null !== a.memoizedState;
+                if ((a.stateNode.isHidden = l) && !m && 0 !== (a.mode & 1)) for(V = a, m = a.child; null !== m;){
+                    for(q = V = m; null !== V;){
+                        r = V;
+                        y = r.child;
+                        switch(r.tag){
+                            case 0:
+                            case 11:
+                            case 14:
+                            case 15:
+                                Pj(4, r, r.return);
+                                break;
+                            case 1:
+                                Lj(r, r.return);
+                                var n = r.stateNode;
+                                if ("function" === typeof n.componentWillUnmount) {
+                                    d = r;
+                                    c = r.return;
+                                    try {
+                                        b = d, n.props = b.memoizedProps, n.state = b.memoizedState, n.componentWillUnmount();
+                                    } catch (t) {
+                                        W(d, c, t);
+                                    }
+                                }
+                                break;
+                            case 5:
+                                Lj(r, r.return);
+                                break;
+                            case 22:
+                                if (null !== r.memoizedState) {
+                                    gk(q);
+                                    continue;
+                                }
+                        }
+                        null !== y ? (y.return = r, V = y) : gk(q);
+                    }
+                    m = m.sibling;
+                }
+                a: for(m = null, q = a;;){
+                    if (5 === q.tag) {
+                        if (null === m) {
+                            m = q;
+                            try {
+                                e = q.stateNode, l ? (f = e.style, "function" === typeof f.setProperty ? f.setProperty("display", "none", "important") : f.display = "none") : (h = q.stateNode, k = q.memoizedProps.style, g = void 0 !== k && null !== k && k.hasOwnProperty("display") ? k.display : null, h.style.display = rb("display", g));
+                            } catch (t) {
+                                W(a, a.return, t);
+                            }
+                        }
+                    } else if (6 === q.tag) {
+                        if (null === m) try {
+                            q.stateNode.nodeValue = l ? "" : q.memoizedProps;
+                        } catch (t) {
+                            W(a, a.return, t);
+                        }
+                    } else if ((22 !== q.tag && 23 !== q.tag || null === q.memoizedState || q === a) && null !== q.child) {
+                        q.child.return = q;
+                        q = q.child;
+                        continue;
+                    }
+                    if (q === a) break a;
+                    for(; null === q.sibling;){
+                        if (null === q.return || q.return === a) break a;
+                        m === q && (m = null);
+                        q = q.return;
+                    }
+                    m === q && (m = null);
+                    q.sibling.return = q.return;
+                    q = q.sibling;
+                }
+            }
+            break;
+        case 19:
+            ck(b, a);
+            ek(a);
+            d & 4 && ak(a);
+            break;
+        case 21:
+            break;
+        default:
+            ck(b, a), ek(a);
+    }
+}
+function ek(a) {
+    var b = a.flags;
+    if (b & 2) {
+        try {
+            a: {
+                for(var c = a.return; null !== c;){
+                    if (Tj(c)) {
+                        var d = c;
+                        break a;
+                    }
+                    c = c.return;
+                }
+                throw Error(p(160));
+            }
+            switch(d.tag){
+                case 5:
+                    var e = d.stateNode;
+                    d.flags & 32 && (ob(e, ""), d.flags &= -33);
+                    var f = Uj(a);
+                    Wj(a, f, e);
+                    break;
+                case 3:
+                case 4:
+                    var g = d.stateNode.containerInfo, h = Uj(a);
+                    Vj(a, h, g);
+                    break;
+                default:
+                    throw Error(p(161));
+            }
+        } catch (k) {
+            W(a, a.return, k);
+        }
+        a.flags &= -3;
+    }
+    b & 4096 && (a.flags &= -4097);
+}
+function hk(a, b, c) {
+    V = a;
+    ik(a, b, c);
+}
+function ik(a, b, c) {
+    for(var d = 0 !== (a.mode & 1); null !== V;){
+        var e = V, f = e.child;
+        if (22 === e.tag && d) {
+            var g = null !== e.memoizedState || Jj;
+            if (!g) {
+                var h = e.alternate, k = null !== h && null !== h.memoizedState || U;
+                h = Jj;
+                var l = U;
+                Jj = g;
+                if ((U = k) && !l) for(V = e; null !== V;)g = V, k = g.child, 22 === g.tag && null !== g.memoizedState ? jk(e) : null !== k ? (k.return = g, V = k) : jk(e);
+                for(; null !== f;)V = f, ik(f, b, c), f = f.sibling;
+                V = e;
+                Jj = h;
+                U = l;
+            }
+            kk(a, b, c);
+        } else 0 !== (e.subtreeFlags & 8772) && null !== f ? (f.return = e, V = f) : kk(a, b, c);
+    }
+}
+function kk(a) {
+    for(; null !== V;){
+        var b = V;
+        if (0 !== (b.flags & 8772)) {
+            var c = b.alternate;
+            try {
+                if (0 !== (b.flags & 8772)) switch(b.tag){
+                    case 0:
+                    case 11:
+                    case 15:
+                        U || Qj(5, b);
+                        break;
+                    case 1:
+                        var d = b.stateNode;
+                        if (b.flags & 4 && !U) if (null === c) d.componentDidMount();
+                        else {
+                            var e = b.elementType === b.type ? c.memoizedProps : Ci(b.type, c.memoizedProps);
+                            d.componentDidUpdate(e, c.memoizedState, d.__reactInternalSnapshotBeforeUpdate);
+                        }
+                        var f = b.updateQueue;
+                        null !== f && sh(b, f, d);
+                        break;
+                    case 3:
+                        var g = b.updateQueue;
+                        if (null !== g) {
+                            c = null;
+                            if (null !== b.child) switch(b.child.tag){
+                                case 5:
+                                    c = b.child.stateNode;
+                                    break;
+                                case 1:
+                                    c = b.child.stateNode;
+                            }
+                            sh(b, g, c);
+                        }
+                        break;
+                    case 5:
+                        var h = b.stateNode;
+                        if (null === c && b.flags & 4) {
+                            c = h;
+                            var k = b.memoizedProps;
+                            switch(b.type){
+                                case "button":
+                                case "input":
+                                case "select":
+                                case "textarea":
+                                    k.autoFocus && c.focus();
+                                    break;
+                                case "img":
+                                    k.src && (c.src = k.src);
+                            }
+                        }
+                        break;
+                    case 6:
+                        break;
+                    case 4:
+                        break;
+                    case 12:
+                        break;
+                    case 13:
+                        if (null === b.memoizedState) {
+                            var l = b.alternate;
+                            if (null !== l) {
+                                var m = l.memoizedState;
+                                if (null !== m) {
+                                    var q = m.dehydrated;
+                                    null !== q && bd(q);
+                                }
+                            }
+                        }
+                        break;
+                    case 19:
+                    case 17:
+                    case 21:
+                    case 22:
+                    case 23:
+                    case 25:
+                        break;
+                    default:
+                        throw Error(p(163));
+                }
+                U || b.flags & 512 && Rj(b);
+            } catch (r) {
+                W(b, b.return, r);
+            }
+        }
+        if (b === a) {
+            V = null;
+            break;
+        }
+        c = b.sibling;
+        if (null !== c) {
+            c.return = b.return;
+            V = c;
+            break;
+        }
+        V = b.return;
+    }
+}
+function gk(a) {
+    for(; null !== V;){
+        var b = V;
+        if (b === a) {
+            V = null;
+            break;
+        }
+        var c = b.sibling;
+        if (null !== c) {
+            c.return = b.return;
+            V = c;
+            break;
+        }
+        V = b.return;
+    }
+}
+function jk(a) {
+    for(; null !== V;){
+        var b = V;
+        try {
+            switch(b.tag){
+                case 0:
+                case 11:
+                case 15:
+                    var c = b.return;
+                    try {
+                        Qj(4, b);
+                    } catch (k) {
+                        W(b, c, k);
+                    }
+                    break;
+                case 1:
+                    var d = b.stateNode;
+                    if ("function" === typeof d.componentDidMount) {
+                        var e = b.return;
+                        try {
+                            d.componentDidMount();
+                        } catch (k) {
+                            W(b, e, k);
+                        }
+                    }
+                    var f = b.return;
+                    try {
+                        Rj(b);
+                    } catch (k) {
+                        W(b, f, k);
+                    }
+                    break;
+                case 5:
+                    var g = b.return;
+                    try {
+                        Rj(b);
+                    } catch (k) {
+                        W(b, g, k);
+                    }
+            }
+        } catch (k) {
+            W(b, b.return, k);
+        }
+        if (b === a) {
+            V = null;
+            break;
+        }
+        var h = b.sibling;
+        if (null !== h) {
+            h.return = b.return;
+            V = h;
+            break;
+        }
+        V = b.return;
+    }
+}
+var lk = Math.ceil, mk = ua.ReactCurrentDispatcher, nk = ua.ReactCurrentOwner, ok = ua.ReactCurrentBatchConfig, K = 0, Q = null, Y = null, Z = 0, fj = 0, ej = Uf(0), T = 0, pk = null, rh = 0, qk = 0, rk = 0, sk = null, tk = null, fk = 0, Gj = Infinity, uk = null, Oi = !1, Pi = null, Ri = null, vk = !1, wk = null, xk = 0, yk = 0, zk = null, Ak = -1, Bk = 0;
+function R() {
+    return 0 !== (K & 6) ? B() : -1 !== Ak ? Ak : Ak = B();
+}
+function yi(a) {
+    if (0 === (a.mode & 1)) return 1;
+    if (0 !== (K & 2) && 0 !== Z) return Z & -Z;
+    if (null !== Kg.transition) return 0 === Bk && (Bk = yc()), Bk;
+    a = C;
+    if (0 !== a) return a;
+    a = window.event;
+    a = void 0 === a ? 16 : jd(a.type);
+    return a;
+}
+function gi(a, b, c, d) {
+    if (50 < yk) throw yk = 0, zk = null, Error(p(185));
+    Ac(a, c, d);
+    if (0 === (K & 2) || a !== Q) a === Q && (0 === (K & 2) && (qk |= c), 4 === T && Ck(a, Z)), Dk(a, d), 1 === c && 0 === K && 0 === (b.mode & 1) && (Gj = B() + 500, fg && jg());
+}
+function Dk(a, b) {
+    var c = a.callbackNode;
+    wc(a, b);
+    var d = uc(a, a === Q ? Z : 0);
+    if (0 === d) null !== c && bc(c), a.callbackNode = null, a.callbackPriority = 0;
+    else if (b = d & -d, a.callbackPriority !== b) {
+        null != c && bc(c);
+        if (1 === b) 0 === a.tag ? ig(Ek.bind(null, a)) : hg(Ek.bind(null, a)), Jf(function() {
+            0 === (K & 6) && jg();
+        }), c = null;
+        else {
+            switch(Dc(d)){
+                case 1:
+                    c = fc;
+                    break;
+                case 4:
+                    c = gc;
+                    break;
+                case 16:
+                    c = hc;
+                    break;
+                case 536870912:
+                    c = jc;
+                    break;
+                default:
+                    c = hc;
+            }
+            c = Fk(c, Gk.bind(null, a));
+        }
+        a.callbackPriority = b;
+        a.callbackNode = c;
+    }
+}
+function Gk(a, b) {
+    Ak = -1;
+    Bk = 0;
+    if (0 !== (K & 6)) throw Error(p(327));
+    var c = a.callbackNode;
+    if (Hk() && a.callbackNode !== c) return null;
+    var d = uc(a, a === Q ? Z : 0);
+    if (0 === d) return null;
+    if (0 !== (d & 30) || 0 !== (d & a.expiredLanes) || b) b = Ik(a, d);
+    else {
+        b = d;
+        var e = K;
+        K |= 2;
+        var f = Jk();
+        if (Q !== a || Z !== b) uk = null, Gj = B() + 500, Kk(a, b);
+        do try {
+            Lk();
+            break;
+        } catch (h) {
+            Mk(a, h);
+        }
+        while (1);
+        $g();
+        mk.current = f;
+        K = e;
+        null !== Y ? b = 0 : (Q = null, Z = 0, b = T);
+    }
+    if (0 !== b) {
+        2 === b && (e = xc(a), 0 !== e && (d = e, b = Nk(a, e)));
+        if (1 === b) throw c = pk, Kk(a, 0), Ck(a, d), Dk(a, B()), c;
+        if (6 === b) Ck(a, d);
+        else {
+            e = a.current.alternate;
+            if (0 === (d & 30) && !Ok(e) && (b = Ik(a, d), 2 === b && (f = xc(a), 0 !== f && (d = f, b = Nk(a, f))), 1 === b)) throw c = pk, Kk(a, 0), Ck(a, d), Dk(a, B()), c;
+            a.finishedWork = e;
+            a.finishedLanes = d;
+            switch(b){
+                case 0:
+                case 1:
+                    throw Error(p(345));
+                case 2:
+                    Pk(a, tk, uk);
+                    break;
+                case 3:
+                    Ck(a, d);
+                    if ((d & 130023424) === d && (b = fk + 500 - B(), 10 < b)) {
+                        if (0 !== uc(a, 0)) break;
+                        e = a.suspendedLanes;
+                        if ((e & d) !== d) {
+                            R();
+                            a.pingedLanes |= a.suspendedLanes & e;
+                            break;
+                        }
+                        a.timeoutHandle = Ff(Pk.bind(null, a, tk, uk), b);
+                        break;
+                    }
+                    Pk(a, tk, uk);
+                    break;
+                case 4:
+                    Ck(a, d);
+                    if ((d & 4194240) === d) break;
+                    b = a.eventTimes;
+                    for(e = -1; 0 < d;){
+                        var g = 31 - oc(d);
+                        f = 1 << g;
+                        g = b[g];
+                        g > e && (e = g);
+                        d &= ~f;
+                    }
+                    d = e;
+                    d = B() - d;
+                    d = (120 > d ? 120 : 480 > d ? 480 : 1080 > d ? 1080 : 1920 > d ? 1920 : 3E3 > d ? 3E3 : 4320 > d ? 4320 : 1960 * lk(d / 1960)) - d;
+                    if (10 < d) {
+                        a.timeoutHandle = Ff(Pk.bind(null, a, tk, uk), d);
+                        break;
+                    }
+                    Pk(a, tk, uk);
+                    break;
+                case 5:
+                    Pk(a, tk, uk);
+                    break;
+                default:
+                    throw Error(p(329));
+            }
+        }
+    }
+    Dk(a, B());
+    return a.callbackNode === c ? Gk.bind(null, a) : null;
+}
+function Nk(a, b) {
+    var c = sk;
+    a.current.memoizedState.isDehydrated && (Kk(a, b).flags |= 256);
+    a = Ik(a, b);
+    2 !== a && (b = tk, tk = c, null !== b && Fj(b));
+    return a;
+}
+function Fj(a) {
+    null === tk ? tk = a : tk.push.apply(tk, a);
+}
+function Ok(a) {
+    for(var b = a;;){
+        if (b.flags & 16384) {
+            var c = b.updateQueue;
+            if (null !== c && (c = c.stores, null !== c)) for(var d = 0; d < c.length; d++){
+                var e = c[d], f = e.getSnapshot;
+                e = e.value;
+                try {
+                    if (!He(f(), e)) return !1;
+                } catch (g) {
+                    return !1;
+                }
+            }
+        }
+        c = b.child;
+        if (b.subtreeFlags & 16384 && null !== c) c.return = b, b = c;
+        else {
+            if (b === a) break;
+            for(; null === b.sibling;){
+                if (null === b.return || b.return === a) return !0;
+                b = b.return;
+            }
+            b.sibling.return = b.return;
+            b = b.sibling;
+        }
+    }
+    return !0;
+}
+function Ck(a, b) {
+    b &= ~rk;
+    b &= ~qk;
+    a.suspendedLanes |= b;
+    a.pingedLanes &= ~b;
+    for(a = a.expirationTimes; 0 < b;){
+        var c = 31 - oc(b), d = 1 << c;
+        a[c] = -1;
+        b &= ~d;
+    }
+}
+function Ek(a) {
+    if (0 !== (K & 6)) throw Error(p(327));
+    Hk();
+    var b = uc(a, 0);
+    if (0 === (b & 1)) return Dk(a, B()), null;
+    var c = Ik(a, b);
+    if (0 !== a.tag && 2 === c) {
+        var d = xc(a);
+        0 !== d && (b = d, c = Nk(a, d));
+    }
+    if (1 === c) throw c = pk, Kk(a, 0), Ck(a, b), Dk(a, B()), c;
+    if (6 === c) throw Error(p(345));
+    a.finishedWork = a.current.alternate;
+    a.finishedLanes = b;
+    Pk(a, tk, uk);
+    Dk(a, B());
+    return null;
+}
+function Qk(a, b) {
+    var c = K;
+    K |= 1;
+    try {
+        return a(b);
+    } finally{
+        K = c, 0 === K && (Gj = B() + 500, fg && jg());
+    }
+}
+function Rk(a) {
+    null !== wk && 0 === wk.tag && 0 === (K & 6) && Hk();
+    var b = K;
+    K |= 1;
+    var c = ok.transition, d = C;
+    try {
+        if (ok.transition = null, C = 1, a) return a();
+    } finally{
+        C = d, ok.transition = c, K = b, 0 === (K & 6) && jg();
+    }
+}
+function Hj() {
+    fj = ej.current;
+    E(ej);
+}
+function Kk(a, b) {
+    a.finishedWork = null;
+    a.finishedLanes = 0;
+    var c = a.timeoutHandle;
+    -1 !== c && (a.timeoutHandle = -1, Gf(c));
+    if (null !== Y) for(c = Y.return; null !== c;){
+        var d = c;
+        wg(d);
+        switch(d.tag){
+            case 1:
+                d = d.type.childContextTypes;
+                null !== d && void 0 !== d && $f();
+                break;
+            case 3:
+                zh();
+                E(Wf);
+                E(H);
+                Eh();
+                break;
+            case 5:
+                Bh(d);
+                break;
+            case 4:
+                zh();
+                break;
+            case 13:
+                E(L);
+                break;
+            case 19:
+                E(L);
+                break;
+            case 10:
+                ah(d.type._context);
+                break;
+            case 22:
+            case 23:
+                Hj();
+        }
+        c = c.return;
+    }
+    Q = a;
+    Y = a = Pg(a.current, null);
+    Z = fj = b;
+    T = 0;
+    pk = null;
+    rk = qk = rh = 0;
+    tk = sk = null;
+    if (null !== fh) {
+        for(b = 0; b < fh.length; b++)if (c = fh[b], d = c.interleaved, null !== d) {
+            c.interleaved = null;
+            var e = d.next, f = c.pending;
+            if (null !== f) {
+                var g = f.next;
+                f.next = e;
+                d.next = g;
+            }
+            c.pending = d;
+        }
+        fh = null;
+    }
+    return a;
+}
+function Mk(a, b) {
+    do {
+        var c = Y;
+        try {
+            $g();
+            Fh.current = Rh;
+            if (Ih) {
+                for(var d = M.memoizedState; null !== d;){
+                    var e = d.queue;
+                    null !== e && (e.pending = null);
+                    d = d.next;
+                }
+                Ih = !1;
+            }
+            Hh = 0;
+            O = N = M = null;
+            Jh = !1;
+            Kh = 0;
+            nk.current = null;
+            if (null === c || null === c.return) {
+                T = 1;
+                pk = b;
+                Y = null;
+                break;
+            }
+            a: {
+                var f = a, g = c.return, h = c, k = b;
+                b = Z;
+                h.flags |= 32768;
+                if (null !== k && "object" === typeof k && "function" === typeof k.then) {
+                    var l = k, m = h, q = m.tag;
+                    if (0 === (m.mode & 1) && (0 === q || 11 === q || 15 === q)) {
+                        var r = m.alternate;
+                        r ? (m.updateQueue = r.updateQueue, m.memoizedState = r.memoizedState, m.lanes = r.lanes) : (m.updateQueue = null, m.memoizedState = null);
+                    }
+                    var y = Ui(g);
+                    if (null !== y) {
+                        y.flags &= -257;
+                        Vi(y, g, h, f, b);
+                        y.mode & 1 && Si(f, l, b);
+                        b = y;
+                        k = l;
+                        var n = b.updateQueue;
+                        if (null === n) {
+                            var t = new Set;
+                            t.add(k);
+                            b.updateQueue = t;
+                        } else n.add(k);
+                        break a;
+                    } else {
+                        if (0 === (b & 1)) {
+                            Si(f, l, b);
+                            tj();
+                            break a;
+                        }
+                        k = Error(p(426));
+                    }
+                } else if (I && h.mode & 1) {
+                    var J = Ui(g);
+                    if (null !== J) {
+                        0 === (J.flags & 65536) && (J.flags |= 256);
+                        Vi(J, g, h, f, b);
+                        Jg(Ji(k, h));
+                        break a;
+                    }
+                }
+                f = k = Ji(k, h);
+                4 !== T && (T = 2);
+                null === sk ? sk = [
+                    f
+                ] : sk.push(f);
+                f = g;
+                do {
+                    switch(f.tag){
+                        case 3:
+                            f.flags |= 65536;
+                            b &= -b;
+                            f.lanes |= b;
+                            var x = Ni(f, k, b);
+                            ph(f, x);
+                            break a;
+                        case 1:
+                            h = k;
+                            var w = f.type, u = f.stateNode;
+                            if (0 === (f.flags & 128) && ("function" === typeof w.getDerivedStateFromError || null !== u && "function" === typeof u.componentDidCatch && (null === Ri || !Ri.has(u)))) {
+                                f.flags |= 65536;
+                                b &= -b;
+                                f.lanes |= b;
+                                var F = Qi(f, h, b);
+                                ph(f, F);
+                                break a;
+                            }
+                    }
+                    f = f.return;
+                }while (null !== f);
+            }
+            Sk(c);
+        } catch (na) {
+            b = na;
+            Y === c && null !== c && (Y = c = c.return);
+            continue;
+        }
+        break;
+    }while (1);
+}
+function Jk() {
+    var a = mk.current;
+    mk.current = Rh;
+    return null === a ? Rh : a;
+}
+function tj() {
+    if (0 === T || 3 === T || 2 === T) T = 4;
+    null === Q || 0 === (rh & 268435455) && 0 === (qk & 268435455) || Ck(Q, Z);
+}
+function Ik(a, b) {
+    var c = K;
+    K |= 2;
+    var d = Jk();
+    if (Q !== a || Z !== b) uk = null, Kk(a, b);
+    do try {
+        Tk();
+        break;
+    } catch (e) {
+        Mk(a, e);
+    }
+    while (1);
+    $g();
+    K = c;
+    mk.current = d;
+    if (null !== Y) throw Error(p(261));
+    Q = null;
+    Z = 0;
+    return T;
+}
+function Tk() {
+    for(; null !== Y;)Uk(Y);
+}
+function Lk() {
+    for(; null !== Y && !cc();)Uk(Y);
+}
+function Uk(a) {
+    var b = Vk(a.alternate, a, fj);
+    a.memoizedProps = a.pendingProps;
+    null === b ? Sk(a) : Y = b;
+    nk.current = null;
+}
+function Sk(a) {
+    var b = a;
+    do {
+        var c = b.alternate;
+        a = b.return;
+        if (0 === (b.flags & 32768)) {
+            if (c = Ej(c, b, fj), null !== c) {
+                Y = c;
+                return;
+            }
+        } else {
+            c = Ij(c, b);
+            if (null !== c) {
+                c.flags &= 32767;
+                Y = c;
+                return;
+            }
+            if (null !== a) a.flags |= 32768, a.subtreeFlags = 0, a.deletions = null;
+            else {
+                T = 6;
+                Y = null;
+                return;
+            }
+        }
+        b = b.sibling;
+        if (null !== b) {
+            Y = b;
+            return;
+        }
+        Y = b = a;
+    }while (null !== b);
+    0 === T && (T = 5);
+}
+function Pk(a, b, c) {
+    var d = C, e = ok.transition;
+    try {
+        ok.transition = null, C = 1, Wk(a, b, c, d);
+    } finally{
+        ok.transition = e, C = d;
+    }
+    return null;
+}
+function Wk(a, b, c, d) {
+    do Hk();
+    while (null !== wk);
+    if (0 !== (K & 6)) throw Error(p(327));
+    c = a.finishedWork;
+    var e = a.finishedLanes;
+    if (null === c) return null;
+    a.finishedWork = null;
+    a.finishedLanes = 0;
+    if (c === a.current) throw Error(p(177));
+    a.callbackNode = null;
+    a.callbackPriority = 0;
+    var f = c.lanes | c.childLanes;
+    Bc(a, f);
+    a === Q && (Y = Q = null, Z = 0);
+    0 === (c.subtreeFlags & 2064) && 0 === (c.flags & 2064) || vk || (vk = !0, Fk(hc, function() {
+        Hk();
+        return null;
+    }));
+    f = 0 !== (c.flags & 15990);
+    if (0 !== (c.subtreeFlags & 15990) || f) {
+        f = ok.transition;
+        ok.transition = null;
+        var g = C;
+        C = 1;
+        var h = K;
+        K |= 4;
+        nk.current = null;
+        Oj(a, c);
+        dk(c, a);
+        Oe(Df);
+        dd = !!Cf;
+        Df = Cf = null;
+        a.current = c;
+        hk(c, a, e);
+        dc();
+        K = h;
+        C = g;
+        ok.transition = f;
+    } else a.current = c;
+    vk && (vk = !1, wk = a, xk = e);
+    f = a.pendingLanes;
+    0 === f && (Ri = null);
+    mc(c.stateNode, d);
+    Dk(a, B());
+    if (null !== b) for(d = a.onRecoverableError, c = 0; c < b.length; c++)e = b[c], d(e.value, {
+        componentStack: e.stack,
+        digest: e.digest
+    });
+    if (Oi) throw Oi = !1, a = Pi, Pi = null, a;
+    0 !== (xk & 1) && 0 !== a.tag && Hk();
+    f = a.pendingLanes;
+    0 !== (f & 1) ? a === zk ? yk++ : (yk = 0, zk = a) : yk = 0;
+    jg();
+    return null;
+}
+function Hk() {
+    if (null !== wk) {
+        var a = Dc(xk), b = ok.transition, c = C;
+        try {
+            ok.transition = null;
+            C = 16 > a ? 16 : a;
+            if (null === wk) var d = !1;
+            else {
+                a = wk;
+                wk = null;
+                xk = 0;
+                if (0 !== (K & 6)) throw Error(p(331));
+                var e = K;
+                K |= 4;
+                for(V = a.current; null !== V;){
+                    var f = V, g = f.child;
+                    if (0 !== (V.flags & 16)) {
+                        var h = f.deletions;
+                        if (null !== h) {
+                            for(var k = 0; k < h.length; k++){
+                                var l = h[k];
+                                for(V = l; null !== V;){
+                                    var m = V;
+                                    switch(m.tag){
+                                        case 0:
+                                        case 11:
+                                        case 15:
+                                            Pj(8, m, f);
+                                    }
+                                    var q = m.child;
+                                    if (null !== q) q.return = m, V = q;
+                                    else for(; null !== V;){
+                                        m = V;
+                                        var r = m.sibling, y = m.return;
+                                        Sj(m);
+                                        if (m === l) {
+                                            V = null;
+                                            break;
+                                        }
+                                        if (null !== r) {
+                                            r.return = y;
+                                            V = r;
+                                            break;
+                                        }
+                                        V = y;
+                                    }
+                                }
+                            }
+                            var n = f.alternate;
+                            if (null !== n) {
+                                var t = n.child;
+                                if (null !== t) {
+                                    n.child = null;
+                                    do {
+                                        var J = t.sibling;
+                                        t.sibling = null;
+                                        t = J;
+                                    }while (null !== t);
+                                }
+                            }
+                            V = f;
+                        }
+                    }
+                    if (0 !== (f.subtreeFlags & 2064) && null !== g) g.return = f, V = g;
+                    else b: for(; null !== V;){
+                        f = V;
+                        if (0 !== (f.flags & 2048)) switch(f.tag){
+                            case 0:
+                            case 11:
+                            case 15:
+                                Pj(9, f, f.return);
+                        }
+                        var x = f.sibling;
+                        if (null !== x) {
+                            x.return = f.return;
+                            V = x;
+                            break b;
+                        }
+                        V = f.return;
+                    }
+                }
+                var w = a.current;
+                for(V = w; null !== V;){
+                    g = V;
+                    var u = g.child;
+                    if (0 !== (g.subtreeFlags & 2064) && null !== u) u.return = g, V = u;
+                    else b: for(g = w; null !== V;){
+                        h = V;
+                        if (0 !== (h.flags & 2048)) try {
+                            switch(h.tag){
+                                case 0:
+                                case 11:
+                                case 15:
+                                    Qj(9, h);
+                            }
+                        } catch (na) {
+                            W(h, h.return, na);
+                        }
+                        if (h === g) {
+                            V = null;
+                            break b;
+                        }
+                        var F = h.sibling;
+                        if (null !== F) {
+                            F.return = h.return;
+                            V = F;
+                            break b;
+                        }
+                        V = h.return;
+                    }
+                }
+                K = e;
+                jg();
+                if (lc && "function" === typeof lc.onPostCommitFiberRoot) try {
+                    lc.onPostCommitFiberRoot(kc, a);
+                } catch (na) {}
+                d = !0;
+            }
+            return d;
+        } finally{
+            C = c, ok.transition = b;
+        }
+    }
+    return !1;
+}
+function Xk(a, b, c) {
+    b = Ji(c, b);
+    b = Ni(a, b, 1);
+    a = nh(a, b, 1);
+    b = R();
+    null !== a && (Ac(a, 1, b), Dk(a, b));
+}
+function W(a, b, c) {
+    if (3 === a.tag) Xk(a, a, c);
+    else for(; null !== b;){
+        if (3 === b.tag) {
+            Xk(b, a, c);
+            break;
+        } else if (1 === b.tag) {
+            var d = b.stateNode;
+            if ("function" === typeof b.type.getDerivedStateFromError || "function" === typeof d.componentDidCatch && (null === Ri || !Ri.has(d))) {
+                a = Ji(c, a);
+                a = Qi(b, a, 1);
+                b = nh(b, a, 1);
+                a = R();
+                null !== b && (Ac(b, 1, a), Dk(b, a));
+                break;
+            }
+        }
+        b = b.return;
+    }
+}
+function Ti(a, b, c) {
+    var d = a.pingCache;
+    null !== d && d.delete(b);
+    b = R();
+    a.pingedLanes |= a.suspendedLanes & c;
+    Q === a && (Z & c) === c && (4 === T || 3 === T && (Z & 130023424) === Z && 500 > B() - fk ? Kk(a, 0) : rk |= c);
+    Dk(a, b);
+}
+function Yk(a, b) {
+    0 === b && (0 === (a.mode & 1) ? b = 1 : (b = sc, sc <<= 1, 0 === (sc & 130023424) && (sc = 4194304)));
+    var c = R();
+    a = ih(a, b);
+    null !== a && (Ac(a, b, c), Dk(a, c));
+}
+function uj(a) {
+    var b = a.memoizedState, c = 0;
+    null !== b && (c = b.retryLane);
+    Yk(a, c);
+}
+function bk(a, b) {
+    var c = 0;
+    switch(a.tag){
+        case 13:
+            var d = a.stateNode;
+            var e = a.memoizedState;
+            null !== e && (c = e.retryLane);
+            break;
+        case 19:
+            d = a.stateNode;
+            break;
+        default:
+            throw Error(p(314));
+    }
+    null !== d && d.delete(b);
+    Yk(a, c);
+}
+var Vk;
+Vk = function(a, b, c) {
+    if (null !== a) if (a.memoizedProps !== b.pendingProps || Wf.current) dh = !0;
+    else {
+        if (0 === (a.lanes & c) && 0 === (b.flags & 128)) return dh = !1, yj(a, b, c);
+        dh = 0 !== (a.flags & 131072) ? !0 : !1;
+    }
+    else dh = !1, I && 0 !== (b.flags & 1048576) && ug(b, ng, b.index);
+    b.lanes = 0;
+    switch(b.tag){
+        case 2:
+            var d = b.type;
+            ij(a, b);
+            a = b.pendingProps;
+            var e = Yf(b, H.current);
+            ch(b, c);
+            e = Nh(null, b, d, a, e, c);
+            var f = Sh();
+            b.flags |= 1;
+            "object" === typeof e && null !== e && "function" === typeof e.render && void 0 === e.$$typeof ? (b.tag = 1, b.memoizedState = null, b.updateQueue = null, Zf(d) ? (f = !0, cg(b)) : f = !1, b.memoizedState = null !== e.state && void 0 !== e.state ? e.state : null, kh(b), e.updater = Ei, b.stateNode = e, e._reactInternals = b, Ii(b, d, a, c), b = jj(null, b, d, !0, f, c)) : (b.tag = 0, I && f && vg(b), Xi(null, b, e, c), b = b.child);
+            return b;
+        case 16:
+            d = b.elementType;
+            a: {
+                ij(a, b);
+                a = b.pendingProps;
+                e = d._init;
+                d = e(d._payload);
+                b.type = d;
+                e = b.tag = Zk(d);
+                a = Ci(d, a);
+                switch(e){
+                    case 0:
+                        b = cj(null, b, d, a, c);
+                        break a;
+                    case 1:
+                        b = hj(null, b, d, a, c);
+                        break a;
+                    case 11:
+                        b = Yi(null, b, d, a, c);
+                        break a;
+                    case 14:
+                        b = $i(null, b, d, Ci(d.type, a), c);
+                        break a;
+                }
+                throw Error(p(306, d, ""));
+            }
+            return b;
+        case 0:
+            return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Ci(d, e), cj(a, b, d, e, c);
+        case 1:
+            return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Ci(d, e), hj(a, b, d, e, c);
+        case 3:
+            a: {
+                kj(b);
+                if (null === a) throw Error(p(387));
+                d = b.pendingProps;
+                f = b.memoizedState;
+                e = f.element;
+                lh(a, b);
+                qh(b, d, null, c);
+                var g = b.memoizedState;
+                d = g.element;
+                if (f.isDehydrated) if (f = {
+                    element: d,
+                    isDehydrated: !1,
+                    cache: g.cache,
+                    pendingSuspenseBoundaries: g.pendingSuspenseBoundaries,
+                    transitions: g.transitions
+                }, b.updateQueue.baseState = f, b.memoizedState = f, b.flags & 256) {
+                    e = Ji(Error(p(423)), b);
+                    b = lj(a, b, d, c, e);
+                    break a;
+                } else if (d !== e) {
+                    e = Ji(Error(p(424)), b);
+                    b = lj(a, b, d, c, e);
+                    break a;
+                } else for(yg = Lf(b.stateNode.containerInfo.firstChild), xg = b, I = !0, zg = null, c = Vg(b, null, d, c), b.child = c; c;)c.flags = c.flags & -3 | 4096, c = c.sibling;
+                else {
+                    Ig();
+                    if (d === e) {
+                        b = Zi(a, b, c);
+                        break a;
+                    }
+                    Xi(a, b, d, c);
+                }
+                b = b.child;
+            }
+            return b;
+        case 5:
+            return Ah(b), null === a && Eg(b), d = b.type, e = b.pendingProps, f = null !== a ? a.memoizedProps : null, g = e.children, Ef(d, e) ? g = null : null !== f && Ef(d, f) && (b.flags |= 32), gj(a, b), Xi(a, b, g, c), b.child;
+        case 6:
+            return null === a && Eg(b), null;
+        case 13:
+            return oj(a, b, c);
+        case 4:
+            return yh(b, b.stateNode.containerInfo), d = b.pendingProps, null === a ? b.child = Ug(b, null, d, c) : Xi(a, b, d, c), b.child;
+        case 11:
+            return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Ci(d, e), Yi(a, b, d, e, c);
+        case 7:
+            return Xi(a, b, b.pendingProps, c), b.child;
+        case 8:
+            return Xi(a, b, b.pendingProps.children, c), b.child;
+        case 12:
+            return Xi(a, b, b.pendingProps.children, c), b.child;
+        case 10:
+            a: {
+                d = b.type._context;
+                e = b.pendingProps;
+                f = b.memoizedProps;
+                g = e.value;
+                G(Wg, d._currentValue);
+                d._currentValue = g;
+                if (null !== f) if (He(f.value, g)) {
+                    if (f.children === e.children && !Wf.current) {
+                        b = Zi(a, b, c);
+                        break a;
+                    }
+                } else for(f = b.child, null !== f && (f.return = b); null !== f;){
+                    var h = f.dependencies;
+                    if (null !== h) {
+                        g = f.child;
+                        for(var k = h.firstContext; null !== k;){
+                            if (k.context === d) {
+                                if (1 === f.tag) {
+                                    k = mh(-1, c & -c);
+                                    k.tag = 2;
+                                    var l = f.updateQueue;
+                                    if (null !== l) {
+                                        l = l.shared;
+                                        var m = l.pending;
+                                        null === m ? k.next = k : (k.next = m.next, m.next = k);
+                                        l.pending = k;
+                                    }
+                                }
+                                f.lanes |= c;
+                                k = f.alternate;
+                                null !== k && (k.lanes |= c);
+                                bh(f.return, c, b);
+                                h.lanes |= c;
+                                break;
+                            }
+                            k = k.next;
+                        }
+                    } else if (10 === f.tag) g = f.type === b.type ? null : f.child;
+                    else if (18 === f.tag) {
+                        g = f.return;
+                        if (null === g) throw Error(p(341));
+                        g.lanes |= c;
+                        h = g.alternate;
+                        null !== h && (h.lanes |= c);
+                        bh(g, c, b);
+                        g = f.sibling;
+                    } else g = f.child;
+                    if (null !== g) g.return = f;
+                    else for(g = f; null !== g;){
+                        if (g === b) {
+                            g = null;
+                            break;
+                        }
+                        f = g.sibling;
+                        if (null !== f) {
+                            f.return = g.return;
+                            g = f;
+                            break;
+                        }
+                        g = g.return;
+                    }
+                    f = g;
+                }
+                Xi(a, b, e.children, c);
+                b = b.child;
+            }
+            return b;
+        case 9:
+            return e = b.type, d = b.pendingProps.children, ch(b, c), e = eh(e), d = d(e), b.flags |= 1, Xi(a, b, d, c), b.child;
+        case 14:
+            return d = b.type, e = Ci(d, b.pendingProps), e = Ci(d.type, e), $i(a, b, d, e, c);
+        case 15:
+            return bj(a, b, b.type, b.pendingProps, c);
+        case 17:
+            return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Ci(d, e), ij(a, b), b.tag = 1, Zf(d) ? (a = !0, cg(b)) : a = !1, ch(b, c), Gi(b, d, e), Ii(b, d, e, c), jj(null, b, d, !0, a, c);
+        case 19:
+            return xj(a, b, c);
+        case 22:
+            return dj(a, b, c);
+    }
+    throw Error(p(156, b.tag));
+};
+function Fk(a, b) {
+    return ac(a, b);
+}
+function $k(a, b, c, d) {
+    this.tag = a;
+    this.key = c;
+    this.sibling = this.child = this.return = this.stateNode = this.type = this.elementType = null;
+    this.index = 0;
+    this.ref = null;
+    this.pendingProps = b;
+    this.dependencies = this.memoizedState = this.updateQueue = this.memoizedProps = null;
+    this.mode = d;
+    this.subtreeFlags = this.flags = 0;
+    this.deletions = null;
+    this.childLanes = this.lanes = 0;
+    this.alternate = null;
+}
+function Bg(a, b, c, d) {
+    return new $k(a, b, c, d);
+}
+function aj(a) {
+    a = a.prototype;
+    return !(!a || !a.isReactComponent);
+}
+function Zk(a) {
+    if ("function" === typeof a) return aj(a) ? 1 : 0;
+    if (void 0 !== a && null !== a) {
+        a = a.$$typeof;
+        if (a === Da) return 11;
+        if (a === Ga) return 14;
+    }
+    return 2;
+}
+function Pg(a, b) {
+    var c = a.alternate;
+    null === c ? (c = Bg(a.tag, b, a.key, a.mode), c.elementType = a.elementType, c.type = a.type, c.stateNode = a.stateNode, c.alternate = a, a.alternate = c) : (c.pendingProps = b, c.type = a.type, c.flags = 0, c.subtreeFlags = 0, c.deletions = null);
+    c.flags = a.flags & 14680064;
+    c.childLanes = a.childLanes;
+    c.lanes = a.lanes;
+    c.child = a.child;
+    c.memoizedProps = a.memoizedProps;
+    c.memoizedState = a.memoizedState;
+    c.updateQueue = a.updateQueue;
+    b = a.dependencies;
+    c.dependencies = null === b ? null : {
+        lanes: b.lanes,
+        firstContext: b.firstContext
+    };
+    c.sibling = a.sibling;
+    c.index = a.index;
+    c.ref = a.ref;
+    return c;
+}
+function Rg(a, b, c, d, e, f) {
+    var g = 2;
+    d = a;
+    if ("function" === typeof a) aj(a) && (g = 1);
+    else if ("string" === typeof a) g = 5;
+    else a: switch(a){
+        case ya:
+            return Tg(c.children, e, f, b);
+        case za:
+            g = 8;
+            e |= 8;
+            break;
+        case Aa:
+            return a = Bg(12, c, b, e | 2), a.elementType = Aa, a.lanes = f, a;
+        case Ea:
+            return a = Bg(13, c, b, e), a.elementType = Ea, a.lanes = f, a;
+        case Fa:
+            return a = Bg(19, c, b, e), a.elementType = Fa, a.lanes = f, a;
+        case Ia:
+            return pj(c, e, f, b);
+        default:
+            if ("object" === typeof a && null !== a) switch(a.$$typeof){
+                case Ba:
+                    g = 10;
+                    break a;
+                case Ca:
+                    g = 9;
+                    break a;
+                case Da:
+                    g = 11;
+                    break a;
+                case Ga:
+                    g = 14;
+                    break a;
+                case Ha:
+                    g = 16;
+                    d = null;
+                    break a;
+            }
+            throw Error(p(130, null == a ? a : typeof a, ""));
+    }
+    b = Bg(g, c, b, e);
+    b.elementType = a;
+    b.type = d;
+    b.lanes = f;
+    return b;
+}
+function Tg(a, b, c, d) {
+    a = Bg(7, a, d, b);
+    a.lanes = c;
+    return a;
+}
+function pj(a, b, c, d) {
+    a = Bg(22, a, d, b);
+    a.elementType = Ia;
+    a.lanes = c;
+    a.stateNode = {
+        isHidden: !1
+    };
+    return a;
+}
+function Qg(a, b, c) {
+    a = Bg(6, a, null, b);
+    a.lanes = c;
+    return a;
+}
+function Sg(a, b, c) {
+    b = Bg(4, null !== a.children ? a.children : [], a.key, b);
+    b.lanes = c;
+    b.stateNode = {
+        containerInfo: a.containerInfo,
+        pendingChildren: null,
+        implementation: a.implementation
+    };
+    return b;
+}
+function al(a, b, c, d, e) {
+    this.tag = b;
+    this.containerInfo = a;
+    this.finishedWork = this.pingCache = this.current = this.pendingChildren = null;
+    this.timeoutHandle = -1;
+    this.callbackNode = this.pendingContext = this.context = null;
+    this.callbackPriority = 0;
+    this.eventTimes = zc(0);
+    this.expirationTimes = zc(-1);
+    this.entangledLanes = this.finishedLanes = this.mutableReadLanes = this.expiredLanes = this.pingedLanes = this.suspendedLanes = this.pendingLanes = 0;
+    this.entanglements = zc(0);
+    this.identifierPrefix = d;
+    this.onRecoverableError = e;
+    this.mutableSourceEagerHydrationData = null;
+}
+function bl(a, b, c, d, e, f, g, h, k) {
+    a = new al(a, b, c, h, k);
+    1 === b ? (b = 1, !0 === f && (b |= 8)) : b = 0;
+    f = Bg(3, null, null, b);
+    a.current = f;
+    f.stateNode = a;
+    f.memoizedState = {
+        element: d,
+        isDehydrated: c,
+        cache: null,
+        transitions: null,
+        pendingSuspenseBoundaries: null
+    };
+    kh(f);
+    return a;
+}
+function cl(a, b, c) {
+    var d = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null;
+    return {
+        $$typeof: wa,
+        key: null == d ? null : "" + d,
+        children: a,
+        containerInfo: b,
+        implementation: c
+    };
+}
+function dl(a) {
+    if (!a) return Vf;
+    a = a._reactInternals;
+    a: {
+        if (Vb(a) !== a || 1 !== a.tag) throw Error(p(170));
+        var b = a;
+        do {
+            switch(b.tag){
+                case 3:
+                    b = b.stateNode.context;
+                    break a;
+                case 1:
+                    if (Zf(b.type)) {
+                        b = b.stateNode.__reactInternalMemoizedMergedChildContext;
+                        break a;
+                    }
+            }
+            b = b.return;
+        }while (null !== b);
+        throw Error(p(171));
+    }
+    if (1 === a.tag) {
+        var c = a.type;
+        if (Zf(c)) return bg(a, c, b);
+    }
+    return b;
+}
+function el(a, b, c, d, e, f, g, h, k) {
+    a = bl(c, d, !0, a, e, f, g, h, k);
+    a.context = dl(null);
+    c = a.current;
+    d = R();
+    e = yi(c);
+    f = mh(d, e);
+    f.callback = void 0 !== b && null !== b ? b : null;
+    nh(c, f, e);
+    a.current.lanes = e;
+    Ac(a, e, d);
+    Dk(a, d);
+    return a;
+}
+function fl(a, b, c, d) {
+    var e = b.current, f = R(), g = yi(e);
+    c = dl(c);
+    null === b.context ? b.context = c : b.pendingContext = c;
+    b = mh(f, g);
+    b.payload = {
+        element: a
+    };
+    d = void 0 === d ? null : d;
+    null !== d && (b.callback = d);
+    a = nh(e, b, g);
+    null !== a && (gi(a, e, g, f), oh(a, e, g));
+    return g;
+}
+function gl(a) {
+    a = a.current;
+    if (!a.child) return null;
+    switch(a.child.tag){
+        case 5:
+            return a.child.stateNode;
+        default:
+            return a.child.stateNode;
+    }
+}
+function hl(a, b) {
+    a = a.memoizedState;
+    if (null !== a && null !== a.dehydrated) {
+        var c = a.retryLane;
+        a.retryLane = 0 !== c && c < b ? c : b;
+    }
+}
+function il(a, b) {
+    hl(a, b);
+    (a = a.alternate) && hl(a, b);
+}
+function jl() {
+    return null;
+}
+var kl = "function" === typeof reportError ? reportError : function(a) {
+    console.error(a);
+};
+function ll(a) {
+    this._internalRoot = a;
+}
+ml.prototype.render = ll.prototype.render = function(a) {
+    var b = this._internalRoot;
+    if (null === b) throw Error(p(409));
+    fl(a, b, null, null);
+};
+ml.prototype.unmount = ll.prototype.unmount = function() {
+    var a = this._internalRoot;
+    if (null !== a) {
+        this._internalRoot = null;
+        var b = a.containerInfo;
+        Rk(function() {
+            fl(null, a, null, null);
+        });
+        b[uf] = null;
+    }
+};
+function ml(a) {
+    this._internalRoot = a;
+}
+ml.prototype.unstable_scheduleHydration = function(a) {
+    if (a) {
+        var b = Hc();
+        a = {
+            blockedOn: null,
+            target: a,
+            priority: b
+        };
+        for(var c = 0; c < Qc.length && 0 !== b && b < Qc[c].priority; c++);
+        Qc.splice(c, 0, a);
+        0 === c && Vc(a);
+    }
+};
+function nl(a) {
+    return !(!a || 1 !== a.nodeType && 9 !== a.nodeType && 11 !== a.nodeType);
+}
+function ol(a) {
+    return !(!a || 1 !== a.nodeType && 9 !== a.nodeType && 11 !== a.nodeType && (8 !== a.nodeType || " react-mount-point-unstable " !== a.nodeValue));
+}
+function pl() {}
+function ql(a, b, c, d, e) {
+    if (e) {
+        if ("function" === typeof d) {
+            var f = d;
+            d = function() {
+                var a = gl(g);
+                f.call(a);
+            };
+        }
+        var g = el(b, d, a, 0, null, !1, !1, "", pl);
+        a._reactRootContainer = g;
+        a[uf] = g.current;
+        sf(8 === a.nodeType ? a.parentNode : a);
+        Rk();
+        return g;
+    }
+    for(; e = a.lastChild;)a.removeChild(e);
+    if ("function" === typeof d) {
+        var h = d;
+        d = function() {
+            var a = gl(k);
+            h.call(a);
+        };
+    }
+    var k = bl(a, 0, !1, null, null, !1, !1, "", pl);
+    a._reactRootContainer = k;
+    a[uf] = k.current;
+    sf(8 === a.nodeType ? a.parentNode : a);
+    Rk(function() {
+        fl(b, k, c, d);
+    });
+    return k;
+}
+function rl(a, b, c, d, e) {
+    var f = c._reactRootContainer;
+    if (f) {
+        var g = f;
+        if ("function" === typeof e) {
+            var h = e;
+            e = function() {
+                var a = gl(g);
+                h.call(a);
+            };
+        }
+        fl(b, g, a, e);
+    } else g = ql(c, b, a, e, d);
+    return gl(g);
+}
+Ec = function(a) {
+    switch(a.tag){
+        case 3:
+            var b = a.stateNode;
+            if (b.current.memoizedState.isDehydrated) {
+                var c = tc(b.pendingLanes);
+                0 !== c && (Cc(b, c | 1), Dk(b, B()), 0 === (K & 6) && (Gj = B() + 500, jg()));
+            }
+            break;
+        case 13:
+            Rk(function() {
+                var b = ih(a, 1);
+                if (null !== b) {
+                    var c = R();
+                    gi(b, a, 1, c);
+                }
+            }), il(a, 1);
+    }
+};
+Fc = function(a) {
+    if (13 === a.tag) {
+        var b = ih(a, 134217728);
+        if (null !== b) {
+            var c = R();
+            gi(b, a, 134217728, c);
+        }
+        il(a, 134217728);
+    }
+};
+Gc = function(a) {
+    if (13 === a.tag) {
+        var b = yi(a), c = ih(a, b);
+        if (null !== c) {
+            var d = R();
+            gi(c, a, b, d);
+        }
+        il(a, b);
+    }
+};
+Hc = function() {
+    return C;
+};
+Ic = function(a, b) {
+    var c = C;
+    try {
+        return C = a, b();
+    } finally{
+        C = c;
+    }
+};
+yb = function(a, b, c) {
+    switch(b){
+        case "input":
+            bb(a, c);
+            b = c.name;
+            if ("radio" === c.type && null != b) {
+                for(c = a; c.parentNode;)c = c.parentNode;
+                c = c.querySelectorAll("input[name=" + JSON.stringify("" + b) + '][type="radio"]');
+                for(b = 0; b < c.length; b++){
+                    var d = c[b];
+                    if (d !== a && d.form === a.form) {
+                        var e = Db(d);
+                        if (!e) throw Error(p(90));
+                        Wa(d);
+                        bb(d, e);
+                    }
+                }
+            }
+            break;
+        case "textarea":
+            ib(a, c);
+            break;
+        case "select":
+            b = c.value, null != b && fb(a, !!c.multiple, b, !1);
+    }
+};
+Gb = Qk;
+Hb = Rk;
+var sl = {
+    usingClientEntryPoint: !1,
+    Events: [
+        Cb,
+        ue,
+        Db,
+        Eb,
+        Fb,
+        Qk
+    ]
+}, tl = {
+    findFiberByHostInstance: Wc,
+    bundleType: 0,
+    version: "18.3.1",
+    rendererPackageName: "react-dom"
+};
+var ul = {
+    bundleType: tl.bundleType,
+    version: tl.version,
+    rendererPackageName: tl.rendererPackageName,
+    rendererConfig: tl.rendererConfig,
+    overrideHookState: null,
+    overrideHookStateDeletePath: null,
+    overrideHookStateRenamePath: null,
+    overrideProps: null,
+    overridePropsDeletePath: null,
+    overridePropsRenamePath: null,
+    setErrorHandler: null,
+    setSuspenseHandler: null,
+    scheduleUpdate: null,
+    currentDispatcherRef: ua.ReactCurrentDispatcher,
+    findHostInstanceByFiber: function(a) {
+        a = Zb(a);
+        return null === a ? null : a.stateNode;
+    },
+    findFiberByHostInstance: tl.findFiberByHostInstance || jl,
+    findHostInstancesForRefresh: null,
+    scheduleRefresh: null,
+    scheduleRoot: null,
+    setRefreshHandler: null,
+    getCurrentFiber: null,
+    reconcilerVersion: "18.3.1-next-f1338f8080-20240426"
+};
+if ("undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) {
+    var vl = __REACT_DEVTOOLS_GLOBAL_HOOK__;
+    if (!vl.isDisabled && vl.supportsFiber) try {
+        kc = vl.inject(ul), lc = vl;
+    } catch (a) {}
+}
+exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = sl;
+exports.createPortal = function(a, b) {
+    var c = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null;
+    if (!nl(b)) throw Error(p(200));
+    return cl(a, b, null, c);
+};
+exports.createRoot = function(a, b) {
+    if (!nl(a)) throw Error(p(299));
+    var c = !1, d = "", e = kl;
+    null !== b && void 0 !== b && (!0 === b.unstable_strictMode && (c = !0), void 0 !== b.identifierPrefix && (d = b.identifierPrefix), void 0 !== b.onRecoverableError && (e = b.onRecoverableError));
+    b = bl(a, 1, !1, null, null, c, !1, d, e);
+    a[uf] = b.current;
+    sf(8 === a.nodeType ? a.parentNode : a);
+    return new ll(b);
+};
+exports.findDOMNode = function(a) {
+    if (null == a) return null;
+    if (1 === a.nodeType) return a;
+    var b = a._reactInternals;
+    if (void 0 === b) {
+        if ("function" === typeof a.render) throw Error(p(188));
+        a = Object.keys(a).join(",");
+        throw Error(p(268, a));
+    }
+    a = Zb(b);
+    a = null === a ? null : a.stateNode;
+    return a;
+};
+exports.flushSync = function(a) {
+    return Rk(a);
+};
+exports.hydrate = function(a, b, c) {
+    if (!ol(b)) throw Error(p(200));
+    return rl(null, a, b, !0, c);
+};
+exports.hydrateRoot = function(a, b, c) {
+    if (!nl(a)) throw Error(p(405));
+    var d = null != c && c.hydratedSources || null, e = !1, f = "", g = kl;
+    null !== c && void 0 !== c && (!0 === c.unstable_strictMode && (e = !0), void 0 !== c.identifierPrefix && (f = c.identifierPrefix), void 0 !== c.onRecoverableError && (g = c.onRecoverableError));
+    b = el(b, null, a, 1, null != c ? c : null, e, !1, f, g);
+    a[uf] = b.current;
+    sf(a);
+    if (d) for(a = 0; a < d.length; a++)c = d[a], e = c._getVersion, e = e(c._source), null == b.mutableSourceEagerHydrationData ? b.mutableSourceEagerHydrationData = [
+        c,
+        e
+    ] : b.mutableSourceEagerHydrationData.push(c, e);
+    return new ml(b);
+};
+exports.render = function(a, b, c) {
+    if (!ol(b)) throw Error(p(200));
+    return rl(null, a, b, !1, c);
+};
+exports.unmountComponentAtNode = function(a) {
+    if (!ol(a)) throw Error(p(40));
+    return a._reactRootContainer ? (Rk(function() {
+        rl(null, null, a, !1, function() {
+            a._reactRootContainer = null;
+            a[uf] = null;
+        });
+    }), !0) : !1;
+};
+exports.unstable_batchedUpdates = Qk;
+exports.unstable_renderSubtreeIntoContainer = function(a, b, c, d) {
+    if (!ol(c)) throw Error(p(200));
+    if (null == a || void 0 === a._reactInternals) throw Error(p(38));
+    return rl(a, b, c, !1, d);
+};
+exports.version = "18.3.1-next-f1338f8080-20240426";
+
+
+/***/ }),
+
+/***/ 4337:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+function checkDCE() {
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") {
+        return;
+    }
+    if (false) {}
+    try {
+        // Verify that the code above has been dead code eliminated (DCE'd).
+        __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+    } catch (err) {
+        // DevTools shouldn't crash React, no matter what.
+        // We should still report in case we break this code.
+        console.error(err);
+    }
+}
+if (true) {
+    // DCE check should happen before ReactDOM bundle executes so that
+    // DevTools can report bad minification during injection.
+    checkDCE();
+    module.exports = __webpack_require__(3521);
+} else {}
+
+
+/***/ }),
+
+/***/ 8423:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/**
+ * @license React
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ 
+var l = Symbol.for("react.element"), n = Symbol.for("react.portal"), p = Symbol.for("react.fragment"), q = Symbol.for("react.strict_mode"), r = Symbol.for("react.profiler"), t = Symbol.for("react.provider"), u = Symbol.for("react.context"), v = Symbol.for("react.forward_ref"), w = Symbol.for("react.suspense"), x = Symbol.for("react.memo"), y = Symbol.for("react.lazy"), z = Symbol.iterator;
+function A(a) {
+    if (null === a || "object" !== typeof a) return null;
+    a = z && a[z] || a["@@iterator"];
+    return "function" === typeof a ? a : null;
+}
+var B = {
+    isMounted: function() {
+        return !1;
+    },
+    enqueueForceUpdate: function() {},
+    enqueueReplaceState: function() {},
+    enqueueSetState: function() {}
+}, C = Object.assign, D = {};
+function E(a, b, e) {
+    this.props = a;
+    this.context = b;
+    this.refs = D;
+    this.updater = e || B;
+}
+E.prototype.isReactComponent = {};
+E.prototype.setState = function(a, b) {
+    if ("object" !== typeof a && "function" !== typeof a && null != a) throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");
+    this.updater.enqueueSetState(this, a, b, "setState");
+};
+E.prototype.forceUpdate = function(a) {
+    this.updater.enqueueForceUpdate(this, a, "forceUpdate");
+};
+function F() {}
+F.prototype = E.prototype;
+function G(a, b, e) {
+    this.props = a;
+    this.context = b;
+    this.refs = D;
+    this.updater = e || B;
+}
+var H = G.prototype = new F;
+H.constructor = G;
+C(H, E.prototype);
+H.isPureReactComponent = !0;
+var I = Array.isArray, J = Object.prototype.hasOwnProperty, K = {
+    current: null
+}, L = {
+    key: !0,
+    ref: !0,
+    __self: !0,
+    __source: !0
+};
+function M(a, b, e) {
+    var d, c = {}, k = null, h = null;
+    if (null != b) for(d in void 0 !== b.ref && (h = b.ref), void 0 !== b.key && (k = "" + b.key), b)J.call(b, d) && !L.hasOwnProperty(d) && (c[d] = b[d]);
+    var g = arguments.length - 2;
+    if (1 === g) c.children = e;
+    else if (1 < g) {
+        for(var f = Array(g), m = 0; m < g; m++)f[m] = arguments[m + 2];
+        c.children = f;
+    }
+    if (a && a.defaultProps) for(d in g = a.defaultProps, g)void 0 === c[d] && (c[d] = g[d]);
+    return {
+        $$typeof: l,
+        type: a,
+        key: k,
+        ref: h,
+        props: c,
+        _owner: K.current
+    };
+}
+function N(a, b) {
+    return {
+        $$typeof: l,
+        type: a.type,
+        key: b,
+        ref: a.ref,
+        props: a.props,
+        _owner: a._owner
+    };
+}
+function O(a) {
+    return "object" === typeof a && null !== a && a.$$typeof === l;
+}
+function escape(a) {
+    var b = {
+        "=": "=0",
+        ":": "=2"
+    };
+    return "$" + a.replace(/[=:]/g, function(a) {
+        return b[a];
+    });
+}
+var P = /\/+/g;
+function Q(a, b) {
+    return "object" === typeof a && null !== a && null != a.key ? escape("" + a.key) : b.toString(36);
+}
+function R(a, b, e, d, c) {
+    var k = typeof a;
+    if ("undefined" === k || "boolean" === k) a = null;
+    var h = !1;
+    if (null === a) h = !0;
+    else switch(k){
+        case "string":
+        case "number":
+            h = !0;
+            break;
+        case "object":
+            switch(a.$$typeof){
+                case l:
+                case n:
+                    h = !0;
+            }
+    }
+    if (h) return h = a, c = c(h), a = "" === d ? "." + Q(h, 0) : d, I(c) ? (e = "", null != a && (e = a.replace(P, "$&/") + "/"), R(c, b, e, "", function(a) {
+        return a;
+    })) : null != c && (O(c) && (c = N(c, e + (!c.key || h && h.key === c.key ? "" : ("" + c.key).replace(P, "$&/") + "/") + a)), b.push(c)), 1;
+    h = 0;
+    d = "" === d ? "." : d + ":";
+    if (I(a)) for(var g = 0; g < a.length; g++){
+        k = a[g];
+        var f = d + Q(k, g);
+        h += R(k, b, e, f, c);
+    }
+    else if (f = A(a), "function" === typeof f) for(a = f.call(a), g = 0; !(k = a.next()).done;)k = k.value, f = d + Q(k, g++), h += R(k, b, e, f, c);
+    else if ("object" === k) throw b = String(a), Error("Objects are not valid as a React child (found: " + ("[object Object]" === b ? "object with keys {" + Object.keys(a).join(", ") + "}" : b) + "). If you meant to render a collection of children, use an array instead.");
+    return h;
+}
+function S(a, b, e) {
+    if (null == a) return a;
+    var d = [], c = 0;
+    R(a, d, "", "", function(a) {
+        return b.call(e, a, c++);
+    });
+    return d;
+}
+function T(a) {
+    if (-1 === a._status) {
+        var b = a._result;
+        b = b();
+        b.then(function(b) {
+            if (0 === a._status || -1 === a._status) a._status = 1, a._result = b;
+        }, function(b) {
+            if (0 === a._status || -1 === a._status) a._status = 2, a._result = b;
+        });
+        -1 === a._status && (a._status = 0, a._result = b);
+    }
+    if (1 === a._status) return a._result.default;
+    throw a._result;
+}
+var U = {
+    current: null
+}, V = {
+    transition: null
+}, W = {
+    ReactCurrentDispatcher: U,
+    ReactCurrentBatchConfig: V,
+    ReactCurrentOwner: K
+};
+function X() {
+    throw Error("act(...) is not supported in production builds of React.");
+}
+exports.Children = {
+    map: S,
+    forEach: function(a, b, e) {
+        S(a, function() {
+            b.apply(this, arguments);
+        }, e);
+    },
+    count: function(a) {
+        var b = 0;
+        S(a, function() {
+            b++;
+        });
+        return b;
+    },
+    toArray: function(a) {
+        return S(a, function(a) {
+            return a;
+        }) || [];
+    },
+    only: function(a) {
+        if (!O(a)) throw Error("React.Children.only expected to receive a single React element child.");
+        return a;
+    }
+};
+exports.Component = E;
+exports.Fragment = p;
+exports.Profiler = r;
+exports.PureComponent = G;
+exports.StrictMode = q;
+exports.Suspense = w;
+exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W;
+exports.act = X;
+exports.cloneElement = function(a, b, e) {
+    if (null === a || void 0 === a) throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
+    var d = C({}, a.props), c = a.key, k = a.ref, h = a._owner;
+    if (null != b) {
+        void 0 !== b.ref && (k = b.ref, h = K.current);
+        void 0 !== b.key && (c = "" + b.key);
+        if (a.type && a.type.defaultProps) var g = a.type.defaultProps;
+        for(f in b)J.call(b, f) && !L.hasOwnProperty(f) && (d[f] = void 0 === b[f] && void 0 !== g ? g[f] : b[f]);
+    }
+    var f = arguments.length - 2;
+    if (1 === f) d.children = e;
+    else if (1 < f) {
+        g = Array(f);
+        for(var m = 0; m < f; m++)g[m] = arguments[m + 2];
+        d.children = g;
+    }
+    return {
+        $$typeof: l,
+        type: a.type,
+        key: c,
+        ref: k,
+        props: d,
+        _owner: h
+    };
+};
+exports.createContext = function(a) {
+    a = {
+        $$typeof: u,
+        _currentValue: a,
+        _currentValue2: a,
+        _threadCount: 0,
+        Provider: null,
+        Consumer: null,
+        _defaultValue: null,
+        _globalName: null
+    };
+    a.Provider = {
+        $$typeof: t,
+        _context: a
+    };
+    return a.Consumer = a;
+};
+exports.createElement = M;
+exports.createFactory = function(a) {
+    var b = M.bind(null, a);
+    b.type = a;
+    return b;
+};
+exports.createRef = function() {
+    return {
+        current: null
+    };
+};
+exports.forwardRef = function(a) {
+    return {
+        $$typeof: v,
+        render: a
+    };
+};
+exports.isValidElement = O;
+exports.lazy = function(a) {
+    return {
+        $$typeof: y,
+        _payload: {
+            _status: -1,
+            _result: a
+        },
+        _init: T
+    };
+};
+exports.memo = function(a, b) {
+    return {
+        $$typeof: x,
+        type: a,
+        compare: void 0 === b ? null : b
+    };
+};
+exports.startTransition = function(a) {
+    var b = V.transition;
+    V.transition = {};
+    try {
+        a();
+    } finally{
+        V.transition = b;
+    }
+};
+exports.unstable_act = X;
+exports.useCallback = function(a, b) {
+    return U.current.useCallback(a, b);
+};
+exports.useContext = function(a) {
+    return U.current.useContext(a);
+};
+exports.useDebugValue = function() {};
+exports.useDeferredValue = function(a) {
+    return U.current.useDeferredValue(a);
+};
+exports.useEffect = function(a, b) {
+    return U.current.useEffect(a, b);
+};
+exports.useId = function() {
+    return U.current.useId();
+};
+exports.useImperativeHandle = function(a, b, e) {
+    return U.current.useImperativeHandle(a, b, e);
+};
+exports.useInsertionEffect = function(a, b) {
+    return U.current.useInsertionEffect(a, b);
+};
+exports.useLayoutEffect = function(a, b) {
+    return U.current.useLayoutEffect(a, b);
+};
+exports.useMemo = function(a, b) {
+    return U.current.useMemo(a, b);
+};
+exports.useReducer = function(a, b, e) {
+    return U.current.useReducer(a, b, e);
+};
+exports.useRef = function(a) {
+    return U.current.useRef(a);
+};
+exports.useState = function(a) {
+    return U.current.useState(a);
+};
+exports.useSyncExternalStore = function(a, b, e) {
+    return U.current.useSyncExternalStore(a, b, e);
+};
+exports.useTransition = function() {
+    return U.current.useTransition();
+};
+exports.version = "18.3.1";
+
+
+/***/ }),
+
+/***/ 167:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+if (true) {
+    module.exports = __webpack_require__(8423);
+} else {}
+
+
+/***/ }),
+
+/***/ 678:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/**
+ * @license React
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ 
+function f(a, b) {
+    var c = a.length;
+    a.push(b);
+    a: for(; 0 < c;){
+        var d = c - 1 >>> 1, e = a[d];
+        if (0 < g(e, b)) a[d] = b, a[c] = e, c = d;
+        else break a;
+    }
+}
+function h(a) {
+    return 0 === a.length ? null : a[0];
+}
+function k(a) {
+    if (0 === a.length) return null;
+    var b = a[0], c = a.pop();
+    if (c !== b) {
+        a[0] = c;
+        a: for(var d = 0, e = a.length, w = e >>> 1; d < w;){
+            var m = 2 * (d + 1) - 1, C = a[m], n = m + 1, x = a[n];
+            if (0 > g(C, c)) n < e && 0 > g(x, C) ? (a[d] = x, a[n] = c, d = n) : (a[d] = C, a[m] = c, d = m);
+            else if (n < e && 0 > g(x, c)) a[d] = x, a[n] = c, d = n;
+            else break a;
+        }
+    }
+    return b;
+}
+function g(a, b) {
+    var c = a.sortIndex - b.sortIndex;
+    return 0 !== c ? c : a.id - b.id;
+}
+if ("object" === typeof performance && "function" === typeof performance.now) {
+    var l = performance;
+    exports.unstable_now = function() {
+        return l.now();
+    };
+} else {
+    var p = Date, q = p.now();
+    exports.unstable_now = function() {
+        return p.now() - q;
+    };
+}
+var r = [], t = [], u = 1, v = null, y = 3, z = !1, A = !1, B = !1, D = "function" === typeof setTimeout ? setTimeout : null, E = "function" === typeof clearTimeout ? clearTimeout : null, F = "undefined" !== typeof setImmediate ? setImmediate : null;
+"undefined" !== typeof navigator && void 0 !== navigator.scheduling && void 0 !== navigator.scheduling.isInputPending && navigator.scheduling.isInputPending.bind(navigator.scheduling);
+function G(a) {
+    for(var b = h(t); null !== b;){
+        if (null === b.callback) k(t);
+        else if (b.startTime <= a) k(t), b.sortIndex = b.expirationTime, f(r, b);
+        else break;
+        b = h(t);
+    }
+}
+function H(a) {
+    B = !1;
+    G(a);
+    if (!A) if (null !== h(r)) A = !0, I(J);
+    else {
+        var b = h(t);
+        null !== b && K(H, b.startTime - a);
+    }
+}
+function J(a, b) {
+    A = !1;
+    B && (B = !1, E(L), L = -1);
+    z = !0;
+    var c = y;
+    try {
+        G(b);
+        for(v = h(r); null !== v && (!(v.expirationTime > b) || a && !M());){
+            var d = v.callback;
+            if ("function" === typeof d) {
+                v.callback = null;
+                y = v.priorityLevel;
+                var e = d(v.expirationTime <= b);
+                b = exports.unstable_now();
+                "function" === typeof e ? v.callback = e : v === h(r) && k(r);
+                G(b);
+            } else k(r);
+            v = h(r);
+        }
+        if (null !== v) var w = !0;
+        else {
+            var m = h(t);
+            null !== m && K(H, m.startTime - b);
+            w = !1;
+        }
+        return w;
+    } finally{
+        v = null, y = c, z = !1;
+    }
+}
+var N = !1, O = null, L = -1, P = 5, Q = -1;
+function M() {
+    return exports.unstable_now() - Q < P ? !1 : !0;
+}
+function R() {
+    if (null !== O) {
+        var a = exports.unstable_now();
+        Q = a;
+        var b = !0;
+        try {
+            b = O(!0, a);
+        } finally{
+            b ? S() : (N = !1, O = null);
+        }
+    } else N = !1;
+}
+var S;
+if ("function" === typeof F) S = function() {
+    F(R);
+};
+else if ("undefined" !== typeof MessageChannel) {
+    var T = new MessageChannel, U = T.port2;
+    T.port1.onmessage = R;
+    S = function() {
+        U.postMessage(null);
+    };
+} else S = function() {
+    D(R, 0);
+};
+function I(a) {
+    O = a;
+    N || (N = !0, S());
+}
+function K(a, b) {
+    L = D(function() {
+        a(exports.unstable_now());
+    }, b);
+}
+exports.unstable_IdlePriority = 5;
+exports.unstable_ImmediatePriority = 1;
+exports.unstable_LowPriority = 4;
+exports.unstable_NormalPriority = 3;
+exports.unstable_Profiling = null;
+exports.unstable_UserBlockingPriority = 2;
+exports.unstable_cancelCallback = function(a) {
+    a.callback = null;
+};
+exports.unstable_continueExecution = function() {
+    A || z || (A = !0, I(J));
+};
+exports.unstable_forceFrameRate = function(a) {
+    0 > a || 125 < a ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : P = 0 < a ? Math.floor(1E3 / a) : 5;
+};
+exports.unstable_getCurrentPriorityLevel = function() {
+    return y;
+};
+exports.unstable_getFirstCallbackNode = function() {
+    return h(r);
+};
+exports.unstable_next = function(a) {
+    switch(y){
+        case 1:
+        case 2:
+        case 3:
+            var b = 3;
+            break;
+        default:
+            b = y;
+    }
+    var c = y;
+    y = b;
+    try {
+        return a();
+    } finally{
+        y = c;
+    }
+};
+exports.unstable_pauseExecution = function() {};
+exports.unstable_requestPaint = function() {};
+exports.unstable_runWithPriority = function(a, b) {
+    switch(a){
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            break;
+        default:
+            a = 3;
+    }
+    var c = y;
+    y = a;
+    try {
+        return b();
+    } finally{
+        y = c;
+    }
+};
+exports.unstable_scheduleCallback = function(a, b, c) {
+    var d = exports.unstable_now();
+    "object" === typeof c && null !== c ? (c = c.delay, c = "number" === typeof c && 0 < c ? d + c : d) : c = d;
+    switch(a){
+        case 1:
+            var e = -1;
+            break;
+        case 2:
+            e = 250;
+            break;
+        case 5:
+            e = 1073741823;
+            break;
+        case 4:
+            e = 1E4;
+            break;
+        default:
+            e = 5E3;
+    }
+    e = c + e;
+    a = {
+        id: u++,
+        callback: b,
+        priorityLevel: a,
+        startTime: c,
+        expirationTime: e,
+        sortIndex: -1
+    };
+    c > d ? (a.sortIndex = c, f(t, a), null === h(r) && a === h(t) && (B ? (E(L), L = -1) : B = !0, K(H, c - d))) : (a.sortIndex = e, f(r, a), A || z || (A = !0, I(J)));
+    return a;
+};
+exports.unstable_shouldYield = M;
+exports.unstable_wrapCallback = function(a) {
+    var b = y;
+    return function() {
+        var c = y;
+        y = b;
+        try {
+            return a.apply(this, arguments);
+        } finally{
+            y = c;
+        }
+    };
+};
+
+
+/***/ }),
+
+/***/ 6904:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+if (true) {
+    module.exports = __webpack_require__(678);
+} else {}
 
 
 /***/ }),
@@ -8907,7 +27744,7 @@ function snakeCase(input, options) {
 
 /***/ }),
 
-/***/ 543:
+/***/ 7543:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -8950,12 +27787,1642 @@ function mapperOptions(key, val, options) {
 }
 
 
+/***/ }),
+
+/***/ 2191:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * @license React
+ * use-sync-external-store-shim.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ 
+var React = __webpack_require__(167);
+function is(x, y) {
+    return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
+}
+var objectIs = "function" === typeof Object.is ? Object.is : is, useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue = React.useDebugValue;
+function useSyncExternalStore$2(subscribe, getSnapshot) {
+    var value = getSnapshot(), _useState = useState({
+        inst: {
+            value: value,
+            getSnapshot: getSnapshot
+        }
+    }), inst = _useState[0].inst, forceUpdate = _useState[1];
+    useLayoutEffect(function() {
+        inst.value = value;
+        inst.getSnapshot = getSnapshot;
+        checkIfSnapshotChanged(inst) && forceUpdate({
+            inst: inst
+        });
+    }, [
+        subscribe,
+        value,
+        getSnapshot
+    ]);
+    useEffect(function() {
+        checkIfSnapshotChanged(inst) && forceUpdate({
+            inst: inst
+        });
+        return subscribe(function() {
+            checkIfSnapshotChanged(inst) && forceUpdate({
+                inst: inst
+            });
+        });
+    }, [
+        subscribe
+    ]);
+    useDebugValue(value);
+    return value;
+}
+function checkIfSnapshotChanged(inst) {
+    var latestGetSnapshot = inst.getSnapshot;
+    inst = inst.value;
+    try {
+        var nextValue = latestGetSnapshot();
+        return !objectIs(inst, nextValue);
+    } catch (error) {
+        return !0;
+    }
+}
+function useSyncExternalStore$1(subscribe, getSnapshot) {
+    return getSnapshot();
+}
+var shim =  true ? useSyncExternalStore$1 : 0;
+exports.useSyncExternalStore = void 0 !== React.useSyncExternalStore ? React.useSyncExternalStore : shim;
+
+
+/***/ }),
+
+/***/ 1528:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+if (true) {
+    module.exports = __webpack_require__(2191);
+} else {}
+
+
+/***/ }),
+
+/***/ 6778:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   P: () => (/* binding */ createAsyncLocalStorage)
+/* harmony export */ });
+const sharedAsyncLocalStorageNotAvailableError = new Error("Invariant: AsyncLocalStorage accessed in runtime where it is not available");
+class FakeAsyncLocalStorage {
+    disable() {
+        throw sharedAsyncLocalStorageNotAvailableError;
+    }
+    getStore() {
+        // This fake implementation of AsyncLocalStorage always returns `undefined`.
+        return undefined;
+    }
+    run() {
+        throw sharedAsyncLocalStorageNotAvailableError;
+    }
+    exit() {
+        throw sharedAsyncLocalStorageNotAvailableError;
+    }
+    enterWith() {
+        throw sharedAsyncLocalStorageNotAvailableError;
+    }
+}
+const maybeGlobalAsyncLocalStorage = globalThis.AsyncLocalStorage;
+function createAsyncLocalStorage() {
+    if (maybeGlobalAsyncLocalStorage) {
+        return new maybeGlobalAsyncLocalStorage();
+    }
+    return new FakeAsyncLocalStorage();
+} //# sourceMappingURL=async-local-storage.js.map
+
+
+/***/ }),
+
+/***/ 5912:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   QL: () => (/* reexport safe */ _chunk_LGJNYDTY_mjs__WEBPACK_IMPORTED_MODULE_0__.QL),
+/* harmony export */   qB: () => (/* reexport safe */ _chunk_LGJNYDTY_mjs__WEBPACK_IMPORTED_MODULE_0__.qB)
+/* harmony export */ });
+/* harmony import */ var _chunk_LGJNYDTY_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2396);
+/* harmony import */ var _chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7032);
+
+
+ //# sourceMappingURL=authorization.mjs.map
+
+
+/***/ }),
+
+/***/ 7032:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Ko: () => (/* binding */ __privateAdd),
+/* harmony export */   U9: () => (/* binding */ __privateMethod),
+/* harmony export */   ac: () => (/* binding */ __privateGet),
+/* harmony export */   qx: () => (/* binding */ __privateSet),
+/* harmony export */   r2: () => (/* binding */ __export),
+/* harmony export */   yA: () => (/* binding */ __reExport)
+/* harmony export */ });
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __typeError = (msg)=>{
+    throw TypeError(msg);
+};
+var __export = (target, all)=>{
+    for(var name in all)__defProp(target, name, {
+        get: all[name],
+        enumerable: true
+    });
+};
+var __copyProps = (to, from, except, desc)=>{
+    if (from && typeof from === "object" || typeof from === "function") {
+        for (let key of __getOwnPropNames(from))if (!__hasOwnProp.call(to, key) && key !== except) __defProp(to, key, {
+            get: ()=>from[key],
+            enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
+        });
+    }
+    return to;
+};
+var __reExport = (target, mod, secondTarget)=>(__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
+var __accessCheck = (obj, member, msg)=>member.has(obj) || __typeError("Cannot " + msg);
+var __privateGet = (obj, member, getter)=>(__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateAdd = (obj, member, value)=>member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+var __privateSet = (obj, member, value, setter)=>(__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
+var __privateMethod = (obj, member, method)=>(__accessCheck(obj, member, "access private method"), method);
+ //# sourceMappingURL=chunk-7ELT755Q.mjs.map
+
+
+/***/ }),
+
+/***/ 7207:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   rx: () => (/* binding */ isProductionEnvironment),
+/* harmony export */   uB: () => (/* binding */ isTestEnvironment),
+/* harmony export */   vf: () => (/* binding */ isDevelopmentEnvironment)
+/* harmony export */ });
+// src/utils/runtimeEnvironment.ts
+var isDevelopmentEnvironment = ()=>{
+    try {
+        return "production" === "development";
+    } catch  {}
+    return false;
+};
+var isTestEnvironment = ()=>{
+    try {
+        return "production" === "test";
+    } catch  {}
+    return false;
+};
+var isProductionEnvironment = ()=>{
+    try {
+        return "production" === "production";
+    } catch  {}
+    return false;
+};
+ //# sourceMappingURL=chunk-7HPDNZ3R.mjs.map
+
+
+/***/ }),
+
+/***/ 3293:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  MY: () => (/* binding */ createDevOrStagingUrlCache),
+  P: () => (/* binding */ getCookieSuffix),
+  _d: () => (/* binding */ getSuffixedCookieName),
+  CY: () => (/* binding */ isDevelopmentFromSecretKey),
+  x9: () => (/* binding */ isPublishableKey),
+  nQ: () => (/* binding */ parsePublishableKey)
+});
+
+// UNUSED EXPORTS: buildPublishableKey, isDevelopmentFromPublishableKey, isProductionFromPublishableKey, isProductionFromSecretKey
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-TETGTEI2.mjs
+var chunk_TETGTEI2 = __webpack_require__(6998);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-KOH7GTJO.mjs
+// src/isomorphicBtoa.ts
+var chunk_KOH7GTJO_isomorphicBtoa = (data)=>{
+    if (typeof btoa !== "undefined" && typeof btoa === "function") {
+        return btoa(data);
+    } else if (typeof global !== "undefined" && global.Buffer) {
+        return new global.Buffer(data).toString("base64");
+    }
+    return data;
+};
+ //# sourceMappingURL=chunk-KOH7GTJO.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-I6MTSTOF.mjs
+var chunk_I6MTSTOF = __webpack_require__(9438);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-G3VP5PJE.mjs
+
+
+
+// src/keys.ts
+var PUBLISHABLE_KEY_LIVE_PREFIX = "pk_live_";
+var PUBLISHABLE_KEY_TEST_PREFIX = "pk_test_";
+var PUBLISHABLE_FRONTEND_API_DEV_REGEX = /^(([a-z]+)-){2}([0-9]{1,2})\.clerk\.accounts([a-z.]*)(dev|com)$/i;
+function buildPublishableKey(frontendApi) {
+    const isDevKey = PUBLISHABLE_FRONTEND_API_DEV_REGEX.test(frontendApi) || frontendApi.startsWith("clerk.") && LEGACY_DEV_INSTANCE_SUFFIXES.some((s)=>frontendApi.endsWith(s));
+    const keyPrefix = isDevKey ? PUBLISHABLE_KEY_TEST_PREFIX : PUBLISHABLE_KEY_LIVE_PREFIX;
+    return `${keyPrefix}${isomorphicBtoa(`${frontendApi}$`)}`;
+}
+function parsePublishableKey(key, options = {}) {
+    key = key || "";
+    if (!key || !isPublishableKey(key)) {
+        if (options.fatal && !key) {
+            throw new Error("Publishable key is missing. Ensure that your publishable key is correctly configured. Double-check your environment configuration for your keys, or access them here: https://dashboard.clerk.com/last-active?path=api-keys");
+        }
+        if (options.fatal && !isPublishableKey(key)) {
+            throw new Error("Publishable key not valid.");
+        }
+        return null;
+    }
+    const instanceType = key.startsWith(PUBLISHABLE_KEY_LIVE_PREFIX) ? "production" : "development";
+    let frontendApi = (0,chunk_TETGTEI2/* isomorphicAtob */.S)(key.split("_")[2]);
+    frontendApi = frontendApi.slice(0, -1);
+    if (options.proxyUrl) {
+        frontendApi = options.proxyUrl;
+    } else if (instanceType !== "development" && options.domain) {
+        frontendApi = `clerk.${options.domain}`;
+    }
+    return {
+        instanceType,
+        frontendApi
+    };
+}
+function isPublishableKey(key = "") {
+    try {
+        const hasValidPrefix = key.startsWith(PUBLISHABLE_KEY_LIVE_PREFIX) || key.startsWith(PUBLISHABLE_KEY_TEST_PREFIX);
+        const hasValidFrontendApiPostfix = (0,chunk_TETGTEI2/* isomorphicAtob */.S)(key.split("_")[2] || "").endsWith("$");
+        return hasValidPrefix && hasValidFrontendApiPostfix;
+    } catch  {
+        return false;
+    }
+}
+function createDevOrStagingUrlCache() {
+    const devOrStagingUrlCache = /* @__PURE__ */ new Map();
+    return {
+        isDevOrStagingUrl: (url)=>{
+            if (!url) {
+                return false;
+            }
+            const hostname = typeof url === "string" ? url : url.hostname;
+            let res = devOrStagingUrlCache.get(hostname);
+            if (res === void 0) {
+                res = chunk_I6MTSTOF/* DEV_OR_STAGING_SUFFIXES */.vO.some((s)=>hostname.endsWith(s));
+                devOrStagingUrlCache.set(hostname, res);
+            }
+            return res;
+        }
+    };
+}
+function isDevelopmentFromPublishableKey(apiKey) {
+    return apiKey.startsWith("test_") || apiKey.startsWith("pk_test_");
+}
+function isProductionFromPublishableKey(apiKey) {
+    return apiKey.startsWith("live_") || apiKey.startsWith("pk_live_");
+}
+function isDevelopmentFromSecretKey(apiKey) {
+    return apiKey.startsWith("test_") || apiKey.startsWith("sk_test_");
+}
+function isProductionFromSecretKey(apiKey) {
+    return apiKey.startsWith("live_") || apiKey.startsWith("sk_live_");
+}
+async function getCookieSuffix(publishableKey, subtle = globalThis.crypto.subtle) {
+    const data = new TextEncoder().encode(publishableKey);
+    const digest = await subtle.digest("sha-1", data);
+    const stringDigest = String.fromCharCode(...new Uint8Array(digest));
+    return chunk_KOH7GTJO_isomorphicBtoa(stringDigest).replace(/\+/gi, "-").replace(/\//gi, "_").substring(0, 8);
+}
+var getSuffixedCookieName = (cookieName, cookieSuffix)=>{
+    return `${cookieName}_${cookieSuffix}`;
+};
+ //# sourceMappingURL=chunk-G3VP5PJE.mjs.map
+
+
+/***/ }),
+
+/***/ 9438:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Fo: () => (/* binding */ LOCAL_API_URL),
+/* harmony export */   Iq: () => (/* binding */ STAGING_API_URL),
+/* harmony export */   Xv: () => (/* binding */ PROD_API_URL),
+/* harmony export */   cM: () => (/* binding */ STAGING_ENV_SUFFIXES),
+/* harmony export */   iF: () => (/* binding */ LOCAL_ENV_SUFFIXES),
+/* harmony export */   mv: () => (/* binding */ LEGACY_DEV_INSTANCE_SUFFIXES),
+/* harmony export */   vO: () => (/* binding */ DEV_OR_STAGING_SUFFIXES)
+/* harmony export */ });
+/* unused harmony exports CURRENT_DEV_INSTANCE_SUFFIXES, iconImageUrl */
+// src/constants.ts
+var LEGACY_DEV_INSTANCE_SUFFIXES = [
+    ".lcl.dev",
+    ".lclstage.dev",
+    ".lclclerk.com"
+];
+var CURRENT_DEV_INSTANCE_SUFFIXES = (/* unused pure expression or super */ null && ([
+    ".accounts.dev",
+    ".accountsstage.dev",
+    ".accounts.lclclerk.com"
+]));
+var DEV_OR_STAGING_SUFFIXES = [
+    ".lcl.dev",
+    ".stg.dev",
+    ".lclstage.dev",
+    ".stgstage.dev",
+    ".dev.lclclerk.com",
+    ".stg.lclclerk.com",
+    ".accounts.lclclerk.com",
+    "accountsstage.dev",
+    "accounts.dev"
+];
+var LOCAL_ENV_SUFFIXES = [
+    ".lcl.dev",
+    "lclstage.dev",
+    ".lclclerk.com",
+    ".accounts.lclclerk.com"
+];
+var STAGING_ENV_SUFFIXES = [
+    ".accountsstage.dev"
+];
+var LOCAL_API_URL = "https://api.lclclerk.com";
+var STAGING_API_URL = "https://api.clerkstage.dev";
+var PROD_API_URL = "https://api.clerk.com";
+function iconImageUrl(id, format = "svg") {
+    return `https://img.clerk.com/static/${id}.${format}`;
+}
+ //# sourceMappingURL=chunk-I6MTSTOF.mjs.map
+
+
+/***/ }),
+
+/***/ 8578:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   J6: () => (/* binding */ eventMethodCalled),
+/* harmony export */   NS: () => (/* binding */ TelemetryCollector),
+/* harmony export */   kD: () => (/* binding */ eventFrameworkMetadata)
+/* harmony export */ });
+/* unused harmony exports eventPrebuiltComponentMounted, eventPrebuiltComponentOpened, eventComponentMounted */
+/* harmony import */ var _chunk_RWYTRAIK_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8622);
+/* harmony import */ var _chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3293);
+/* harmony import */ var _chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7032);
+
+
+
+// src/telemetry/throttler.ts
+var DEFAULT_CACHE_TTL_MS = 864e5;
+var _storageKey, _cacheTtl, _TelemetryEventThrottler_instances, generateKey_fn, cache_get, isValidBrowser_get;
+var TelemetryEventThrottler = class {
+    constructor(){
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _TelemetryEventThrottler_instances);
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _storageKey, "clerk_telemetry_throttler");
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _cacheTtl, DEFAULT_CACHE_TTL_MS);
+    }
+    isEventThrottled(payload) {
+        if (!(0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _TelemetryEventThrottler_instances, isValidBrowser_get)) {
+            return false;
+        }
+        const now = Date.now();
+        const key = (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryEventThrottler_instances, generateKey_fn).call(this, payload);
+        const entry = (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _TelemetryEventThrottler_instances, cache_get)?.[key];
+        if (!entry) {
+            const updatedCache = {
+                ...(0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _TelemetryEventThrottler_instances, cache_get),
+                [key]: now
+            };
+            localStorage.setItem((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _storageKey), JSON.stringify(updatedCache));
+        }
+        const shouldInvalidate = entry && now - entry > (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _cacheTtl);
+        if (shouldInvalidate) {
+            const updatedCache = (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _TelemetryEventThrottler_instances, cache_get);
+            delete updatedCache[key];
+            localStorage.setItem((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _storageKey), JSON.stringify(updatedCache));
+        }
+        return !!entry;
+    }
+};
+_storageKey = new WeakMap();
+_cacheTtl = new WeakMap();
+_TelemetryEventThrottler_instances = new WeakSet();
+/**
+ * Generates a consistent unique key for telemetry events by sorting payload properties.
+ * This ensures that payloads with identical content in different orders produce the same key.
+ */ generateKey_fn = function(event) {
+    const { sk: _sk, pk: _pk, payload, ...rest } = event;
+    const sanitizedEvent = {
+        ...payload,
+        ...rest
+    };
+    return JSON.stringify(Object.keys({
+        ...payload,
+        ...rest
+    }).sort().map((key)=>sanitizedEvent[key]));
+};
+cache_get = function() {
+    const cacheString = localStorage.getItem((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _storageKey));
+    if (!cacheString) {
+        return {};
+    }
+    return JSON.parse(cacheString);
+};
+isValidBrowser_get = function() {
+    if (true) {
+        return false;
+    }
+    const storage = window.localStorage;
+    if (!storage) {
+        return false;
+    }
+    try {
+        const testKey = "test";
+        storage.setItem(testKey, testKey);
+        storage.removeItem(testKey);
+        return true;
+    } catch (err) {
+        const isQuotaExceededError = err instanceof DOMException && // Check error names for different browsers
+        (err.name === "QuotaExceededError" || err.name === "NS_ERROR_DOM_QUOTA_REACHED");
+        if (isQuotaExceededError && storage.length > 0) {
+            storage.removeItem((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _storageKey));
+        }
+        return false;
+    }
+};
+// src/telemetry/collector.ts
+var DEFAULT_CONFIG = {
+    samplingRate: 1,
+    maxBufferSize: 5,
+    // Production endpoint: https://clerk-telemetry.com
+    // Staging endpoint: https://staging.clerk-telemetry.com
+    // Local: http://localhost:8787
+    endpoint: "https://clerk-telemetry.com"
+};
+var _config, _eventThrottler, _metadata, _buffer, _pendingFlush, _TelemetryCollector_instances, shouldRecord_fn, shouldBeSampled_fn, scheduleFlush_fn, flush_fn, logEvent_fn, getSDKMetadata_fn, preparePayload_fn;
+var TelemetryCollector = class {
+    constructor(options){
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _TelemetryCollector_instances);
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _config);
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _eventThrottler);
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _metadata, {});
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _buffer, []);
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateAdd */ .Ko)(this, _pendingFlush);
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateSet */ .qx)(this, _config, {
+            maxBufferSize: options.maxBufferSize ?? DEFAULT_CONFIG.maxBufferSize,
+            samplingRate: options.samplingRate ?? DEFAULT_CONFIG.samplingRate,
+            disabled: options.disabled ?? false,
+            debug: options.debug ?? false,
+            endpoint: DEFAULT_CONFIG.endpoint
+        });
+        if (!options.clerkVersion && "undefined" === "undefined") {
+            (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).clerkVersion = "";
+        } else {
+            (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).clerkVersion = options.clerkVersion ?? "";
+        }
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).sdk = options.sdk;
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).sdkVersion = options.sdkVersion;
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).publishableKey = options.publishableKey ?? "";
+        const parsedKey = (0,_chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_2__/* .parsePublishableKey */ .nQ)(options.publishableKey);
+        if (parsedKey) {
+            (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).instanceType = parsedKey.instanceType;
+        }
+        if (options.secretKey) {
+            (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).secretKey = options.secretKey.substring(0, 16);
+        }
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateSet */ .qx)(this, _eventThrottler, new TelemetryEventThrottler());
+    }
+    get isEnabled() {
+        if ((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).instanceType !== "development") {
+            return false;
+        }
+        if ((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _config).disabled || typeof process !== "undefined" && (0,_chunk_RWYTRAIK_mjs__WEBPACK_IMPORTED_MODULE_0__/* .isTruthy */ .fQ)(process.env.CLERK_TELEMETRY_DISABLED)) {
+            return false;
+        }
+        if (false) {}
+        return true;
+    }
+    get isDebug() {
+        return (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _config).debug || typeof process !== "undefined" && (0,_chunk_RWYTRAIK_mjs__WEBPACK_IMPORTED_MODULE_0__/* .isTruthy */ .fQ)(process.env.CLERK_TELEMETRY_DEBUG);
+    }
+    record(event) {
+        const preparedPayload = (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, preparePayload_fn).call(this, event.event, event.payload);
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, logEvent_fn).call(this, preparedPayload.event, preparedPayload);
+        if (!(0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, shouldRecord_fn).call(this, preparedPayload, event.eventSamplingRate)) {
+            return;
+        }
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _buffer).push(preparedPayload);
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, scheduleFlush_fn).call(this);
+    }
+};
+_config = new WeakMap();
+_eventThrottler = new WeakMap();
+_metadata = new WeakMap();
+_buffer = new WeakMap();
+_pendingFlush = new WeakMap();
+_TelemetryCollector_instances = new WeakSet();
+shouldRecord_fn = function(preparedPayload, eventSamplingRate) {
+    return this.isEnabled && !this.isDebug && (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, shouldBeSampled_fn).call(this, preparedPayload, eventSamplingRate);
+};
+shouldBeSampled_fn = function(preparedPayload, eventSamplingRate) {
+    const randomSeed = Math.random();
+    const toBeSampled = randomSeed <= (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _config).samplingRate && (typeof eventSamplingRate === "undefined" || randomSeed <= eventSamplingRate);
+    if (!toBeSampled) {
+        return false;
+    }
+    return !(0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _eventThrottler).isEventThrottled(preparedPayload);
+};
+scheduleFlush_fn = function() {
+    if (true) {
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, flush_fn).call(this);
+        return;
+    }
+    const isBufferFull = (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _buffer).length >= (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _config).maxBufferSize;
+    if (isBufferFull) {
+        if ((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _pendingFlush)) {
+            const cancel = typeof cancelIdleCallback !== "undefined" ? cancelIdleCallback : clearTimeout;
+            cancel((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _pendingFlush));
+        }
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, flush_fn).call(this);
+        return;
+    }
+    if ((0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _pendingFlush)) {
+        return;
+    }
+    if ("requestIdleCallback" in window) {
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateSet */ .qx)(this, _pendingFlush, requestIdleCallback(()=>{
+            (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, flush_fn).call(this);
+        }));
+    } else {
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateSet */ .qx)(this, _pendingFlush, setTimeout(()=>{
+            (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, flush_fn).call(this);
+        }, 0));
+    }
+};
+flush_fn = function() {
+    fetch(new URL("/v1/event", (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _config).endpoint), {
+        method: "POST",
+        // TODO: We send an array here with that idea that we can eventually send multiple events.
+        body: JSON.stringify({
+            events: (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _buffer)
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).catch(()=>void 0).then(()=>{
+        (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateSet */ .qx)(this, _buffer, []);
+    }).catch(()=>void 0);
+};
+/**
+ * If running in debug mode, log the event and its payload to the console.
+ */ logEvent_fn = function(event, payload) {
+    if (!this.isDebug) {
+        return;
+    }
+    if (typeof console.groupCollapsed !== "undefined") {
+        console.groupCollapsed("[clerk/telemetry]", event);
+        console.log(payload);
+        console.groupEnd();
+    } else {
+        console.log("[clerk/telemetry]", event, payload);
+    }
+};
+/**
+ * If in browser, attempt to lazily grab the SDK metadata from the Clerk singleton, otherwise fallback to the initially passed in values.
+ *
+ * This is necessary because the sdkMetadata can be set by the host SDK after the TelemetryCollector is instantiated.
+ */ getSDKMetadata_fn = function() {
+    let sdkMetadata = {
+        name: (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).sdk,
+        version: (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).sdkVersion
+    };
+    if (false) {}
+    return sdkMetadata;
+};
+/**
+ * Append relevant metadata from the Clerk singleton to the event payload.
+ */ preparePayload_fn = function(event, payload) {
+    const sdkMetadata = (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateMethod */ .U9)(this, _TelemetryCollector_instances, getSDKMetadata_fn).call(this);
+    return {
+        event,
+        cv: (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).clerkVersion ?? "",
+        it: (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).instanceType ?? "",
+        sdk: sdkMetadata.name,
+        sdkv: sdkMetadata.version,
+        ...(0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).publishableKey ? {
+            pk: (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).publishableKey
+        } : {},
+        ...(0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).secretKey ? {
+            sk: (0,_chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__/* .__privateGet */ .ac)(this, _metadata).secretKey
+        } : {},
+        payload
+    };
+};
+// src/telemetry/events/component-mounted.ts
+var EVENT_COMPONENT_MOUNTED = "COMPONENT_MOUNTED";
+var EVENT_COMPONENT_OPENED = "COMPONENT_OPENED";
+var EVENT_SAMPLING_RATE = 0.1;
+function createPrebuiltComponentEvent(event) {
+    return function(component, props, additionalPayload) {
+        return {
+            event,
+            eventSamplingRate: EVENT_SAMPLING_RATE,
+            payload: {
+                component,
+                appearanceProp: Boolean(props?.appearance),
+                baseTheme: Boolean(props?.appearance?.baseTheme),
+                elements: Boolean(props?.appearance?.elements),
+                variables: Boolean(props?.appearance?.variables),
+                ...additionalPayload
+            }
+        };
+    };
+}
+function eventPrebuiltComponentMounted(component, props, additionalPayload) {
+    return createPrebuiltComponentEvent(EVENT_COMPONENT_MOUNTED)(component, props, additionalPayload);
+}
+function eventPrebuiltComponentOpened(component, props, additionalPayload) {
+    return createPrebuiltComponentEvent(EVENT_COMPONENT_OPENED)(component, props, additionalPayload);
+}
+function eventComponentMounted(component, props = {}) {
+    return {
+        event: EVENT_COMPONENT_MOUNTED,
+        eventSamplingRate: EVENT_SAMPLING_RATE,
+        payload: {
+            component,
+            ...props
+        }
+    };
+}
+// src/telemetry/events/method-called.ts
+var EVENT_METHOD_CALLED = "METHOD_CALLED";
+function eventMethodCalled(method, payload) {
+    return {
+        event: EVENT_METHOD_CALLED,
+        payload: {
+            method,
+            ...payload
+        }
+    };
+}
+// src/telemetry/events/framework-metadata.ts
+var EVENT_FRAMEWORK_METADATA = "FRAMEWORK_METADATA";
+var EVENT_SAMPLING_RATE2 = 0.1;
+function eventFrameworkMetadata(payload) {
+    return {
+        event: EVENT_FRAMEWORK_METADATA,
+        eventSamplingRate: EVENT_SAMPLING_RATE2,
+        payload
+    };
+}
+ //# sourceMappingURL=chunk-L6WULBPV.mjs.map
+
+
+/***/ }),
+
+/***/ 2396:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Ly: () => (/* binding */ splitByScope),
+/* harmony export */   QL: () => (/* binding */ createCheckAuthorization),
+/* harmony export */   qB: () => (/* binding */ resolveAuthState)
+/* harmony export */ });
+/* unused harmony export validateReverificationConfig */
+// src/authorization.ts
+var TYPES_TO_OBJECTS = {
+    strict_mfa: {
+        afterMinutes: 10,
+        level: "multi_factor"
+    },
+    strict: {
+        afterMinutes: 10,
+        level: "second_factor"
+    },
+    moderate: {
+        afterMinutes: 60,
+        level: "second_factor"
+    },
+    lax: {
+        afterMinutes: 1440,
+        level: "second_factor"
+    }
+};
+var ALLOWED_LEVELS = /* @__PURE__ */ new Set([
+    "first_factor",
+    "second_factor",
+    "multi_factor"
+]);
+var ALLOWED_TYPES = /* @__PURE__ */ new Set([
+    "strict_mfa",
+    "strict",
+    "moderate",
+    "lax"
+]);
+var isValidMaxAge = (maxAge)=>typeof maxAge === "number" && maxAge > 0;
+var isValidLevel = (level)=>ALLOWED_LEVELS.has(level);
+var isValidVerificationType = (type)=>ALLOWED_TYPES.has(type);
+var checkOrgAuthorization = (params, options)=>{
+    const { orgId, orgRole, orgPermissions } = options;
+    if (!params.role && !params.permission) {
+        return null;
+    }
+    if (!orgId || !orgRole || !orgPermissions) {
+        return null;
+    }
+    if (params.permission) {
+        return orgPermissions.includes(params.permission);
+    }
+    if (params.role) {
+        return orgRole === params.role;
+    }
+    return null;
+};
+var checkForFeatureOrPlan = (claim, featureOrPlan)=>{
+    const { org: orgFeatures, user: userFeatures } = splitByScope(claim);
+    const [scope, _id] = featureOrPlan.split(":");
+    const id = _id || scope;
+    if (scope === "org") {
+        return orgFeatures.includes(id);
+    } else if (scope === "user") {
+        return userFeatures.includes(id);
+    } else {
+        return [
+            ...orgFeatures,
+            ...userFeatures
+        ].includes(id);
+    }
+};
+var checkBillingAuthorization = (params, options)=>{
+    const { features, plans } = options;
+    if (params.feature && features) {
+        return checkForFeatureOrPlan(features, params.feature);
+    }
+    if (params.plan && plans) {
+        return checkForFeatureOrPlan(plans, params.plan);
+    }
+    return null;
+};
+var splitByScope = (fea)=>{
+    const features = fea ? fea.split(",").map((f)=>f.trim()) : [];
+    return {
+        org: features.filter((f)=>f.split(":")[0].includes("o")).map((f)=>f.split(":")[1]),
+        user: features.filter((f)=>f.split(":")[0].includes("u")).map((f)=>f.split(":")[1])
+    };
+};
+var validateReverificationConfig = (config)=>{
+    if (!config) {
+        return false;
+    }
+    const convertConfigToObject = (config2)=>{
+        if (typeof config2 === "string") {
+            return TYPES_TO_OBJECTS[config2];
+        }
+        return config2;
+    };
+    const isValidStringValue = typeof config === "string" && isValidVerificationType(config);
+    const isValidObjectValue = typeof config === "object" && isValidLevel(config.level) && isValidMaxAge(config.afterMinutes);
+    if (isValidStringValue || isValidObjectValue) {
+        return convertConfigToObject.bind(null, config);
+    }
+    return false;
+};
+var checkReverificationAuthorization = (params, { factorVerificationAge })=>{
+    if (!params.reverification || !factorVerificationAge) {
+        return null;
+    }
+    const isValidReverification = validateReverificationConfig(params.reverification);
+    if (!isValidReverification) {
+        return null;
+    }
+    const { level, afterMinutes } = isValidReverification();
+    const [factor1Age, factor2Age] = factorVerificationAge;
+    const isValidFactor1 = factor1Age !== -1 ? afterMinutes > factor1Age : null;
+    const isValidFactor2 = factor2Age !== -1 ? afterMinutes > factor2Age : null;
+    switch(level){
+        case "first_factor":
+            return isValidFactor1;
+        case "second_factor":
+            return factor2Age !== -1 ? isValidFactor2 : isValidFactor1;
+        case "multi_factor":
+            return factor2Age === -1 ? isValidFactor1 : isValidFactor1 && isValidFactor2;
+    }
+};
+var createCheckAuthorization = (options)=>{
+    return (params)=>{
+        if (!options.userId) {
+            return false;
+        }
+        const billingAuthorization = checkBillingAuthorization(params, options);
+        const orgAuthorization = checkOrgAuthorization(params, options);
+        const reverificationAuthorization = checkReverificationAuthorization(params, options);
+        if ([
+            billingAuthorization || orgAuthorization,
+            reverificationAuthorization
+        ].some((a)=>a === null)) {
+            return [
+                billingAuthorization || orgAuthorization,
+                reverificationAuthorization
+            ].some((a)=>a === true);
+        }
+        return [
+            billingAuthorization || orgAuthorization,
+            reverificationAuthorization
+        ].every((a)=>a === true);
+    };
+};
+var resolveAuthState = ({ authObject: { sessionId, sessionStatus, userId, actor, orgId, orgRole, orgSlug, signOut, getToken, has, sessionClaims }, options: { treatPendingAsSignedOut = true } })=>{
+    if (sessionId === void 0 && userId === void 0) {
+        return {
+            isLoaded: false,
+            isSignedIn: void 0,
+            sessionId,
+            sessionClaims: void 0,
+            userId,
+            actor: void 0,
+            orgId: void 0,
+            orgRole: void 0,
+            orgSlug: void 0,
+            has: void 0,
+            signOut,
+            getToken
+        };
+    }
+    if (sessionId === null && userId === null) {
+        return {
+            isLoaded: true,
+            isSignedIn: false,
+            sessionId,
+            userId,
+            sessionClaims: null,
+            actor: null,
+            orgId: null,
+            orgRole: null,
+            orgSlug: null,
+            has: ()=>false,
+            signOut,
+            getToken
+        };
+    }
+    if (treatPendingAsSignedOut && sessionStatus === "pending") {
+        return {
+            isLoaded: true,
+            isSignedIn: false,
+            sessionId: null,
+            userId: null,
+            sessionClaims: null,
+            actor: null,
+            orgId: null,
+            orgRole: null,
+            orgSlug: null,
+            has: ()=>false,
+            signOut,
+            getToken
+        };
+    }
+    if (!!sessionId && !!sessionClaims && !!userId && !!orgId && !!orgRole) {
+        return {
+            isLoaded: true,
+            isSignedIn: true,
+            sessionId,
+            sessionClaims,
+            userId,
+            actor: actor || null,
+            orgId,
+            orgRole,
+            orgSlug: orgSlug || null,
+            has,
+            signOut,
+            getToken
+        };
+    }
+    if (!!sessionId && !!sessionClaims && !!userId && !orgId) {
+        return {
+            isLoaded: true,
+            isSignedIn: true,
+            sessionId,
+            sessionClaims,
+            userId,
+            actor: actor || null,
+            orgId: null,
+            orgRole: null,
+            orgSlug: null,
+            has,
+            signOut,
+            getToken
+        };
+    }
+};
+ //# sourceMappingURL=chunk-LGJNYDTY.mjs.map
+
+
+/***/ }),
+
+/***/ 7571:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   X: () => (/* binding */ retry)
+/* harmony export */ });
+// src/retry.ts
+var defaultOptions = {
+    initialDelay: 125,
+    maxDelayBetweenRetries: 0,
+    factor: 2,
+    shouldRetry: (_, iteration)=>iteration < 5,
+    retryImmediately: false,
+    jitter: true
+};
+var RETRY_IMMEDIATELY_DELAY = 100;
+var sleep = async (ms)=>new Promise((s)=>setTimeout(s, ms));
+var applyJitter = (delay, jitter)=>{
+    return jitter ? delay * (1 + Math.random()) : delay;
+};
+var createExponentialDelayAsyncFn = (opts)=>{
+    let timesCalled = 0;
+    const calculateDelayInMs = ()=>{
+        const constant = opts.initialDelay;
+        const base = opts.factor;
+        let delay = constant * Math.pow(base, timesCalled);
+        delay = applyJitter(delay, opts.jitter);
+        return Math.min(opts.maxDelayBetweenRetries || delay, delay);
+    };
+    return async ()=>{
+        await sleep(calculateDelayInMs());
+        timesCalled++;
+    };
+};
+var retry = async (callback, options = {})=>{
+    let iterations = 0;
+    const { shouldRetry, initialDelay, maxDelayBetweenRetries, factor, retryImmediately, jitter } = {
+        ...defaultOptions,
+        ...options
+    };
+    const delay = createExponentialDelayAsyncFn({
+        initialDelay,
+        maxDelayBetweenRetries,
+        factor,
+        jitter
+    });
+    while(true){
+        try {
+            return await callback();
+        } catch (e) {
+            iterations++;
+            if (!shouldRetry(e, iterations)) {
+                throw e;
+            }
+            if (retryImmediately && iterations === 1) {
+                await sleep(applyJitter(RETRY_IMMEDIATELY_DELAY, jitter));
+            } else {
+                await delay();
+            }
+        }
+    }
+};
+ //# sourceMappingURL=chunk-N2V3PKFE.mjs.map
+
+
+/***/ }),
+
+/***/ 6857:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   gO: () => (/* binding */ ClerkAPIResponseError),
+/* harmony export */   nU: () => (/* binding */ parseError),
+/* harmony export */   t5: () => (/* binding */ buildErrorThrower)
+/* harmony export */ });
+/* unused harmony exports isUnauthorizedError, isCaptchaError, is4xxError, isNetworkError, isKnownError, isClerkAPIResponseError, isClerkRuntimeError, isReverificationCancelledError, isMetamaskError, isUserLockedError, isPasswordPwnedError, parseErrors, errorToJSON, ClerkRuntimeError, EmailLinkError, isEmailLinkError, EmailLinkErrorCode, EmailLinkErrorCodeStatus, ClerkWebAuthnError */
+// src/error.ts
+function isUnauthorizedError(e) {
+    const status = e?.status;
+    const code = e?.errors?.[0]?.code;
+    return code === "authentication_invalid" && status === 401;
+}
+function isCaptchaError(e) {
+    return [
+        "captcha_invalid",
+        "captcha_not_enabled",
+        "captcha_missing_token"
+    ].includes(e.errors[0].code);
+}
+function is4xxError(e) {
+    const status = e?.status;
+    return !!status && status >= 400 && status < 500;
+}
+function isNetworkError(e) {
+    const message = (`${e.message}${e.name}` || "").toLowerCase().replace(/\s+/g, "");
+    return message.includes("networkerror");
+}
+function isKnownError(error) {
+    return isClerkAPIResponseError(error) || isMetamaskError(error) || isClerkRuntimeError(error);
+}
+function isClerkAPIResponseError(err) {
+    return "clerkError" in err;
+}
+function isClerkRuntimeError(err) {
+    return "clerkRuntimeError" in err;
+}
+function isReverificationCancelledError(err) {
+    return isClerkRuntimeError(err) && err.code === "reverification_cancelled";
+}
+function isMetamaskError(err) {
+    return "code" in err && [
+        4001,
+        32602,
+        32603
+    ].includes(err.code) && "message" in err;
+}
+function isUserLockedError(err) {
+    return isClerkAPIResponseError(err) && err.errors?.[0]?.code === "user_locked";
+}
+function isPasswordPwnedError(err) {
+    return isClerkAPIResponseError(err) && err.errors?.[0]?.code === "form_password_pwned";
+}
+function parseErrors(data = []) {
+    return data.length > 0 ? data.map(parseError) : [];
+}
+function parseError(error) {
+    return {
+        code: error.code,
+        message: error.message,
+        longMessage: error.long_message,
+        meta: {
+            paramName: error?.meta?.param_name,
+            sessionId: error?.meta?.session_id,
+            emailAddresses: error?.meta?.email_addresses,
+            identifiers: error?.meta?.identifiers,
+            zxcvbn: error?.meta?.zxcvbn
+        }
+    };
+}
+function errorToJSON(error) {
+    return {
+        code: error?.code || "",
+        message: error?.message || "",
+        long_message: error?.longMessage,
+        meta: {
+            param_name: error?.meta?.paramName,
+            session_id: error?.meta?.sessionId,
+            email_addresses: error?.meta?.emailAddresses,
+            identifiers: error?.meta?.identifiers,
+            zxcvbn: error?.meta?.zxcvbn
+        }
+    };
+}
+var ClerkAPIResponseError = class _ClerkAPIResponseError extends Error {
+    constructor(message, { data, status, clerkTraceId, retryAfter }){
+        super(message);
+        this.toString = ()=>{
+            let message = `[${this.name}]
+Message:${this.message}
+Status:${this.status}
+Serialized errors: ${this.errors.map((e)=>JSON.stringify(e))}`;
+            if (this.clerkTraceId) {
+                message += `
+Clerk Trace ID: ${this.clerkTraceId}`;
+            }
+            return message;
+        };
+        Object.setPrototypeOf(this, _ClerkAPIResponseError.prototype);
+        this.status = status;
+        this.message = message;
+        this.clerkTraceId = clerkTraceId;
+        this.retryAfter = retryAfter;
+        this.clerkError = true;
+        this.errors = parseErrors(data);
+    }
+};
+var ClerkRuntimeError = class _ClerkRuntimeError extends (/* unused pure expression or super */ null && (Error)) {
+    constructor(message, { code }){
+        const prefix = "\uD83D\uDD12 Clerk:";
+        const regex = new RegExp(prefix.replace(" ", "\\s*"), "i");
+        const sanitized = message.replace(regex, "");
+        const _message = `${prefix} ${sanitized.trim()}
+
+(code="${code}")
+`;
+        super(_message);
+        /**
+     * Returns a string representation of the error.
+     *
+     * @returns {string} A formatted string with the error name and message.
+     */ this.toString = ()=>{
+            return `[${this.name}]
+Message:${this.message}`;
+        };
+        Object.setPrototypeOf(this, _ClerkRuntimeError.prototype);
+        this.code = code;
+        this.message = _message;
+        this.clerkRuntimeError = true;
+        this.name = "ClerkRuntimeError";
+    }
+};
+var EmailLinkError = class _EmailLinkError extends (/* unused pure expression or super */ null && (Error)) {
+    constructor(code){
+        super(code);
+        this.code = code;
+        this.name = "EmailLinkError";
+        Object.setPrototypeOf(this, _EmailLinkError.prototype);
+    }
+};
+function isEmailLinkError(err) {
+    return err.name === "EmailLinkError";
+}
+var EmailLinkErrorCode = {
+    Expired: "expired",
+    Failed: "failed",
+    ClientMismatch: "client_mismatch"
+};
+var EmailLinkErrorCodeStatus = {
+    Expired: "expired",
+    Failed: "failed",
+    ClientMismatch: "client_mismatch"
+};
+var DefaultMessages = Object.freeze({
+    InvalidProxyUrlErrorMessage: `The proxyUrl passed to Clerk is invalid. The expected value for proxyUrl is an absolute URL or a relative path with a leading '/'. (key={{url}})`,
+    InvalidPublishableKeyErrorMessage: `The publishableKey passed to Clerk is invalid. You can get your Publishable key at https://dashboard.clerk.com/last-active?path=api-keys. (key={{key}})`,
+    MissingPublishableKeyErrorMessage: `Missing publishableKey. You can get your key at https://dashboard.clerk.com/last-active?path=api-keys.`,
+    MissingSecretKeyErrorMessage: `Missing secretKey. You can get your key at https://dashboard.clerk.com/last-active?path=api-keys.`,
+    MissingClerkProvider: `{{source}} can only be used within the <ClerkProvider /> component. Learn more: https://clerk.com/docs/components/clerk-provider`
+});
+function buildErrorThrower({ packageName, customMessages }) {
+    let pkg = packageName;
+    const messages = {
+        ...DefaultMessages,
+        ...customMessages
+    };
+    function buildMessage(rawMessage, replacements) {
+        if (!replacements) {
+            return `${pkg}: ${rawMessage}`;
+        }
+        let msg = rawMessage;
+        const matches = rawMessage.matchAll(/{{([a-zA-Z0-9-_]+)}}/g);
+        for (const match of matches){
+            const replacement = (replacements[match[1]] || "").toString();
+            msg = msg.replace(`{{${match[1]}}}`, replacement);
+        }
+        return `${pkg}: ${msg}`;
+    }
+    return {
+        setPackageName ({ packageName: packageName2 }) {
+            if (typeof packageName2 === "string") {
+                pkg = packageName2;
+            }
+            return this;
+        },
+        setMessages ({ customMessages: customMessages2 }) {
+            Object.assign(messages, customMessages2 || {});
+            return this;
+        },
+        throwInvalidPublishableKeyError (params) {
+            throw new Error(buildMessage(messages.InvalidPublishableKeyErrorMessage, params));
+        },
+        throwInvalidProxyUrl (params) {
+            throw new Error(buildMessage(messages.InvalidProxyUrlErrorMessage, params));
+        },
+        throwMissingPublishableKeyError () {
+            throw new Error(buildMessage(messages.MissingPublishableKeyErrorMessage));
+        },
+        throwMissingSecretKeyError () {
+            throw new Error(buildMessage(messages.MissingSecretKeyErrorMessage));
+        },
+        throwMissingClerkProviderError (params) {
+            throw new Error(buildMessage(messages.MissingClerkProvider, params));
+        },
+        throw (message) {
+            throw new Error(buildMessage(message));
+        }
+    };
+}
+var ClerkWebAuthnError = class extends (/* unused pure expression or super */ null && (ClerkRuntimeError)) {
+    constructor(message, { code }){
+        super(message, {
+            code
+        });
+        this.code = code;
+    }
+};
+ //# sourceMappingURL=chunk-NT4JRXL3.mjs.map
+
+
+/***/ }),
+
+/***/ 8622:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   fQ: () => (/* binding */ isTruthy)
+/* harmony export */ });
+/* unused harmony exports toSentence, isIPV4Address, titleize, snakeToCamel, camelToSnake, deepCamelToSnake, deepSnakeToCamel, getNonUndefinedValues */
+// src/underscore.ts
+var toSentence = (items)=>{
+    if (items.length == 0) {
+        return "";
+    }
+    if (items.length == 1) {
+        return items[0];
+    }
+    let sentence = items.slice(0, -1).join(", ");
+    sentence += `, or ${items.slice(-1)}`;
+    return sentence;
+};
+var IP_V4_ADDRESS_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+function isIPV4Address(str) {
+    return IP_V4_ADDRESS_REGEX.test(str || "");
+}
+function titleize(str) {
+    const s = str || "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function snakeToCamel(str) {
+    return str ? str.replace(/([-_][a-z])/g, (match)=>match.toUpperCase().replace(/-|_/, "")) : "";
+}
+function camelToSnake(str) {
+    return str ? str.replace(/[A-Z]/g, (letter)=>`_${letter.toLowerCase()}`) : "";
+}
+var createDeepObjectTransformer = (transform)=>{
+    const deepTransform = (obj)=>{
+        if (!obj) {
+            return obj;
+        }
+        if (Array.isArray(obj)) {
+            return obj.map((el)=>{
+                if (typeof el === "object" || Array.isArray(el)) {
+                    return deepTransform(el);
+                }
+                return el;
+            });
+        }
+        const copy = {
+            ...obj
+        };
+        const keys = Object.keys(copy);
+        for (const oldName of keys){
+            const newName = transform(oldName.toString());
+            if (newName !== oldName) {
+                copy[newName] = copy[oldName];
+                delete copy[oldName];
+            }
+            if (typeof copy[newName] === "object") {
+                copy[newName] = deepTransform(copy[newName]);
+            }
+        }
+        return copy;
+    };
+    return deepTransform;
+};
+var deepCamelToSnake = createDeepObjectTransformer(camelToSnake);
+var deepSnakeToCamel = createDeepObjectTransformer(snakeToCamel);
+function isTruthy(value) {
+    if (typeof value === `boolean`) {
+        return value;
+    }
+    if (value === void 0 || value === null) {
+        return false;
+    }
+    if (typeof value === `string`) {
+        if (value.toLowerCase() === `true`) {
+            return true;
+        }
+        if (value.toLowerCase() === `false`) {
+            return false;
+        }
+    }
+    const number = parseInt(value, 10);
+    if (isNaN(number)) {
+        return false;
+    }
+    if (number > 0) {
+        return true;
+    }
+    return false;
+}
+function getNonUndefinedValues(obj) {
+    return Object.entries(obj).reduce((acc, [key, value])=>{
+        if (value !== void 0) {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
+}
+ //# sourceMappingURL=chunk-RWYTRAIK.mjs.map
+
+
+/***/ }),
+
+/***/ 6998:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   S: () => (/* binding */ isomorphicAtob)
+/* harmony export */ });
+// src/isomorphicAtob.ts
+var isomorphicAtob = (data)=>{
+    if (typeof atob !== "undefined" && typeof atob === "function") {
+        return atob(data);
+    } else if (typeof global !== "undefined" && global.Buffer) {
+        return new global.Buffer(data, "base64").toString();
+    }
+    return data;
+};
+ //# sourceMappingURL=chunk-TETGTEI2.mjs.map
+
+
+/***/ }),
+
+/***/ 8428:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  x9: () => (/* reexport */ deprecated)
+});
+
+// UNUSED EXPORTS: deprecatedObjectProperty, deprecatedProperty
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-7HPDNZ3R.mjs
+var chunk_7HPDNZ3R = __webpack_require__(7207);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-UEY4AZIP.mjs
+
+// src/deprecated.ts
+var displayedWarnings = /* @__PURE__ */ new Set();
+var deprecated = (fnName, warning, key)=>{
+    const hideWarning = (0,chunk_7HPDNZ3R/* isTestEnvironment */.uB)() || (0,chunk_7HPDNZ3R/* isProductionEnvironment */.rx)();
+    const messageId = key ?? fnName;
+    if (displayedWarnings.has(messageId) || hideWarning) {
+        return;
+    }
+    displayedWarnings.add(messageId);
+    console.warn(`Clerk - DEPRECATION WARNING: "${fnName}" is deprecated and will be removed in the next major release.
+${warning}`);
+};
+var deprecatedProperty = (cls, propName, warning, isStatic = false)=>{
+    const target = isStatic ? cls : cls.prototype;
+    let value = target[propName];
+    Object.defineProperty(target, propName, {
+        get () {
+            deprecated(propName, warning, `${cls.name}:${propName}`);
+            return value;
+        },
+        set (v) {
+            value = v;
+        }
+    });
+};
+var deprecatedObjectProperty = (obj, propName, warning, key)=>{
+    let value = obj[propName];
+    Object.defineProperty(obj, propName, {
+        get () {
+            deprecated(propName, warning, key);
+            return value;
+        },
+        set (v) {
+            value = v;
+        }
+    });
+};
+ //# sourceMappingURL=chunk-UEY4AZIP.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-7ELT755Q.mjs
+var chunk_7ELT755Q = __webpack_require__(7032);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/deprecated.mjs
+
+
+
+ //# sourceMappingURL=deprecated.mjs.map
+
+
+/***/ }),
+
+/***/ 9659:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   gO: () => (/* reexport safe */ _chunk_NT4JRXL3_mjs__WEBPACK_IMPORTED_MODULE_0__.gO),
+/* harmony export */   nU: () => (/* reexport safe */ _chunk_NT4JRXL3_mjs__WEBPACK_IMPORTED_MODULE_0__.nU),
+/* harmony export */   t5: () => (/* reexport safe */ _chunk_NT4JRXL3_mjs__WEBPACK_IMPORTED_MODULE_0__.t5)
+/* harmony export */ });
+/* harmony import */ var _chunk_NT4JRXL3_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6857);
+/* harmony import */ var _chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7032);
+
+
+ //# sourceMappingURL=error.mjs.map
+
+
+/***/ }),
+
+/***/ 9389:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CY: () => (/* reexport safe */ _chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_1__.CY),
+/* harmony export */   MY: () => (/* reexport safe */ _chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_1__.MY),
+/* harmony export */   P: () => (/* reexport safe */ _chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_1__.P),
+/* harmony export */   _d: () => (/* reexport safe */ _chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_1__._d),
+/* harmony export */   nQ: () => (/* reexport safe */ _chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_1__.nQ),
+/* harmony export */   x9: () => (/* reexport safe */ _chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_1__.x9)
+/* harmony export */ });
+/* harmony import */ var _chunk_G3VP5PJE_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3293);
+/* harmony import */ var _chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7032);
+
+
+
+
+
+ //# sourceMappingURL=keys.mjs.map
+
+
+/***/ }),
+
+/***/ 6888:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   J6: () => (/* reexport safe */ _chunk_L6WULBPV_mjs__WEBPACK_IMPORTED_MODULE_0__.J6),
+/* harmony export */   NS: () => (/* reexport safe */ _chunk_L6WULBPV_mjs__WEBPACK_IMPORTED_MODULE_0__.NS),
+/* harmony export */   kD: () => (/* reexport safe */ _chunk_L6WULBPV_mjs__WEBPACK_IMPORTED_MODULE_0__.kD)
+/* harmony export */ });
+/* harmony import */ var _chunk_L6WULBPV_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8578);
+/* harmony import */ var _chunk_RWYTRAIK_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8622);
+/* harmony import */ var _chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7032);
+
+
+
+
+
+
+
+ //# sourceMappingURL=telemetry.mjs.map
+
+
+/***/ }),
+
+/***/ 4904:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   fQ: () => (/* reexport safe */ _chunk_RWYTRAIK_mjs__WEBPACK_IMPORTED_MODULE_0__.fQ)
+/* harmony export */ });
+/* harmony import */ var _chunk_RWYTRAIK_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8622);
+/* harmony import */ var _chunk_7ELT755Q_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7032);
+
+
+ //# sourceMappingURL=underscore.mjs.map
+
+
+/***/ }),
+
+/***/ 1620:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  vf: () => (/* reexport */ chunk_7HPDNZ3R/* isDevelopmentEnvironment */.vf),
+  yJ: () => (/* reexport */ logErrorInDevMode)
+});
+
+// UNUSED EXPORTS: allSettled, createDeferredPromise, fastDeepMergeAndKeep, fastDeepMergeAndReplace, handleValueOrFn, isProductionEnvironment, isStaging, isTestEnvironment, noop
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-7HPDNZ3R.mjs
+var chunk_7HPDNZ3R = __webpack_require__(7207);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/chunk-ARQUL5DC.mjs
+
+// src/utils/allSettled.ts
+function allSettled(iterable) {
+    const promises = Array.from(iterable).map((p)=>p.then((value)=>({
+                status: "fulfilled",
+                value
+            }), (reason)=>({
+                status: "rejected",
+                reason
+            })));
+    return Promise.all(promises);
+}
+// src/utils/logErrorInDevMode.ts
+var logErrorInDevMode = (message)=>{
+    if ((0,chunk_7HPDNZ3R/* isDevelopmentEnvironment */.vf)()) {
+        console.error(`Clerk: ${message}`);
+    }
+};
+// src/utils/fastDeepMerge.ts
+var fastDeepMergeAndReplace = (source, target)=>{
+    if (!source || !target) {
+        return;
+    }
+    for(const key in source){
+        if (Object.prototype.hasOwnProperty.call(source, key) && source[key] !== null && typeof source[key] === `object`) {
+            if (target[key] === void 0) {
+                target[key] = new (Object.getPrototypeOf(source[key])).constructor();
+            }
+            fastDeepMergeAndReplace(source[key], target[key]);
+        } else if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+        }
+    }
+};
+var fastDeepMergeAndKeep = (source, target)=>{
+    if (!source || !target) {
+        return;
+    }
+    for(const key in source){
+        if (Object.prototype.hasOwnProperty.call(source, key) && source[key] !== null && typeof source[key] === `object`) {
+            if (target[key] === void 0) {
+                target[key] = new (Object.getPrototypeOf(source[key])).constructor();
+            }
+            fastDeepMergeAndKeep(source[key], target[key]);
+        } else if (Object.prototype.hasOwnProperty.call(source, key) && target[key] === void 0) {
+            target[key] = source[key];
+        }
+    }
+};
+ //# sourceMappingURL=chunk-ARQUL5DC.mjs.map
+
+// EXTERNAL MODULE: ./node_modules/@clerk/shared/dist/chunk-7ELT755Q.mjs
+var chunk_7ELT755Q = __webpack_require__(7032);
+;// CONCATENATED MODULE: ./node_modules/@clerk/shared/dist/utils/index.mjs
+
+
+
+
+
+
+
+ //# sourceMappingURL=index.mjs.map
+
+
+/***/ }),
+
+/***/ 4317:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   _: () => (/* binding */ _interop_require_default),
+/* harmony export */   _interop_require_default: () => (/* binding */ _interop_require_default)
+/* harmony export */ });
+function _interop_require_default(obj) {
+    return obj && obj.__esModule ? obj : {
+        default: obj
+    };
+}
+
+
+
+/***/ }),
+
+/***/ 3972:
+/***/ ((module) => {
+
+"use strict";
+module.exports = {"i8":"13.5.11"};
+
 /***/ })
 
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__(491));
+/******/ var __webpack_exports__ = (__webpack_exec__(5692));
 /******/ (_ENTRIES = typeof _ENTRIES === "undefined" ? {} : _ENTRIES).middleware_middleware = __webpack_exports__;
 /******/ }
 ]);
