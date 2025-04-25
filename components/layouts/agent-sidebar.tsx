@@ -5,30 +5,24 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
-  Users,
   FileText,
   MessageSquare,
-  BarChart3,
-  Shield,
   Settings,
 } from "lucide-react"
 
 const navItems = [
-  { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { name: "Benutzer", href: "/admin/users", icon: Users },
-  { name: "Aktivitäten", href: "/admin/activities", icon: FileText },
-  { name: "Community", href: "/admin/community", icon: MessageSquare },
-  { name: "Berichte", href: "/admin/reports", icon: BarChart3 },
-  { name: "Berechtigungen", href: "/admin/permissions", icon: Shield },
-  { name: "Einstellungen", href: "/admin/settings", icon: Settings },
+  { name: "Dashboard", href: "/agent", icon: LayoutDashboard },
+  { name: "Aktivitäten", href: "/agent/activities", icon: FileText },
+  { name: "Nachrichten", href: "/agent/messages", icon: MessageSquare },
+  { name: "Einstellungen", href: "/agent/settings", icon: Settings },
 ]
 
-export function AdminSidebar() {
+export function AgentSidebar() {
   const pathname = usePathname()
 
   return (
     <aside className="w-64 bg-white border-r p-4 space-y-2">
-      <h2 className="text-lg font-bold mb-4">Admin Panel</h2>
+      <h2 className="text-lg font-bold mb-4">Agent Panel</h2>
       <nav className="space-y-1">
         {navItems.map((item) => (
           <Link
