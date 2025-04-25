@@ -1,13 +1,16 @@
-import { AdminSidebar } from "@/components/layouts/admin/admin-sidebar"
+
+import { AdminSidebar } from "@/components/layouts/admin-sidebar"
 import { Topbar } from "@/components/layouts/topbar"
 
 export default function AdminDashboard() {
   return (
-    <div className="flex h-screen">
-      <AdminSidebar />
-      <div className="flex-1 flex flex-col">
-        <Topbar />
-        <main className="p-6">Admin-Dashboard-Inhalt</main>
+    <div className="flex min-h-screen flex-col">
+      <Topbar />
+      <div className="flex flex-1">
+        <AdminSidebar />
+        <main className="flex-1 p-6">
+          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+        </main>
       </div>
     </div>
   )
