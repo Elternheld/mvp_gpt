@@ -1,7 +1,7 @@
 // runtime can't be in strict mode because a global variable is assign and maybe created.
 (self["webpackChunk_N_E"] = self["webpackChunk_N_E"] || []).push([[826],{
 
-/***/ 5692:
+/***/ 3732:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7718,13 +7718,11 @@ const esm_Protect = Protect;
 }));
 const config = {
     matcher: [
-        "/((?!.*\\..*|_next).*)",
-        "/",
-        "/(api|trpc)(.*)"
+        "/((?!_next|.*\\..*).*)"
     ]
 };
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-middleware-loader.js?absolutePagePath=private-next-root-dir%2Fmiddleware.ts&page=%2Fmiddleware&rootDir=C%3A%5CUsers%5CAKhal%5COneDrive%5CDokumente%5CGitHub%5Cmvp_gpt&matchers=W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpPyg%2FOlxcLygoPyEuKlxcLi4qfF9uZXh0KS4qKSkoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKCg%2FIS4qXFwuLip8X25leHQpLiopIn0seyJyZWdleHAiOiJeKD86XFwvKF9uZXh0XFwvZGF0YVxcL1teL117MSx9KSk%2FKD86XFwvKFxcLz9pbmRleHxcXC8%2FaW5kZXhcXC5qc29uKSk%2FW1xcLyNcXD9dPyQiLCJvcmlnaW5hbFNvdXJjZSI6Ii8ifSx7InJlZ2V4cCI6Il4oPzpcXC8oX25leHRcXC9kYXRhXFwvW14vXXsxLH0pKT8oPzpcXC8oYXBpfHRycGMpKSguKikoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKGFwaXx0cnBjKSguKikifV0%3D&preferredRegion=&middlewareConfig=eyJtYXRjaGVycyI6W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpPyg%2FOlxcLygoPyEuKlxcLi4qfF9uZXh0KS4qKSkoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKCg%2FIS4qXFwuLip8X25leHQpLiopIn0seyJyZWdleHAiOiJeKD86XFwvKF9uZXh0XFwvZGF0YVxcL1teL117MSx9KSk%2FKD86XFwvKFxcLz9pbmRleHxcXC8%2FaW5kZXhcXC5qc29uKSk%2FW1xcLyNcXD9dPyQiLCJvcmlnaW5hbFNvdXJjZSI6Ii8ifSx7InJlZ2V4cCI6Il4oPzpcXC8oX25leHRcXC9kYXRhXFwvW14vXXsxLH0pKT8oPzpcXC8oYXBpfHRycGMpKSguKikoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKGFwaXx0cnBjKSguKikifV19!
+;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-middleware-loader.js?absolutePagePath=private-next-root-dir%2Fmiddleware.ts&page=%2Fmiddleware&rootDir=C%3A%5CUsers%5CAKhal%5COneDrive%5CDokumente%5CGitHub%5Cmvp_gpt&matchers=W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpPyg%2FOlxcLygoPyFfbmV4dHwuKlxcLi4qKS4qKSkoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKCg%2FIV9uZXh0fC4qXFwuLiopLiopIn1d&preferredRegion=&middlewareConfig=eyJtYXRjaGVycyI6W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpPyg%2FOlxcLygoPyFfbmV4dHwuKlxcLi4qKS4qKSkoLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvKCg%2FIV9uZXh0fC4qXFwuLiopLiopIn1dfQ%3D%3D!
 
 
 // Import the userland code.
@@ -29422,7 +29420,7 @@ module.exports = {"i8":"13.5.11"};
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__(5692));
+/******/ var __webpack_exports__ = (__webpack_exec__(3732));
 /******/ (_ENTRIES = typeof _ENTRIES === "undefined" ? {} : _ENTRIES).middleware_middleware = __webpack_exports__;
 /******/ }
 ]);
