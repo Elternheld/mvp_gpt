@@ -1,34 +1,39 @@
 
+"use client";
+
 import { createContext, useContext, useState } from "react";
 
-const ToastContext = createContext({
-  showToast: (message: string) => {},
-});
+interface Toast {
+  id: number;
+  message: string;
+}
+
+interface ToastContextType {
+  toasts: Toast[];
+  showToast: (message: string) => void;
+}
+
+const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toasts, setToasts] = useState<string[]>([]);
+  const [toasts, setToasts] = useState<Toast[]>([]);
 
   const showToast = (message: string) => {
-    setToasts((prev) => [...prev, message]);
-    setTimeout(() => {
-      setToasts((prev) => prev.slice(1));
-    }, 3000);
+    const newToast = { id: Date.now(), message };
+    setToasts((prevToasts) => [...prevToasts, newToast]);
   };
 
   return (
-    <ToastContext.Provider value={{ showToast }}>
+    <ToastContext.Provider value={{ toasts, showToast }}>
       {children}
-      <div className="fixed bottom-4 right-4 space-y-2">
-        {toasts.map((toast, index) => (
-          <div key={index} className="bg-black text-white p-2 rounded">
-            {toast}
-          </div>
-        ))}
-      </div>
     </ToastContext.Provider>
   );
 }
 
 export function useToast() {
-  return useContext(ToastContext);
+  const context = useContext(ToastContext);
+  if (!context) {
+    throw new Error("useToast must be used within a ToastProvider");
+  }
+  return context;
 }
