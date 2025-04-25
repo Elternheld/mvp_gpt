@@ -1,4 +1,4 @@
-exports.id=690,exports.ids=[690],exports.modules={1294:(e,t,a)=>{"use strict";a.d(t,{CH:()=>s,tj:()=>l}),a(6704);var n=a(9885),o=(a(1357),a(8556)),i=a(9222);a(9598),a(5270),a(2850),a(2163);a(9334),a(5222),a(1671),(0,i.JM)({packageName:"@clerk/nextjs"}),(0,i.Aw)("@clerk/nextjs");let s=o.CH,l=o.tj;o.Cv},2125:(e,t,a)=>{"use strict";a.d(t,{Z:()=>createLucideIcon});var n=a(9885);/**
+exports.id=690,exports.ids=[690],exports.modules={1294:(e,t,a)=>{"use strict";a.d(t,{CH:()=>s,tj:()=>l}),a(6704);var n=a(9885),o=(a(1357),a(8556)),i=a(9222);a(9598),a(5270),a(2850),a(2163);a(4520),a(5222),a(1671),(0,i.JM)({packageName:"@clerk/nextjs"}),(0,i.Aw)("@clerk/nextjs");let s=o.CH,l=o.tj;o.Cv},2125:(e,t,a)=>{"use strict";a.d(t,{Z:()=>createLucideIcon});var n=a(9885);/**
  * @license lucide-react v0.503.0 - ISC
  *
  * This source code is licensed under the ISC license.
