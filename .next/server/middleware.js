@@ -1,7 +1,7 @@
 // runtime can't be in strict mode because a global variable is assign and maybe created.
 (self["webpackChunk_N_E"] = self["webpackChunk_N_E"] || []).push([[826],{
 
-/***/ 352:
+/***/ 491:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7419,49 +7419,17 @@ function prunePrivateMetadata(resource) {
 
  //# sourceMappingURL=index.js.map
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/esm/server/web/exports/next-response.js
-// This file is for modularized imports for next/server to get fully-treeshaking.
- //# sourceMappingURL=next-response.js.map
-
 ;// CONCATENATED MODULE: ./middleware.ts
 
-
-/* harmony default export */ const middleware = ((0,server_namespaceObject.authMiddleware)({
-    publicRoutes: [
-        "/",
-        "/sign-in",
-        "/sign-up"
-    ],
-    afterAuth (auth, req) {
-        const { userId, sessionId, orgRole, user } = auth;
-        // no user signed in
-        if (!userId || !user) {
-            return NextResponse.redirect(new URL("/sign-in", req.url));
-        }
-        const role = user.publicMetadata?.role;
-        // Redirect based on role if visiting root
-        if (req.nextUrl.pathname === "/") {
-            if (role === "admin") return NextResponse.redirect(new URL("/admin", req.url));
-            if (role === "agent") return NextResponse.redirect(new URL("/agent", req.url));
-            return NextResponse.redirect(new URL("/dashboard", req.url));
-        }
-        // Restrict access by path
-        if (req.nextUrl.pathname.startsWith("/admin") && role !== "admin") {
-            return NextResponse.redirect(new URL("/dashboard", req.url));
-        }
-        if (req.nextUrl.pathname.startsWith("/agent") && role !== "agent") {
-            return NextResponse.redirect(new URL("/dashboard", req.url));
-        }
-        return NextResponse.next();
-    }
-}));
+/* harmony default export */ const middleware = ((0,server_namespaceObject.authMiddleware)());
 const config = {
     matcher: [
-        "/((?!_next|.*..*).*)"
+        "/admin/:path*",
+        "/agent/:path*"
     ]
 };
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-middleware-loader.js?absolutePagePath=private-next-root-dir%2Fmiddleware.ts&page=%2Fmiddleware&rootDir=C%3A%5CUsers%5CAKhal%5COneDrive%5CDokumente%5CGitHub%5Cmvp_gpt&matchers=W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpPyg%2FOlxcLygoPyFfbmV4dHwuKi4uKikuKikpKC5qc29uKT9bXFwvI1xcP10%2FJCIsIm9yaWdpbmFsU291cmNlIjoiLygoPyFfbmV4dHwuKi4uKikuKikifV0%3D&preferredRegion=&middlewareConfig=eyJtYXRjaGVycyI6W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpPyg%2FOlxcLygoPyFfbmV4dHwuKi4uKikuKikpKC5qc29uKT9bXFwvI1xcP10%2FJCIsIm9yaWdpbmFsU291cmNlIjoiLygoPyFfbmV4dHwuKi4uKikuKikifV19!
+;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-middleware-loader.js?absolutePagePath=private-next-root-dir%2Fmiddleware.ts&page=%2Fmiddleware&rootDir=C%3A%5CUsers%5CAKhal%5COneDrive%5CDokumente%5CGitHub%5Cmvp_gpt&matchers=W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpP1xcL2FkbWluKD86XFwvKCg%2FOlteXFwvI1xcP10rPykoPzpcXC8oPzpbXlxcLyNcXD9dKz8pKSopKT8oLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvYWRtaW4vOnBhdGgqIn0seyJyZWdleHAiOiJeKD86XFwvKF9uZXh0XFwvZGF0YVxcL1teL117MSx9KSk%2FXFwvYWdlbnQoPzpcXC8oKD86W15cXC8jXFw%2FXSs%2FKSg%2FOlxcLyg%2FOlteXFwvI1xcP10rPykpKikpPyguanNvbik%2FW1xcLyNcXD9dPyQiLCJvcmlnaW5hbFNvdXJjZSI6Ii9hZ2VudC86cGF0aCoifV0%3D&preferredRegion=&middlewareConfig=eyJtYXRjaGVycyI6W3sicmVnZXhwIjoiXig%2FOlxcLyhfbmV4dFxcL2RhdGFcXC9bXi9dezEsfSkpP1xcL2FkbWluKD86XFwvKCg%2FOlteXFwvI1xcP10rPykoPzpcXC8oPzpbXlxcLyNcXD9dKz8pKSopKT8oLmpzb24pP1tcXC8jXFw%2FXT8kIiwib3JpZ2luYWxTb3VyY2UiOiIvYWRtaW4vOnBhdGgqIn0seyJyZWdleHAiOiJeKD86XFwvKF9uZXh0XFwvZGF0YVxcL1teL117MSx9KSk%2FXFwvYWdlbnQoPzpcXC8oKD86W15cXC8jXFw%2FXSs%2FKSg%2FOlxcLyg%2FOlteXFwvI1xcP10rPykpKikpPyguanNvbik%2FW1xcLyNcXD9dPyQiLCJvcmlnaW5hbFNvdXJjZSI6Ii9hZ2VudC86cGF0aCoifV19!
 
 
 // Import the userland code.
@@ -8987,7 +8955,7 @@ function mapperOptions(key, val, options) {
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__(352));
+/******/ var __webpack_exports__ = (__webpack_exec__(491));
 /******/ (_ENTRIES = typeof _ENTRIES === "undefined" ? {} : _ENTRIES).middleware_middleware = __webpack_exports__;
 /******/ }
 ]);
