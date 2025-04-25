@@ -1,5 +1,5 @@
 import Header from "@/components/layout/header"
-
+import "@/public/themes.css"
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
