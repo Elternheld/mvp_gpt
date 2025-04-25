@@ -1,5 +1,9 @@
-import { SignUp } from "@clerk/nextjs";
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    serverActions: true, // Enable Server Actions for Clerk
+  },
+};
 
-export default function Page() {
-  return <SignUp />;
-}
+module.exports = nextConfig;
