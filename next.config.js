@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    serverActions: true, // Enable Server Actions for Clerk
+    serverActions: {}, // Ensure this is an object, even if it's empty
   },
 };
 
