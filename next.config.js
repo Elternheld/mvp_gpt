@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    serverActions: true
-  }
-}
+    serverActions: {}, // Replace the boolean with an empty object
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
