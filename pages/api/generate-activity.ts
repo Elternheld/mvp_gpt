@@ -1,11 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    res.status(200).json({
-      activity: 'Kartenspiel mit Belohnungssystem – fördert logisches Denken und Geduld.'
-    });
+// Example of an API route
+export default function handler(req, res) {
+  if (req.method === 'GET') {
+    res.status(200).json({ message: 'Activity endpoint is working!' });
   } else {
-    res.status(405).json({ message: 'Only POST requests allowed' });
+    res.status(405).json({ message: 'Method Not Allowed' });
   }
 }
