@@ -1,10 +1,10 @@
 {
-  "/_error": "pages/_error.js",
   "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/api/generate-activity": "pages/api/generate-activity.js",
+  "/generator": "pages/generator.js",
   "/": "pages/index.js",
   "/sign-in/[[...index]]": "pages/sign-in/[[...index]].js",
-  "/api/generate-activity": "pages/api/generate-activity.js",
   "/sign-up/[[...index]]": "pages/sign-up/[[...index]].js",
-  "/generator": "pages/generator.js",
   "/_document": "pages/_document.js"
 }

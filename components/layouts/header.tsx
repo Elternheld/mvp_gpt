@@ -1,16 +1,7 @@
-import Link from "next/link"
-
-export default function Header() {
+export function Header() {
   return (
-    <header className="flex items-center justify-end p-4 border-b">
-      <nav className="space-x-4">
-        <Link href="/sign-in" className="text-blue-600 hover:underline">
-          Anmelden
-        </Link>
-        <Link href="/sign-up" className="text-blue-600 hover:underline">
-          Registrieren
-        </Link>
-      </nav>
-    </header>
-  )
+    <div className="w-full p-4 bg-gray-100 text-center text-gray-600">
+      Dies ist der Header (Platzhalter).
+    </div>
+  );
 }
