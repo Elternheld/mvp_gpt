@@ -2,29 +2,32 @@
 
 import { useToast } from "@/hooks/use-toast"
 import {
-  Toast,
+  Toaster as Sonner,
   ToastClose,
   ToastDescription,
   ToastProvider,
   ToastTitle,
-  ToastViewport,
-} from "@/components/ui/sonner"
+  toast as sonnerToast
+} from "sonner"
 
 export function Toaster() {
   const { toasts } = useToast()
 
   return (
     <ToastProvider>
-      {toasts.map(({ id, title, description, ...props }) => (
-        <Toast key={id} {...props}>
-          <div className="grid gap-1">
-            {title && <ToastTitle>{title}</ToastTitle>}
-            {description && <ToastDescription>{description}</ToastDescription>}
-          </div>
-          <ToastClose />
-        </Toast>
-      ))}
-      <ToastViewport />
+      {toasts.map(function ({ id, title, description, ...props }) {
+        return (
+          <Sonner key={id} {...props}>
+            <div className="grid gap-1">
+              {title && <ToastTitle>{title}</ToastTitle>}
+              {description && (
+                <ToastDescription>{description}</ToastDescription>
+              )}
+            </div>
+            <ToastClose />
+          </Sonner>
+        )
+      })}
     </ToastProvider>
   )
 }
