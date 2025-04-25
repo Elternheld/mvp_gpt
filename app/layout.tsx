@@ -1,12 +1,23 @@
-import Header from "@/components/layout/header"
-import "@/public/themes.css"
+import "./globals.css"
+import type { Metadata } from "next"
+import { ClerkProvider } from "@clerk/nextjs"
+import { dark } from "@clerk/themes"
+
+export const metadata: Metadata = {
+  title: "ElternHeld",
+  description: "Dein Eltern-Alltagshelfer"
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de">
-      <body>
-        <Header />
-        <main className="p-4">{children}</main>
-      </body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark
+      }}
+    >
+      <html lang="de">
+        <body>{children}</body>
+      </html>
+    </ClerkProvider>
   )
 }
