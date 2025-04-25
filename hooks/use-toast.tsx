@@ -1,17 +1,14 @@
 
 "use client"
 
-import {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode,
-} from "react"
+import * as React from "react"
 
 type Toast = {
-  id: number
-  title: string
+  id: string
+  title?: string
   description?: string
+  duration?: number
+  variant?: "default" | "destructive"
 }
 
 type ToastContextType = {
@@ -19,13 +16,22 @@ type ToastContextType = {
   showToast: (toast: Toast) => void
 }
 
-const ToastContext = createContext<ToastContextType | undefined>(undefined)
+const ToastContext = React.createContext<ToastContextType | undefined>(undefined)
 
-export function ToastProvider({ children }: { children: ReactNode }) {
-  const [toasts, setToasts] = useState<Toast[]>([])
+export function useToast(): ToastContextType {
+  const context = React.useContext(ToastContext)
+  if (!context) {
+    throw new Error("useToast must be used within a ToastProvider")
+  }
+  return context
+}
+
+export function ToastProvider({ children }: { children: React.ReactNode }) {
+  const [toasts, setToasts] = React.useState<Toast[]>([])
 
   const showToast = (toast: Toast) => {
-    setToasts((prevToasts) => [...prevToasts, toast])
+    const id = Math.random().toString(36).substring(7)
+    setToasts((prev) => [...prev, { ...toast, id }])
   }
 
   return (
@@ -33,12 +39,4 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
     </ToastContext.Provider>
   )
-}
-
-export function useToast() {
-  const context = useContext(ToastContext)
-  if (!context) {
-    throw new Error("useToast must be used within a ToastProvider")
-  }
-  return context
 }
