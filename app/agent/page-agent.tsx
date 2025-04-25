@@ -1,16 +1,14 @@
-import { SignedIn } from "@clerk/nextjs"
-import { AgentSidebar } from "@/components/agent/agent-sidebar"
+import { AgentSidebar } from "@/components/layouts/agent-sidebar"
+import { Topbar } from "@/components/layouts/topbar"
 
-export default function AgentPage() {
+export default function AgentDashboard() {
   return (
-    <SignedIn>
-      <div className="flex">
-        <AgentSidebar />
-        <main className="flex-1 p-6">
-          <h1 className="text-2xl font-bold">Agent Dashboard</h1>
-          <p className="mt-2 text-gray-600">Hier siehst du die Ansicht für Agenten.</p>
-        </main>
+    <div className="flex h-screen">
+      <AgentSidebar />
+      <div className="flex-1 flex flex-col">
+        <Topbar />
+        <main className="p-4">Agent Dashboard Inhalte hier...</main>
       </div>
-    </SignedIn>
+    </div>
   )
 }
