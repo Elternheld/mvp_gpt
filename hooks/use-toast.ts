@@ -1,39 +1,28 @@
+// hooks/use-toast.ts
 
-"use client";
-
-import { createContext, useContext, useState } from "react";
+import { useState } from "react"
 
 interface Toast {
-  id: number;
-  message: string;
-}
-
-interface ToastContextType {
-  toasts: Toast[];
-  showToast: (message: string) => void;
-}
-
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
-
-export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toasts, setToasts] = useState<Toast[]>([]);
-
-  const showToast = (message: string) => {
-    const newToast = { id: Date.now(), message };
-    setToasts((prevToasts) => [...prevToasts, newToast]);
-  };
-
-  return (
-    <ToastContext.Provider value={{ toasts, showToast }}>
-      {children}
-    </ToastContext.Provider>
-  );
+  id: number
+  message: string
 }
 
 export function useToast() {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error("useToast must be used within a ToastProvider");
+  const [toasts, setToasts] = useState<Toast[]>([])
+
+  function showToast(message: string) {
+    const id = Date.now()
+    const newToast = { id, message }
+    setToasts((prevToasts) => [...prevToasts, newToast])
+
+    // Remove toast automatically after 3 seconds
+    setTimeout(() => {
+      setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id))
+    }, 3000)
   }
-  return context;
+
+  return {
+    toasts,
+    showToast,
+  }
 }
