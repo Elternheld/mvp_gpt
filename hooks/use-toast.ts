@@ -1,28 +1,40 @@
-// hooks/use-toast.ts
+"use client"
 
-import { useState } from "react"
+import * as React from "react"
 
-interface Toast {
-  id: number
-  message: string
+interface ToastItem {
+  id: string
+  title?: React.ReactNode
+  description?: React.ReactNode
+  action?: React.ReactNode
 }
 
+interface ToastContextType {
+  toasts: ToastItem[]
+  showToast: (toast: Omit<ToastItem, "id">) => void
+}
+
+const ToastContext = React.createContext<ToastContextType | undefined>(undefined)
+
 export function useToast() {
-  const [toasts, setToasts] = useState<Toast[]>([])
+  const context = React.useContext(ToastContext)
+  if (!context) {
+    throw new Error("useToast must be used within a ToastProvider")
+  }
+  return context
+}
 
-  function showToast(message: string) {
-    const id = Date.now()
-    const newToast = { id, message }
-    setToasts((prevToasts) => [...prevToasts, newToast])
+export function ToastProvider({ children }: { children: React.ReactNode }) {
+  const [toasts, setToasts] = React.useState<ToastItem[]>([])
 
-    // Remove toast automatically after 3 seconds
-    setTimeout(() => {
-      setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id))
-    }, 3000)
+  function showToast(toast: Omit<ToastItem, "id">) {
+    const id = Math.random().toString(36).substring(2, 9)
+    setToasts((prev) => [...prev, { id, ...toast }])
   }
 
-  return {
-    toasts,
-    showToast,
-  }
+  return (
+    <ToastContext.Provider value={{ toasts, showToast }}>
+      {children}
+    </ToastContext.Provider>
+  )
 }
