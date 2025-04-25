@@ -1,4 +1,4 @@
-import { AgentSidebar } from "@/components/layouts/agent-sidebar"
+import { AgentSidebar } from "@/components/layouts/agent/agent-sidebar"
 import { Topbar } from "@/components/layouts/topbar"
 
 export default function AgentDashboard() {
@@ -7,7 +7,7 @@ export default function AgentDashboard() {
       <AgentSidebar />
       <div className="flex-1 flex flex-col">
         <Topbar />
-        <main className="p-4">Agent Dashboard Inhalte hier...</main>
+        <main className="p-6">Agenten-Dashboard-Inhalt</main>
       </div>
     </div>
   )
