@@ -1,29 +1,27 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 
-// Define the type for individual toasts
-type Toast = {
+// Define the shape of the ToastContext
+interface Toast {
   id: string;
-  title: string;
-  description?: string;
-};
+  message: string;
+}
 
-// Define the shape of the context
-type ToastContextType = {
+interface ToastContextType {
   toasts: Toast[];
-  showToast: (toast: Omit<Toast, "id">) => void;
+  showToast: (message: string) => void;
   removeToast: (id: string) => void;
-};
+}
 
 // Create the ToastContext
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-// Create the ToastProvider component
-export function ToastProvider({ children }: { children: ReactNode }) {
+// Toast Provider Component
+export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const showToast = (toast: Omit<Toast, "id">) => {
-    const id = Date.now().toString();
-    setToasts((prevToasts) => [...prevToasts, { ...toast, id }]);
+  const showToast = (message: string) => {
+    const id = Math.random().toString();
+    setToasts((prevToasts) => [...prevToasts, { id, message }]);
   };
 
   const removeToast = (id: string) => {
@@ -35,13 +33,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
     </ToastContext.Provider>
   );
-}
+};
 
-// Create a custom hook to use the ToastContext
-export function useToast() {
+// Custom hook to use the ToastContext
+export const useToast = () => {
   const context = useContext(ToastContext);
   if (!context) {
     throw new Error("useToast must be used within a ToastProvider");
   }
   return context;
-}
+};

@@ -1,7 +1,6 @@
-import React from "react";
 import { ToastProvider } from "../components/ui/use-toast";
 
-function MyApp({ Component, pageProps }: any) {
+function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   return (
     <ToastProvider>
       <Component {...pageProps} />
