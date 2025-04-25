@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    serverActions: {}, // Ensure this is an object, even if it's empty
+    serverActions: {}, // Ensure this is an object, even if empty
   },
 };
 
