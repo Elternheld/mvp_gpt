@@ -1,34 +1,27 @@
 {
-  "node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js": {
-    "id": 2642,
+  "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js": {
+    "id": 9855,
     "files": [
-      "static/chunks/642.4f99f3ad4f6f58a9.js"
+      "static/chunks/585.51ac36b99cf9b945.js",
+      "static/chunks/855.38abd316b4ffb6c7.js"
     ]
   },
-  "node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\keyless-cookie-sync.js -> ../keyless-actions.js": {
-    "id": 8751,
+  "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\keyless-cookie-sync.js -> ../keyless-actions.js": {
+    "id": 1585,
     "files": [
-      "static/chunks/751.094f6eb07bdb6163.js"
+      "static/chunks/585.51ac36b99cf9b945.js"
     ]
   },
-  "node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\keyless-actions.js -> ../server/keyless-log-cache.js": {
-    "id": null,
-    "files": []
-  },
-  "node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\keyless-actions.js -> ../server/keyless-node.js": {
-    "id": null,
-    "files": []
-  },
-  "node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
-    "id": 472,
+  "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\keyless-actions.js -> ../server/keyless-log-cache.js": {
+    "id": 9825,
     "files": [
-      "static/chunks/472.a3826d29d6854395.js"
+      "static/chunks/825.7881edb4ddb7b99d.js"
     ]
   },
-  "node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
-    "id": 9341,
+  "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\keyless-actions.js -> ../server/keyless-node.js": {
+    "id": 9610,
     "files": [
-      "static/chunks/341.056900400c7cb71c.js"
+      "static/chunks/610.18cfdecca6e6f38c.js"
     ]
   }
 }
