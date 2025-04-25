@@ -15,7 +15,7 @@ interface ToastContextType {
 // Create the ToastContext
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-// Log the value of ToastContext
+// Debugging: Log the created ToastContext
 console.log("ToastContext:", ToastContext);
 
 // Toast Provider Component
