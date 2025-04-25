@@ -1,1 +1,4 @@
-{"node":{"fc712a4e0483b3050ec9af3da9d25383e835dc82":{"workers":{"app/_not-found":9334,"app/agent/page":9334,"app/admin/page":9334},"layer":{"app/_not-found":"rsc","app/agent/page":"rsc","app/admin/page":"rsc"}},"303c2a4ffe862ae784afa8435abfdf7c882df0ca":{"workers":{"app/_not-found":9334,"app/agent/page":9334,"app/admin/page":9334},"layer":{"app/_not-found":"rsc","app/agent/page":"rsc","app/admin/page":"rsc"}},"0e3d6e063c12529b6725066d9d698ce8b19c3d47":{"workers":{"app/_not-found":9334,"app/agent/page":9334,"app/admin/page":9334},"layer":{"app/_not-found":"rsc","app/agent/page":"rsc","app/admin/page":"rsc"}}},"edge":{}}
+{
+  "node": {},
+  "edge": {}
+}
