@@ -1,19 +1,9 @@
-import { ClerkProvider } from "@clerk/nextjs";
-import "../styles/globals.css";
-
-export const metadata = {
-  title: "Elternheld MVP",
-  description: "Eine Anwendung, die Eltern unterstützt.",
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    serverActions: true, // Enable Server Actions for Clerk
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="de">
-      <body>
-        <ClerkProvider>
-          {children}
-        </ClerkProvider>
-      </body>
-    </html>
-  );
-}
+module.exports = nextConfig;
